@@ -131,6 +131,10 @@ function send(message: Record<string, unknown>) { if (socket?.readyState === Web
     }
     socket.send(JSON.stringify({ version: 1, ...message, epoch }));
 } }
+function publishState(now = performance.now()) {
+    send({ type: 'state', controlRevision, position: self.position, rotation: self.rotation, velocity: self.velocity, mode: self.mode, vehicleId: self.vehicleId, seat: self.seat, keys: self.keys, seq: ++sequence });
+    lastSend = now;
+}
 function removeMesh(mesh: THREE.Group) { scene.remove(mesh); mesh.traverse(object => { if (object instanceof THREE.Mesh) {
     object.geometry.dispose();
     for (const material of Array.isArray(object.material) ? object.material : [object.material])
@@ -248,13 +252,24 @@ function handle(m: ServerMessage) {
                     v.position = [...m.position];
                 if (m.rotation)
                     v.rotation = [...m.rotation];
-                if (m.velocity)
-                    v.velocity = [...m.velocity];
-                if (self.mode === 'driver' && self.vehicleId === v.id) {
+                if (m.velocity) v.velocity = [...m.velocity];
+                else if (m.position) v.velocity = [0, 0, 0]; // Server position corrections stop old motion.
+                if (self.mode !== 'onFoot' && self.vehicleId === v.id) {
                     self.position = [...v.position];
                     self.rotation = [...v.rotation];
                     heading = headingFromRotation(v.rotation);
-                    speed = 0;
+                    self.heading = heading;
+                    // Received velocity describes the vehicle; deriving it from an
+                    // occluded tab's render delta creates a spurious speed spike.
+                    self.velocity = [...v.velocity];
+                    if (self.mode === 'driver') speed = 0;
+                    else {
+                        // Passenger replication must continue even when Chrome
+                        // throttles rendering in a visible but occluded window.
+                        // Publishing here resets the shared frame-send deadline.
+                        const now = performance.now();
+                        if (now - lastSend >= inCarRate) publishState(now);
+                    }
                 }
             }
             break;
@@ -360,17 +375,20 @@ window.addEventListener('keydown', event => { if (event.code === 'Enter' && !isT
         jumpSpeed = 5.8;
 } });
 window.addEventListener('keyup', event => keys.delete(event.code));
-function suspend() { keys.clear(); self.keys = 0; self.velocity = [0, 0, 0]; speed = 0; if (self.spawned)
-    send({ type: 'state', controlRevision, position: self.position, rotation: self.rotation, velocity: self.velocity, mode: self.mode, vehicleId: self.vehicleId, seat: self.seat, keys: self.keys, seq: ++sequence }); }
+function suspend() { keys.clear(); self.keys = 0; self.velocity = [0, 0, 0]; speed = 0; if (self.spawned) publishState(); }
 window.addEventListener('blur', suspend);
-document.addEventListener('visibilitychange', () => {
-    if (!document.hidden || terminalReason !== null || !socket || socket.readyState === WebSocket.CLOSED) return;
-    // A hidden tab cannot keep its simulation current. Release its upstream player
-    // instead of allowing the native worker to keep publishing stale coordinates.
+function disconnectSuspendedPage(reason: 'tab hidden' | 'page suspended') {
+    if (terminalReason !== null || !socket || socket.readyState === WebSocket.CLOSED) return;
+    // Hidden or frozen pages cannot keep their simulation current. Release the
+    // upstream player instead of letting its worker publish stale coordinates.
     send({ type: 'disconnect' });
     socket.close();
-    disconnect('Disconnected: tab hidden; join again to resynchronize.');
+    disconnect(`Disconnected: ${reason}; join again to resynchronize.`);
+}
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden) disconnectSuspendedPage('tab hidden');
 });
+document.addEventListener('freeze', () => disconnectSuspendedPage('page suspended'));
 window.addEventListener('pagehide', () => { send({ type: 'disconnect' }); socket?.close(); });
 function collision(x: number, y: number, radius: number) { return arena.barriers.some(b => Math.abs(x - b.position[0]) < b.size[0] / 2 + radius && Math.abs(y - b.position[1]) < b.size[1] / 2 + radius); }
 function freeExitPosition(vehicle: Vehicle, seat: number): Vec3 {
@@ -439,7 +457,7 @@ function step(dt: number) {
     }
     self.heading = heading;
     self.rotation = rotationFromHeading(heading);
-    self.velocity = self.position.map((n, i) => (n - old[i]) / dt) as Vec3;
+    self.velocity = self.mode === 'passenger' ? [...(vehicles.get(self.vehicleId)?.velocity ?? [0, 0, 0])] as Vec3 : self.position.map((n, i) => (n - old[i]) / dt) as Vec3;
     self.keys = (keys.has('KeyW') ? 8 : 0) | (keys.has('KeyS') ? 32 : 0) | (keys.has('Space') ? 128 : 0);
     if (self.mode === 'driver') {
         const v = vehicles.get(self.vehicleId);
@@ -453,7 +471,7 @@ camera.lookAt(0, 6, 10);
 let previous = performance.now(), accumulator = 0, lastHud = 0;
 function frame(now: number) {
     requestAnimationFrame(frame);
-    const delta = Math.min((now - previous) / 1000, .1);
+    const delta = Math.max(0, Math.min((now - previous) / 1000, .1));
     previous = now;
     accumulator += delta;
     while (accumulator >= 1 / 60) {
@@ -461,8 +479,7 @@ function frame(now: number) {
         accumulator -= 1 / 60;
     }
     if (self.spawned && now - lastSend >= (self.mode === 'onFoot' ? onFootRate : inCarRate)) {
-        send({ type: 'state', controlRevision, position: self.position, rotation: self.rotation, velocity: self.velocity, mode: self.mode, vehicleId: self.vehicleId, seat: self.seat, keys: self.keys, seq: ++sequence });
-        lastSend = now;
+        publishState(now);
     }
     selfMesh.visible = self.spawned && self.mode === 'onFoot';
     selfMesh.position.set(...self.position);
