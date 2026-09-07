@@ -1,6 +1,6 @@
 # Development roadmap
 
-Date: 2026-09-07. Every implementation milestone below is pending. Acceptance numbers are proposed targets, not measurements or promises.
+Date: 2026-09-07. This research roadmap is retained as historical context. The narrower browser/open.mp PoC is implemented; the current accepted milestone is [Arroyo neighborhood](neighborhood-plan.md), followed by a shared checkpoint challenge, private remote invitations/latency tests, and native-client interoperability. Consult [project status](status.md) for measured results rather than treating the original gates below as current status.
 
 ## Product target and dependency order
 

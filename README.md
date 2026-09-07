@@ -1,10 +1,12 @@
 # SA Online Browser
 
-A cloud-local browser multiplayer prototype: two players walk, chat, and share a placeholder arcade car through the SA-MP 0.3.7 protocol and an unchanged **open.mp v1.5.8.3079** server.
+A cloud-local browser multiplayer prototype: two players walk, chat, and drive an original sports coupe around Arroyo, a San Andreas-inspired neighborhood through the SA-MP 0.3.7 protocol and an unchanged **open.mp v1.5.8.3079** server.
 
 The browser renders and simulates locally. A Node WebSocket gateway starts one native C++ protocol worker per browser. All peer gameplay travels through the real upstream UDP server; the gateway does not broadcast gameplay between browsers.
 
-![Two browser players sharing the placeholder car](docs/images/poc.png)
+![Arroyo art direction](assets/reference/arroyo-concept.png)
+
+The image above is the original concept target. In-engine screenshots and measured results are recorded in [the neighborhood result record](docs/neighborhood-results.md).
 
 ## Run
 
@@ -30,7 +32,8 @@ After an abrupt worker crash, the server can retain the nickname until its conne
 
 | Control | Action |
 | --- | --- |
-| W/A/S/D | Walk or drive |
+| W/A/S/D | Camera-relative walking; accelerate, brake and steer while driving |
+| Right mouse drag / wheel | Orbit camera / zoom |
 | Space | Jump on foot |
 | Enter | Chat |
 | E / G | Request driver / passenger seat near the car |
@@ -47,7 +50,7 @@ Stop `dev:poc` first so ports 3000 and 7777 are available, then run:
 npm run verify:poc
 ```
 
-The suite runs type checks, gateway and native tests, then two independent headed Chromium sessions under Xvfb. Allow approximately thirteen minutes, including a ten-minute active multiplayer soak. It checks server observations and decoded browser snapshots as well as rendering. `POC_HEADLESS=1 npm run verify:poc` selects headless Chromium.
+The suite runs type checks, gateway and native tests, then two independent headed Chromium sessions under Xvfb. Allow approximately thirty minutes: the retained yard and new neighborhood each run a ten-minute active multiplayer soak, with additional loop, lifecycle and graphics tests. It checks server observations and decoded browser snapshots as well as rendering. `POC_HEADLESS=1 npm run verify:poc` selects headless Chromium.
 
 Screenshots, videos, traces, JSON results, and server observations are written to ignored `artifacts/verification/`. Gateway worker transitions are in `.runtime/logs/gateway.jsonl`. Reproduce these artifacts when moving to a fresh workspace; large recordings are not committed.
 
@@ -62,3 +65,19 @@ This demonstrates a narrow browser/open.mp protocol subset with original placeho
 - Research: [SA-MP/open.mp](docs/research/sa-mp.md), [MTA](docs/research/mta.md), [browser feasibility](docs/research/browser-runtime.md)
 
 Original PoC code is **GPL-3.0-or-later**. Preserve [third-party licenses and notices](THIRD_PARTY_NOTICES.md), including installed agent skills. No GTA assets or executables are included.
+
+## Neighborhood and editable assets
+
+`npm run dev:poc` selects Arroyo by default. `POC_SCENE=yard npm run dev:poc` retains the original test yard. Scene selection is a server setting; browsers load the selected manifest before joining. A stale manifest or asset hash produces an explicit loading/join error. Restart the demo after changing manifests or exports.
+
+Use **Low graphics** in the cloud desktop. It uses reduced internal render resolution, baked vertex shading and simplified fence wires. **Standard** uses full-resolution PBR materials and soft shadow maps. The HUD remains at display resolution in both modes. The minimap shows north, players and the car; chat collapses through its heading, and the top-right diagnostics button reveals protocol details. Keep each player tab visible in its own window.
+
+```sh
+npm run build:assets                 # installs pinned Blender 4.5.13 in .runtime if absent
+node tools/create-scenes.mjs          # regenerate the committed layout manifests
+npm run build:browser
+```
+
+Normal `setup:poc` consumes committed GLBs and image inputs; it does not install Blender or call an image service. Edit `tools/assets/build.py` to regenerate the kit, or inspect the editable `assets/source/*.blend` files. The script is the authoritative source; rebuilding replaces those .blend exports. Geometry is modeled in meters, Z-up and +Y forward, normalized once after glTF loading. Texture inputs, prompts, licenses and source pins are in [asset provenance](assets/PROVENANCE.md). The imagegen authoring skill is included under `.agents/skills/imagegen` with its own license.
+
+The [accepted plan](docs/neighborhood-plan.md) defines the current scope. Next: a shared checkpoint driving challenge, then private remote invitations and latency testing, then an original GTA/SA-MP interoperability slice. Arroyo's custom map does not establish native GTA world compatibility.

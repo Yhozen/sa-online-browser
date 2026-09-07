@@ -11,3 +11,7 @@ The root GPL-3.0 license applies to original PoC implementation code, with the o
 - **Installed agent skills**: third-party material under `.agents/skills`, with origins in skills-lock.json; the original PoC license does not change their terms.
 
 No GTA executable, model, texture, audio or native SA-MP client is included. Browser geometry is created by the original implementation.
+
+## Bundled imagegen skill
+
+`.agents/skills/imagegen` is copied from the supplied Codex system skill for this milestone's reproducible authoring workflow. Its upstream license is preserved in `.agents/skills/imagegen/LICENSE.txt`. Actual image generation used the built-in tool; the bundled optional API scripts were not used and are not required by setup or asset builds.

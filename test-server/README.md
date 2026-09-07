@@ -21,7 +21,7 @@ Perl build prerequisites and downloaded its Conan dependencies. That experiment
 was stopped once the official release worked through QEMU; a complete source
 build is not claimed or needed by the setup command.
 
-`arena.json` supplies browser geometry and generated Pawn spawn/car constants.
+`packages/shared/scenes/{yard,neighborhood}.json` supplies browser geometry and generated Pawn spawn/car constants. `POC_SCENE` selects the manifest, defaulting to `neighborhood`; each server start recompiles the fixture. `arena.json` remains the source for the retained yard layout recipe. `POC_GAME_PORT` can override the default UDP port for an isolated test process.
 The server binds UDP **127.0.0.1:7777**, accepts ordinary 0.3.7 players, allows
 eight players, and disables public announcement, artwork, and open.mp encryption.
 
