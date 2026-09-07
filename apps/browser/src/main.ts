@@ -513,7 +513,7 @@ async function initializeScene(){
   const response=await fetch('/scene',{cache:'no-store'});if(!response.ok)throw Error('Scene metadata unavailable. Start the gateway and retry.');
   const manifest=await response.json();if(!['yard','neighborhood'].includes(manifest.id)||typeof manifest.revision!=='string'||!Array.isArray(manifest.barriers))throw Error('Invalid scene metadata. Reload after rebuilding the server.');
   arena=manifest;collisionIndex=new CollisionIndex(arena.barriers);
-  await loadAssets(text=>el('loading').textContent=text);
+  await loadAssets(text=>el('loading').textContent=text,arena.assets);
   buildEnvironment(scene,arena);selfMesh=capsule(0);selfMesh.visible=false;
   el('loading').textContent='Ready · '+arena.name;el('join').textContent='Join '+arena.name+' ↗';document.querySelector('.arena-name')!.textContent=arena.name.toUpperCase();
   applyQuality(scene,quality==='low');renderer.compile(scene,camera);

@@ -7,6 +7,7 @@ OUT=ROOT/'apps/browser/public/assets'; OUT.mkdir(parents=True,exist_ok=True)
 SOURCE=ROOT/'assets/source'; SOURCE.mkdir(exist_ok=True)
 assert bpy.app.version[:3]==(4,5,13), bpy.app.version_string
 random.seed(73)
+bpy.context.preferences.filepaths.save_version=0
 bpy.ops.object.select_all(action='SELECT');bpy.ops.object.delete(use_global=False)
 materials={}
 def material(name,color,rough=.8,metal=0):
@@ -36,7 +37,7 @@ def start():
 def export(name,merge=True):
  if merge:
   for mat in materials.values():
-   group=[o for o in list(bpy.context.scene.objects) if o.type=='MESH' and o.data.materials[0]==mat]
+   group=[o for o in list(bpy.context.scene.objects) if o.type=='MESH' and o.data.materials[0]==mat and not (name=='coupe' and (o.name.startswith('wheel') or o.name.startswith('hub')))]
    if not group:continue
    bpy.ops.object.select_all(action='DESELECT')
    for o in group:o.select_set(True)
@@ -53,7 +54,7 @@ def house(v):
   box('flat roof',(0,0,3.85),(16.6,12.6,.35),roof);box('parapet',(0,-6,4.15),(16.7,.35,.7),wall)
   for x in [-7.8,7.8]:box('parapet side',(x,0,4.05),(.3,12,.55),wall)
  else:
-  ridge=5.5 if v==3 else 5
+  ridge=5.8 if v==3 else 4.35 if v==1 else 5
   mesh('gable',[(-8.5,-6.5,3.7),(8.5,-6.5,3.7),(0,-6.5,ridge),(-8.5,6.5,3.7),(8.5,6.5,3.7),(0,6.5,ridge)],[(0,1,2),(3,5,4),(0,2,5,3),(2,1,4,5)],roof)
   for y in [-6.53,6.53]:
    cyl('fascia',(-8.5,y,3.7),(0,y,ridge),.10,paint,4);cyl('fascia',(0,y,ridge),(8.5,y,3.7),.10,paint,4)
@@ -74,6 +75,11 @@ def house(v):
  box('garage trim',(5.8,-6.07,1.5),(3.85,.15,2.85),white)
  box('garage door',(5.8,-6.18,1.48),(3.55,.08,2.65),paint)
  for z in [.35,.8,1.25,1.7,2.15,2.6]:box('garage seam',(5.8,-6.24,z),(3.5,.02,.025),wood)
+ if v==3:
+  box('dormer',(0,-2.5,4.5),(2.4,2,1.5),wall);box('dormer glass',(0,-3.52,4.6),(1.2,.04,.9),dark);box('dormer cap',(0,-2.5,5.35),(2.7,2.3,.2),roof)
+ if v==1:
+  box('side porch',(8.5,1,.2),(2,6,.4),concrete);box('side shade',(8.5,1,3.1),(2.5,6.3,.15),paint)
+  for y in [-1.8,3.8]:box('side post',(9.5,y,1.5),(.16,.16,3),paint)
  box('chimney',(5,3,4.6),(1,1,2),wall);box('cap',(5,3,5.65),(1.25,1.25,.12),concrete)
  box('driveway',(6,-9,.025),(4,6,.05),concrete)
  export(f'house-{v}')
@@ -102,6 +108,11 @@ for i in range(-15,16):
   b=min(1, (2-x)/direction) if direction>0 else min(1,(-2-x)/direction)
   if b>a:cyl('wire',(x+direction*a,0,.05+a),(x+direction*b,0,.05+b),.006,chrome,4)
 export('fence')
+start()
+for x in [-2,2]:cyl('post',(x,0,0),(x,0,1.1),.04,chrome,4)
+for z in [.1,1.05]:cyl('rail',(-2,0,z),(2,0,z),.025,chrome,4)
+for x in [-1.5,-.5,.5,1.5]:cyl('wire',(x-.5,0,.1),(x+.5,0,1.05),.009,chrome,3);cyl('wire',(x+.5,0,.1),(x-.5,0,1.05),.009,chrome,3)
+export('fence-low')
 start();box('post',(0,0,.5),(.09,.09,1),wood);box('box',(0,.08,1.03),(.35,.55,.3),trim,.08);box('flag',(.2,0,1.12),(.025,.04,.2),red);export('mailbox')
 start();box('bin',(0,0,.43),(.56,.62,.86),trim,.06);box('lid',(0,0,.9),(.63,.7,.08),dark,.02)
 for x in [-.22,.22]:sphere('wheel',(x,.22,.12),(.10,.10,.10),dark)
@@ -140,7 +151,7 @@ for x in [-.96,.96]:
   wheel=cyl('wheel', (x-.12,y,-.59),(x+.12,y,-.59),.41,dark,20)
   cyl('hub',(x-.14,y,-.59),(x+.14,y,-.59),.24,chrome,12)
 box('spoiler',(0,-1.91,.30),(1.7,.28,.08),coral,.03)
-export('coupe',False)
+export('coupe',True)
 
 # Human authored as smoothly shaded weighted parts; bone weights are explicit and editable.
 start();parts=[]
@@ -155,11 +166,11 @@ part(sphere('nose',(0,.13,1.72),(.032,.045,.045),skin),'head')
 for x in [-.055,.055]:
  part(sphere('eye',(x,.119,1.77),(.022,.016,.013),white),'head');part(sphere('iris',(x,.133,1.77),(.010,.005,.011),hair),'head')
 for side,x in [('L',-.15),('R',.15)]:
- part(sphere('thigh',(x,0,.66),(.115,.13,.25),denim),f'thigh{side}')
- part(sphere('calf',(x,0,.25),(.085,.095,.25),denim),f'shin{side}')
+ part(cyl('thigh',(x,0,.46),(x,0,.91),.10,denim,12,.125),f'thigh{side}')
+ part(cyl('calf',(x,0,.09),(x,0,.48),.075,denim,12,.10),f'shin{side}')
  part(box('sneaker',(x,.055,.07),(.19,.34,.14),white,.045),f'shin{side}')
  armx= -.31 if side=='L' else .31
- part(sphere('sleeve',(armx,0,1.27),(.10,.12,.22),shirt),f'arm{side}')
+ part(cyl('sleeve',(armx,0,1.09),(armx,0,1.41),.075,shirt,12,.105),f'arm{side}')
  part(sphere('forearm',(armx,0,.99),(.068,.075,.18),skin),f'forearm{side}')
  part(sphere('hand',(armx,0,.81),(.065,.07,.09),skin),f'forearm{side}')
 bpy.ops.object.armature_add();rig=bpy.context.object;rig.name='NeighborRig';bpy.ops.object.mode_set(mode='EDIT');rig.data.edit_bones.remove(rig.data.edit_bones[0])

@@ -6,20 +6,22 @@ const models=new Map<string,GLTF>();
 export const surfaceMaterials=new Map<string,THREE.MeshStandardMaterial>();
 export const assetStats={bytes:0,textureBytes:0,files:0};
 const names=['house-0','house-1','house-2','house-3','palm','tree','fence','fence-low','mailbox','bin','pole','lamp','coupe','neighbor'];
-export async function loadAssets(progress:(text:string)=>void){
+export async function loadAssets(progress:(text:string)=>void,inventory?:{files:Record<string,{bytes:number;sha256:string}>}){
  const loader=new GLTFLoader();let count=0;
+ async function verify(name:string,bytes:ArrayBuffer){const expected=inventory?.files[name];if(!expected)throw Error('Asset inventory is missing '+name+'. Rebuild assets and restart the gateway.');const hash=[...new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))].map(b=>b.toString(16).padStart(2,'0')).join('');if(hash!==expected.sha256||bytes.byteLength!==expected.bytes)throw Error('Asset revision mismatch: '+name+'. Reload after restarting the gateway.');}
+
  const canonical=new Map<string,THREE.Material>();
  // Sequential loading keeps peak decode memory predictable and provides useful progress.
  for(const name of names){
   progress(`Loading ${name} · ${count+1}/${names.length+1}`);
   const response=await fetch(`/assets/${name}.glb`);if(!response.ok)throw Error(`${name}.glb could not load (HTTP ${response.status}). Check the asset build and retry.`);
-  const bytes=await response.arrayBuffer();assetStats.bytes+=bytes.byteLength;
+  const bytes=await response.arrayBuffer();await verify(`${name}.glb`,bytes);assetStats.bytes+=bytes.byteLength;
   const gltf=await loader.parseAsync(bytes,'/assets/');
   gltf.scene.traverse(o=>{if(o instanceof THREE.Mesh){o.castShadow=true;o.receiveShadow=true;const list=Array.isArray(o.material)?o.material:[o.material];o.material=list.map(m=>{if(m.name.startsWith('foliage'))m.side=THREE.DoubleSide;if(!canonical.has(m.name))canonical.set(m.name,m);else if(canonical.get(m.name)!==m)m.dispose();return canonical.get(m.name)!;});if(o.material.length===1)o.material=o.material[0];}});
   models.set(name,gltf);assetStats.files=++count;
  }
  const response=await fetch('/assets/neighborhood-atlas.png');if(!response.ok)throw Error('Surface textures are missing. Run npm run build:assets and retry.');
- const blob=await response.blob();assetStats.bytes+=blob.size;const bitmap=await createImageBitmap(blob);
+ const blob=await response.blob();await verify('neighborhood-atlas.png',await blob.arrayBuffer());assetStats.bytes+=blob.size;const bitmap=await createImageBitmap(blob);
  const size=512;
  for(const [i,name] of ['stucco','asphalt','concrete','grass'].entries()){
   const canvas=document.createElement('canvas');canvas.width=canvas.height=size;const ctx=canvas.getContext('2d')!;

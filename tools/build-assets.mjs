@@ -13,3 +13,5 @@ if(!existsSync(binary)){
 }
 run(binary,['--background','--python-exit-code','1','--python','tools/assets/build.py']);
 copyFileSync('assets/textures/neighborhood-atlas.png','apps/browser/public/assets/neighborhood-atlas.png');
+
+run(process.execPath,['tools/asset-inventory.mjs']);
