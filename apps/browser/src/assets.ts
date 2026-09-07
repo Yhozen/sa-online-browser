@@ -169,7 +169,7 @@ export function instantiateStatic(
       qualityOnly?: string;
     }
   >();
-  for (const p of placements.flatMap((p) =>
+  for (const p of placements.flatMap<(typeof placements)[number] & {qualityOnly?:string}>((p) =>
     p.asset === "fence"
       ? [
           { ...p, qualityOnly: "standard" },
