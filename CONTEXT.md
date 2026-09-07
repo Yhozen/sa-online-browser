@@ -25,3 +25,11 @@ A replacement browser client that joins an existing multiplayer server through a
 **Control revision**: Native worker counter changed by server corrections and seat transitions. Browser snapshots echo it; the worker drops snapshots from an earlier revision.
 
 **Seat reservation**: A Pawn fixture rule assigning a driver or passenger slot before sending standard vehicle-placement RPCs. It is distinct from a client's vehicle-entry notification.
+
+## Neighborhood presentation
+
+- **Scene manifest:** shared static placements, collision, spawns, resets, vehicle and minimap geometry; selected by POC_SCENE.
+- **Scene revision:** content identity advertised by the gateway and echoed on join, preventing clients playing different geometry together.
+- **Asset kit:** original reusable Blender exports and their editable source scripts; independent of protocol entities.
+- **Seat anchor:** visual local transform for a replicated driver/passenger, not a seat reservation or networking message.
+- **Arroyo:** original browser neighborhood, not part of the native GTA map.

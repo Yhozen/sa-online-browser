@@ -40,3 +40,7 @@ The durable next stage after this PoC is a separately agreed native-reference in
 ## History
 
 Research compared MTA, SA-MP/open.mp, and browser/runtime feasibility with parallel agents. MTA's unavailable transport/anti-cheat internals made SA-MP the more inspectable initial target. The user then approved the narrower placeholder PoC and its local two-browser acceptance criteria. Parallel implementation covered the runtime fixture, native protocol, and browser; the primary agent integrated the gateway, verification, and durable project record.
+
+## Active: Arroyo neighborhood
+
+Accepted neighborhood implementation is underway. The existing yard remains the multiplayer regression fixture. Art direction and gates: [neighborhood plan](neighborhood-plan.md). Original concept and texture inputs generated with the imagegen skill; official Blender download returned a Cloudflare challenge, and the official mirror supplies the pinned release/checksum.
