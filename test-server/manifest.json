@@ -1,0 +1,42 @@
+{
+  "openmp": {
+    "version": "v1.5.8.3079",
+    "sourceCommit": "c6759bd8d265171ae3d86598895a23d5a8d92a3b",
+    "url": "https://github.com/openmultiplayer/open.mp/releases/download/v1.5.8.3079/open.mp-linux-x86.tar.gz",
+    "sha256": "5df708898cbbb97f6c299ad5c1ff663a52ad4d3d39b3d561f1fe08a32df424f4",
+    "binarySha256": "4c402c280168447b841b862386ccc1bc1fd3126cfaad3481be493d84a04689ff"
+  },
+  "debianMetadata": "https://deb.debian.org/debian/dists/bookworm/main/binary-i386/Packages.xz",
+  "debianPackages": [
+    {
+      "name": "libatomic1",
+      "version": "12.2.0-14+deb12u1",
+      "url": "https://deb.debian.org/debian/pool/main/g/gcc-12/libatomic1_12.2.0-14+deb12u1_i386.deb",
+      "sha256": "4c9e99e98b0372160ffcb6ee2548ca2a8e007283b08df3395f0eeca0d2288361"
+    },
+    {
+      "name": "libgcc-s1",
+      "version": "12.2.0-14+deb12u1",
+      "url": "https://deb.debian.org/debian/pool/main/g/gcc-12/libgcc-s1_12.2.0-14+deb12u1_i386.deb",
+      "sha256": "56b95a550b342418f6c4765d5c9b08df2c7167134767e44f1f1bc82ced363ece"
+    },
+    {
+      "name": "libc6",
+      "version": "2.36-9+deb12u14",
+      "url": "https://deb.debian.org/debian/pool/main/g/glibc/libc6_2.36-9+deb12u14_i386.deb",
+      "sha256": "76b12e06be66ec3fc2c1791d7d8cf34c2b828ed210e3913feeeb8edc9688f820"
+    }
+  ],
+  "qemu": {
+    "name": "qemu-user-static",
+    "version": "1:7.2+dfsg-7+deb12u18+b3",
+    "url": "https://deb.debian.org/debian/pool/main/q/qemu/qemu-user-static_7.2+dfsg-7+deb12u18+b3_amd64.deb",
+    "sha256": "c3e3ba2bd87f8c5b9a5da5ef21b5a3b82d7c63b89dd448d9ddaa4eabc5b6e402",
+    "binarySha256": "a26e7305a383a7bc67080f6e5bce72dedcc3612080a023a4b0fdc4629a7cecc2"
+  },
+  "runtime": {
+    "architecture": "i386",
+    "execution": "qemu-i386-static",
+    "reason": "Native i386 UDP socket creation returns EACCES in this cloud VM; QEMU executes unchanged upstream server and uses host socket syscalls."
+  }
+}

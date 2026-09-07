@@ -1,0 +1,25 @@
+{
+  "name": "sa-online-browser",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "GPL-3.0-or-later",
+  "engines": { "node": ">=24 <25" },
+  "scripts": {
+    "setup:poc": "node tools/setup.mjs",
+    "build:browser": "vite build --config apps/browser/vite.config.ts",
+    "typecheck": "tsc --noEmit",
+    "dev:poc": "node tools/dev.mjs",
+    "verify:poc": "node tools/verify.mjs",
+    "test:gateway": "node --test tests/gateway.test.mjs"
+  },
+  "dependencies": { "three": "0.185.1", "ws": "8.21.3" },
+  "devDependencies": {
+    "@playwright/test": "1.59.1",
+    "@types/node": "24.10.1",
+    "@types/three": "0.185.4",
+    "@types/ws": "8.18.1",
+    "typescript": "5.9.3",
+    "vite": "8.2.2"
+  }
+}
