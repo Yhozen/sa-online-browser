@@ -98,8 +98,20 @@ def reliability(s):
         for(unsigned j=0;j<list.Size();++j) if(list[j]->splitPacketIndex==internalPacket->splitPacketIndex) invalid=true;
     }
     if(invalid){delete[] internalPacket->data;internalPacketPool.ReleasePointer(internalPacket);return;}''')
+ # Rejection deletes the packet; cache its ID before either upstream caller invokes insertion.
+ s=s.replace('InsertIntoSplitPacketList( internalPacket, time );', 'const SplitPacketIdType incomingSplitId = internalPacket->splitPacketId;\n\t\t\t\tInsertIntoSplitPacketList( internalPacket, time );')
+ s=s.replace('BuildPacketFromSplitPacketList( internalPacket->splitPacketId, time );', 'BuildPacketFromSplitPacketList( incomingSplitId, time );')
+ # The bounded insertion may decline a new channel; upstream assumed insertion always succeeded.
+ s=s.replace('i=splitPacketChannelList.GetIndexFromKey(splitPacketId, &objectExists);', 'i=splitPacketChannelList.GetIndexFromKey(splitPacketId, &objectExists);\n\tif (!objectExists) return 0;')
+ # Upstream concatenates complete bytes, so only the final part may contain padding.
+ s=s.replace('internalPacket->dataBitLength = length;', '''internalPacket->dataBitLength = length;
+    if(internalPacket->splitPacketCount && internalPacket->splitPacketIndex + 1 < internalPacket->splitPacketCount && (length & 7)) {
+        internalPacketPool.ReleasePointer(internalPacket);return 0;
+    }''')
  return s
 edit(pathlib.Path('Source/ReliabilityLayer.cpp'),reliability)
+# Nodes are allocated as DataPlusPtr; retain that type during sized deletion.
+edit(pathlib.Path('Include/raknet/SingleProducerConsumer.h'), lambda s: s.replace('delete (char*) readPointer;', 'delete readPointer;').replace('delete (char*) writePointer;', 'delete writePointer;'))
 # nlohmann single header: immutable release, verified SHA256.
 import urllib.request,hashlib
 p=ROOT/'native/vendor/json.hpp'

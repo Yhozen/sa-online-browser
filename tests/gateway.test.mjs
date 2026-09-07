@@ -11,5 +11,5 @@ test('reject malformed text, malformed shapes and incompatible versions', () => 
   for (const m of [null, [], {}, { type: 'join', name: '../x' }, { type: 'join', name: 'Alice', version: 2 }, { type: 'chat', epoch: 1, text: 'a\0b' }, { type: 'chat', epoch: 1, text: '🎉'.repeat(40) }, { type: 'chat', epoch: 0, text: 'hello' }, { type: 'connect', host: '192.168.0.1', port: 53 }]) assert.equal(validateMessage(m), false, JSON.stringify(m));
 });
 test('reject dangerous motion values before entering native code', () => {
-  for (const patch of [{ position: [NaN, 0, 0] }, { position: [Infinity, 0, 0] }, { position: [0, 0] }, { velocity: [0, -1001, 0] }, { rotation: [0, 0, 0, 0] }, { rotation: [1, 1, 1, 1] }, { keys: -1 }, { vehicleId: 65536 }, { seat: 9 }, { mode: 'npc' }, { seq: -1 }, { epoch: 1.5 }]) assert.equal(validateMessage({ ...state(), ...patch }), false, JSON.stringify(patch));
+  for (const patch of [{ position: [NaN, 0, 0] }, { position: [Infinity, 0, 0] }, { position: [0, 0] }, { velocity: [0, -1001, 0] }, { rotation: [0, 0, 0, 0] }, { rotation: [1, 1, 1, 1] }, { keys: -1 }, { vehicleId: 2000 }, { seat: 9 }, { mode: 'npc' }, { seq: -1 }, { controlRevision: -1 }, { epoch: 1.5 }]) assert.equal(validateMessage({ ...state(), ...patch }), false, JSON.stringify(patch));
 });

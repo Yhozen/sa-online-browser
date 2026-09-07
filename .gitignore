@@ -1,7 +1,7 @@
 .context/
 .runtime/
 node_modules/
-native/build/
+native/build*/
 native/vendor/
 apps/browser/dist/
 test-results/

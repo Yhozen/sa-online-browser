@@ -23,7 +23,9 @@ function launch(name, command, args) {
 function shutdown(code = 0) {
   if (stopping) return; stopping = true;
   for (const child of children) if (child.exitCode === null) child.kill('SIGTERM');
-  setTimeout(() => { for (const child of children) if (child.exitCode === null) child.kill('SIGKILL'); rmSync('.runtime/poc-processes.json', { force: true }); process.exit(code); }, 3000).unref();
+  const timeout = setTimeout(() => { for (const child of children) if (child.exitCode === null) child.kill('SIGKILL'); }, 3000);
+  Promise.all(children.map(child => child.exitCode !== null || child.signalCode !== null ? Promise.resolve() : new Promise(resolve => child.once('close', resolve))))
+    .then(() => { clearTimeout(timeout); rmSync('.runtime/poc-processes.json', { force: true }); process.exit(code); });
 }
 const server = launch('server', 'python3', ['tools/run-server.py']);
 const gateway = launch('gateway', process.execPath, ['services/gateway/server.mjs']);

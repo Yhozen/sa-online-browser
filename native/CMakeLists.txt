@@ -21,3 +21,8 @@ add_executable(protocol-tests tests.cpp)
 target_include_directories(protocol-tests PRIVATE vendor)
 target_link_libraries(protocol-tests PRIVATE raknet)
 add_test(NAME protocol-codecs COMMAND protocol-tests)
+
+add_test(NAME protocol-fixture-failure COMMAND protocol-tests --corrupt-fixture)
+set_tests_properties(protocol-fixture-failure PROPERTIES WILL_FAIL TRUE)
+find_package(Python3 REQUIRED COMPONENTS Interpreter)
+add_test(NAME protocol-process-lifecycle COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/process-tests.py $<TARGET_FILE:poc-worker>)

@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import http from 'node:http';
 import { spawn } from 'node:child_process';
-import { createReadStream, existsSync, mkdirSync, appendFileSync } from 'node:fs';
-import { readFile, stat } from 'node:fs/promises';
+import { createReadStream, mkdirSync, appendFileSync } from 'node:fs';
+import { stat } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { WebSocketServer, WebSocket } from 'ws';
@@ -22,15 +22,15 @@ export function validateMessage(m) {
   return Number.isSafeInteger(m.seq) && m.seq >= 0 && Number.isSafeInteger(m.controlRevision) && m.controlRevision >= 0 && vector(m.position, 3, 20000) && vector(m.velocity, 3, 1000) && vector(m.rotation, 4, 1.01)
     && Math.abs(m.rotation.reduce((a, x) => a + x * x, 0) - 1) < 0.1
     && ['onFoot', 'driver', 'passenger'].includes(m.mode) && Number.isInteger(m.keys) && m.keys >= 0 && m.keys <= 65535
-    && Number.isInteger(m.vehicleId) && m.vehicleId >= 0 && m.vehicleId <= 65535 && Number.isInteger(m.seat) && m.seat >= -1 && m.seat <= 7;
+    && Number.isInteger(m.vehicleId) && m.vehicleId >= 0 && m.vehicleId <= 1999 && Number.isInteger(m.seat) && m.seat >= -1 && m.seat <= 7;
 }
 export function createGateway({ port = 3000, host = '127.0.0.1', gameHost = '127.0.0.1', gamePort = 7777, workerPath = path.join(ROOT, 'native/build/poc-worker') } = {}) {
   mkdirSync(path.dirname(LOG), { recursive: true });
   let epochCounter = Date.now();
-  const sessions = new Map();
+  const sessions = new Map(), workers = new Set();
   function log(type, details = {}) { const line = JSON.stringify({ time: new Date().toISOString(), type, ...details }); appendFileSync(LOG, line + '\n'); console.log(line); }
   const server = http.createServer(async (req, res) => {
-    if (req.url === '/health') { res.writeHead(200, { 'Content-Type': 'application/json' }); res.end(JSON.stringify({ ok: true, sessions: sessions.size })); return; }
+    if (req.url === '/health') { res.writeHead(200, { 'Content-Type': 'application/json' }); res.end(JSON.stringify({ ok: true, sessions: sessions.size, workers: workers.size })); return; }
     if (req.method !== 'GET' && req.method !== 'HEAD') { res.writeHead(405); res.end(); return; }
     try {
       const pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
@@ -86,6 +86,8 @@ export function createGateway({ port = 3000, host = '127.0.0.1', gameHost = '127
         if (child) { finish('Already joined.'); return; }
         clearTimeout(joinTimer);
         child = spawn(workerPath, ['--host', gameHost, '--port', String(gamePort), '--name', m.name], { cwd: ROOT, stdio: ['pipe', 'pipe', 'pipe'] });
+        workers.add(child);
+        child.once('close', () => workers.delete(child));
         log('workerStarted', { epoch, pid: child.pid, name: m.name });
         send({ type: 'connecting' });
         joinTimer = setTimeout(() => finish('Server did not complete admission.'), 15000);
@@ -97,7 +99,7 @@ export function createGateway({ port = 3000, host = '127.0.0.1', gameHost = '127
             const line = output.slice(0, end); output = output.slice(end + 1);
             let event;
             try { event = JSON.parse(line); } catch { if (line.trim()) log('workerDiagnostic', { epoch, text: line.slice(0, 1024) }); continue; }
-            if (event.type === 'spawn' || event.type === 'init') clearTimeout(joinTimer);
+            if (event.type === 'spawn') clearTimeout(joinTimer);
             if (event.type === 'error' || event.type === 'disconnected') log('workerStatus', { epoch, event });
             send(event);
             if (event.type === 'disconnected') finish(event.reason || 'Server disconnected.');
@@ -122,7 +124,11 @@ export function createGateway({ port = 3000, host = '127.0.0.1', gameHost = '127
   return {
     server,
     start: () => new Promise((resolve, reject) => { server.once('error', reject); server.listen(port, host, () => { log('gatewayReady', { host, port: server.address().port }); resolve(server.address()); }); }),
-    close: async () => { for (const session of sessions.values()) session.finish('Gateway stopped.'); wss.close(); await new Promise(resolve => server.close(resolve)); },
+    close: async () => {
+      for (const session of sessions.values()) session.finish('Gateway stopped.');
+      const exited = [...workers].map(child => new Promise(resolve => child.once('close', resolve)));
+      wss.close(); await new Promise(resolve => server.close(resolve)); await Promise.all(exited);
+    },
   };
 }
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

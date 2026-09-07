@@ -14,12 +14,15 @@
 #include <csignal>
 #include <random>
 #include <sstream>
+#include <type_traits>
+#include <cerrno>
 using namespace RakNet;
 using json=nlohmann::json;
 using Vec=std::array<float,3>;
 using Quat=std::array<float,4>;
 static RakClient client;
 static bool running=true,spawned=false,seatPending=false;
+static volatile std::sig_atomic_t stopRequested=0;
 static uint64_t sequence=0,controlRevision=0;
 static Vec position={0,0,10};
 static float heading=0;
@@ -27,15 +30,15 @@ static json state={{"mode","onFoot"},{"position",position},{"rotation",{1,0,0,0}
 void emit(json event){
  const auto type=event.value("type","");
  if(type=="spawn"||type=="selfPosition"||type=="selfHeading"||type=="seat"||type=="exitVehicle")++controlRevision;
- event["controlRevision"]=controlRevision;event["seq"]=++sequence;std::cout<<event.dump(-1,' ',false,json::error_handler_t::replace)<<std::endl;}
+ event["controlRevision"]=controlRevision;event["seq"]=++sequence;std::cout<<event.dump(-1,' ',false,json::error_handler_t::replace)<<std::endl;if(!std::cout)running=false;}
 struct Reader {
  BitStream b;
- Reader(unsigned char* data,unsigned bytes,unsigned bits=0):b(data,bytes,false){if(bits)b.SetWriteOffset(bits);}
- template<class T> T get(){T v{};if(!b.Read(v))throw std::runtime_error("truncated payload");return v;}
+ Reader(unsigned char* data,unsigned bytes,unsigned bits=0):b(data,bytes,false){if(bytes>65536||(bytes&&!data)||bits>bytes*8)throw std::runtime_error("invalid payload bounds");if(bits)b.SetWriteOffset(bits);}
+ template<class T> T get(){T v{};if(!b.Read(v))throw std::runtime_error("truncated payload");if constexpr(std::is_floating_point_v<T>)if(!std::isfinite(v))throw std::runtime_error("non-finite payload value");return v;}
  void skip(unsigned bits){if(b.GetNumberOfUnreadBits()<bits)throw std::runtime_error("truncated payload");b.IgnoreBits(bits);}
  Vec vec(){Vec p;for(auto&f:p){f=get<float>();if(!std::isfinite(f))throw std::runtime_error("invalid vector");}return p;}
- Quat quat(){Quat q;if(!b.ReadNormQuat(q[0],q[1],q[2],q[3]))throw std::runtime_error("truncated quaternion");return q;}
- Vec velocity(){Vec v{0,0,0};float magnitude=get<float>();if(!std::isfinite(magnitude)||magnitude<0)throw std::runtime_error("invalid velocity");if(magnitude>0.00001f)for(auto&f:v){if(!b.ReadCompressed(f))throw std::runtime_error("truncated velocity");f*=magnitude;}return v;}
+ Quat quat(){Quat q{};if(b.GetNumberOfUnreadBits()<52)throw std::runtime_error("truncated quaternion");if(!b.ReadNormQuat(q[0],q[1],q[2],q[3]))throw std::runtime_error("truncated quaternion");float norm=0;for(auto f:q)norm+=f*f;if(!std::isfinite(norm)||fabs(norm-1.f)>.001f)throw std::runtime_error("invalid quaternion");return q;}
+ Vec velocity(){Vec v{0,0,0};float magnitude=get<float>();if(!std::isfinite(magnitude)||magnitude<0||magnitude>100)throw std::runtime_error("invalid velocity");if(magnitude>0.00001f)for(auto&f:v){if(!b.ReadCompressed(f))throw std::runtime_error("truncated velocity");f*=magnitude;}return v;}
  std::string string(unsigned n){if(n>4096||b.GetNumberOfUnreadBits()<n*8)throw std::runtime_error("invalid string length");std::string s(n,' ');if(n&&!b.Read(s.data(),n))throw std::runtime_error("truncated string");return s;}
  std::string str8(){return string(get<uint8_t>());}
 };
@@ -63,27 +66,27 @@ void onRpc(RPCParameters*params,void*extra){
  Reader r(params->input,(params->numberOfBitsOfData+7)/8,params->numberOfBitsOfData);
  switch(id){
  case 139:{
-  r.skip(104);auto playerId=r.get<uint16_t>();r.skip(115);footRate=r.get<uint32_t>();carRate=r.get<uint32_t>();
+  r.skip(104);auto playerId=r.get<uint16_t>();r.skip(115);auto foot=r.get<uint32_t>();auto car=r.get<uint32_t>();r.skip(96);r.str8();r.skip(212*8+32);if(playerId>=1000)throw std::runtime_error("invalid player id");footRate=foot;carRate=car;
   emit({{"type","init"},{"playerId",playerId},{"onFootRate",footRate},{"inCarRate",carRate}});
   BitStream b;b.Write(uint16_t(0));rpc(128,b);break;
  }
  case 128:case 68:{
-  if(id==128)r.get<uint8_t>();r.skip(48);position=r.vec();heading=r.get<float>();state["position"]=position;state["rotation"]=Quat{float(cos(heading*M_PI/360)),0,0,float(-sin(heading*M_PI/360))};
+  if(id==128)r.get<uint8_t>();r.skip(48);auto spawn=r.vec();auto angle=r.get<float>();r.skip(192);position=spawn;heading=angle;state["position"]=position;state["rotation"]=Quat{float(cos(heading*M_PI/360)),0,0,float(-sin(heading*M_PI/360))};
   if(id==128)rpc(129);break;
  }
- case 129:{auto allow=r.get<uint32_t>();if(allow){rpc(52);spawned=true;emit({{"type","spawn"},{"position",position},{"heading",heading}});syncState();}else emit({{"type","error"},{"message","Spawn rejected"}});break;}
+ case 129:{auto allow=r.get<uint32_t>();if(allow==1||allow==2){rpc(52);spawned=true;emit({{"type","spawn"},{"position",position},{"heading",heading}});syncState();}else emit({{"type","error"},{"message","Spawn rejected"}});break;}
  case 137:{auto id=r.get<uint16_t>();r.skip(40);auto name=r.str8();emit({{"type","playerJoin"},{"id",id},{"name",name}});break;}
- case 138:case 163:emit({{"type","playerRemove"},{"id",r.get<uint16_t>()}});break;
- case 32:{auto id=r.get<uint16_t>();r.skip(40);auto p=r.vec();auto h=r.get<float>();emit({{"type","playerState"},{"id",id},{"position",p},{"rotation",{cos(h*M_PI/360),0,0,-sin(h*M_PI/360)}},{"velocity",{0,0,0}},{"mode","onFoot"}});break;}
+ case 138:case 163:{auto id=r.get<uint16_t>();if(reinterpret_cast<intptr_t>(extra)==138)r.skip(8);emit({{"type","playerRemove"},{"id",id}});break;}
+ case 32:{auto id=r.get<uint16_t>();r.skip(40);auto p=r.vec();auto h=r.get<float>();r.skip(216);emit({{"type","playerState"},{"id",id},{"position",p},{"rotation",{cos(h*M_PI/360),0,0,-sin(h*M_PI/360)}},{"velocity",{0,0,0}},{"mode","onFoot"}});break;}
  case 101:{auto id=r.get<uint16_t>();auto text=r.str8();emit({{"type","chat"},{"id",id},{"text",text}});break;}
  case 93:{r.skip(32);auto text=r.string(r.get<uint32_t>());emit({{"type","message"},{"text",text}});break;}
  case 12:case 13:{position=r.vec();state["position"]=position;emit({{"type","selfPosition"},{"position",position}});break;}
  case 19:{heading=r.get<float>();state["rotation"]=Quat{float(cos(heading*M_PI/360)),0,0,float(-sin(heading*M_PI/360))};emit({{"type","selfHeading"},{"heading",heading}});break;}
- case 164:{auto id=r.get<uint16_t>();auto model=r.get<uint32_t>();auto p=r.vec();auto h=r.get<float>();emit({{"type","vehicle"},{"id",id},{"model",model},{"position",p},{"heading",h}});break;}
+ case 164:{auto id=r.get<uint16_t>();auto model=r.get<uint32_t>();auto p=r.vec();auto h=r.get<float>();r.skip(328);emit({{"type","vehicle"},{"id",id},{"model",model},{"position",p},{"heading",h}});break;}
  case 165:emit({{"type","vehicleRemove"},{"id",r.get<uint16_t>()}});break;
  case 159:{auto id=r.get<uint16_t>();auto p=r.vec();if(state.value("mode","onFoot")!="onFoot"&&state.value("vehicleId",0)==id){++controlRevision;state["position"]=p;state["velocity"]=Vec{0,0,0};}emit({{"type","vehicleState"},{"id",id},{"position",p}});break;}
  case 160:{auto id=r.get<uint16_t>();auto h=r.get<float>();Quat q{float(cos(h*M_PI/360)),0,0,float(-sin(h*M_PI/360))};if(state.value("mode","onFoot")!="onFoot"&&state.value("vehicleId",0)==id){++controlRevision;state["rotation"]=q;}emit({{"type","vehicleState"},{"id",id},{"heading",h},{"rotation",q}});break;}
- case 70:{seatPending=true;auto id=r.get<uint16_t>();auto seat=r.get<uint8_t>();state["mode"]=seat==0?"driver":"passenger";state["vehicleId"]=id;state["seat"]=seat;emit({{"type","seat"},{"vehicleId",id},{"seat",seat}});break;}
+ case 70:{auto id=r.get<uint16_t>();auto seat=r.get<uint8_t>();if(id==0||id>=2000||seat>7)throw std::runtime_error("invalid seat placement");seatPending=true;state["mode"]=seat==0?"driver":"passenger";state["vehicleId"]=id;state["seat"]=seat;emit({{"type","seat"},{"vehicleId",id},{"seat",seat}});break;}
  case 71:{seatPending=false;BitStream b;b.Write(uint16_t(state.value("vehicleId",1)));rpc(154,b);state["mode"]="onFoot";emit({{"type","exitVehicle"}});syncState();break;}
  case 130:emit({{"type","error"},{"message","Server rejected join (reason "+std::to_string(r.get<uint8_t>())+")"}});running=false;break;
  default:break;
@@ -92,11 +95,12 @@ void onRpc(RPCParameters*params,void*extra){
 }
 void onSync(Packet*p){
  try{
- Reader r(p->data,p->length,p->bitSize);int kind=r.get<uint8_t>();auto id=r.get<uint16_t>();Vec pos,vel{0,0,0};Quat q{1,0,0,0};uint16_t vehicle=0;int seat=0;std::string mode;
- if(kind==207){if(r.get<bool>())r.skip(16);if(r.get<bool>())r.skip(16);r.skip(16);pos=r.vec();q=r.quat();r.skip(24);vel=r.velocity();mode="onFoot";}
- else if(kind==200){vehicle=r.get<uint16_t>();r.skip(48);q=r.quat();pos=r.vec();vel=r.velocity();mode="driver";}
- else if(kind==211){vehicle=r.get<uint16_t>();seat=r.get<uint16_t>()&127;r.skip(64);pos=r.vec();mode="passenger";}
+ Reader r(p->data,p->length,p->bitSize);int kind=r.get<uint8_t>();auto id=r.get<uint16_t>();Vec pos,vel{0,0,0};Quat q{1,0,0,0};uint16_t vehicle=0;int seat=-1;std::string mode;
+ if(kind==207){if(r.get<bool>())r.skip(16);if(r.get<bool>())r.skip(16);r.skip(16);pos=r.vec();q=r.quat();r.skip(24);vel=r.velocity();if(r.get<bool>()){r.skip(16);r.vec();}if(r.get<bool>())r.skip(32);mode="onFoot";}
+ else if(kind==200){vehicle=r.get<uint16_t>();r.skip(48);q=r.quat();pos=r.vec();vel=r.velocity();r.skip(32);r.skip(2);if(r.get<bool>())r.skip(32);if(r.get<bool>())r.skip(16);seat=0;mode="driver";}
+ else if(kind==211){vehicle=r.get<uint16_t>();seat=r.get<uint16_t>()&63;r.skip(64);pos=r.vec();mode="passenger";}
  else return;
+ if(id>=1000||(mode!="onFoot"&&(vehicle==0||vehicle>=2000||seat>7)))throw std::runtime_error("invalid synchronization identity");
  emit({{"type","playerState"},{"id",id},{"position",pos},{"rotation",q},{"velocity",vel},{"mode",mode},{"vehicleId",vehicle},{"seat",seat}});
  if(kind==200)emit({{"type","vehicleState"},{"id",vehicle},{"position",pos},{"rotation",q},{"velocity",vel}});
  }catch(const std::exception&e){std::cerr<<"decode sync: "<<e.what()<<'\n';}
@@ -105,11 +109,13 @@ void input(const std::string&line){
  try{auto j=json::parse(line);std::string type=j.at("type");
  if(type=="disconnect"){running=false;return;}
  if(type=="state"){
+  for(const auto&field:{"keys","vehicleId","seat"})if(j.contains(field)&&!j[field].is_number_integer())throw std::runtime_error("state indexes must be integers");
+  for(const auto&field:{"position","velocity","rotation"})if(!j.at(field).is_array()||j.at(field).size()!=(std::string(field)=="rotation"?4u:3u))throw std::runtime_error("state vector has wrong length");
   auto p=j.at("position").get<Vec>();auto q=j.at("rotation").get<Quat>();auto v=j.at("velocity").get<Vec>();
   for(auto f:p)if(!std::isfinite(f)||fabs(f)>20000)throw std::runtime_error("invalid position");
-  for(auto f:v)if(!std::isfinite(f)||fabs(f)>1000)throw std::runtime_error("invalid velocity");
+  float speedSquared=0;for(auto f:v){if(!std::isfinite(f))throw std::runtime_error("invalid velocity");speedSquared+=f*f;}if(speedSquared>10000)throw std::runtime_error("invalid velocity");
   float norm=0;for(auto f:q){if(!std::isfinite(f))throw std::runtime_error("invalid rotation");norm+=f*f;}
-  if(norm<.5||norm>1.5)throw std::runtime_error("invalid rotation");
+  if(fabs(norm-1.f)>.001f)throw std::runtime_error("invalid rotation");
   auto mode=j.value("mode","onFoot");if(mode!="onFoot"&&mode!="driver"&&mode!="passenger")throw std::runtime_error("invalid mode");
   if(j.value("vehicleId",0)<0||j.value("vehicleId",0)>1999||j.value("seat",0)<-1||j.value("seat",0)>7||j.value("keys",0)<0||j.value("keys",0)>65535)throw std::runtime_error("invalid state index");
   if(!j.contains("controlRevision")||!j["controlRevision"].is_number_unsigned()||j["controlRevision"].get<uint64_t>()!=controlRevision)return;
@@ -126,19 +132,22 @@ void input(const std::string&line){
 int main(int argc,char**argv){
  std::string host="127.0.0.1",name="Browser";int port=7777;
  for(int i=1;i+1<argc;i+=2){std::string k=argv[i];if(k=="--host")host=argv[i+1];else if(k=="--name")name=argv[i+1];else if(k=="--port")port=std::stoi(argv[i+1]);}
- signal(SIGTERM,[](int){running=false;});signal(SIGINT,[](int){running=false;});
+ signal(SIGTERM,[](int){stopRequested=1;});signal(SIGINT,[](int){stopRequested=1;});signal(SIGPIPE,SIG_IGN);
  for(int id:{139,128,68,129,137,138,163,32,101,93,12,13,19,164,165,159,160,70,71,130})client.RegisterAsRemoteProcedureCall(id,onRpc,reinterpret_cast<void*>(intptr_t(id)));
- client.SetMTUSize(576);client.SetTimeoutTime(10000);client.Connect(host.c_str(),port,0,0,5);fcntl(STDIN_FILENO,F_SETFL,O_NONBLOCK);
+ client.SetMTUSize(576);client.SetTimeoutTime(10000);if(!client.Connect(host.c_str(),port,0,0,5)){emit({{"type","error"},{"message","Unable to start upstream connection"}});return 1;}int flags=fcntl(STDIN_FILENO,F_GETFL,0);if(flags<0||fcntl(STDIN_FILENO,F_SETFL,flags|O_NONBLOCK)<0){emit({{"type","error"},{"message","Cannot configure worker stdin"}});client.Disconnect(200);return 1;}
  std::string buffer;auto begin=std::chrono::steady_clock::now(),lastSync=begin;
- while(running){
+ while(running&&!stopRequested){
   for(Packet*p=client.Receive();p;p=client.Receive()){
+   if(!p->data||p->length==0){client.DeallocatePacket(p);continue;}
+   try{
    int id=p->data[0];
    if(id==ID_CONNECTION_REQUEST_ACCEPTED){Reader r(p->data,p->length);r.skip(72);auto token=r.get<uint32_t>();BitStream b;b.Write(uint32_t(4057));b.Write(uint8_t(1));str8(b,name);b.Write(token^uint32_t(4057));std::random_device random;std::ostringstream serial;serial<<std::hex<<(uint64_t(random())*1001ull);str8(b,serial.str());str8(b,"0.3.7");rpc(25,b);std::cerr<<"transport accepted; sent player join\n";}
    else if(id==207||id==200||id==211)onSync(p);
    else if(id==ID_CONNECTION_LOST||id==ID_DISCONNECTION_NOTIFICATION||id==ID_CONNECTION_ATTEMPT_FAILED||id==ID_CONNECTION_BANNED||id==ID_INVALID_PASSWORD){emit({{"type","disconnected"},{"reason","Upstream connection ended (packet "+std::to_string(id)+")"}});running=false;}
+   }catch(const std::exception&e){emit({{"type","error"},{"message",std::string("Invalid upstream packet: ")+e.what()}});running=false;}
    client.DeallocatePacket(p);
   }
-  char chunk[4096];ssize_t n;while((n=read(0,chunk,sizeof(chunk)))>0){buffer.append(chunk,n);if(buffer.size()>65536){emit({{"type","error"},{"message","Input buffer overflow"}});running=false;break;}size_t end;while((end=buffer.find('\n'))!=std::string::npos){input(buffer.substr(0,end));buffer.erase(0,end+1);}}if(n==0)running=false;
+  char chunk[4096];ssize_t n;while((n=read(0,chunk,sizeof(chunk)))>0){buffer.append(chunk,n);if(buffer.size()>65536){emit({{"type","error"},{"message","Input buffer overflow"}});running=false;break;}size_t end;while((end=buffer.find('\n'))!=std::string::npos){input(buffer.substr(0,end));buffer.erase(0,end+1);}}if(n==0)running=false;if(n<0&&errno!=EAGAIN&&errno!=EWOULDBLOCK&&errno!=EINTR){emit({{"type","error"},{"message","Worker stdin read failed"}});running=false;}
   auto now=std::chrono::steady_clock::now();auto rate=state.value("mode","onFoot")=="onFoot"?footRate:carRate;
   if(std::chrono::duration_cast<std::chrono::milliseconds>(now-lastSync).count()>=std::max(15u,std::min(rate,1000u))){syncState();lastSync=now;}
   if(!spawned&&now-begin>std::chrono::seconds(20)){emit({{"type","error"},{"message","Timed out waiting for upstream spawn"}});running=false;}
