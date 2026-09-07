@@ -6,6 +6,10 @@ Updated 2026-09-07. The accepted implementation scope is [the browser PoC plan](
 
 The unchanged official open.mp release runs locally. Two ordinary, non-NPC protocol workers and two independent browser sessions have joined, spawned, exchanged server-routed walking/chat, and shared a car with driver/passenger synchronization. The browser uses original Three.js geometry and arcade collision/handling. Commands allocate seats through the Pawn fixture and standard placement RPCs.
 
+The cloud desktop WebGL startup failure is fixed with `npm run open:poc`, which launches a separate Chrome profile with the same SwiftShader graphics flags used by verification. The failing desktop Chrome was running with `--disable-gpu`; the earlier acceptance results only covered explicitly enabled software WebGL. Unavailable graphics now produce a recovery screen before networking starts. See [run and recovery instructions](../README.md#webgl-startup-errors).
+
+Validation of this fix: three headed graphics regressions passed (software WebGL, browser-disabled WebGL, context exception/retry), plus type checking, production build, three gateway tests, and three native CTests. The unchanged headed multiplayer end-to-end scenario passed against an isolated fixture on HTTP 3200 / UDP 7778, with only test paths and ports adapted. An initial run missed the timed car-distance threshold while an extra software-rendered game window was open; the next attempt encountered a concurrently restarted demo on port 3000, so verification moved to the isolated fixture. The launcher was also visually checked on the actual cloud desktop. The historical full acceptance/soak results below were not rerun for this fix; future full verification includes all eight browser scenarios.
+
 | Milestone | Status | Evidence |
 | --- | --- | --- |
 | Accepted plan and glossary | Complete | ADR 0002, poc-plan.md, CONTEXT.md |

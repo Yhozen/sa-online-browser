@@ -10,6 +10,7 @@
     "build:browser": "vite build --config apps/browser/vite.config.ts",
     "typecheck": "tsc --noEmit",
     "dev:poc": "node tools/dev.mjs",
+    "open:poc": "node tools/open-browser.mjs",
     "verify:poc": "node tools/verify.mjs",
     "test:gateway": "node --test tests/gateway.test.mjs"
   },

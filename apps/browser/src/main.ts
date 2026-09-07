@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import * as THREE from 'three';
+import { createRenderer } from './graphics';
 import arena from '../../../test-server/arena.json';
 import type { PlayerState, Vec3, Rotation, ServerMessage } from '../../../packages/shared/protocol';
-import './style.css';
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 <div id="viewport" class="viewport" data-testid="viewport"></div><div class="vignette"></div>
 <header class="top"><div class="brand"><div class="monogram">SA</div><div><div class="title">Browser playground<span style="color:#7e9594"> / </span>01</div><p class="eyebrow">Same server. A new way in.</p></div></div><div id="connection" class="connection"><span class="dot"></span><span data-testid="status" id="status">Not connected</span></div></header>
@@ -18,7 +18,7 @@ scene.fog = new THREE.Fog('#283d46', 55, 135);
 THREE.Object3D.DEFAULT_UP.set(0, 0, 1);
 const camera = new THREE.PerspectiveCamera(48, innerWidth / innerHeight, 0.1, 250);
 camera.up.set(0, 0, 1);
-const renderer = new THREE.WebGLRenderer({ antialias: true });
+const renderer = createRenderer();
 renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
 renderer.setSize(innerWidth, innerHeight);
 renderer.shadowMap.enabled = true;

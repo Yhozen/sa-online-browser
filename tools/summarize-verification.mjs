@@ -17,14 +17,14 @@ function visit(suite) {
   for (const child of suite.suites || []) visit(child);
 }
 for (const suite of results.suites) visit(suite);
-if (cases.length !== 5 || cases.some(x => x.status !== 'expected')) throw new Error('All five browser acceptance scenarios must pass.');
+if (cases.length !== 8 || cases.some(x => x.status !== 'expected')) throw new Error('All five multiplayer and three graphics scenarios must pass.');
 const active = new Map(), cycles = [];
 for (const event of observations) {
   if (event.event === 'connect') active.set(event.player, event.name);
   if (event.event === 'disconnect') { const name = active.get(event.player); if (name?.startsWith('BrowserCycle_')) cycles.push(name); active.delete(event.player); }
 }
 if (new Set(cycles).size !== 20) throw new Error('Twenty observed server slot releases are required.');
-const sourceFiles = ['apps/browser/src/main.ts', 'services/gateway/server.mjs', 'native/worker.cpp', 'tools/setup-protocol.py', 'test-server/poc.pwn', 'test-server/arena.json', 'tests/browser/poc.spec.mjs', 'tools/dev.mjs', 'tools/verify-supervisor.py', 'package-lock.json'];
+const sourceFiles = ['apps/browser/src/main.ts', 'apps/browser/src/bootstrap.ts', 'apps/browser/src/graphics.ts', 'services/gateway/server.mjs', 'native/worker.cpp', 'tools/setup-protocol.py', 'test-server/poc.pwn', 'test-server/arena.json', 'tests/browser/poc.spec.mjs', 'tests/browser/graphics.spec.mjs', 'tools/browser-options.mjs', 'tools/open-browser.mjs', 'playwright.config.mjs', 'tools/dev.mjs', 'tools/verify-supervisor.py', 'package-lock.json'];
 const hash = file => createHash('sha256').update(readFileSync(file)).digest('hex');
 const summary = {
   verifiedAt: new Date().toISOString(), command: 'npm run verify:poc',
