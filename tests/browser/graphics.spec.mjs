@@ -5,7 +5,7 @@ import { createGateway } from '../../services/gateway/server.mjs';
 const url = 'http://127.0.0.1:3100';
 let gateway;
 test.beforeAll(async () => {
-    gateway = createGateway({ port: 3100 });
+    gateway = createGateway({ port: 3100, sceneId:'yard' });
     await gateway.start();
 });
 test.afterAll(async () => { await gateway?.close(); });

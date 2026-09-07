@@ -13,7 +13,7 @@ const distance = (a, b) => Math.hypot(...a.map((x, i) => x - b[i]));
 function last(event, player) { return observations.findLast(x => x.event === event && (player === undefined || x.player === player)); }
 async function startServer() {
   serverReady = false;
-  server = spawn('python3', ['tools/run-server.py'], { stdio: ['ignore', 'pipe', 'pipe'] });
+  server = spawn('python3', ['tools/run-server.py'], { stdio: ['pipe', 'pipe', 'pipe'], env:{...process.env,POC_SCENE:'yard'} });
   const log = createWriteStream('artifacts/verification/server.log', { flags: 'a' });
   server.stdout.pipe(log); server.stderr.pipe(log);
   let buffer = '';
@@ -30,13 +30,13 @@ async function startServer() {
 }
 async function stopServer() {
   if (!server || server.exitCode !== null) return;
-  const stopped = new Promise(resolve => server.once('exit', resolve)); server.kill('SIGTERM');
+  const stopped = new Promise(resolve => server.once('exit', resolve)); server.stdin.write('exit\n');
   await Promise.race([stopped, sleep(3000).then(() => { if (server.exitCode === null) server.kill('SIGKILL'); })]);
   serverReady = false;
 }
 test.beforeAll(async () => {
   mkdirSync('artifacts/verification', { recursive: true });
-  await startServer(); gateway = createGateway(); await gateway.start();
+  await startServer(); gateway = createGateway({sceneId:'yard'}); await gateway.start();
 });
 test.afterAll(async () => {
   await gateway?.close(); await stopServer();
