@@ -163,7 +163,7 @@ public OnPlayerCommandText(playerid, cmdtext[])
     {
         ClearSeat(playerid);
         if (IsPlayerInAnyVehicle(playerid)) RemovePlayerFromVehicle(playerid);
-        SetPlayerPos(playerid, -4.0, -4.0, POC_SPAWN_Z);
+        SetPlayerPos(playerid, POC_TELEPORT_X, POC_TELEPORT_Y, POC_SPAWN_Z);
         printf("POC {\"event\":\"teleport\",\"player\":%d,\"tick\":%d}", playerid, GetTickCount());
         return 1;
     }

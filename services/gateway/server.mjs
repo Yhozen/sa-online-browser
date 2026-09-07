@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import http from 'node:http';
+import { loadScene } from '../../packages/shared/scene.mjs';
 import { spawn } from 'node:child_process';
 import { createReadStream, mkdirSync, appendFileSync } from 'node:fs';
 import { stat } from 'node:fs/promises';
@@ -10,7 +11,7 @@ import { WebSocketServer, WebSocket } from 'ws';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const DIST = path.join(ROOT, 'apps/browser/dist');
 const LOG = path.join(ROOT, '.runtime/logs/gateway.jsonl');
-const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png' };
+const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png', '.glb': 'model/gltf-binary', '.webp': 'image/webp' };
 export function validateMessage(m) {
   if (!m || typeof m !== 'object' || Array.isArray(m)) return false;
   if (m.type === 'join') return (m.version === undefined || m.version === 1) && typeof m.name === 'string' && /^[A-Za-z0-9_]{3,20}$/.test(m.name);
@@ -24,12 +25,14 @@ export function validateMessage(m) {
     && ['onFoot', 'driver', 'passenger'].includes(m.mode) && Number.isInteger(m.keys) && m.keys >= 0 && m.keys <= 65535
     && Number.isInteger(m.vehicleId) && m.vehicleId >= 0 && m.vehicleId <= 1999 && Number.isInteger(m.seat) && m.seat >= -1 && m.seat <= 7;
 }
-export function createGateway({ port = 3000, host = '127.0.0.1', gameHost = '127.0.0.1', gamePort = 7777, workerPath = path.join(ROOT, 'native/build/poc-worker') } = {}) {
+export function createGateway({ port = 3000, host = '127.0.0.1', gameHost = '127.0.0.1', gamePort = 7777, sceneId = process.env.POC_SCENE || 'neighborhood', workerPath = path.join(ROOT, 'native/build/poc-worker') } = {}) {
+  const scene = loadScene(sceneId);
   mkdirSync(path.dirname(LOG), { recursive: true });
   let epochCounter = Date.now();
   const sessions = new Map(), workers = new Set();
   function log(type, details = {}) { const line = JSON.stringify({ time: new Date().toISOString(), type, ...details }); appendFileSync(LOG, line + '\n'); console.log(line); }
   const server = http.createServer(async (req, res) => {
+    if (req.url === '/scene') { res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }); res.end(JSON.stringify(scene)); return; }
     if (req.url === '/health') { res.writeHead(200, { 'Content-Type': 'application/json' }); res.end(JSON.stringify({ ok: true, sessions: sessions.size, workers: workers.size })); return; }
     if (req.method !== 'GET' && req.method !== 'HEAD') { res.writeHead(405); res.end(); return; }
     try {
@@ -74,7 +77,7 @@ export function createGateway({ port = 3000, host = '127.0.0.1', gameHost = '127
       ws.close(1000, reason.slice(0, 100));
     }
     sessions.set(epoch, { finish });
-    send({ type: 'session', version: 1 });
+    send({ type: 'session', version: 1, scene: {id:scene.id, revision:scene.revision} });
     ws.on('message', raw => {
       if (cleaned) return;
       if (Date.now() - windowStart >= 1000) { count = 0; windowStart = Date.now(); }
@@ -84,6 +87,7 @@ export function createGateway({ port = 3000, host = '127.0.0.1', gameHost = '127
       if (!validateMessage(m)) { finish('Invalid message.'); return; }
       if (m.type === 'join') {
         if (child) { finish('Already joined.'); return; }
+        if (m.scene?.id !== scene.id || m.scene?.revision !== scene.revision) { finish('Scene mismatch. Reload this page to load the server neighborhood.'); return; }
         clearTimeout(joinTimer);
         child = spawn(workerPath, ['--host', gameHost, '--port', String(gamePort), '--name', m.name], { cwd: ROOT, stdio: ['pipe', 'pipe', 'pipe'] });
         workers.add(child);

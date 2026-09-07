@@ -1,0 +1,2270 @@
+{
+  "id": "neighborhood",
+  "name": "Arroyo",
+  "revision": "arroyo-1",
+  "groundZ": 9,
+  "halfSize": 90,
+  "spawns": [
+    [
+      -4,
+      0,
+      10
+    ],
+    [
+      4,
+      0,
+      10
+    ]
+  ],
+  "teleport": [
+    -4,
+    -4,
+    10
+  ],
+  "vehicle": {
+    "model": 411,
+    "position": [
+      0,
+      6,
+      10
+    ],
+    "heading": 0
+  },
+  "barriers": [
+    {
+      "id": "boundary-west",
+      "position": [
+        -90,
+        0,
+        11
+      ],
+      "size": [
+        2,
+        182,
+        4
+      ]
+    },
+    {
+      "id": "boundary-east",
+      "position": [
+        90,
+        0,
+        11
+      ],
+      "size": [
+        2,
+        182,
+        4
+      ]
+    },
+    {
+      "id": "boundary-north",
+      "position": [
+        0,
+        90,
+        11
+      ],
+      "size": [
+        180,
+        2,
+        4
+      ]
+    },
+    {
+      "id": "boundary-south",
+      "position": [
+        0,
+        -90,
+        11
+      ],
+      "size": [
+        180,
+        2,
+        4
+      ]
+    },
+    {
+      "id": "house-0",
+      "position": [
+        -27,
+        -46,
+        11.9
+      ],
+      "size": [
+        12,
+        16,
+        5.8
+      ]
+    },
+    {
+      "id": "fence-0--11-0",
+      "position": [
+        -27,
+        -57,
+        9.525
+      ],
+      "size": [
+        23,
+        0.15,
+        1.05
+      ]
+    },
+    {
+      "id": "fence-0-11-0",
+      "position": [
+        -27,
+        -35,
+        9.525
+      ],
+      "size": [
+        23,
+        0.15,
+        1.05
+      ]
+    },
+    {
+      "id": "fence-0-0-11",
+      "position": [
+        -38,
+        -46,
+        9.525
+      ],
+      "size": [
+        0.15,
+        22,
+        1.05
+      ]
+    },
+    {
+      "id": "fence-0--5--11",
+      "position": [
+        -16,
+        -51,
+        9.525
+      ],
+      "size": [
+        0.15,
+        12,
+        1.05
+      ]
+    },
+    {
+      "id": "palm-0",
+      "position": [
+        -20,
+        -54,
+        13
+      ],
+      "size": [
+        0.7,
+        0.7,
+        8
+      ]
+    },
+    {
+      "id": "tree-0",
+      "position": [
+        -35,
+        -38,
+        13
+      ],
+      "size": [
+        0.7,
+        0.7,
+        8
+      ]
+    },
+    {
+      "id": "house-1",
+      "position": [
+        -27,
+        -18,
+        11.9
+      ],
+      "size": [
+        12,
+        16,
+        5.8
+      ]
+    },
+    {
+      "id": "fence-1--11-0",
+      "position": [
+        -27,
+        -29,
+        9.525
+      ],
+      "size": [
+        23,
+        0.15,
+        1.05
+      ]
+    },
+    {
+      "id": "fence-1-11-0",
+      "position": [
+        -27,
+        -7,
+        9.525
+      ],
+      "size": [
+        23,
+        0.15,
+        1.05
+      ]
+    },
+    {
+      "id": "fence-1-0-11",
+      "position": [
+        -38,
+        -18,
+        9.525
+      ],
+      "size": [
+        0.15,
+        22,
+        1.05
+      ]
+    },
+    {
+      "id": "fence-1--5--11",
+      "position": [
+        -16,
+        -23,
+        9.525
+      ],
+      "size": [
+        0.15,
+        12,
+        1.05
+      ]
+    },
+    {
+      "id": "palm-1",
+      "position": [
+        -20,
+        -26,
+        13
+      ],
+      "size": [
+        0.7,
+        0.7,
+        8
+      ]
+    },
+    {
+      "id": "tree-1",
+      "position": [
+        -35,
+        -10,
+        13
+      ],
+      "size": [
+        0.7,
+        0.7,
+        8
+      ]
+    },
+    {
+      "id": "house-2",
+      "position": [
+        -27,
+        11,
+        11.9
+      ],
+      "size": [
+        12,
+        16,
+        5.8
+      ]
+    },
+    {
+      "id": "fence-2--11-0",
+      "position": [
+        -27,
+        0,
+        9.525
+      ],
+      "size": [
+        23,
+        0.15,
+        1.05
+      ]
+    },
+    {
+      "id": "fence-2-11-0",
+      "position": [
+        -27,
+        22,
+        9.525
+      ],
+      "size": [
+        23,
+        0.15,
+        1.05
+      ]
+    },
+    {
+      "id": "fence-2-0-11",
+      "position": [
+        -38,
+        11,
+        9.525
+      ],
+      "size": [
+        0.15,
+        22,
+        1.05
+      ]
+    },
+    {
+      "id": "fence-2--5--11",
+      "position": [
+        -16,
+        5.999999999999999,
+        9.525
+      ],
+      "size": [
+        0.15,
+        12,
+        1.05
+      ]
+    },
+    {
+      "id": "palm-2",
+      "position": [
+        -20,
+        2.9999999999999996,
+        13
+      ],
+      "size": [
+        0.7,
+        0.7,
+        8
+      ]
+    },
+    {
+      "id": "tree-2",
+      "position": [
+        -35,
+        19,
+        13
+      ],
+      "size": [
+        0.7,
+        0.7,
+        8
+      ]
+    },
+    {
+      "id": "house-3",
+      "position": [
+        -28,
+        43,
+        11.9
+      ],
+      "size": [
+        12,
+        16,
+        5.8
+      ]
+    },
+    {
+      "id": "fence-3--11-0",
+      "position": [
+        -28,
+        32,
+        9.525
+      ],
+      "size": [
+        23,
+        0.15,
+        1.05
+      ]
+    },
+    {
+      "id": "fence-3-11-0",
+      "position": [
+        -28,
+        54,
+        9.525
+      ],
+      "size": [
+        23,
+        0.15,
+        1.05
+      ]
+    },
+    {
+      "id": "fence-3-0-11",
+      "position": [
+        -39,
+        43,
+        9.525
+      ],
+      "size": [
+        0.15,
+        22,
+        1.05
+      ]
+    },
+    {
+      "id": "fence-3--5--11",
+      "position": [
+        -17,
+        38,
+        9.525
+      ],
+      "size": [
+        0.15,
+        12,
+        1.05
+      ]
+    },
+    {
+      "id": "palm-3",
+      "position": [
+        -21,
+        35,
+        13
+      ],
+      "size": [
+        0.7,
+        0.7,
+        8
+      ]
+    },
+    {
+      "id": "tree-3",
+      "position": [
+        -36,
+        51,
+        13
+      ],
+      "size": [
+        0.7,
+        0.7,
+        8
+      ]
+    },
+    {
+      "id": "house-4",
+      "position": [
+        0,
+        71,
+        11.9
+      ],
+      "size": [
+        16,
+        12,
+        5.8
+      ]
+    },
+    {
+      "id": "fence-4--11-0",
+      "position": [
+        -11,
+        71,
+        9.525
+      ],
+      "size": [
+        0.15,
+        23,
+        1.05
+      ]
+    },
+    {
+      "id": "fence-4-11-0",
+      "position": [
+        11,
+        71,
+        9.525
+      ],
+      "size": [
+        0.15,
+        23,
+        1.05
+      ]
+    },
+    {
+      "id": "fence-4-0-11",
+      "position": [
+        0,
+        82,
+        9.525
+      ],
+      "size": [
+        22,
+        0.15,
+        1.05
+      ]
+    },
+    {
+      "id": "fence-4--5--11",
+      "position": [
+        -5,
+        60,
+        9.525
+      ],
+      "size": [
+        12,
+        0.15,
+        1.05
+      ]
+    },
+    {
+      "id": "palm-4",
+      "position": [
+        -8,
+        64,
+        13
+      ],
+      "size": [
+        0.7,
+        0.7,
+        8
+      ]
+    },
+    {
+      "id": "tree-4",
+      "position": [
+        8,
+        79,
+        13
+      ],
+      "size": [
+        0.7,
+        0.7,
+        8
+      ]
+    },
+    {
+      "id": "house-5",
+      "position": [
+        29,
+        43,
+        11.9
+      ],
+      "size": [
+        12,
+        16,
+        5.8
+      ]
+    },
+    {
+      "id": "fence-5--11-0",
+      "position": [
+        29,
+        54,
+        9.525
+      ],
+      "size": [
+        23,
+        0.15,
+        1.05
+      ]
+    },
+    {
+      "id": "fence-5-11-0",
+      "position": [
+        29,
+        32,
+        9.525
+      ],
+      "size": [
+        23,
+        0.15,
+        1.05
+      ]
+    },
+    {
+      "id": "fence-5-0-11",
+      "position": [
+        40,
+        43,
+        9.525
+      ],
+      "size": [
+        0.15,
+        22,
+        1.05
+      ]
+    },
+    {
+      "id": "fence-5--5--11",
+      "position": [
+        18,
+        48,
+        9.525
+      ],
+      "size": [
+        0.15,
+        12,
+        1.05
+      ]
+    },
+    {
+      "id": "palm-5",
+      "position": [
+        22,
+        51,
+        13
+      ],
+      "size": [
+        0.7,
+        0.7,
+        8
+      ]
+    },
+    {
+      "id": "tree-5",
+      "position": [
+        37,
+        35,
+        13
+      ],
+      "size": [
+        0.7,
+        0.7,
+        8
+      ]
+    },
+    {
+      "id": "house-6",
+      "position": [
+        77,
+        12,
+        11.9
+      ],
+      "size": [
+        12,
+        16,
+        5.8
+      ]
+    },
+    {
+      "id": "fence-6--11-0",
+      "position": [
+        77,
+        23,
+        9.525
+      ],
+      "size": [
+        23,
+        0.15,
+        1.05
+      ]
+    },
+    {
+      "id": "fence-6-11-0",
+      "position": [
+        77,
+        1,
+        9.525
+      ],
+      "size": [
+        23,
+        0.15,
+        1.05
+      ]
+    },
+    {
+      "id": "fence-6-0-11",
+      "position": [
+        88,
+        12,
+        9.525
+      ],
+      "size": [
+        0.15,
+        22,
+        1.05
+      ]
+    },
+    {
+      "id": "fence-6--5--11",
+      "position": [
+        66,
+        17,
+        9.525
+      ],
+      "size": [
+        0.15,
+        12,
+        1.05
+      ]
+    },
+    {
+      "id": "palm-6",
+      "position": [
+        70,
+        20,
+        13
+      ],
+      "size": [
+        0.7,
+        0.7,
+        8
+      ]
+    },
+    {
+      "id": "tree-6",
+      "position": [
+        85,
+        4.000000000000001,
+        13
+      ],
+      "size": [
+        0.7,
+        0.7,
+        8
+      ]
+    },
+    {
+      "id": "house-7",
+      "position": [
+        77,
+        -22,
+        11.9
+      ],
+      "size": [
+        12,
+        16,
+        5.8
+      ]
+    },
+    {
+      "id": "fence-7--11-0",
+      "position": [
+        77,
+        -11,
+        9.525
+      ],
+      "size": [
+        23,
+        0.15,
+        1.05
+      ]
+    },
+    {
+      "id": "fence-7-11-0",
+      "position": [
+        77,
+        -33,
+        9.525
+      ],
+      "size": [
+        23,
+        0.15,
+        1.05
+      ]
+    },
+    {
+      "id": "fence-7-0-11",
+      "position": [
+        88,
+        -22,
+        9.525
+      ],
+      "size": [
+        0.15,
+        22,
+        1.05
+      ]
+    },
+    {
+      "id": "fence-7--5--11",
+      "position": [
+        66,
+        -17,
+        9.525
+      ],
+      "size": [
+        0.15,
+        12,
+        1.05
+      ]
+    },
+    {
+      "id": "palm-7",
+      "position": [
+        70,
+        -14,
+        13
+      ],
+      "size": [
+        0.7,
+        0.7,
+        8
+      ]
+    },
+    {
+      "id": "tree-7",
+      "position": [
+        85,
+        -30,
+        13
+      ],
+      "size": [
+        0.7,
+        0.7,
+        8
+      ]
+    },
+    {
+      "id": "house-8",
+      "position": [
+        28,
+        -19,
+        11.9
+      ],
+      "size": [
+        16,
+        12,
+        5.8
+      ]
+    },
+    {
+      "id": "fence-8--11-0",
+      "position": [
+        17,
+        -19,
+        9.525
+      ],
+      "size": [
+        0.15,
+        23,
+        1.05
+      ]
+    },
+    {
+      "id": "fence-8-11-0",
+      "position": [
+        39,
+        -19,
+        9.525
+      ],
+      "size": [
+        0.15,
+        23,
+        1.05
+      ]
+    },
+    {
+      "id": "fence-8-0-11",
+      "position": [
+        28,
+        -8,
+        9.525
+      ],
+      "size": [
+        22,
+        0.15,
+        1.05
+      ]
+    },
+    {
+      "id": "fence-8--5--11",
+      "position": [
+        23,
+        -30,
+        9.525
+      ],
+      "size": [
+        12,
+        0.15,
+        1.05
+      ]
+    },
+    {
+      "id": "palm-8",
+      "position": [
+        20,
+        -26,
+        13
+      ],
+      "size": [
+        0.7,
+        0.7,
+        8
+      ]
+    },
+    {
+      "id": "tree-8",
+      "position": [
+        36,
+        -11,
+        13
+      ],
+      "size": [
+        0.7,
+        0.7,
+        8
+      ]
+    },
+    {
+      "id": "house-9",
+      "position": [
+        29,
+        -72,
+        11.9
+      ],
+      "size": [
+        16,
+        12,
+        5.8
+      ]
+    },
+    {
+      "id": "fence-9--11-0",
+      "position": [
+        40,
+        -72,
+        9.525
+      ],
+      "size": [
+        0.15,
+        23,
+        1.05
+      ]
+    },
+    {
+      "id": "fence-9-11-0",
+      "position": [
+        18,
+        -72,
+        9.525
+      ],
+      "size": [
+        0.15,
+        23,
+        1.05
+      ]
+    },
+    {
+      "id": "fence-9-0-11",
+      "position": [
+        29,
+        -83,
+        9.525
+      ],
+      "size": [
+        22,
+        0.15,
+        1.05
+      ]
+    },
+    {
+      "id": "fence-9--5--11",
+      "position": [
+        34,
+        -61,
+        9.525
+      ],
+      "size": [
+        12,
+        0.15,
+        1.05
+      ]
+    },
+    {
+      "id": "palm-9",
+      "position": [
+        37,
+        -65,
+        13
+      ],
+      "size": [
+        0.7,
+        0.7,
+        8
+      ]
+    },
+    {
+      "id": "tree-9",
+      "position": [
+        21,
+        -80,
+        13
+      ],
+      "size": [
+        0.7,
+        0.7,
+        8
+      ]
+    }
+  ],
+  "houses": [
+    {
+      "id": "house-0",
+      "asset": "house-0",
+      "position": [
+        -27,
+        -46,
+        9
+      ],
+      "rotation": 1.5707963267948966
+    },
+    {
+      "id": "house-1",
+      "asset": "house-1",
+      "position": [
+        -27,
+        -18,
+        9
+      ],
+      "rotation": 1.5707963267948966
+    },
+    {
+      "id": "house-2",
+      "asset": "house-2",
+      "position": [
+        -27,
+        11,
+        9
+      ],
+      "rotation": 1.5707963267948966
+    },
+    {
+      "id": "house-3",
+      "asset": "house-3",
+      "position": [
+        -28,
+        43,
+        9
+      ],
+      "rotation": 1.5707963267948966
+    },
+    {
+      "id": "house-4",
+      "asset": "house-0",
+      "position": [
+        0,
+        71,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "id": "house-5",
+      "asset": "house-1",
+      "position": [
+        29,
+        43,
+        9
+      ],
+      "rotation": -1.5707963267948966
+    },
+    {
+      "id": "house-6",
+      "asset": "house-2",
+      "position": [
+        77,
+        12,
+        9
+      ],
+      "rotation": -1.5707963267948966
+    },
+    {
+      "id": "house-7",
+      "asset": "house-3",
+      "position": [
+        77,
+        -22,
+        9
+      ],
+      "rotation": -1.5707963267948966
+    },
+    {
+      "id": "house-8",
+      "asset": "house-0",
+      "position": [
+        28,
+        -19,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "id": "house-9",
+      "asset": "house-1",
+      "position": [
+        29,
+        -72,
+        9
+      ],
+      "rotation": 3.141592653589793
+    }
+  ],
+  "props": [
+    {
+      "asset": "fence",
+      "position": [
+        -27,
+        -57,
+        9
+      ],
+      "rotation": 3.141592653589793,
+      "scale": [
+        5.75,
+        1,
+        1
+      ]
+    },
+    {
+      "asset": "fence",
+      "position": [
+        -27,
+        -35,
+        9
+      ],
+      "rotation": 3.141592653589793,
+      "scale": [
+        5.75,
+        1,
+        1
+      ]
+    },
+    {
+      "asset": "fence",
+      "position": [
+        -38,
+        -46,
+        9
+      ],
+      "rotation": 1.5707963267948966,
+      "scale": [
+        5.5,
+        1,
+        1
+      ]
+    },
+    {
+      "asset": "fence",
+      "position": [
+        -16,
+        -51,
+        9
+      ],
+      "rotation": 1.5707963267948966,
+      "scale": [
+        3,
+        1,
+        1
+      ]
+    },
+    {
+      "asset": "mailbox",
+      "position": [
+        -16,
+        -55,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "bin",
+      "position": [
+        -19,
+        -38,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "palm",
+      "position": [
+        -20,
+        -54,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "tree",
+      "position": [
+        -35,
+        -38,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "fence",
+      "position": [
+        -27,
+        -29,
+        9
+      ],
+      "rotation": 3.141592653589793,
+      "scale": [
+        5.75,
+        1,
+        1
+      ]
+    },
+    {
+      "asset": "fence",
+      "position": [
+        -27,
+        -7,
+        9
+      ],
+      "rotation": 3.141592653589793,
+      "scale": [
+        5.75,
+        1,
+        1
+      ]
+    },
+    {
+      "asset": "fence",
+      "position": [
+        -38,
+        -18,
+        9
+      ],
+      "rotation": 1.5707963267948966,
+      "scale": [
+        5.5,
+        1,
+        1
+      ]
+    },
+    {
+      "asset": "fence",
+      "position": [
+        -16,
+        -23,
+        9
+      ],
+      "rotation": 1.5707963267948966,
+      "scale": [
+        3,
+        1,
+        1
+      ]
+    },
+    {
+      "asset": "mailbox",
+      "position": [
+        -16,
+        -27,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "bin",
+      "position": [
+        -19,
+        -10,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "palm",
+      "position": [
+        -20,
+        -26,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "tree",
+      "position": [
+        -35,
+        -10,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "fence",
+      "position": [
+        -27,
+        0,
+        9
+      ],
+      "rotation": 3.141592653589793,
+      "scale": [
+        5.75,
+        1,
+        1
+      ]
+    },
+    {
+      "asset": "fence",
+      "position": [
+        -27,
+        22,
+        9
+      ],
+      "rotation": 3.141592653589793,
+      "scale": [
+        5.75,
+        1,
+        1
+      ]
+    },
+    {
+      "asset": "fence",
+      "position": [
+        -38,
+        11,
+        9
+      ],
+      "rotation": 1.5707963267948966,
+      "scale": [
+        5.5,
+        1,
+        1
+      ]
+    },
+    {
+      "asset": "fence",
+      "position": [
+        -16,
+        5.999999999999999,
+        9
+      ],
+      "rotation": 1.5707963267948966,
+      "scale": [
+        3,
+        1,
+        1
+      ]
+    },
+    {
+      "asset": "mailbox",
+      "position": [
+        -16,
+        1.9999999999999993,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "bin",
+      "position": [
+        -19,
+        19,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "palm",
+      "position": [
+        -20,
+        2.9999999999999996,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "tree",
+      "position": [
+        -35,
+        19,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "fence",
+      "position": [
+        -28,
+        32,
+        9
+      ],
+      "rotation": 3.141592653589793,
+      "scale": [
+        5.75,
+        1,
+        1
+      ]
+    },
+    {
+      "asset": "fence",
+      "position": [
+        -28,
+        54,
+        9
+      ],
+      "rotation": 3.141592653589793,
+      "scale": [
+        5.75,
+        1,
+        1
+      ]
+    },
+    {
+      "asset": "fence",
+      "position": [
+        -39,
+        43,
+        9
+      ],
+      "rotation": 1.5707963267948966,
+      "scale": [
+        5.5,
+        1,
+        1
+      ]
+    },
+    {
+      "asset": "fence",
+      "position": [
+        -17,
+        38,
+        9
+      ],
+      "rotation": 1.5707963267948966,
+      "scale": [
+        3,
+        1,
+        1
+      ]
+    },
+    {
+      "asset": "mailbox",
+      "position": [
+        -17,
+        34,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "bin",
+      "position": [
+        -20,
+        51,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "palm",
+      "position": [
+        -21,
+        35,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "tree",
+      "position": [
+        -36,
+        51,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "fence",
+      "position": [
+        -11,
+        71,
+        9
+      ],
+      "rotation": 1.5707963267948966,
+      "scale": [
+        5.75,
+        1,
+        1
+      ]
+    },
+    {
+      "asset": "fence",
+      "position": [
+        11,
+        71,
+        9
+      ],
+      "rotation": 1.5707963267948966,
+      "scale": [
+        5.75,
+        1,
+        1
+      ]
+    },
+    {
+      "asset": "fence",
+      "position": [
+        0,
+        82,
+        9
+      ],
+      "rotation": 0,
+      "scale": [
+        5.5,
+        1,
+        1
+      ]
+    },
+    {
+      "asset": "fence",
+      "position": [
+        -5,
+        60,
+        9
+      ],
+      "rotation": 0,
+      "scale": [
+        3,
+        1,
+        1
+      ]
+    },
+    {
+      "asset": "mailbox",
+      "position": [
+        -9,
+        60,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "bin",
+      "position": [
+        8,
+        63,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "palm",
+      "position": [
+        -8,
+        64,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "tree",
+      "position": [
+        8,
+        79,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "fence",
+      "position": [
+        29,
+        54,
+        9
+      ],
+      "rotation": 0,
+      "scale": [
+        5.75,
+        1,
+        1
+      ]
+    },
+    {
+      "asset": "fence",
+      "position": [
+        29,
+        32,
+        9
+      ],
+      "rotation": 0,
+      "scale": [
+        5.75,
+        1,
+        1
+      ]
+    },
+    {
+      "asset": "fence",
+      "position": [
+        40,
+        43,
+        9
+      ],
+      "rotation": -1.5707963267948966,
+      "scale": [
+        5.5,
+        1,
+        1
+      ]
+    },
+    {
+      "asset": "fence",
+      "position": [
+        18,
+        48,
+        9
+      ],
+      "rotation": -1.5707963267948966,
+      "scale": [
+        3,
+        1,
+        1
+      ]
+    },
+    {
+      "asset": "mailbox",
+      "position": [
+        18,
+        52,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "bin",
+      "position": [
+        21,
+        35,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "palm",
+      "position": [
+        22,
+        51,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "tree",
+      "position": [
+        37,
+        35,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "fence",
+      "position": [
+        77,
+        23,
+        9
+      ],
+      "rotation": 0,
+      "scale": [
+        5.75,
+        1,
+        1
+      ]
+    },
+    {
+      "asset": "fence",
+      "position": [
+        77,
+        1,
+        9
+      ],
+      "rotation": 0,
+      "scale": [
+        5.75,
+        1,
+        1
+      ]
+    },
+    {
+      "asset": "fence",
+      "position": [
+        88,
+        12,
+        9
+      ],
+      "rotation": -1.5707963267948966,
+      "scale": [
+        5.5,
+        1,
+        1
+      ]
+    },
+    {
+      "asset": "fence",
+      "position": [
+        66,
+        17,
+        9
+      ],
+      "rotation": -1.5707963267948966,
+      "scale": [
+        3,
+        1,
+        1
+      ]
+    },
+    {
+      "asset": "mailbox",
+      "position": [
+        66,
+        21,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "bin",
+      "position": [
+        69,
+        3.9999999999999996,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "palm",
+      "position": [
+        70,
+        20,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "tree",
+      "position": [
+        85,
+        4.000000000000001,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "fence",
+      "position": [
+        77,
+        -11,
+        9
+      ],
+      "rotation": 0,
+      "scale": [
+        5.75,
+        1,
+        1
+      ]
+    },
+    {
+      "asset": "fence",
+      "position": [
+        77,
+        -33,
+        9
+      ],
+      "rotation": 0,
+      "scale": [
+        5.75,
+        1,
+        1
+      ]
+    },
+    {
+      "asset": "fence",
+      "position": [
+        88,
+        -22,
+        9
+      ],
+      "rotation": -1.5707963267948966,
+      "scale": [
+        5.5,
+        1,
+        1
+      ]
+    },
+    {
+      "asset": "fence",
+      "position": [
+        66,
+        -17,
+        9
+      ],
+      "rotation": -1.5707963267948966,
+      "scale": [
+        3,
+        1,
+        1
+      ]
+    },
+    {
+      "asset": "mailbox",
+      "position": [
+        66,
+        -13,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "bin",
+      "position": [
+        69,
+        -30,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "palm",
+      "position": [
+        70,
+        -14,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "tree",
+      "position": [
+        85,
+        -30,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "fence",
+      "position": [
+        17,
+        -19,
+        9
+      ],
+      "rotation": 1.5707963267948966,
+      "scale": [
+        5.75,
+        1,
+        1
+      ]
+    },
+    {
+      "asset": "fence",
+      "position": [
+        39,
+        -19,
+        9
+      ],
+      "rotation": 1.5707963267948966,
+      "scale": [
+        5.75,
+        1,
+        1
+      ]
+    },
+    {
+      "asset": "fence",
+      "position": [
+        28,
+        -8,
+        9
+      ],
+      "rotation": 0,
+      "scale": [
+        5.5,
+        1,
+        1
+      ]
+    },
+    {
+      "asset": "fence",
+      "position": [
+        23,
+        -30,
+        9
+      ],
+      "rotation": 0,
+      "scale": [
+        3,
+        1,
+        1
+      ]
+    },
+    {
+      "asset": "mailbox",
+      "position": [
+        19,
+        -30,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "bin",
+      "position": [
+        36,
+        -27,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "palm",
+      "position": [
+        20,
+        -26,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "tree",
+      "position": [
+        36,
+        -11,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "fence",
+      "position": [
+        40,
+        -72,
+        9
+      ],
+      "rotation": 4.71238898038469,
+      "scale": [
+        5.75,
+        1,
+        1
+      ]
+    },
+    {
+      "asset": "fence",
+      "position": [
+        18,
+        -72,
+        9
+      ],
+      "rotation": 4.71238898038469,
+      "scale": [
+        5.75,
+        1,
+        1
+      ]
+    },
+    {
+      "asset": "fence",
+      "position": [
+        29,
+        -83,
+        9
+      ],
+      "rotation": 3.141592653589793,
+      "scale": [
+        5.5,
+        1,
+        1
+      ]
+    },
+    {
+      "asset": "fence",
+      "position": [
+        34,
+        -61,
+        9
+      ],
+      "rotation": 3.141592653589793,
+      "scale": [
+        3,
+        1,
+        1
+      ]
+    },
+    {
+      "asset": "mailbox",
+      "position": [
+        38,
+        -61,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "bin",
+      "position": [
+        21,
+        -64,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "palm",
+      "position": [
+        37,
+        -65,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "tree",
+      "position": [
+        21,
+        -80,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "pole",
+      "position": [
+        -9,
+        -62,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "lamp",
+      "position": [
+        -11.700000000000001,
+        -54,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "pole",
+      "position": [
+        9,
+        -62,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "lamp",
+      "position": [
+        11.700000000000001,
+        -54,
+        9
+      ],
+      "rotation": 3.141592653589793
+    },
+    {
+      "asset": "pole",
+      "position": [
+        -9,
+        -30,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "lamp",
+      "position": [
+        -11.700000000000001,
+        -22,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "pole",
+      "position": [
+        9,
+        -30,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "lamp",
+      "position": [
+        11.700000000000001,
+        -22,
+        9
+      ],
+      "rotation": 3.141592653589793
+    },
+    {
+      "asset": "pole",
+      "position": [
+        -9,
+        2,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "lamp",
+      "position": [
+        -11.700000000000001,
+        10,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "pole",
+      "position": [
+        9,
+        2,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "lamp",
+      "position": [
+        11.700000000000001,
+        10,
+        9
+      ],
+      "rotation": 3.141592653589793
+    },
+    {
+      "asset": "pole",
+      "position": [
+        -9,
+        34,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "lamp",
+      "position": [
+        -11.700000000000001,
+        42,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "pole",
+      "position": [
+        9,
+        34,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "lamp",
+      "position": [
+        11.700000000000001,
+        42,
+        9
+      ],
+      "rotation": 3.141592653589793
+    },
+    {
+      "asset": "palm",
+      "position": [
+        22,
+        -57,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "palm",
+      "position": [
+        22,
+        21,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "palm",
+      "position": [
+        50,
+        -57,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "palm",
+      "position": [
+        50,
+        21,
+        9
+      ],
+      "rotation": 0
+    }
+  ],
+  "roads": [
+    {
+      "points": [
+        [
+          0,
+          -66
+        ],
+        [
+          0,
+          40
+        ]
+      ],
+      "width": 12
+    },
+    {
+      "points": [
+        [
+          0,
+          -48
+        ],
+        [
+          58,
+          -48
+        ],
+        [
+          58,
+          12
+        ],
+        [
+          0,
+          12
+        ]
+      ],
+      "width": 12
+    }
+  ],
+  "culdesac": {
+    "center": [
+      0,
+      40
+    ],
+    "radius": 18
+  },
+  "route": [
+    [
+      0,
+      6
+    ],
+    [
+      0,
+      12
+    ],
+    [
+      58,
+      12
+    ],
+    [
+      58,
+      -48
+    ],
+    [
+      0,
+      -48
+    ],
+    [
+      0,
+      6
+    ]
+  ]
+}

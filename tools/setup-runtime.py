@@ -74,7 +74,14 @@ def main():
     if loader.is_symlink():
         loader.unlink()
         loader.symlink_to('i386-linux-gnu/ld-linux.so.2')
-    arena = json.loads((ROOT / 'test-server/arena.json').read_text())
+    prepare_scene()
+    print('Runtime ready. Launch: python3 tools/run-server.py', flush=True)
+
+
+def prepare_scene():
+    scene = os.environ.get('POC_SCENE', 'neighborhood')
+    if scene not in ('yard', 'neighborhood'): raise ValueError('Invalid POC_SCENE')
+    arena = json.loads((ROOT / f'packages/shared/scenes/{scene}.json').read_text())
     generated = ROOT / '.runtime/Server/gamemodes/arena.inc'
     spawns = arena['spawns']
     vehicle = arena['vehicle']
@@ -83,6 +90,8 @@ def main():
         f'#define POC_SPAWN_X1 ({spawns[1][0]:.1f})',
         f'#define POC_SPAWN_Y ({spawns[0][1]:.1f})',
         f'#define POC_SPAWN_Z ({spawns[0][2]:.1f})',
+        f'#define POC_TELEPORT_X ({arena["teleport"][0]:.1f})',
+        f'#define POC_TELEPORT_Y ({arena["teleport"][1]:.1f})',
         f'#define POC_CAR_MODEL {vehicle["model"]}',
         f'#define POC_CAR_X ({vehicle["position"][0]:.1f})',
         f'#define POC_CAR_Y ({vehicle["position"][1]:.1f})',
@@ -96,12 +105,11 @@ def main():
     config = json.loads((server / 'config.json').read_text())
     config.update({'announce': False, 'enable_query': True, 'max_players': 8, 'max_bots': 0, 'name': 'Browser PoC fixture', 'password': ''})
     config['artwork']['enable'] = False
-    config['network'].update({'bind': '127.0.0.1', 'port': 7777, 'allow_037_clients': True, 'use_omp_encryption': False, 'minimum_connection_time': 0})
+    config['network'].update({'bind': '127.0.0.1', 'port': int(os.environ.get('POC_GAME_PORT', '7777')), 'allow_037_clients': True, 'use_omp_encryption': False, 'minimum_connection_time': 0})
     config['pawn'].update({'main_scripts': ['poc 1'], 'side_scripts': [], 'legacy_plugins': []})
     config['rcon']['enable'] = False
     config['logging'].update({'file': 'log.txt', 'use_timestamp': False, 'use_prefix': False})
     (server / 'config.json').write_text(json.dumps(config, indent=2) + '\n')
-    print('Runtime ready. Launch: python3 tools/run-server.py', flush=True)
 
 
 if __name__ == '__main__':

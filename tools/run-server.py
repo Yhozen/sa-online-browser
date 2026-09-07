@@ -14,6 +14,7 @@ spec.loader.exec_module(runtime)
 server = ROOT / '.runtime/Server'
 if not (server / 'gamemodes/poc.amx').exists():
     raise SystemExit('Run npm run setup:poc before starting the server.')
+runtime.prepare_scene()
 os.chdir(server)
 command = [str(ROOT / '.runtime/qemu/usr/bin/qemu-i386-static')] + runtime.loader_command(server / 'omp-server')
 os.execv(command[0], command)

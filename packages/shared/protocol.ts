@@ -23,6 +23,7 @@ export interface PlayerState {
 export type ClientMessage = {
     type: 'join';
     name: string;
+    scene: {id:string;revision:string};
     version: 1;
 } | ({
     type: 'state';
