@@ -53,7 +53,9 @@ export async function loadAssets(
   // Sequential loading keeps peak decode memory predictable and provides useful progress.
   for (const name of names) {
     progress(`Loading ${name} · ${count + 1}/${names.length + 1}`);
-    const response = await fetch(`/assets/${name}.glb`);
+    const response = await fetch(`/assets/${name}.glb`, {
+      signal: AbortSignal.timeout(15000),
+    });
     if (!response.ok)
       throw Error(
         `${name}.glb could not load (HTTP ${response.status}). Check the asset build and retry.`,
@@ -79,7 +81,9 @@ export async function loadAssets(
     models.set(name, gltf);
     assetStats.files = ++count;
   }
-  const response = await fetch("/assets/neighborhood-atlas.png");
+  const response = await fetch("/assets/neighborhood-atlas.png", {
+    signal: AbortSignal.timeout(15000),
+  });
   if (!response.ok)
     throw Error(
       "Surface textures are missing. Run npm run build:assets and retry.",
@@ -169,7 +173,9 @@ export function instantiateStatic(
       qualityOnly?: string;
     }
   >();
-  for (const p of placements.flatMap<(typeof placements)[number] & {qualityOnly?:string}>((p) =>
+  for (const p of placements.flatMap<
+    (typeof placements)[number] & { qualityOnly?: string }
+  >((p) =>
     p.asset === "fence"
       ? [
           { ...p, qualityOnly: "standard" },

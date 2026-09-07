@@ -3,11 +3,11 @@
   "files": {
     "bin.glb": {
       "bytes": 26804,
-      "sha256": "31af8d45fab047079f61473bd551aa4e9b614b1c2f0513cd666f840203319011"
+      "sha256": "d1c2e23249b83072f8f22ede1ca3a85f47eecf2821b0fd22d11ab12f92710566"
     },
     "coupe.glb": {
-      "bytes": 223256,
-      "sha256": "c33d6781bfa677d56a13200ba56c480b9769a589600c568ce85f1a5972315786"
+      "bytes": 223392,
+      "sha256": "63cfbac9b755ec138c4f8fdc4690628fe1d9a83363cec68458af9c0fad947085"
     },
     "fence-low.glb": {
       "bytes": 9668,
@@ -19,31 +19,31 @@
     },
     "house-0.glb": {
       "bytes": 69568,
-      "sha256": "21e5547c383b759e7c7ef2927471e0044f3d274aae5e806f66ff951cc8bf2292"
+      "sha256": "e33db7094bd8a59cb6cfbeb86d6dac29b75e19bcbed5ac451603c7e9c734e9da"
     },
     "house-1.glb": {
       "bytes": 71908,
-      "sha256": "6b6ceb17cb8978005300e1f7afba1350c1fca44899bc7fe859cca58d0f70c961"
+      "sha256": "0e88dcd1684d85c0a8f92f504d3679aa523d9be0ebc4608a6c4fea9e86db51a6"
     },
     "house-2.glb": {
       "bytes": 53580,
-      "sha256": "819713856415054729628ea0840f86f0eda12bb03275d195a70647438c791b94"
+      "sha256": "14c72452d9623a074811fe51371a3a518d1970e494e4da0c7aafeb547ee1b3bc"
     },
     "house-3.glb": {
       "bytes": 71356,
-      "sha256": "ff9b48f95959ebb0dc2fc6e5519cd173103b554459663819d96dd697d1041eb0"
+      "sha256": "b8a30826463dab73f1de2d72c8af458906a4c9e70c8a5c2d7addd4b9dc2d419a"
     },
     "lamp.glb": {
       "bytes": 15624,
-      "sha256": "da9ba523a84377643e740bf87fd7926011f0fb450be9abad2bd78765375e0f25"
+      "sha256": "441ea3474416afaae722f63e361e840994d31914fd4bebba1250d91d7ccbfe7d"
     },
     "mailbox.glb": {
       "bytes": 12356,
-      "sha256": "0bc82267a8dd94b57c8d02a9444ea7cc739e410a0c0971086b5511305cfe5558"
+      "sha256": "b033836d43aeb90642480258e01f4d6bf023f39619fdc781d6cce14c13a929db"
     },
     "neighbor.glb": {
-      "bytes": 212452,
-      "sha256": "f079ab4d4f060d26b7f001933bece3b2757f1bfca65b408f090fc782e7bba132"
+      "bytes": 213236,
+      "sha256": "ab83f88e004698d6622bcee53897bc59aee63402507070f50743c4e2168c85b4"
     },
     "neighborhood-atlas.png": {
       "bytes": 3529016,
@@ -59,7 +59,7 @@
     },
     "tree.glb": {
       "bytes": 43956,
-      "sha256": "6518f9d7271bc41ec40e3fc071280dfe5908e531f6ec557fa7230ebb9236691f"
+      "sha256": "fa76f77abb561e4697a7b16729a0c619a11f0cae22cf73ab24aaf0b04b3ffe75"
     }
   }
 }

@@ -45,7 +45,7 @@ function visit(suite) {
   for (const child of suite.suites || []) visit(child);
 }
 for (const suite of results.suites) visit(suite);
-if (cases.length !== 12 || cases.some((x) => x.status !== "expected"))
+if (cases.length !== 14 || cases.some((x) => x.status !== "expected"))
   throw new Error("All yard, graphics and neighborhood scenarios must pass.");
 const active = new Map(),
   cycles = [];
@@ -59,6 +59,22 @@ for (const event of observations) {
 }
 if (new Set(cycles).size !== 20)
   throw new Error("Twenty observed server slot releases are required.");
+const neighborhoodPerformance = JSON.parse(
+  readFileSync("artifacts/neighborhood/performance.json"),
+);
+const residentRejoins = JSON.parse(
+  readFileSync("artifacts/neighborhood/resident-rejoins.json"),
+);
+if (
+  neighborhoodPerformance.recording !== false ||
+  neighborhoodPerformance.metrics.some(
+    (m) => m.medianFPS < 20 || m.p95FrameMs >= 100,
+  ) ||
+  residentRejoins.length !== 20
+)
+  throw Error(
+    "Neighborhood performance or resident lifecycle evidence incomplete",
+  );
 const neighborhoodSoak = JSON.parse(
   readFileSync("artifacts/neighborhood/soak.json"),
 );
@@ -136,6 +152,8 @@ const summary = {
   browserCyclesReleased: [...new Set(cycles)].length,
   sustainedSession: soak,
   neighborhood: {
+    performance: neighborhoodPerformance,
+    residentRejoins,
     sustainedSession: {
       durationMs: neighborhoodSoak.durationMs,
       rounds: neighborhoodSoak.rounds,

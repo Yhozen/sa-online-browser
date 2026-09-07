@@ -27,3 +27,7 @@ Retain full yard multiplayer and graphics regressions. Add scene mismatch, missi
 Incremental Conventional Commits: scene contract, reproducible assets, character/car presentation, camera/HUD, verification, results. First inspect a representative house/street/avatar/car in-engine before expanding the kit. Update docs/status.md and CONTEXT.md as discoveries change the plan.
 
 Next milestones: a server-scored checkpoint challenge; private HTTPS/WSS invitations, limits and latency testing; original GTA/SA-MP client interoperability and world alignment. None is implied by this browser/open.mp scene milestone.
+
+## Measurement clarification from implementation
+
+The recorded ten-minute functional soak retains video/traces and reports their observed frame cost. A separate active two-player benchmark measures ordinary play without video/trace instrumentation, after ten seconds warm-up. Both use 1280×720 browser viewports; low mode explicitly reports its smaller drawing-buffer resolution. FPS is reported to 0.1 FPS to avoid treating Chromium's sub-millisecond timestamp quantization as a meaningful target miss; raw median frame milliseconds and sampled frame times remain available. This does not round a 15 FPS recording run into a passing normal-play result. Hardware GPU results remain separate and unverified.

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-import type { Barrier } from "../../../packages/shared/scene";
+import type { Barrier, SceneManifest } from "../../../packages/shared/scene";
 export class CollisionIndex {
   private cells = new Map<string, Set<Barrier>>();
   constructor(
@@ -69,4 +69,46 @@ export class CollisionIndex {
     }
     return 1;
   }
+}
+
+import type { Vec3 } from "../../../packages/shared/protocol";
+
+export function findSafeExitPosition(
+  origin: Vec3,
+  angle: number,
+  seat: number,
+  arena: SceneManifest,
+  index: CollisionIndex,
+): Vec3 {
+  const side = seat === 0 ? -1 : 1;
+  // Try the requested door, the opposite door, then the rear/front of the car.
+  const offsets = [
+    [side * 2, 0],
+    [-side * 2, 0],
+    [0, -3],
+    [0, 3],
+  ];
+  for (const radius of [3, 4, 6]) {
+    for (let i = 0; i < 16; i++) {
+      const a = (i * Math.PI) / 8;
+      offsets.push([Math.cos(a) * radius, Math.sin(a) * radius]);
+    }
+  }
+  for (const [x, y] of offsets) {
+    const position: Vec3 = [
+      origin[0] + x * Math.cos(angle) - y * Math.sin(angle),
+      origin[1] + x * Math.sin(angle) + y * Math.cos(angle),
+      arena.groundZ + 1,
+    ];
+    if (
+      Math.abs(position[0]) < arena.halfSize &&
+      Math.abs(position[1]) < arena.halfSize &&
+      !index.collides(position[0], position[1], 0.45)
+    )
+      return position;
+  }
+  // The fixed fixture always has clear spawns, including after a server vehicle correction.
+  return [
+    ...arena.spawns.find((p) => !index.collides(p[0], p[1], 0.45))!,
+  ] as Vec3;
 }

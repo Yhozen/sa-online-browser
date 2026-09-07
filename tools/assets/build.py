@@ -156,7 +156,13 @@ for o in list(bpy.context.scene.objects):
  if o.type=='MESH' and not (o.name.startswith('wheel') or o.name.startswith('hub')):
   bpy.ops.object.select_all(action='DESELECT');o.select_set(True);bpy.context.view_layer.objects.active=o;bpy.ops.object.transform_apply(location=True,rotation=True,scale=True)
   for vertex in o.data.vertices:vertex.co.z=vertex.co.z*.75-.2
- if o.name.startswith('seat_') and o.type=='EMPTY':o.location.z=-.30
+ if o.name.startswith('seat_') and o.type=='EMPTY':o.location.z=-.45
+ceiling=bpy.data.objects.new('cabin_ceiling',None);bpy.context.collection.objects.link(ceiling);ceiling.location=(0,0,.45)
+floor=bpy.data.objects.new('cabin_floor',None);bpy.context.collection.objects.link(floor);floor.location=(0,0,-.85)
+# Bucket seat and floor match the lower occupant hip position.
+for o in list(bpy.context.scene.objects):
+ if o.type=='MESH' and any(o.name.startswith(n) for n in ['seat cushion','seat back','headrest','floor']):
+  for vertex in o.data.vertices:vertex.co.z-=.55 if o.name.startswith('floor') else .28
 export('coupe',True)
 
 # Human authored as smoothly shaded weighted parts; bone weights are explicit and editable.
@@ -164,7 +170,7 @@ start();parts=[]
 def part(o,b):parts.append((o,b));return o
 part(sphere('hips',(0,0,.90),(.23,.14,.19),denim),'hips')
 verts=[];faces=[]
-for z,w,d in [(.96,.20,.13),(1.12,.23,.15),(1.35,.265,.15),(1.44,.27,.13),(1.53,.085,.075)]:
+for z,w,d in [(.96,.20,.13),(1.12,.23,.15),(1.35,.23,.15),(1.44,.23,.13),(1.53,.085,.075)]:
  for i in range(16):a=i*math.tau/16;verts.append((math.cos(a)*w,math.sin(a)*d,z))
 for j in range(4):
  for i in range(16):faces.append((j*16+i,j*16+(i+1)%16,(j+1)*16+(i+1)%16,(j+1)*16+i))
@@ -182,14 +188,14 @@ for side,x in [('L',-.15),('R',.15)]:
  part(cyl('thigh',(x,0,.46),(x,0,.91),.10,denim,12,.125),f'thigh{side}')
  part(cyl('calf',(x,0,.09),(x,0,.48),.075,denim,12,.10),f'shin{side}')
  part(box('sneaker',(x,.055,.07),(.19,.34,.14),white,.045),f'shin{side}')
- armx= -.31 if side=='L' else .31
- part(cyl('sleeve',(armx,0,1.09),(armx,0,1.41),.075,shirt,12,.105),f'arm{side}');part(sphere('shoulder',(armx,0,1.41),(.10,.10,.075),shirt),f'arm{side}')
+ armx= -.245 if side=='L' else .245
+ part(cyl('sleeve',(armx,0,1.09),(armx,0,1.41),.075,shirt,12,.085),f'arm{side}');part(sphere('shoulder',(armx,0,1.41),(.085,.10,.075),shirt),f'arm{side}')
  part(sphere('forearm',(armx,0,.99),(.068,.075,.18),skin),f'forearm{side}')
  part(sphere('hand',(armx,0,.81),(.065,.07,.09),skin),f'forearm{side}')
 bpy.ops.object.armature_add();rig=bpy.context.object;rig.name='NeighborRig';bpy.ops.object.mode_set(mode='EDIT');rig.data.edit_bones.remove(rig.data.edit_bones[0])
 bones=[('hips',(0,0,.85),(0,0,1.0),None),('spine',(0,0,1),(0,0,1.5),'hips'),('head',(0,0,1.5),(0,0,1.9),'spine')]
 for side,x in [('L',-.15),('R',.15)]:
- ax=-.31 if side=='L' else .31
+ ax=-.245 if side=='L' else .245
  bones += [(f'thigh{side}',(x,0,.85),(x,0,.46),'hips'),(f'shin{side}',(x,0,.46),(x,0,.07),f'thigh{side}'),(f'arm{side}',(ax,0,1.45),(ax,0,1.12),'spine'),(f'forearm{side}',(ax,0,1.12),(ax,0,.81),f'arm{side}')]
 for name,head,tail,parent in bones:
  b=rig.data.edit_bones.new(name);b.head=head;b.tail=tail
@@ -216,7 +222,8 @@ for name,duration in [('idle',60),('walk',30),('jump',30),('seated',60)]:
   if name=='jump':
    for side in ['L','R']:rig.pose.bones[f'thigh{side}'].rotation_euler.x=.45;rig.pose.bones[f'shin{side}'].rotation_euler.x=-.7;rig.pose.bones[f'arm{side}'].rotation_euler.x=-.7
   if name=='seated':
-   for side in ['L','R']:rig.pose.bones[f'thigh{side}'].rotation_euler.x=math.pi/2;rig.pose.bones[f'shin{side}'].rotation_euler.x=-math.pi/2;rig.pose.bones[f'arm{side}'].rotation_euler.x=.55;rig.pose.bones[f'forearm{side}'].rotation_euler.x=.6
+   rig.pose.bones['spine'].rotation_euler.x=.3
+   for side in ['L','R']:rig.pose.bones[f'thigh{side}'].rotation_euler.x=math.pi/2;rig.pose.bones[f'shin{side}'].rotation_euler.x=-math.pi/2+1.4;rig.pose.bones[f'arm{side}'].rotation_euler.x=.55;rig.pose.bones[f'forearm{side}'].rotation_euler.x=.6
   for p in rig.pose.bones:p.keyframe_insert('rotation_euler',frame=frame);p.keyframe_insert('location',frame=frame)
  track=rig.animation_data.nla_tracks.new();track.name=name;track.strips.new(name,1,action)
 rig.animation_data.action=None

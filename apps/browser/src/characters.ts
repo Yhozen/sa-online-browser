@@ -81,6 +81,9 @@ export function animateCharacter(
 export function disposeActor(group: THREE.Group) {
   const a = actors.get(group);
   if (a) {
+    group.traverse((o) => {
+      if (o instanceof THREE.SkinnedMesh) o.skeleton.dispose();
+    });
     a.mixer.stopAllAction();
     a.mixer.uncacheRoot(group);
     a.outfit.forEach(disposeQualityMaterial);

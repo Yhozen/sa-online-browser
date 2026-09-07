@@ -12,7 +12,7 @@ import {
   createCar,
   animateCar,
 } from "./characters";
-import { CollisionIndex } from "./collision";
+import { CollisionIndex, findSafeExitPosition } from "./collision";
 import { FollowCamera } from "./camera";
 import { mountHUD, minimap } from "./hud";
 let arena = yard as unknown as SceneManifest,
@@ -595,37 +595,15 @@ function collision(x: number, y: number, radius: number) {
   return collisionIndex.collides(x, y, radius);
 }
 function freeExitPosition(vehicle: Vehicle, seat: number): Vec3 {
-  const angle = headingFromRotation(vehicle.rotation);
-  const side = seat === 0 ? -1 : 1;
-  // Try the requested door, the opposite door, then the rear/front of the car.
-  const offsets = [
-    [side * 2, 0],
-    [-side * 2, 0],
-    [0, -3],
-    [0, 3],
-  ];
-  for (const radius of [3, 4, 6]) {
-    for (let i = 0; i < 16; i++) {
-      const a = (i * Math.PI) / 8;
-      offsets.push([Math.cos(a) * radius, Math.sin(a) * radius]);
-    }
-  }
-  for (const [x, y] of offsets) {
-    const position: Vec3 = [
-      vehicle.position[0] + x * Math.cos(angle) - y * Math.sin(angle),
-      vehicle.position[1] + x * Math.sin(angle) + y * Math.cos(angle),
-      arena.groundZ + 1,
-    ];
-    if (
-      Math.abs(position[0]) < arena.halfSize &&
-      Math.abs(position[1]) < arena.halfSize &&
-      !collision(position[0], position[1], 0.45)
-    )
-      return position;
-  }
-  // The fixed fixture always has clear spawns, including after a server vehicle correction.
-  return [...arena.spawns.find((p) => !collision(p[0], p[1], 0.45))!] as Vec3;
+  return findSafeExitPosition(
+    vehicle.position,
+    headingFromRotation(vehicle.rotation),
+    seat,
+    arena,
+    collisionIndex,
+  );
 }
+
 function step(dt: number) {
   if (!self.spawned) return;
   const old = [...self.position] as Vec3;
@@ -852,6 +830,18 @@ function snapshot() {
       scene: { id: arena.id, revision: arena.revision, ready: sceneReady },
       graphics: {
         preset: quality,
+        sceneDownloadBytes: [
+          ...performance.getEntriesByType("resource"),
+          ...performance.getEntriesByType("navigation"),
+        ].reduce(
+          (sum, entry) =>
+            sum + ((entry as PerformanceResourceTiming).encodedBodySize || 0),
+          0,
+        ),
+        memory: {
+          ...renderer.info.memory,
+          programs: renderer.info.programs?.length ?? 0,
+        },
         renderScale: renderer.getPixelRatio(),
         renderSize: renderer
           .getDrawingBufferSize(new THREE.Vector2())
@@ -922,7 +912,7 @@ function setQuality(value: string) {
   localStorage.setItem("poc-quality", quality);
   document.body.dataset.quality = quality;
   renderer.setPixelRatio(
-    quality === "low" ? 0.35 : Math.min(devicePixelRatio, 1.5),
+    quality === "low" ? 0.3 : Math.min(devicePixelRatio, 1.5),
   );
   renderer.shadowMap.enabled = quality === "standard";
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -935,7 +925,10 @@ el<HTMLSelectElement>("quality").onchange = () =>
 setQuality(quality);
 async function initializeScene() {
   try {
-    const response = await fetch("/scene", { cache: "no-store" });
+    const response = await fetch("/scene", {
+      cache: "no-store",
+      signal: AbortSignal.timeout(15000),
+    });
     if (!response.ok)
       throw Error("Scene metadata unavailable. Start the gateway and retry.");
     const manifest = await response.json();
