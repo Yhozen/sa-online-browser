@@ -11,7 +11,9 @@ if (built.status !== 0) process.exit(built.status || 1);
 mkdirSync('.runtime/logs', { recursive: true });
 const children = []; let stopping = false;
 function launch(name, command, args) {
-  const child = spawn(command, args, { cwd: root, stdio: ['ignore', 'pipe', 'pipe'], env: process.env });
+  const child = spawn(command, args, { cwd: root, stdio: [name === 'server' ? 'pipe' : 'ignore', 'pipe', 'pipe'], env: process.env });
+  child.pocName = name;
+  child.stdin?.on('error', error => { if (!stopping) console.error(`${name} input: ${error.message}`); });
   const log = createWriteStream(`.runtime/logs/${name}.log`, { flags: 'a' });
   child.stdout.pipe(log); child.stderr.pipe(log);
   child.stdout.on('data', chunk => { if (name === 'gateway') process.stdout.write(chunk); });
@@ -22,8 +24,11 @@ function launch(name, command, args) {
 }
 function shutdown(code = 0) {
   if (stopping) return; stopping = true;
-  for (const child of children) if (child.exitCode === null) child.kill('SIGTERM');
-  const timeout = setTimeout(() => { for (const child of children) if (child.exitCode === null) child.kill('SIGKILL'); }, 3000);
+  for (const child of children) if (child.exitCode === null) {
+    if (child.pocName === 'server' && child.stdin?.writable) child.stdin.write('exit\n');
+    else child.kill('SIGTERM');
+  }
+  const timeout = setTimeout(() => { for (const child of children) if (child.exitCode === null && child.signalCode === null) child.kill('SIGKILL'); }, 8000);
   Promise.all(children.map(child => child.exitCode !== null || child.signalCode !== null ? Promise.resolve() : new Promise(resolve => child.once('close', resolve))))
     .then(() => { clearTimeout(timeout); rmSync('.runtime/poc-processes.json', { force: true }); process.exit(code); });
 }

@@ -4,6 +4,11 @@
 isolated i386 userspace and QEMU, compiles `poc.pwn` with the release's bundled
 Pawn compiler, and writes a local configuration. `python3 tools/run-server.py`
 executes the server with its working directory in `.runtime/Server`.
+For a direct interactive launch, enter `exit` in the server console to stop it.
+Supervisors should retain a stdin pipe and send `exit\n` before falling back to
+signals. In this QEMU runtime, direct signal shutdown has produced an upstream
+abort or a stalled process; four console-exit probes terminated cleanly with
+exit code 0. The server binary remains unchanged.
 
 The official open.mp **v1.5.8.3079 binary and components are unchanged**. This
 cloud environment executes i386 programs but returns `EACCES` for their socket

@@ -1,6 +1,7 @@
 .context/
 .runtime/
 node_modules/
+__pycache__/
 native/build*/
 native/vendor/
 apps/browser/dist/

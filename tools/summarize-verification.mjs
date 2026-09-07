@@ -6,6 +6,10 @@ import { chromium } from 'playwright';
 const dir = 'artifacts/verification';
 const read = name => JSON.parse(readFileSync(`${dir}/${name}`, 'utf8'));
 const results = read('results.json'), soak = read('soak.json'), observations = read('server-observations.json'), agreements = read('position-agreements.json'), errors = read('browser-errors.json');
+const supervisor = read('supervisor.json');
+if (!supervisor.normalWorkerSpawn || !supervisor.allSupervisedProcessesExited || supervisor.exitCode !== 0) throw new Error('Demo supervisor verification did not pass.');
+const interrupt = read('supervisor-sigint.json');
+if (!interrupt.normalWorkerSpawn || !interrupt.allSupervisedProcessesExited || interrupt.exitCode !== 0) throw new Error('Demo Ctrl+C verification did not pass.');
 if (results.stats.unexpected || results.stats.interrupted || results.stats.skipped || soak.durationMs < 600000 || !agreements.length || errors.some(x => x.errors.length)) throw new Error('Acceptance evidence is incomplete or failing.');
 const cases = [];
 function visit(suite) {
@@ -20,7 +24,7 @@ for (const event of observations) {
   if (event.event === 'disconnect') { const name = active.get(event.player); if (name?.startsWith('BrowserCycle_')) cycles.push(name); active.delete(event.player); }
 }
 if (new Set(cycles).size !== 20) throw new Error('Twenty observed server slot releases are required.');
-const sourceFiles = ['apps/browser/src/main.ts', 'services/gateway/server.mjs', 'native/worker.cpp', 'tools/setup-protocol.py', 'test-server/poc.pwn', 'test-server/arena.json', 'tests/browser/poc.spec.mjs', 'package-lock.json'];
+const sourceFiles = ['apps/browser/src/main.ts', 'services/gateway/server.mjs', 'native/worker.cpp', 'tools/setup-protocol.py', 'test-server/poc.pwn', 'test-server/arena.json', 'tests/browser/poc.spec.mjs', 'tools/dev.mjs', 'tools/verify-supervisor.py', 'package-lock.json'];
 const hash = file => createHash('sha256').update(readFileSync(file)).digest('hex');
 const summary = {
   verifiedAt: new Date().toISOString(), command: 'npm run verify:poc',
@@ -30,6 +34,7 @@ const summary = {
   normalPlayers: observations.filter(x => x.event === 'connect' && ['Proof_A', 'Proof_B'].includes(x.name)).map(({ name, player, npc }) => ({ name, player, npc })),
   browserCyclesReleased: [...new Set(cycles)].length,
   sustainedSession: soak,
+  demoSupervisor: { termination: supervisor, keyboardInterrupt: interrupt },
   positionChecks: { count: agreements.length, maxDistance: Math.max(...agreements.map(x => x.distance)), maxSampleAgeMs: Math.max(...agreements.map(x => x.checkedAt - x.serverSampleAt)), requiredDistance: 0.5, deadlineMs: 1000 },
   uncaughtBrowserErrors: errors.flatMap(x => x.errors),
   testedSourceSha256: Object.fromEntries(sourceFiles.map(file => [file, hash(file)])),
