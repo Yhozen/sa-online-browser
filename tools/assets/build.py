@@ -151,17 +151,30 @@ for x in [-.96,.96]:
   wheel=cyl('wheel', (x-.12,y,-.59),(x+.12,y,-.59),.41,dark,20)
   cyl('hub',(x-.14,y,-.59),(x+.14,y,-.59),.24,chrome,12)
 box('spoiler',(0,-1.91,.30),(1.7,.28,.08),coral,.03)
+# Lower the glasshouse into sports-coupe proportions; retain wheel radius and ground contact.
+for o in list(bpy.context.scene.objects):
+ if o.type=='MESH' and not (o.name.startswith('wheel') or o.name.startswith('hub')):
+  bpy.ops.object.select_all(action='DESELECT');o.select_set(True);bpy.context.view_layer.objects.active=o;bpy.ops.object.transform_apply(location=True,rotation=True,scale=True)
+  for vertex in o.data.vertices:vertex.co.z=vertex.co.z*.75-.2
+ if o.name.startswith('seat_') and o.type=='EMPTY':o.location.z=-.30
 export('coupe',True)
 
 # Human authored as smoothly shaded weighted parts; bone weights are explicit and editable.
 start();parts=[]
 def part(o,b):parts.append((o,b));return o
 part(sphere('hips',(0,0,.90),(.23,.14,.19),denim),'hips')
-part(sphere('shirt',(0,0,1.23),(.26,.15,.34),shirt),'spine')
+verts=[];faces=[]
+for z,w,d in [(.96,.20,.13),(1.12,.23,.15),(1.35,.265,.15),(1.44,.27,.13),(1.53,.085,.075)]:
+ for i in range(16):a=i*math.tau/16;verts.append((math.cos(a)*w,math.sin(a)*d,z))
+for j in range(4):
+ for i in range(16):faces.append((j*16+i,j*16+(i+1)%16,(j+1)*16+(i+1)%16,(j+1)*16+i))
+body=part(mesh('overshirt',verts,faces,shirt),'spine')
+for f in body.data.polygons:f.use_smooth=True
 part(box('undershirt',(0,.144,1.26),(.19,.018,.38),white,.025),'spine')
 part(cyl('neck',(0,0,1.48),(0,0,1.59),.08,skin,12),'head')
 part(sphere('head',(0,0,1.72),(.135,.13,.19),skin,16,10),'head')
 part(sphere('hair',(0,-.025,1.83),(.14,.125,.10),hair,14,8),'head')
+part(sphere('beard',(0,.025,1.63),(.108,.105,.06),hair),'head')
 part(sphere('nose',(0,.13,1.72),(.032,.045,.045),skin),'head')
 for x in [-.055,.055]:
  part(sphere('eye',(x,.119,1.77),(.022,.016,.013),white),'head');part(sphere('iris',(x,.133,1.77),(.010,.005,.011),hair),'head')
@@ -170,7 +183,7 @@ for side,x in [('L',-.15),('R',.15)]:
  part(cyl('calf',(x,0,.09),(x,0,.48),.075,denim,12,.10),f'shin{side}')
  part(box('sneaker',(x,.055,.07),(.19,.34,.14),white,.045),f'shin{side}')
  armx= -.31 if side=='L' else .31
- part(cyl('sleeve',(armx,0,1.09),(armx,0,1.41),.075,shirt,12,.105),f'arm{side}')
+ part(cyl('sleeve',(armx,0,1.09),(armx,0,1.41),.075,shirt,12,.105),f'arm{side}');part(sphere('shoulder',(armx,0,1.41),(.10,.10,.075),shirt),f'arm{side}')
  part(sphere('forearm',(armx,0,.99),(.068,.075,.18),skin),f'forearm{side}')
  part(sphere('hand',(armx,0,.81),(.065,.07,.09),skin),f'forearm{side}')
 bpy.ops.object.armature_add();rig=bpy.context.object;rig.name='NeighborRig';bpy.ops.object.mode_set(mode='EDIT');rig.data.edit_bones.remove(rig.data.edit_bones[0])

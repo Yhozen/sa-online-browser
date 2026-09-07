@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-import { GraphicsUnavailableError } from './graphics';
-import './style.css';
+import { GraphicsUnavailableError } from "./graphics";
+import "./style.css";
 
 // Stop before networking and input handlers are installed when graphics fail.
-import('./main').catch(error => {
-    if (!(error instanceof GraphicsUnavailableError)) throw error;
-    document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
+import("./main").catch((error) => {
+  if (!(error instanceof GraphicsUnavailableError)) throw error;
+  document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
 <main class="graphics-error panel" role="alert" aria-labelledby="graphics-title">
     <div class="kicker">Browser playground</div>
     <h1 id="graphics-title">3D graphics are unavailable</h1>
@@ -15,6 +15,8 @@ import('./main').catch(error => {
     <button class="primary" id="retry-graphics">Try again</button>
     <details><summary>Graphics details</summary><pre id="graphics-details"></pre></details>
 </main>`;
-    document.getElementById('graphics-details')!.textContent = error.message;
-    document.getElementById('retry-graphics')!.addEventListener('click', () => location.reload());
+  document.getElementById("graphics-details")!.textContent = error.message;
+  document
+    .getElementById("retry-graphics")!
+    .addEventListener("click", () => location.reload());
 });
