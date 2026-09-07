@@ -1,4 +1,4 @@
-# ADR 0003: original neighborhood presentation over the existing protocol subset
+# ADR 0004: original neighborhood presentation over the existing protocol subset
 
 Status: accepted and being verified, 2026-09-07.
 

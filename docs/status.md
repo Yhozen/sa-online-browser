@@ -1,10 +1,10 @@
 # Project status and continuation
 
-Updated 2026-09-07. The accepted implementation scope is [the browser PoC plan](poc-plan.md), which supersedes the broader roadmap's immediate native-GTA comparison gate. SA-MP 0.3.7 through separate native workers remains the selected protocol architecture.
+Updated 2026-09-07. The current accepted scope is [the Arroyo neighborhood plan](neighborhood-plan.md), preserving the working [browser PoC subset](poc-plan.md). Full neighborhood and retained-yard acceptance is running; preliminary route, collision, loading and lifecycle checks have passed. SA-MP 0.3.7 through separate native workers remains the selected protocol architecture.
 
 ## Current implementation
 
-The unchanged official open.mp release runs locally. Two ordinary, non-NPC protocol workers and two independent browser sessions have joined, spawned, exchanged server-routed walking/chat, and shared a car with driver/passenger synchronization. The browser uses original Three.js geometry and arcade collision/handling. Commands allocate seats through the Pawn fixture and standard placement RPCs.
+The unchanged official open.mp release runs locally. Two ordinary, non-NPC protocol workers and two independent browser sessions have joined, spawned, exchanged server-routed walking/chat, and shared a car with driver/passenger synchronization. The browser now loads original Blender GLB houses, props, a rigged human and a sports coupe, with shared scene geometry and arcade collision/handling. Commands allocate seats through the Pawn fixture and standard placement RPCs.
 
 The cloud desktop WebGL startup failure is fixed with `npm run open:poc`, which launches a separate Chrome profile with the same SwiftShader graphics flags used by verification. The failing desktop Chrome was running with `--disable-gpu`; the earlier acceptance results only covered explicitly enabled software WebGL. Unavailable graphics now produce a recovery screen before networking starts. See [run and recovery instructions](../README.md#webgl-startup-errors).
 
@@ -35,7 +35,7 @@ Validation of this fix: three headed graphics regressions passed (software WebGL
 
 The approved local PoC is complete. See [the result record](poc-results.md) and [machine summary](poc-verification.json). Run `npm run setup:poc`, then `npm run verify:poc` with ports 3000/7777 free to reproduce acceptance. Start the demo with `npm run dev:poc`. Keep generated runtime downloads and recordings ignored; committed summaries and source hashes identify the tested implementation.
 
-The durable next stage after this PoC is a separately agreed native-reference interoperability slice, with legal user-provided assets and an original/native comparison fixture. Public-server admission, broader RPC coverage, cross-browser behavior, network impairment, realistic GTA collision/handling, asset streaming, and deployment remain separate gates in the long-horizon roadmap.
+The accepted continuation is Arroyo, then a server-scored checkpoint challenge and private remote play, followed by a native-reference interoperability slice with user-provided assets and an original/native comparison fixture. Public-server admission, broader RPC coverage, cross-browser behavior, network impairment, realistic GTA collision/handling, asset streaming, and deployment remain separate gates in the long-horizon roadmap.
 
 ## History
 
