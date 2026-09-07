@@ -27,6 +27,8 @@ Original implementation code is GPL-3.0-or-later. Preserve independent upstream 
 5. Implement stream/placement/removal/driver/passenger/exit and correction vehicle messages; complete route both ways with swapped roles.
 6. Automate two isolated Chromium sessions, then headed Chromium under Xvfb, retaining screenshots/video/traces and server/worker evidence.
 
+Implementation annotation: the cloud denied native i386 socket calls. The unchanged official release now runs through checksum-pinned QEMU with isolated Debian libraries. A pristine x86_64 source fallback was investigated but not completed once this release-binary path worked; see [the runtime record](../test-server/README.md).
+
 ## Acceptance
 
 Both server player IDs must be distinct and non-NPC. Movement must appear in server observations and the other browser's incoming state. Unique chat arrives exactly once. Server must report driver/passenger in the same vehicle, vehicle movement must follow driver input, and passenger controls must not move it. Simultaneous seat requests yield one driver. Exit/swap, server corrections, duplicate name, unavailable server, worker crash, server restart, close/reopen all behave visibly without fake success.

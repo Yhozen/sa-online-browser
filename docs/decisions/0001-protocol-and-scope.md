@@ -1,7 +1,7 @@
 # ADR 0001: SA-MP 0.3.7 through a native gateway
 
 Date: 2026-09-07  
-Status: selected for feasibility work; implementation and interoperability unproven.
+Status: selected and implemented for the narrower [browser/open.mp PoC](0002-placeholder-poc.md). Native GTA and original SA-MP interoperability remain unverified. The analysis below records the initial research decision; see [current status](../status.md) for implementation evidence.
 
 ## Decision
 

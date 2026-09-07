@@ -1,0 +1,139 @@
+{
+  "verifiedAt": "2026-09-07T22:08:32.748Z",
+  "command": "npm run verify:poc",
+  "environment": {
+    "node": "v24.14.0",
+    "platform": "linux",
+    "architecture": "x64",
+    "chromium": "Google Chrome for Testing 147.0.7727.15",
+    "headed": true,
+    "rendering": "SwiftShader under Xvfb; functional rendering only"
+  },
+  "upstream": {
+    "version": "v1.5.8.3079",
+    "sourceCommit": "c6759bd8d265171ae3d86598895a23d5a8d92a3b",
+    "url": "https://github.com/openmultiplayer/open.mp/releases/download/v1.5.8.3079/open.mp-linux-x86.tar.gz",
+    "sha256": "5df708898cbbb97f6c299ad5c1ff663a52ad4d3d39b3d561f1fe08a32df424f4",
+    "binarySha256": "4c402c280168447b841b862386ccc1bc1fd3126cfaad3481be493d84a04689ff"
+  },
+  "browserScenarios": [
+    {
+      "title": "end-to-end: normal players walk, chat, share a car and recover",
+      "status": "expected",
+      "durationMs": 23940
+    },
+    {
+      "title": "failures: duplicate name, worker crash, unavailable server and restart",
+      "status": "expected",
+      "durationMs": 62546
+    },
+    {
+      "title": "lifecycle: twenty browser connection cycles release sessions",
+      "status": "expected",
+      "durationMs": 33106
+    },
+    {
+      "title": "edges: jump, wall collision, safe passenger exit and hidden-tab cleanup",
+      "status": "expected",
+      "durationMs": 23036
+    },
+    {
+      "title": "soak: ten minutes of active two-player walking chat and driving",
+      "status": "expected",
+      "durationMs": 622322
+    }
+  ],
+  "durationMs": 767321.828,
+  "normalPlayers": [
+    {
+      "name": "Proof_A",
+      "player": 0,
+      "npc": 0
+    },
+    {
+      "name": "Proof_B",
+      "player": 1,
+      "npc": 0
+    },
+    {
+      "name": "Proof_B",
+      "player": 1,
+      "npc": 0
+    }
+  ],
+  "browserCyclesReleased": 20,
+  "sustainedSession": {
+    "durationMs": 602817,
+    "rounds": 79,
+    "playerIds": [
+      0,
+      1
+    ],
+    "errors": []
+  },
+  "demoSupervisor": {
+    "termination": {
+      "startup": true,
+      "normalWorkerSpawn": true,
+      "signal": "SIGTERM",
+      "exitCode": 0,
+      "pidFileRemoved": true,
+      "allSupervisedProcessesExited": true,
+      "upstreamAbort": false
+    },
+    "keyboardInterrupt": {
+      "startup": true,
+      "normalWorkerSpawn": true,
+      "signal": "process-group SIGINT",
+      "exitCode": 0,
+      "pidFileRemoved": true,
+      "allSupervisedProcessesExited": true,
+      "upstreamAbort": false
+    }
+  },
+  "positionChecks": {
+    "count": 167,
+    "maxDistance": 0.18899417495727544,
+    "maxSampleAgeMs": 200,
+    "requiredDistance": 0.5,
+    "deadlineMs": 1000
+  },
+  "uncaughtBrowserErrors": [],
+  "testedSourceSha256": {
+    "apps/browser/src/main.ts": "2cfb1ae5e560375baf82e518f55a21adea73148c9a84f68c696477b9b0558e11",
+    "services/gateway/server.mjs": "8e08197eb68561d4e074fd4ee0b1f283cb55b44631174d8968203d3ecc710e51",
+    "native/worker.cpp": "805debb07a1504151f4deb487cc10d41f589d20f359bdd53cab147f2f10567e9",
+    "tools/setup-protocol.py": "fcaa0ce80cb14bf33a007d6bec1687e832e7d31a9a13b8a469e43110e0cfb2d4",
+    "test-server/poc.pwn": "46c4c8c71f1abf901258bd545bdb6aeee3c058b9cc890f8ccc8b3b1896b79a95",
+    "test-server/arena.json": "b1dcd0a602599ba894d4bbe7a30a713a01daa61ae55bd9b5067135922019b53d",
+    "tests/browser/poc.spec.mjs": "3a98c14b7697f1b9c136f17879eb21336eecc82bdb551ee7aa98f44d24a043c4",
+    "tools/dev.mjs": "a32709f89229838bf118130367b16a016e375df0dc94ff1cabe75d5585ef0104",
+    "tools/verify-supervisor.py": "c0a2e0594b98236a2a1d7114e66d2ca0a8ddbba05e1ae77e4134ff7fa2cd0bd9",
+    "package-lock.json": "b99e5c05368deae7d0cd82a86505d33671cc2275c0852eed3f08afbd0b07bd74"
+  },
+  "nativeWorkerSha256": "4b1cb23ed915be631b5aa27bd48f625d79420c4380bc6ccb2762eb9625843c3d",
+  "evidence": [
+    "results.json",
+    "server-observations.json",
+    "position-agreements.json",
+    "browser-errors.json",
+    "soak.json",
+    "walking-chat.png",
+    "driver-passenger.png",
+    "wall-exit.png",
+    "soak-complete.png",
+    "report/",
+    "videos/",
+    "*.zip"
+  ],
+  "unverified": [
+    "original GTA clients",
+    "original SA-MP servers",
+    "public servers",
+    "non-Chromium browsers",
+    "hardware GPU performance",
+    "WAN behavior",
+    "GTA assets and realistic physics",
+    "full legacy protocol coverage"
+  ]
+}

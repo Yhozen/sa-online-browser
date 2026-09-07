@@ -7,6 +7,7 @@ The root GPL-3.0 license applies to original PoC implementation code, with the o
 - **nlohmann/json**: MIT, downloaded by the native setup recipe with its source header and notice.
 - **Three.js, ws, TypeScript, Vite and their dependencies**: retain package licenses in the installed dependency tree; exact versions/integrity are recorded in package-lock.json. Playwright is Apache-2.0.
 - **Debian runtime packages**: the isolated runtime retains downloaded package metadata and included copyright/license files. Exact versions and package hashes are recorded by the setup manifest.
+- **QEMU user-mode emulator**: the Debian `qemu-user-static` package supplies `qemu-i386-static` under QEMU's upstream GPL and per-file terms. The package's copyright file and source-package metadata are retained in the isolated runtime. This runs the unchanged official server binary on the cloud host.
 - **Installed agent skills**: third-party material under `.agents/skills`, with origins in skills-lock.json; the original PoC license does not change their terms.
 
 No GTA executable, model, texture, audio or native SA-MP client is included. Browser geometry is created by the original implementation.

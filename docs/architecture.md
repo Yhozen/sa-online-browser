@@ -1,6 +1,6 @@
 # Proposed architecture
 
-Date: 2026-09-07. Design proposal; no components have been implemented.
+Date: 2026-09-07. Historical long-horizon design proposal. The narrower [accepted PoC](poc-plan.md) now has an implementation; consult [current status](status.md) for demonstrated behavior and remaining gates.
 
 ## End-to-end boundary
 
@@ -94,4 +94,4 @@ tools/                    Capture, replay and comparison utilities
 docs/                     Evidence, decisions, status and compatibility
 ```
 
-These directories are proposed, not present implementation. Keep the browser transport and SA-MP codec separate so either can change without rewriting simulation.
+This is the proposed long-horizon layout; the implemented PoC uses `apps/browser`, `services/gateway`, and `native`. Keep the browser transport and SA-MP codec separate so either can change without rewriting simulation.

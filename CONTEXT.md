@@ -19,3 +19,9 @@ A replacement browser client that joins an existing multiplayer server through a
 **Passenger**: A seated player whose position follows the shared vehicle without authority to drive it.
 
 **Protocol proof**: Demonstrated normal-player behavior on the pinned server through actual SA-MP UDP traffic. It is narrower than native GTA gameplay compatibility.
+
+**Session epoch**: Gateway-assigned identity for one browser WebSocket session. Rejoining creates a new epoch so delayed messages cannot enter the new session.
+
+**Control revision**: Native worker counter changed by server corrections and seat transitions. Browser snapshots echo it; the worker drops snapshots from an earlier revision.
+
+**Seat reservation**: A Pawn fixture rule assigning a driver or passenger slot before sending standard vehicle-placement RPCs. It is distinct from a client's vehicle-entry notification.
