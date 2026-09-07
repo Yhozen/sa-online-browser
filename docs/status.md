@@ -44,3 +44,7 @@ Research compared MTA, SA-MP/open.mp, and browser/runtime feasibility with paral
 ## Active: Arroyo neighborhood
 
 Accepted neighborhood implementation is underway. The existing yard remains the multiplayer regression fixture. Art direction and gates: [neighborhood plan](neighborhood-plan.md). Original concept and texture inputs generated with the imagegen skill; official Blender download returned a Cloudflare challenge, and the official mirror supplies the pinned release/checksum.
+
+Scene contract and first asset kit are implemented. The original Blender rig exports all four requested clips. Initial desktop inspection caught a minimap covering the join button at 720p and competing old/new camera updates; both are fixed before acceptance testing. Imported geometry and materials are shared rather than disposed on player reconnect.
+
+Cloud graphics tuning: first two-view PBR run was below the FPS target. Low mode now uses shared baked vertex shading, reduced internal resolution, simplified fence wires and merged coupe body materials. Geometry remains under budget. Camera test initially aimed through the gap between houses; move to an actual facade before asserting obstruction. Scene mismatch/asset retry and four scene unit checks pass.
