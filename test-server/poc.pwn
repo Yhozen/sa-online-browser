@@ -6,6 +6,10 @@ new Car;
 new Driver = INVALID_PLAYER_ID;
 new Passenger = INVALID_PLAYER_ID;
 new SampleSequence;
+new bool:ResetPending;
+new bool:ResetTimeoutLogged;
+new ResetRequestedAt;
+new ResetDisconnectedPlayer = INVALID_PLAYER_ID;
 
 forward Observe();
 
@@ -35,14 +39,11 @@ stock ClearSeat(playerid)
     if (Passenger == playerid) Passenger = INVALID_PLAYER_ID;
 }
 
-stock ResetFixture()
+stock FinishReset()
 {
-    Driver = INVALID_PLAYER_ID;
-    Passenger = INVALID_PLAYER_ID;
     for (new id; id < MAX_PLAYERS; id++)
     {
-        if (!IsPlayerConnected(id)) continue;
-        if (IsPlayerInAnyVehicle(id)) RemovePlayerFromVehicle(id);
+        if (!IsPlayerConnected(id) || id == ResetDisconnectedPlayer) continue;
         new Float:x, Float:y, Float:z;
         SpawnPosition(id, x, y, z);
         SetPlayerPos(id, x, y, z);
@@ -52,7 +53,50 @@ stock ResetFixture()
     SetVehicleZAngle(Car, POC_CAR_HEADING);
     SetVehicleVelocity(Car, 0.0, 0.0, 0.0);
     SetVehicleHealth(Car, 1000.0);
+    ResetPending = false;
+    ResetDisconnectedPlayer = INVALID_PLAYER_ID;
     printf("POC {\"event\":\"reset\",\"tick\":%d}", GetTickCount());
+}
+
+stock ResetFixture(disconnectedPlayer = INVALID_PLAYER_ID)
+{
+    if (disconnectedPlayer != INVALID_PLAYER_ID) ResetDisconnectedPlayer = disconnectedPlayer;
+    if (ResetPending) return;
+    ResetPending = true;
+    ResetTimeoutLogged = false;
+    ResetRequestedAt = GetTickCount();
+    Driver = INVALID_PLAYER_ID;
+    Passenger = INVALID_PLAYER_ID;
+    for (new id; id < MAX_PLAYERS; id++)
+    {
+        if (!IsPlayerConnected(id) || id == ResetDisconnectedPlayer) continue;
+        // Also cancel a placement whose first vehicle synchronization is still pending.
+        RemovePlayerFromVehicle(id);
+    }
+    printf("POC {\"event\":\"resetRequested\",\"tick\":%d}", ResetRequestedAt);
+}
+
+stock TryFinishReset()
+{
+    if (!ResetPending) return;
+    for (new id; id < MAX_PLAYERS; id++)
+    {
+        if (!IsPlayerConnected(id) || id == ResetDisconnectedPlayer) continue;
+        new PLAYER_STATE:playerState = GetPlayerState(id);
+        if (playerState != PLAYER_STATE_ONFOOT && playerState != PLAYER_STATE_NONE)
+        {
+            if (!ResetTimeoutLogged && GetTickCount() - ResetRequestedAt >= 5000)
+            {
+                ResetTimeoutLogged = true;
+                printf("POC {\"event\":\"resetWaiting\",\"player\":%d,\"state\":%d,\"tick\":%d}", id, _:playerState, GetTickCount());
+                SendClientMessageToAll(0xFF9999FF, "Reset is waiting for players to leave the vehicle.");
+            }
+            return;
+        }
+    }
+    // The received on-foot packet supersedes older vehicle packets on the same
+    // unreliable-sequenced channel. Only now can the final vehicle correction stick.
+    FinishReset();
 }
 
 public OnGameModeInit()
@@ -127,6 +171,12 @@ public OnPlayerCommandText(playerid, cmdtext[])
     if (!strcmp(cmdtext, "/drive", true)) seat = 0;
     if (!strcmp(cmdtext, "/passenger", true)) seat = 1;
     if (seat == -1) return 0;
+    if (ResetPending)
+    {
+        SendClientMessage(playerid, 0xFF9999FF, "Reset in progress. Wait before entering the car.");
+        printf("POC {\"event\":\"seatRejected\",\"player\":%d,\"seat\":%d,\"reason\":\"reset\",\"tick\":%d}", playerid, seat, GetTickCount());
+        return 1;
+    }
     new Float:x, Float:y, Float:z;
     GetVehiclePos(Car, x, y, z);
     if (!IsPlayerInRangeOfPoint(playerid, 12.0, x, y, z))
@@ -168,13 +218,14 @@ public OnPlayerDisconnect(playerid, reason)
 {
     new wasDriver = Driver == playerid;
     ClearSeat(playerid);
-    if (wasDriver) ResetFixture();
+    if (wasDriver) ResetFixture(playerid);
     printf("POC {\"event\":\"disconnect\",\"player\":%d,\"reason\":%d,\"tick\":%d}", playerid, reason, GetTickCount());
     return 1;
 }
 
 public Observe()
 {
+    TryFinishReset();
     SampleSequence++;
     new count;
     for (new id; id < MAX_PLAYERS; id++)

@@ -1,70 +1,37 @@
 # Project status and continuation
 
-Last updated: 2026-09-07.
+Updated 2026-09-07. The accepted implementation scope is [the browser PoC plan](poc-plan.md), which supersedes the broader roadmap's immediate native-GTA comparison gate. SA-MP 0.3.7 through separate native workers remains the selected protocol architecture.
 
-## Current result
+## Current implementation
 
-Research and initial planning are complete. Select **SA-MP 0.3.7 via a native gateway**, using pinned open.mp as the first test server. The [decision](decisions/0001-protocol-and-scope.md), [architecture](architecture.md) and [roadmap](roadmap.md) are the durable project record.
+The unchanged official open.mp release runs locally. Two ordinary, non-NPC protocol workers and two independent browser sessions have joined, spawned, exchanged server-routed walking/chat, and shared a car with driver/passenger synchronization. The browser uses original Three.js geometry and arcade collision/handling. Commands allocate seats through the Pawn fixture and standard placement RPCs.
 
-Three parallel research agents investigated MTA, SA-MP/open.mp, and browser/engine feasibility. The primary agent cross-checked decisive claims against official documentation and repository code and consolidated the plan. No server was run, no native player was connected, no browser runtime was built, and no interoperability or performance claim has been validated.
-
-## Milestone ledger
-
-| Milestone | Status | Evidence / next gate |
+| Milestone | Status | Evidence |
 | --- | --- | --- |
-| R0: compare protocols and write plan | Complete | Three research reports; ADR 0001; architecture and roadmap |
-| M0: reproducible lab | Pending | Release hash, config, gamemode, dependency/license inventory, native fixture |
-| M1: native replacement client | Pending | Client-direction RakNet/SA-MP join, spawn and idle sync |
-| M2: browser gateway | Pending | Independent browser sessions and tested delivery behavior |
-| Runtime experiment / ADR 0002 | Pending | Measured small scene and engine tradeoff |
-| M3: on-foot mixed clients | Pending | Native and browser observe the same movement |
-| M4: world/assets | Pending | Local import, collision, bounded streaming |
-| M5: friends driving MVP | Pending | Driver/passenger interoperability |
-| M6–M8: coverage, hardening, hosted alpha | Pending | See milestone exit criteria |
+| Accepted plan and glossary | Complete | ADR 0002, poc-plan.md, CONTEXT.md |
+| Reproducible runtime | Implemented | Pinned release/package hashes; isolated Debian/QEMU recipe; unchanged server listens on UDP 7777 |
+| Native legacy sessions | Implemented | Live two-worker admission/chat/motion/seats; directional/fragment/invalid-input tests |
+| Browser walking/chat/driving | Implemented | Headless two-browser end-to-end pass; screenshots and decoded state |
+| Headed failures/lifecycle | Passed preliminary run | Duplicate nickname, crash, unavailable server/restart; twenty browser connect/disconnect cycles |
+| Full headed acceptance and ten-minute soak | In progress | Final run follows reset-race fix |
+| Native GTA / original SA-MP / public servers | Deferred, unverified | Separate compatibility work; not implied by this PoC |
 
-## Assumptions and unresolved preferences
+## Experiments and decisions
 
-- Begin with a controlled server, then expand compatibility. The user was asked this preference during research; no answer had arrived when this plan was written. This assumption does not justify replacing the legacy wire protocol with a custom server API.
-- First platform: desktop browsers with keyboard/mouse, initially Chromium plus a second browser engine. Mobile is deferred until runtime budgets and controls are understood.
-- Browser performs gameplay/rendering locally; a hosted gateway is acceptable as the practical transport architecture. No plugin/native helper on the browser user's device.
-- Supported GTA data can eventually be selected locally by the player. Exact data variant, availability of a native reference installation and distribution terms remain unresolved.
-- Product code license, renderer, physics library and final web transport library remain undecided; narrow spikes should resolve them with evidence.
+- **Runtime:** native execution of the official 32-bit binary reached denied socket syscalls (`EACCES`) under this cloud's syscall restrictions. An x86_64 source fallback was investigated but not completed. Running the unchanged release with a checksum-pinned `qemu-i386-static` and isolated Debian bookworm i386 libraries successfully translates the calls. Host libraries remain untouched.
+- **Client transport:** the pinned RakNet server fork needs client-direction transformation, cookie/auth handling, guarded server-only behavior, and bounded fragment acceptance. These adaptations affect only the worker dependency. The upstream binary is unchanged.
+- **Corrections:** browser state echoes worker `controlRevision`; delayed snapshots cannot undo server teleports, heading changes, or seat transitions. The worker waits for an acknowledged placement before transmitting vehicle state.
+- **Headed reset failure, corrected:** a final in-flight driver packet could overwrite an immediate fixture vehicle reset. The fixture now waits for confirmed on-foot state before finalizing reset, and acceptance explicitly checks the vehicle reset position. The next headed end-to-end run passed.
+- **Soak investigation:** the first active round found a passenger browser position lagging the server by two units. No sustained-session pass is claimed; retain independent snapshots on divergence and investigate before the final run.
+- **Review fixes:** collision-free exit selection prevents becoming trapped beside barriers. Hidden tabs explicitly disconnect and clear entities/input; ordinary window blur only clears input. Disconnect reasons survive WebSocket closure. Malformed fragment review exposed memory ownership/alignment hazards in the adapted dependency; AddressSanitizer regressions are being added.
+- **Verification hardening:** native checks remain active with `-DNDEBUG`, with a deliberate failing-fixture negative control. Initialization bytes are independently packed from the pinned upstream schema, fragmented/reordered, and decoded. Lifecycle checks observe worker exit and server slot release, not only gateway session-map deletion.
 
-## Risk register
+## Continuing work
 
-| ID | Risk and present evidence | Experiment / response | Gate |
-| --- | --- | --- | --- |
-| R1 | open.mp RakNet code is server-oriented; independent client admission unproven | Adapt client direction/auth and compare a normal player session; separate query from join | M1 |
-| R2 | open.mp success may not reproduce original SA-MP behavior | Maintain an independent original-server fixture and label results by server/build | M1, M7 |
-| R3 | Legacy RakNet and other code have separate license/provenance constraints | Record exact terms per dependency before vendoring; choose a documented reuse/independent implementation path | M0 |
-| R4 | Rendering can work while collision, animation or vehicle behavior diverges from native GTA | Measured shared world slice, native observation, one vehicle before broader content | Runtime, M3–M5 |
-| R5 | Assets/format variants and local reference installation may be unavailable | Use synthetic fixtures initially; record native and asset-dependent tests as pending | M0, M4 |
-| R6 | Public server gamemodes/custom-client checks exceed supported behavior | Feature/admission ledger and per-server testing; narrow supported set | M6–M7 |
-| R7 | Browser transport delay, loss or throttling causes stale state | Compare WSS/WebRTC, bounded buffers, epochs, tab and impairment tests | M2–M3 |
-| R8 | Shared gateway IPs/global native state cause admission or session isolation problems | Two-session test first, separate workers initially, measured connection limits | M2 |
-| R9 | MTA transport/anti-cheat and Lua loading rely on unavailable module internals | Defer MTA; require new evidence before revisiting | ADR review |
-| R10 | Gateway per-session cost or browser memory makes deployment impractical | Benchmark 8-player load and real asset slice before public alpha | M4, M7 |
+Run `npm run setup:poc`, then `npm run verify:poc` with ports 3000/7777 free. Inspect the final machine results, soak record, independent server observations, and browser traces before declaring acceptance. Keep generated runtime downloads and recordings ignored. Commit fixes and result summaries using Conventional Commits.
 
-## Next concrete task
+The durable next stage after this PoC is a separately agreed native-reference interoperability slice, with legal user-provided assets and an original/native comparison fixture. Public-server admission, broader RPC coverage, cross-browser behavior, network impairment, realistic GTA collision/handling, asset streaming, and deployment remain separate gates in the long-horizon roadmap.
 
-**Execute M0, then begin the native M1 admission spike.** The first implementation PR should contain:
+## History
 
-1. A reproducible pinned open.mp server recipe, generated configuration and tiny Pawn test gamemode.
-2. A dependency/source manifest, with exact release artifact hashes and the licensing decision for any imported transport code.
-3. A headless native probe that clearly distinguishes UDP discovery, transport acceptance, player join and spawn. It may initially prove only the first stage; report the others as pending.
-4. A fixture/capture format and updated status with exact commands, outputs and failure state. Native comparison is required before declaring full M1 success.
-
-Keep native protocol investigation focused before writing a production gateway or importing a full city. The next acceptance objective is a **normal player session visible to a native client**, not a polished landing page.
-
-## How to resume after a new session
-
-1. Read this file and ADR 0001, then the next milestone in the roadmap.
-2. Read the research report relevant to the next uncertainty; use pinned links to reproduce findings. `.context/research/` clones are disposable and may not survive a new workspace.
-3. Check working-tree changes and existing test results before editing. Do not infer a milestone passed from code presence.
-4. Append a dated entry below with outcome, evidence location, remaining blocker and next action. Move resolved assumptions into decisions and update the risk/compatibility ledgers.
-
-## Work log
-
-### 2026-09-07 — Initial research
-
-Inspected all four user-provided sources plus official open.mp, MTA and browser documentation. Found decisive MTA closed-module dependencies, SA-MP's inspectable server-side reference and client adaptation gap, and SanAndreasUnity's separate multiplayer and browser portability limitations. Selected SA-MP and wrote staged acceptance gates. Reviewed the architecture and roadmap with the protocol and runtime research agents. Checked all 8 Markdown files for balanced code fences, all 17 local links and 43 unique pinned source paths against the research checkouts; all passed. Implementation tests are not applicable yet.
+Research compared MTA, SA-MP/open.mp, and browser/runtime feasibility with parallel agents. MTA's unavailable transport/anti-cheat internals made SA-MP the more inspectable initial target. The user then approved the narrower placeholder PoC and its local two-browser acceptance criteria. Parallel implementation covered the runtime fixture, native protocol, and browser; the primary agent integrated the gateway, verification, and durable project record.

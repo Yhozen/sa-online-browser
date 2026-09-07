@@ -93,6 +93,7 @@ const received: Record<string, number> = {}, chats: {
     system: boolean;
 }[] = [];
 let socket: WebSocket | null = null, epoch: number | null = null, sequence = 0, controlRevision = 0, lastServerSequence = -1, status = 'Not connected', onFootRate = 30, inCarRate = 30, lastSend = 0, heading = 0, speed = 0, jumpSpeed = 0, toastUntil = 0;
+let terminalReason: string | null = null;
 const keys = new Set<string>();
 function capsule(color: number) { const group = new THREE.Group(); const mesh = new THREE.Mesh(new THREE.CapsuleGeometry(.33, .95, 6, 12), mat(color)); mesh.rotation.x = Math.PI / 2; mesh.castShadow = true; group.add(mesh); box(.42, .22, .18, darkMat, [0, .29, .43], group); const ring = new THREE.Mesh(new THREE.RingGeometry(.47, .51, 32), new THREE.MeshBasicMaterial({ color, side: THREE.DoubleSide, transparent: true, opacity: .4 })); ring.position.z = -.97; group.add(ring); scene.add(group); return group; }
 const selfMesh = capsule(0x68d7bc);
@@ -141,7 +142,7 @@ function clearWorld() { for (const p of peers.values()) {
     p.label.remove();
 } for (const v of vehicles.values())
     removeMesh(v.mesh); peers.clear(); vehicles.clear(); names.clear(); self.id = null; self.spawned = false; self.mode = 'onFoot'; self.vehicleId = 0; self.seat = 0; self.velocity = [0, 0, 0]; self.keys = 0; selfMesh.visible = false; keys.clear(); speed = 0; jumpSpeed = 0; sequence = 0; controlRevision = 0; lastServerSequence = -1; }
-function disconnect(reason: string) { clearWorld(); setStatus(reason); el<HTMLButtonElement>('join').disabled = false; el('join-panel').classList.remove('hidden'); }
+function disconnect(reason: string) { terminalReason = reason; clearWorld(); setStatus(reason); el<HTMLButtonElement>('join').disabled = false; el('join-panel').classList.remove('hidden'); }
 function ensurePeer(id: number) { let p = peers.get(id); if (!p) {
     const label = document.createElement('div');
     label.className = 'player-label';
@@ -151,6 +152,7 @@ function ensurePeer(id: number) { let p = peers.get(id); if (!p) {
     peers.set(id, p);
 } return p; }
 function handle(m: ServerMessage) {
+    if (terminalReason !== null) return;
     if (typeof m.epoch === 'number') {
         if (epoch !== null && m.epoch !== epoch)
             return;
@@ -297,8 +299,9 @@ function handle(m: ServerMessage) {
         }
         case 'exitVehicle': {
             const v = vehicles.get(self.vehicleId);
-            if (v)
-                self.position = [v.position[0] + (self.seat === 0 ? -2 : 2), v.position[1], arena.groundZ + 1];
+            // Explicit server placements win; otherwise choose a nearby clear doorway.
+            if (m.position) self.position = [...m.position];
+            else if (v) self.position = freeExitPosition(v, self.seat);
             self.mode = 'onFoot';
             self.vehicleId = 0;
             self.seat = 0;
@@ -308,7 +311,7 @@ function handle(m: ServerMessage) {
             break;
         }
         case 'disconnected':
-            disconnect(m.reason ?? 'Disconnected');
+            disconnect(`Disconnected: ${m.reason ?? 'Server ended the session.'}`);
             socket?.close();
             break;
         case 'error':
@@ -319,7 +322,7 @@ function handle(m: ServerMessage) {
             break;
     }
 }
-el<HTMLFormElement>('join-form').addEventListener('submit', event => { event.preventDefault(); socket?.close(); clearWorld(); epoch = null; self.name = el<HTMLInputElement>('nickname').value.trim(); setStatus('Connecting…'); const current = new WebSocket(`${location.protocol === 'https:' ? 'wss:' : 'ws:'}//${location.host}/ws`); socket = current; current.addEventListener('open', () => { if (socket === current)
+el<HTMLFormElement>('join-form').addEventListener('submit', event => { event.preventDefault(); socket?.close(); clearWorld(); terminalReason = null; epoch = null; self.name = el<HTMLInputElement>('nickname').value.trim(); setStatus('Connecting…'); const current = new WebSocket(`${location.protocol === 'https:' ? 'wss:' : 'ws:'}//${location.host}/ws`); socket = current; current.addEventListener('open', () => { if (socket === current)
     send({ type: 'join', name: self.name }); }); current.addEventListener('message', event => { if (socket !== current)
     return; try {
     handle(JSON.parse(String(event.data)));
@@ -328,11 +331,10 @@ catch {
     toast('Invalid gateway message');
     current.close(1002, 'Invalid gateway message');
 } }); current.addEventListener('error', () => { if (socket === current)
-    toast('The gateway is unavailable. Check the local server.'); }); current.addEventListener('close', () => { if (socket === current) {
-    const reason = status.startsWith('Error:') || status === 'Disconnected by you' ? status : 'Disconnected · join to reconnect';
-    disconnect(reason);
+    toast('The gateway is unavailable. Check the local server.'); }); current.addEventListener('close', event => { if (socket === current) {
+    disconnect(terminalReason ?? (event.reason ? `Disconnected: ${event.reason}` : 'Disconnected: join to reconnect'));
 } }); });
-el('disconnect').addEventListener('click', () => { send({ type: 'disconnect' }); socket?.close(); disconnect('Disconnected by you'); });
+el('disconnect').addEventListener('click', () => { send({ type: 'disconnect' }); socket?.close(); disconnect('Disconnected: left by you'); });
 el<HTMLFormElement>('chat-form').addEventListener('submit', event => { event.preventDefault(); const input = el<HTMLInputElement>('chat-input'), text = input.value.trim(); if (text && self.spawned) {
     send({ type: text.startsWith('/') ? 'command' : 'chat', text });
     input.value = '';
@@ -361,10 +363,34 @@ window.addEventListener('keyup', event => keys.delete(event.code));
 function suspend() { keys.clear(); self.keys = 0; self.velocity = [0, 0, 0]; speed = 0; if (self.spawned)
     send({ type: 'state', controlRevision, position: self.position, rotation: self.rotation, velocity: self.velocity, mode: self.mode, vehicleId: self.vehicleId, seat: self.seat, keys: self.keys, seq: ++sequence }); }
 window.addEventListener('blur', suspend);
-document.addEventListener('visibilitychange', () => { if (document.hidden)
-    suspend(); });
+document.addEventListener('visibilitychange', () => {
+    if (!document.hidden || terminalReason !== null || !socket || socket.readyState === WebSocket.CLOSED) return;
+    // A hidden tab cannot keep its simulation current. Release its upstream player
+    // instead of allowing the native worker to keep publishing stale coordinates.
+    send({ type: 'disconnect' });
+    socket.close();
+    disconnect('Disconnected: tab hidden; join again to resynchronize.');
+});
 window.addEventListener('pagehide', () => { send({ type: 'disconnect' }); socket?.close(); });
 function collision(x: number, y: number, radius: number) { return arena.barriers.some(b => Math.abs(x - b.position[0]) < b.size[0] / 2 + radius && Math.abs(y - b.position[1]) < b.size[1] / 2 + radius); }
+function freeExitPosition(vehicle: Vehicle, seat: number): Vec3 {
+    const angle = headingFromRotation(vehicle.rotation);
+    const side = seat === 0 ? -1 : 1;
+    // Try the requested door, the opposite door, then the rear/front of the car.
+    const offsets = [[side * 2, 0], [-side * 2, 0], [0, -3], [0, 3]];
+    for (const radius of [3, 4, 6]) {
+        for (let i = 0; i < 16; i++) {
+            const a = i * Math.PI / 8;
+            offsets.push([Math.cos(a) * radius, Math.sin(a) * radius]);
+        }
+    }
+    for (const [x, y] of offsets) {
+        const position: Vec3 = [vehicle.position[0] + x * Math.cos(angle) - y * Math.sin(angle), vehicle.position[1] + x * Math.sin(angle) + y * Math.cos(angle), arena.groundZ + 1];
+        if (Math.abs(position[0]) < arena.halfSize && Math.abs(position[1]) < arena.halfSize && !collision(position[0], position[1], .45)) return position;
+    }
+    // The fixed fixture always has clear spawns, including after a server vehicle correction.
+    return [...arena.spawns.find(p => !collision(p[0], p[1], .45))!] as Vec3;
+}
 function step(dt: number) {
     if (!self.spawned)
         return;

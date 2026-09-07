@@ -24,10 +24,15 @@ Commands `/drive` and `/passenger` reserve seats 0 and 1 within 12 world units o
 the vehicle. `/exit` clears the seat and removes the player; `/reset` resets all
 players and the vehicle; `/teleport` corrects the sender to `(-4,-4,10)`.
 Driver disconnect resets the fixture and reconciles remaining occupants.
+Reset first removes occupants and blocks new seat requests. It waits for actual
+server-observed on-foot states before applying final player/vehicle corrections;
+otherwise an in-flight driver update could overwrite the vehicle reset. A wait
+longer than five seconds emits a visible diagnostic without claiming completion.
 
 Independent observations appear in stdout and `.runtime/Server/log.txt` as
 `POC {json}`. Event types include `ready`, `connect` (with `npc`), `spawn`, `chat`,
-`state`, `seatGranted`, `seatRejected`, `exit`, `reset`, `teleport`, `disconnect`,
+`state`, `seatGranted`, `seatRejected`, `exit`, `resetRequested`, `resetWaiting`,
+`reset`, `teleport`, `disconnect`,
 and 200 ms `player`/`vehicle` samples. Coordinates use GTA `(x,y,z)`; `tick` is
 server uptime in milliseconds. Player state `1` is on foot, `2` is driver, and
 `3` is passenger. Unreserved owners are `65535`; no vehicle is `0`.
