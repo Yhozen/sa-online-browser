@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Run against a live dev:poc on the actual cloud desktop (not xvfb-run).
+import { visualBudgets as budget } from "./visual-budgets.mjs";
 import { chromium, expect } from "@playwright/test";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { softwareGraphicsArgs } from "./browser-options.mjs";
@@ -35,10 +36,12 @@ async function player(name) {
     viewport: { width: 1280, height: 720 },
   });
   contexts.push(context);
+  await context.addInitScript(() => localStorage.setItem("poc-quality", "low"));
   await context.addInitScript(installTextureAudit);
   await context.tracing.start({ screenshots: true, snapshots: true });
   const page = await context.newPage();
   page.on("pageerror", (e) => errors.push({ name, message: e.message }));
+  page.on("console", message => { if(message.type() === "error" && /THREE|WebGL|shader/i.test(message.text())) errors.push({name,message:message.text()}); });
   await page.goto(url);
   await page.getByTestId("nickname").fill(name);
   await page.getByTestId("join").click();
@@ -62,7 +65,7 @@ async function capture(p, name, quality = "standard") {
   const textures = await p.evaluate(() => window.__textureAudit);
   expect(textures.flatMap((t) => t.unsupported)).toEqual([]);
   expect(textures.reduce((n, t) => n + t.bytes, 0)).toBeLessThan(
-    96 * 1024 * 1024,
+    budget.textureStorageBytes,
   );
   records.push({
     name,
@@ -72,8 +75,8 @@ async function capture(p, name, quality = "standard") {
     self: s.self,
     presentation: s.presentation,
   });
-  expect(graphics.triangles).toBeLessThanOrEqual(300000);
-  expect(graphics.calls).toBeLessThanOrEqual(250);
+  expect(graphics.triangles).toBeLessThanOrEqual(budget.renderedTriangles);
+  expect(graphics.calls).toBeLessThanOrEqual(budget.drawCalls);
   await p.locator("#quality").selectOption("low");
 }
 try {

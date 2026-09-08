@@ -13,7 +13,10 @@ run(process.execPath, [
   "--experimental-transform-types",
   "--test",
   "tests/scene.test.mjs",
+  "tests/simulation-clock.test.mjs",
+  "tests/reflection.test.mjs",
 ]);
+run(process.execPath, ["--test", "tests/assets.test.mjs"]);
 run("ctest", ["--test-dir", "native/build", "--output-on-failure"]);
 run("npm", ["run", "build:browser"]);
 if (process.env.POC_HEADLESS === "1")

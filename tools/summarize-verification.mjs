@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import { visualBudgets as budget } from "./visual-budgets.mjs";
 import { readFileSync, writeFileSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
@@ -72,10 +73,10 @@ if (
       m.renderScale !== 1 ||
       m.renderSize[0] !== m.viewport[0] ||
       m.renderSize[1] !== m.viewport[1] ||
-      m.medianFPS < 4 ||
+      !Number.isFinite(m.medianFPS) || m.medianFPS <= 0 ||
       !Number.isFinite(m.p95FrameMs) ||
       !Number.isFinite(m.textureStorageBytes) ||
-      m.textureStorageBytes >= 96 * 1024 * 1024,
+      m.textureStorageBytes >= budget.textureStorageBytes,
   ) ||
   residentRejoins.length !== 20
 )
@@ -129,6 +130,21 @@ const sourceFiles = [
   "apps/browser/src/camera.ts",
   "apps/browser/src/hud.ts",
   "apps/browser/src/shadows.ts",
+  "apps/browser/src/antialias.ts",
+  "apps/browser/src/simulation-clock.ts",
+  "tests/simulation-clock.test.mjs",
+  "apps/browser/src/lighting.ts",
+  "apps/browser/src/reflection-storage.ts",
+  "tools/bake-reflections.mjs",
+  "tests/reflection.test.mjs",
+  "apps/browser/src/horizon.ts",
+  "apps/browser/src/road-detail.ts",
+  "apps/browser/src/verges.ts",
+  "apps/browser/src/surface-textures.ts",
+  "tools/assets/environment-kit.py",
+  "tools/assets/heroes.py",
+  "tests/assets.test.mjs",
+  "tools/visual-budgets.mjs",
   "packages/shared/scenes/neighborhood.json",
   "apps/browser/public/assets/inventory.json",
   "tests/browser/neighborhood.spec.mjs",

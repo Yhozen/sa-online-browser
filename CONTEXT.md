@@ -36,3 +36,10 @@ A replacement browser client that joins an existing multiplayer server through a
 - **Drawing buffer:** the pixel resolution used for the 3D scene. Both presets use viewport dimensions multiplied by the native device pixel ratio, including after resizing. Resolution must not be reduced to reach an FPS target.
 - **Texture storage audit:** test-only accounting of WebGL texture allocations, including mipmaps, skeletons and shadows. Logical texture bytes exclude driver overhead and total browser memory.
 - **Recorded soak:** a sustained functional session captured with video/traces. Its capture cost is reported separately from an unrecorded ordinary-play benchmark.
+
+## Visual upgrade
+
+- **Dream-loop target:** generated reference made from an actual gameplay composition; never evidence that the renderer achieved it.
+- **Native FXAA:** edge antialiasing after rendering at viewport × native DPR; no reduced-resolution scene buffer or upscaling.
+- **Baked vertex occlusion:** original Blender geometry is ray-tested to store local shelter shading in GLB vertex colors; preserved by both graphics presets.
+- **Cloud FPS diagnostic:** the historical 4 FPS target is reported, while fidelity and native resolution remain mandatory. Hardware GPU performance needs separate measurement.

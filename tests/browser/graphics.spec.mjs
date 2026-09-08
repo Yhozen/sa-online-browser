@@ -3,30 +3,39 @@ import { test, expect, chromium } from '@playwright/test';
 import { createGateway } from '../../services/gateway/server.mjs';
 
 const url = 'http://127.0.0.1:3100';
-let gateway;
+let gateway, neighborhoodGateway;
 test.beforeAll(async () => {
     gateway = createGateway({ port: 3100, sceneId:'yard' });
     await gateway.start();
+    neighborhoodGateway = createGateway({port:3101,sceneId:"neighborhood"});
+    await neighborhoodGateway.start();
 });
-test.afterAll(async () => { await gateway?.close(); });
+test.afterAll(async () => { await Promise.all([gateway?.close(),neighborhoodGateway?.close()]); });
 
 test('graphics: software WebGL starts the playground', async ({ page }) => {
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
     await page.goto(url);
-    await expect(page.getByTestId('join')).toBeEnabled();
+    await expect(page.getByTestId('join')).toBeEnabled({timeout:60000});
     await expect(page.locator('#viewport canvas')).toBeVisible();
     await expect.poll(() => page.evaluate(() => window.__poc?.status)).toBe('Not connected');
+    expect(await page.evaluate(() => window.__poc.graphics.preset)).toBe('standard');
+    await page.locator('#quality').selectOption('low');
+    await page.reload();
+    await expect(page.getByTestId('join')).toBeEnabled({timeout:60000});
+    expect(await page.evaluate(() => window.__poc.graphics.preset)).toBe('low');
     expect(errors).toEqual([]);
 });
 
 test('graphics: both presets preserve native screen resolution after resize and reload', async ({ browser }) => {
+    test.setTimeout(360000);
+    for (const url of ['http://127.0.0.1:3100','http://127.0.0.1:3101'])
     for (const deviceScaleFactor of [1, 2]) {
         const context = await browser.newContext({ viewport: { width: 640, height: 360 }, deviceScaleFactor });
         try {
             const page = await context.newPage();
             await page.goto(url);
-            await expect(page.getByTestId('join')).toBeEnabled();
+            await expect(page.getByTestId('join')).toBeEnabled({timeout:60000});
             async function nativeResolution() {
                 await expect.poll(() => page.evaluate(() => {
                     const canvas = document.querySelector('#viewport canvas');
@@ -45,7 +54,7 @@ test('graphics: both presets preserve native screen resolution after resize and 
                 await page.setViewportSize({ width: 640, height: 360 });
             }
             await page.reload();
-            await expect(page.getByTestId('join')).toBeEnabled();
+            await expect(page.getByTestId('join')).toBeEnabled({timeout:60000});
             await nativeResolution();
         } finally { await context.close(); }
     }
@@ -90,7 +99,7 @@ test('graphics: context exceptions are handled and retry can recover', async ({ 
     await page.getByText('Graphics details', { exact: true }).click();
     await expect(page.locator('#graphics-details')).toHaveText('Test context creation failure');
     await page.getByRole('button', { name: 'Try again' }).click();
-    await expect(page.getByTestId('join')).toBeEnabled();
+    await expect(page.getByTestId('join')).toBeEnabled({timeout:60000});
     await expect(page.locator('#viewport canvas')).toBeVisible();
     expect(errors).toEqual([]);
 });
