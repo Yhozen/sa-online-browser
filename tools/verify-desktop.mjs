@@ -44,8 +44,8 @@ async function player(name) {
   page.on("console", message => { if(message.type() === "error" && /THREE|WebGL|shader/i.test(message.text())) errors.push({name,message:message.text()}); });
   await page.goto(url);
   await page.getByTestId("nickname").fill(name);
-  await page.getByTestId("join").click();
-  await page.waitForFunction(() => window.__poc.self.spawned);
+  await page.getByTestId("join").click({ timeout: 180000 });
+  await page.waitForFunction(() => window.__poc.self.spawned, {}, { timeout: 180000 });
   return page;
 }
 async function key(p, key, duration = 0) {
@@ -59,7 +59,9 @@ async function capture(p, name, quality = "standard") {
   await p.bringToFront();
   await p.locator("#quality").selectOption(quality);
   await p.waitForTimeout(1000);
-  await p.screenshot({ path: `${dir}/${name}.png` });
+  // Native Standard compilation/readback exceeded 30 seconds in art capture 19.
+  // Allow capture readiness without changing input, pixels, or gameplay assertions.
+  await p.screenshot({ path: `${dir}/${name}.png`, timeout: 180000 });
   const s = await snap(p);
   const { frameTimes, ...graphics } = s.graphics;
   const textures = await p.evaluate(() => window.__textureAudit);
