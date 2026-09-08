@@ -3,6 +3,8 @@ import * as THREE from "three";
 import { GLTFLoader, type GLTF } from "three/addons/loaders/GLTFLoader.js";
 import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
 import { clone } from "three/addons/utils/SkeletonUtils.js";
+import { surfaceTexture } from "./surface-textures";
+export let environmentTexture: THREE.Texture | undefined;
 const models = new Map<string, GLTF>();
 export const surfaceMaterials = new Map<string, THREE.MeshStandardMaterial>();
 export const assetStats = { bytes: 0, textureBytes: 0, files: 0 };
@@ -70,8 +72,19 @@ export async function loadAssets(
         o.receiveShadow = true;
         const list = Array.isArray(o.material) ? o.material : [o.material];
         o.material = list.map((m) => {
-          if (m.name.startsWith("foliage")) m.side = THREE.DoubleSide;
-          if (!canonical.has(m.name)) canonical.set(m.name, m);
+          if (m.name.startsWith("foliage") || m.name.startsWith("palm-frond")) m.side = THREE.DoubleSide;
+          if (m.name === "chrome" && m instanceof THREE.MeshStandardMaterial) {
+            m.color.set(0x70766b); m.roughness = .5;
+          }
+          if (!canonical.has(m.name)) {
+            if (m.name === "paint" && m instanceof THREE.MeshStandardMaterial) {
+              const physical = new THREE.MeshPhysicalMaterial();
+              THREE.MeshStandardMaterial.prototype.copy.call(physical, m);
+              physical.clearcoat = 1; physical.clearcoatRoughness = .14;
+              physical.metalness = .55; physical.roughness = .25;
+              canonical.set(m.name, physical); m.dispose();
+            } else canonical.set(m.name, m);
+          }
           else if (canonical.get(m.name) !== m) m.dispose();
           return canonical.get(m.name)!;
         });
@@ -81,61 +94,55 @@ export async function loadAssets(
     models.set(name, gltf);
     assetStats.files = ++count;
   }
-  const response = await fetch("/assets/neighborhood-atlas.png", {
-    signal: AbortSignal.timeout(15000),
-  });
-  if (!response.ok)
-    throw Error(
-      "Surface textures are missing. Run npm run build:assets and retry.",
-    );
-  const blob = await response.blob();
-  await verify("neighborhood-atlas.png", await blob.arrayBuffer());
-  assetStats.bytes += blob.size;
-  const bitmap = await createImageBitmap(blob);
-  const size = 512;
-  for (const [i, name] of [
-    "stucco",
-    "asphalt",
-    "concrete",
-    "grass",
-  ].entries()) {
-    const canvas = document.createElement("canvas");
-    canvas.width = canvas.height = size;
-    const ctx = canvas.getContext("2d")!;
-    ctx.drawImage(
-      bitmap,
-      ((i % 2) * bitmap.width) / 2,
-      (Math.floor(i / 2) * bitmap.height) / 2,
-      bitmap.width / 2,
-      bitmap.height / 2,
-      0,
-      0,
-      size,
-      size,
-    );
-    const texture = new THREE.CanvasTexture(canvas);
-    texture.colorSpace = THREE.SRGBColorSpace;
-    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
-    texture.repeat.set(1, 1);
-    texture.anisotropy = 2;
-    const material = new THREE.MeshStandardMaterial({
-      map: texture,
-      roughness: 0.95,
-      color: name === "grass" ? 0xb6b78c : 0xffffff,
-    });
-    surfaceMaterials.set(name, material);
-    if (name === "stucco" || name === "concrete") {
+  async function textureInput(name: string) {
+    progress(`Loading materials · ${name}`);
+    const response = await fetch(`/assets/${name}`, { signal: AbortSignal.timeout(30000) });
+    if (!response.ok) throw Error(`${name} could not load (HTTP ${response.status}). Rebuild assets and retry.`);
+    const bytes = await response.arrayBuffer();
+    await verify(name, bytes);
+    assetStats.bytes += bytes.byteLength; assetStats.files++;
+    return createImageBitmap(new Blob([bytes]), name === "arroyo-sky.png" ? { imageOrientation: "flipY" } : {});
+  }
+  for (const [file, slots] of [
+    ["arroyo-surfaces.png", ["asphalt", "concrete", "stucco", "grass"]],
+    ["arroyo-details.png", ["shingle", "wood", "sage", "denim"]],
+  ] as const) {
+    const bitmap = await textureInput(file);
+    for (const [i, name] of slots.entries()) {
+      const size = name === "asphalt" ? 1024 : 512;
+      const maps = surfaceTexture(bitmap, i, size);
+      const material = new THREE.MeshStandardMaterial({ ...maps, roughness: .95, normalScale: new THREE.Vector2(.45, .45) });
+      if (name === "asphalt") { material.color.set(0x9a9a96); material.roughness = .88; }
+      if (name === "grass") material.color.set(0xabb787);
+      surfaceMaterials.set(name, material);
       const existing = canonical.get(name);
       if (existing instanceof THREE.MeshStandardMaterial) {
-        existing.map = texture;
-        existing.color.set(0xffffff);
-        existing.needsUpdate = true;
+        Object.assign(existing, maps);
+        existing.color.set(name === "wood" ? 0xb0a490 : name === "denim" ? 0x9caebd : 0xffffff);
+        existing.normalScale.set(.35, .35); existing.needsUpdate = true;
       }
+      assetStats.textureBytes += size * size * 4 * 4 / 3 * 3;
+    }
+    bitmap.close();
+  }
+  const leaves = await textureInput("arroyo-foliage.png");
+  const leafTexture = new THREE.Texture(leaves);
+  leafTexture.colorSpace = THREE.SRGBColorSpace; leafTexture.needsUpdate = true; leafTexture.flipY = false;
+  assetStats.textureBytes += leaves.width * leaves.height * 4 * 4 / 3;
+  for (const name of ["foliage", "foliage-light"]) {
+    const m = canonical.get(name);
+    if (m instanceof THREE.MeshStandardMaterial) {
+      m.map = leafTexture; m.color.set(name === "foliage" ? 0xaec697 : 0xd8d29b);
+      m.side = THREE.DoubleSide; m.alphaTest = .45; m.transparent = false;
+      m.roughness = .85; m.needsUpdate = true;
     }
   }
-  bitmap.close();
-  assetStats.textureBytes = (4 * size * size * 4 * 4) / 3;
-  assetStats.files = ++count;
+  const sky = await textureInput("arroyo-sky.png");
+  environmentTexture = new THREE.Texture(sky);
+  environmentTexture.colorSpace = THREE.SRGBColorSpace;
+  environmentTexture.needsUpdate = true; environmentTexture.flipY = false;
+  assetStats.textureBytes += sky.width * sky.height * 4 * 4 / 3;
+
 }
 export function asset(name: string): THREE.Group {
   const gltf = models.get(name);
@@ -191,10 +198,11 @@ export function instantiateStatic(
     root.traverse((o) => {
       if (o instanceof THREE.Mesh) {
         if (p.asset.startsWith("house-") && !Array.isArray(o.material)) {
-          let batch = houses.get(o.material.uuid);
+          const houseKey = o.material.uuid + ":" + Math.floor(p.position[0] / 40) + ":" + Math.floor(p.position[1] / 40);
+          let batch = houses.get(houseKey);
           if (!batch) {
             batch = { material: o.material, geometries: [] };
-            houses.set(o.material.uuid, batch);
+            houses.set(houseKey, batch);
           }
           const geometry = o.geometry.clone().applyMatrix4(o.matrixWorld);
           if (!geometry.getAttribute("uv"))
@@ -209,7 +217,7 @@ export function instantiateStatic(
           return;
         }
         const key =
-          o.geometry.uuid +
+          o.geometry.uuid + ":" + Math.floor(p.position[0] / 32) + ":" + Math.floor(p.position[1] / 32) +
           JSON.stringify(
             (Array.isArray(o.material) ? o.material : [o.material]).map(
               (m) => m.uuid,

@@ -3,11 +3,11 @@ import type { SceneManifest } from "../../../packages/shared/scene";
 export function mountHUD() {
   document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
 <div id="viewport" class="viewport" data-testid="viewport"></div><div class="vignette"></div>
-<header class="top"><div class="brand"><div class="monogram">a.</div><div><div class="title">arroyo</div><p class="eyebrow">A place to meet.</p></div></div><div id="connection" class="connection"><span class="dot"></span><span data-testid="status" id="status">Not connected</span><button id="debug-toggle" title="Protocol diagnostics">⌘</button><select id="quality" aria-label="Graphics quality"><option value="low">Low graphics</option><option value="standard">Standard</option></select></div></header>
-<aside class="left"><section class="panel join" id="join-panel"><div class="kicker">AFTERNOON IN ARROYO</div><h1>Make yourself<br>at home.</h1><p class="muted">A quiet block. An open road.<br>Bring a friend along for the ride.</p><form id="join-form"><label for="nickname">YOUR NAME</label><input id="nickname" data-testid="nickname" minlength="3" maxlength="20" pattern="[A-Za-z0-9_]+" value="BrowserPlayer" autocomplete="off" required/><button class="primary" data-testid="join" id="join" disabled>Join neighborhood ↗</button></form><p id="loading" role="status">Preparing the scene…</p><button id="retry-assets" class="secondary hidden">Retry loading</button></section>
+<header class="top"><div class="brand"><div><div class="title">Arroyo</div><p class="eyebrow">San Andreas · Multiplayer</p></div></div><div id="connection" class="connection"><span class="dot"></span><span data-testid="status" id="status">Not connected</span><button id="debug-toggle" title="Protocol diagnostics">⌘</button><select id="quality" aria-label="Graphics quality"><option value="low">Low</option><option value="standard">Standard</option></select></div></header>
+<aside class="left"><section class="panel join" id="join-panel"><div class="kicker">WELCOME TO THE NEIGHBORHOOD</div><h1>Your block.<br>Your people.</h1><p class="muted">Afternoon sun. An open road.<br>Join your friends in Arroyo.</p><form id="join-form"><label for="nickname">YOUR NAME</label><input id="nickname" data-testid="nickname" minlength="3" maxlength="20" pattern="[A-Za-z0-9_]+" value="BrowserPlayer" autocomplete="off" required/><button class="primary" data-testid="join" id="join" disabled>Join neighborhood ↗</button></form><p id="loading" role="status">Preparing the scene…</p><button id="retry-assets" class="secondary hidden">Retry loading</button></section>
 <section class="panel info" id="diagnostics"><div class="kicker">Session diagnostics</div><div class="row"><span>Player</span><strong id="self-name">—</strong></div><div class="row"><span>Server ID</span><strong id="server-id" data-testid="server-id">—</strong></div><div class="row"><span>Mode</span><strong id="mode" data-testid="mode">Exploring soon</strong></div><div class="row"><span>Nearby</span><strong id="player-count">0</strong></div><div id="roster"></div></section></aside>
-<div class="corner"><div class="arena-name">ARROYO</div><div class="arena-detail">SAN ANDREAS–INSPIRED · ORIGINAL WORLD</div><div class="speed"><span id="speed">00</span><small>KM/H</small></div><button class="secondary hidden" data-testid="disconnect" id="disconnect">Leave session</button></div>
-<div class="map-wrap"><canvas id="minimap" width="210" height="210" aria-label="Neighborhood minimap"></canvas><div class="map-caption">N ↑ <span>ARROYO AVE</span></div></div>
+<div class="corner"><div class="arena-name">Arroyo</div><div class="arena-detail">A PLACE TO MEET</div><div class="speed"><span id="speed">00</span><small>KM/H</small></div><button class="secondary hidden" data-testid="disconnect" id="disconnect">Leave session</button></div>
+<div class="map-wrap"><canvas id="minimap" width="210" height="210" aria-label="Neighborhood minimap"></canvas><div class="map-caption"><b>N</b><span>ARROYO AVE</span></div></div>
 <section class="chat panel"><div class="chat-head"><button id="chat-toggle" aria-expanded="true">Neighborhood chat</button><span class="tag">ENTER ↵</span></div><div id="chat-content"><div data-testid="chat-log" id="chat-log" class="chat-log" role="log" aria-live="polite"></div><form id="chat-form"><input id="chat-input" data-testid="chat-input" placeholder="Say hello · /reset to start over" maxlength="128" autocomplete="off" disabled/><button type="submit" aria-label="Send chat">↗</button></form></div></section>
 <aside class="bottom"><div class="controls"><span><kbd>W A S D</kbd> move</span><span><kbd>E / G</kbd> drive / ride</span><span><kbd>F</kbd> exit</span><span><kbd>SPACE</kbd> jump</span><span>Right drag · orbit &nbsp; Scroll · zoom</span></div></aside><div id="toast" class="toast hidden" role="alert"></div><div class="footer-label">BROWSER → NATIVE GATEWAY → OPEN.MP</div>`;
   document.getElementById("debug-toggle")!.onclick = () =>
@@ -33,11 +33,11 @@ export function minimap(
     cx = canvas.width / 2,
     cy = canvas.height / 2;
   const p = (v: number[]) => [cx + v[0] * s, cy - v[1] * s];
-  c.fillStyle = "#7c8768";
+  c.fillStyle = "#536146";
   c.fillRect(0, 0, 210, 210);
   c.lineCap = "round";
   c.lineJoin = "round";
-  c.strokeStyle = "#d8d1b5";
+  c.strokeStyle = "#b6b5a1";
   for (const r of manifest.roads) {
     c.lineWidth = (r.width + 2) * s;
     c.beginPath();
@@ -52,10 +52,10 @@ export function minimap(
     const [x, y] = p(manifest.culdesac.center);
     c.beginPath();
     c.arc(x, y, manifest.culdesac.radius * s, 0, Math.PI * 2);
-    c.fillStyle = "#d8d1b5";
+    c.fillStyle = "#b6b5a1";
     c.fill();
   }
-  c.fillStyle = "#514e42";
+  c.fillStyle = "#30342c";
   for (const b of manifest.barriers.filter(
     (b) => !b.id || b.id.startsWith("house"),
   )) {

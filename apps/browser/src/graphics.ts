@@ -13,11 +13,11 @@ export function createRenderer(): WebGLRenderer {
     // Use the same context for the check and renderer: a separate probe
     // would allocate another GPU context and could pass while this one fails.
     const context = canvas.getContext("webgl2", {
-      antialias: false,
+      antialias: true,
       alpha: false,
     });
     if (!context) throw new Error(reason);
-    return new WebGLRenderer({ canvas, context, antialias: false });
+    return new WebGLRenderer({ canvas, context, antialias: true });
   } catch (error) {
     throw new GraphicsUnavailableError(
       error instanceof Error ? error.message : reason,
@@ -73,6 +73,8 @@ export function applyQuality(root: Object3D, low: boolean) {
           opacity: m.opacity,
           side: m.side,
           depthWrite: m.depthWrite,
+          alphaTest: m.alphaTest,
+          alphaMap: m.alphaMap,
           vertexColors: true,
         });
         converted.name = m.name;

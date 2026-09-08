@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import * as THREE from "three";
+import { roadDetail } from "./road-detail";
+import { buildHorizon } from "./horizon";
 import type { SceneManifest } from "../../../packages/shared/scene";
 import { instantiateStatic, surfaceMaterials, assetStats } from "./assets";
 export function buildEnvironment(scene: THREE.Scene, manifest: SceneManifest) {
@@ -68,7 +70,7 @@ export function buildEnvironment(scene: THREE.Scene, manifest: SceneManifest) {
         box([x, y, z + 0.03], [0.13, 2.5, 0.015], mat("white", 0xe6e4c9));
   } else {
     scene.background = new THREE.Color(0x9ec9da);
-    scene.fog = new THREE.Fog(0xb7cbd0, 100, 260);
+    scene.fog = new THREE.Fog(0xb8c6c6, 130, 780);
     surface(0, 0, 600, 600, z - 0.03, mat("grass", 0xaaa478));
     const asphalt = mat("asphalt", 0x505450),
       concrete = mat("concrete", 0xb0ada1),
@@ -165,6 +167,7 @@ export function buildEnvironment(scene: THREE.Scene, manifest: SceneManifest) {
             );
           }
       }
+    roadDetail(scene, manifest);
     instantiateStatic(scene, [...manifest.houses, ...manifest.props]);
     for (const b of manifest.barriers.filter((b) =>
       b.id?.startsWith("boundary"),
@@ -204,17 +207,7 @@ export function buildEnvironment(scene: THREE.Scene, manifest: SceneManifest) {
         );
       }
     }
-    // Distant original silhouettes close the horizon without playable terrain slopes.
-    for (let i = 0; i < 18; i++) {
-      const a = (i * Math.PI * 2) / 18;
-      const hill = new THREE.Mesh(
-        new THREE.SphereGeometry(1, 10, 6),
-        mat("distant", 0x899e94),
-      );
-      hill.position.set(Math.cos(a) * 235, Math.sin(a) * 235, z - 10);
-      hill.scale.set(65, 55, 25 + (i % 4) * 7);
-      scene.add(hill);
-    }
+    buildHorizon(scene, z);
     const canvas = document.createElement("canvas");
     canvas.width = 512;
     canvas.height = 128;

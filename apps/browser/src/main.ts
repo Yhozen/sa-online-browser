@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import * as THREE from "three";
+import { installAtmosphere, updateSun } from "./lighting";
 import { createRenderer, applyQuality } from "./graphics";
 import yard from "../../../packages/shared/scenes/yard.json";
 import type { SceneManifest } from "../../../packages/shared/scene";
@@ -35,7 +36,7 @@ const camera = new THREE.PerspectiveCamera(
   48,
   innerWidth / innerHeight,
   0.1,
-  250,
+  900,
 );
 camera.up.set(0, 0, 1);
 const renderer = createRenderer();
@@ -50,22 +51,7 @@ renderer.domElement.setAttribute(
   "Multiplayer playground. Use WASD to move.",
 );
 el("viewport").append(renderer.domElement);
-scene.add(new THREE.HemisphereLight(0xe0f0ff, 0x6e7259, 1.8));
-const sun = new THREE.DirectionalLight(0xffe4be, 2.5);
-sun.position.set(-20, -18, 55);
-sun.castShadow = true;
-sun.shadow.mapSize.set(1024, 1024);
-Object.assign(sun.shadow.camera, {
-  left: -60,
-  right: 60,
-  top: 60,
-  bottom: -60,
-  near: 1,
-  far: 130,
-});
-sun.shadow.bias = -0.001;
-sun.target.position.set(0, 0, 9);
-scene.add(sun, sun.target);
+const sun = installAtmosphere(scene, renderer);
 interface Peer {
   id: number;
   name: string;
@@ -773,6 +759,7 @@ function frame(now: number) {
       delta,
       collisionIndex,
     );
+  updateSun(sun, target);
   if (!document.hidden) renderer.render(scene, camera);
   if (sceneReady) {
     frameTimes.push(elapsed);
@@ -907,7 +894,7 @@ Object.defineProperty(window, "__poc", {
 });
 
 const frameTimes: number[] = [];
-let quality = localStorage.getItem("poc-quality") || "low";
+let quality = localStorage.getItem("poc-quality") || "standard";
 function setQuality(value: string) {
   quality = value === "standard" ? "standard" : "low";
   localStorage.setItem("poc-quality", quality);
@@ -916,7 +903,7 @@ function setQuality(value: string) {
   renderer.setPixelRatio(devicePixelRatio);
   renderer.shadowMap.enabled = quality === "standard";
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.05;
+  renderer.toneMappingExposure = 1.0;
   el<HTMLSelectElement>("quality").value = quality;
   applyQuality(scene, quality === "low");
 }
@@ -947,12 +934,13 @@ async function initializeScene() {
       arena.assets,
     );
     buildEnvironment(scene, arena);
+    await sun.environment();
     selfMesh = capsule(0);
     selfMesh.visible = false;
     el("loading").textContent = "Ready · " + arena.name;
     el("join").textContent = "Join " + arena.name + " ↗";
     document.querySelector(".arena-name")!.textContent =
-      arena.name.toUpperCase();
+      arena.name;
     applyQuality(scene, quality === "low");
     renderer.compile(scene, camera);
     sceneReady = true;

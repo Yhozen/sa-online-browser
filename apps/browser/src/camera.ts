@@ -3,8 +3,8 @@ import * as THREE from "three";
 import type { CollisionIndex } from "./collision";
 export class FollowCamera {
   yaw = 0;
-  pitch = 0.29;
-  distance = 7;
+  pitch = 0.25;
+  distance = 6.6;
   obstruction = 1;
   private dragging = false;
   private lastOrbit = 0;
