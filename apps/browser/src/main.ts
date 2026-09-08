@@ -694,6 +694,7 @@ function advanceSimulation(now: number) {
   // Visibility/freeze events still explicitly release every suspended session.
 }
 function simulateAndPublish(now: number) {
+  syncViewport();
   advanceSimulation(now);
   if (self.spawned && now - lastSend >= (self.mode === "onFoot" ? onFootRate : inCarRate)) publishState(now);
 }
@@ -830,13 +831,22 @@ function frame(now: number) {
   }
 }
 requestAnimationFrame(frame);
-window.addEventListener("resize", () => {
-  camera.aspect = innerWidth / innerHeight;
+let viewportWidth = innerWidth, viewportHeight = innerHeight, viewportDPR = devicePixelRatio;
+function syncViewport() {
+  const width = innerWidth, height = innerHeight, dpr = devicePixelRatio;
+  if (width === viewportWidth && height === viewportHeight && dpr === viewportDPR) return;
+  viewportWidth = width; viewportHeight = height; viewportDPR = dpr;
+  camera.aspect = width / height;
   camera.updateProjectionMatrix();
-  renderer.setPixelRatio(devicePixelRatio);
-  renderer.setSize(innerWidth, innerHeight);
+  renderer.setPixelRatio(dpr);
+  renderer.setSize(width, height);
   antialias.resize();
-});
+  minimap(arena, self, [...peers.values()], [...vehicles.values()]);
+}
+// A busy compositor can delay resize events while exposing the new CSS viewport.
+// The existing update timer also checks these cheap dimensions, keeping every
+// render target native-sized even before that event or the next rendered frame.
+window.addEventListener("resize", syncViewport);
 // A fresh immutable observation snapshot, never a control or test bypass.
 function snapshot() {
   return JSON.parse(

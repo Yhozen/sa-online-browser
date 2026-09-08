@@ -43,11 +43,20 @@ test('graphics: both presets preserve native screen resolution after resize and 
                     const width = Math.floor(innerWidth * devicePixelRatio);
                     const height = Math.floor(innerHeight * devicePixelRatio);
                     const radar = document.querySelector('#minimap');
-                    const radarNative = radar.width === Math.floor(radar.clientWidth * devicePixelRatio) &&
-                        radar.height === Math.floor(radar.clientHeight * devicePixelRatio);
-                    return radarNative && canvas.width === width && canvas.height === height &&
-                        gl.drawingBufferWidth === width && gl.drawingBufferHeight === height;
-                })).toBe(true);
+                    return {
+                        viewport: [canvas.width - width, canvas.height - height,
+                            gl.drawingBufferWidth - width, gl.drawingBufferHeight - height],
+                        radar: [radar.width - Math.floor(radar.clientWidth * devicePixelRatio),
+                            radar.height - Math.floor(radar.clientHeight * devicePixelRatio)],
+                    };
+                }), {
+                    // Native DPR2 software frames can block a single observation for
+                    // 8–10 seconds; allow rendering readiness without changing pixels
+                    // or the separate one-second multiplayer agreement requirement.
+                    timeout:60000,
+                    message: `${url} at DPR ${deviceScaleFactor}: drawing buffers must match CSS pixels × DPR`,
+                })
+                    .toEqual({viewport:[0,0,0,0],radar:[0,0]});
             }
             for (const preset of ['low', 'standard', 'low']) {
                 await page.locator('#quality').selectOption(preset);
