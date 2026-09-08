@@ -4,7 +4,7 @@ import { createHash } from "node:crypto";
 const dir = "apps/browser/public/assets";
 const files = Object.fromEntries(
   readdirSync(dir)
-    .filter((n) => /\.(glb|png)$/.test(n))
+    .filter((n) => /\.(glb|png|webp|jpg|ktx2)$/.test(n))
     .sort()
     .map((name) => {
       const bytes = readFileSync(`${dir}/${name}`);

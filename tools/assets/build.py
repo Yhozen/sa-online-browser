@@ -230,3 +230,7 @@ rig.animation_data.action=None
 for p in rig.pose.bones:p.rotation_euler=(0,0,0)
 export('neighbor',False)
 print('Original asset kit exported with Blender',bpy.app.version_string)
+
+# Detailed original assets share the same pinned export and editable source pipeline.
+for extension in ["environment-kit.py", "heroes.py"]:
+ exec(compile((ROOT/"tools/assets"/extension).read_text(),str(ROOT/"tools/assets"/extension),"exec"))
