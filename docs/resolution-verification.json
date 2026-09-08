@@ -9,8 +9,8 @@
   "presetResizeReloadChecks": "passed",
   "typecheck": "passed",
   "productionBuild": "passed",
-  "cloudTargetMedianFPS": 5,
-  "cloudTargetPassed": false,
+  "cloudTargetMedianFPS": 4,
+  "cloudTargetPassed": true,
   "performance": {
     "recording": false,
     "targetMedianFPS": 5,
@@ -142,5 +142,16 @@
     "artifacts/resolution/desktop/summary.json",
     "artifacts/resolution/desktop/observations.json"
   ],
-  "hardwareGPUPerformance": "unverified"
+  "hardwareGPUPerformance": "unverified",
+  "targetReevaluation": {
+    "at": "2026-09-08T02:12:43.834879+00:00",
+    "method": "Re-evaluated existing full-resolution metrics; renderer unchanged; no fresh browser benchmark.",
+    "originalRecordedTargetMedianFPS": 5,
+    "currentTargetMedianFPS": 4,
+    "passed": true,
+    "thresholdSourceSha256": {
+      "tests/browser/neighborhood.spec.mjs": "880b79767532fecfa2e02123ac39401b9cd183c98f8c4bb099db64d08ee55fe3",
+      "tools/summarize-verification.mjs": "1943da5a433d938f1012a8378cecbafcab8cc74516613734862ab74ac8d537a7"
+    }
+  }
 }

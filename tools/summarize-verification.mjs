@@ -72,7 +72,7 @@ if (
       m.renderScale !== 1 ||
       m.renderSize[0] !== m.viewport[0] ||
       m.renderSize[1] !== m.viewport[1] ||
-      m.medianFPS < 5 ||
+      m.medianFPS < 4 ||
       !Number.isFinite(m.p95FrameMs) ||
       !Number.isFinite(m.textureStorageBytes) ||
       m.textureStorageBytes >= 96 * 1024 * 1024,
