@@ -1,0 +1,595 @@
+{
+  "verifiedAt": "2026-09-08T09:11:26.009Z",
+  "command": "POC_DESKTOP_ARTIFACTS=artifacts/desktop-visual npm run verify:desktop",
+  "display": ":1",
+  "browser": "152.0.7977.82",
+  "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+  "viewport": [
+    1280,
+    720
+  ],
+  "scene": {
+    "id": "neighborhood",
+    "revision": "4ab5612ad0c7953d"
+  },
+  "errors": [],
+  "fullSuiteRecord": "visual-verification.json",
+  "testOnlyDeliveryAdjustments": "visual-budget-revision.json",
+  "records": [
+    {
+      "name": "street",
+      "scene": {
+        "id": "neighborhood",
+        "revision": "4ab5612ad0c7953d",
+        "ready": true
+      },
+      "graphics": {
+        "preset": "standard",
+        "antialias": "FXAA at native resolution",
+        "sceneDownloadBytes": 46023763,
+        "memory": {
+          "geometries": 253,
+          "textures": 62,
+          "programs": 69
+        },
+        "renderScale": 1,
+        "renderSize": [
+          1280,
+          720
+        ],
+        "triangles": 5012877,
+        "calls": 871,
+        "assets": {
+          "bytes": 45297408,
+          "textureBytes": 96814688,
+          "files": 20
+        },
+        "frameCount": 108,
+        "camera": {
+          "position": [
+            -4,
+            -5.813474530263869,
+            12.234423755527137
+          ],
+          "yaw": 0,
+          "obstruction": 1
+        }
+      },
+      "self": {
+        "id": 0,
+        "name": "Desktop_A",
+        "spawned": true,
+        "heading": 0,
+        "position": [
+          -4,
+          0,
+          10
+        ],
+        "rotation": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "velocity": [
+          0,
+          0,
+          0
+        ],
+        "mode": "onFoot",
+        "vehicleId": 0,
+        "seat": 0,
+        "keys": 0
+      },
+      "presentation": {
+        "self": {
+          "visible": true,
+          "animation": "idle",
+          "position": [
+            -4,
+            0,
+            10
+          ]
+        },
+        "peers": [
+          {
+            "id": 1,
+            "visible": true,
+            "animation": "idle",
+            "position": [
+              3.999999486135199,
+              0,
+              9.99999968320625
+            ]
+          }
+        ]
+      },
+      "textureStorageBytes": 284623808,
+      "unsupportedTextureFormats": []
+    },
+    {
+      "name": "pedestrian",
+      "scene": {
+        "id": "neighborhood",
+        "revision": "4ab5612ad0c7953d",
+        "ready": true
+      },
+      "graphics": {
+        "preset": "standard",
+        "antialias": "FXAA at native resolution",
+        "sceneDownloadBytes": 46023763,
+        "memory": {
+          "geometries": 253,
+          "textures": 62,
+          "programs": 69
+        },
+        "renderScale": 1,
+        "renderSize": [
+          1280,
+          720
+        ],
+        "triangles": 4989709,
+        "calls": 866,
+        "assets": {
+          "bytes": 45297408,
+          "textureBytes": 96814688,
+          "files": 20
+        },
+        "frameCount": 113,
+        "camera": {
+          "position": [
+            -4,
+            -2.5188566307836213,
+            12.234423755527137
+          ],
+          "yaw": 0,
+          "obstruction": 1
+        }
+      },
+      "self": {
+        "id": 0,
+        "name": "Desktop_A",
+        "spawned": true,
+        "heading": 0,
+        "position": [
+          -4,
+          3.4166666666666683,
+          10
+        ],
+        "rotation": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "velocity": [
+          0,
+          0,
+          0
+        ],
+        "mode": "onFoot",
+        "vehicleId": 0,
+        "seat": 0,
+        "keys": 0
+      },
+      "presentation": {
+        "self": {
+          "visible": true,
+          "animation": "idle",
+          "position": [
+            -4,
+            3.4166666666666683,
+            10
+          ]
+        },
+        "peers": [
+          {
+            "id": 1,
+            "visible": true,
+            "animation": "idle",
+            "position": [
+              3.9999999951588117,
+              0,
+              9.999999997015443
+            ]
+          }
+        ]
+      },
+      "textureStorageBytes": 284623808,
+      "unsupportedTextureFormats": []
+    },
+    {
+      "name": "driving",
+      "scene": {
+        "id": "neighborhood",
+        "revision": "4ab5612ad0c7953d",
+        "ready": true
+      },
+      "graphics": {
+        "preset": "standard",
+        "antialias": "FXAA at native resolution",
+        "sceneDownloadBytes": 46023763,
+        "memory": {
+          "geometries": 253,
+          "textures": 62,
+          "programs": 69
+        },
+        "renderScale": 1,
+        "renderSize": [
+          1280,
+          720
+        ],
+        "triangles": 5070533,
+        "calls": 858,
+        "assets": {
+          "bytes": 45297408,
+          "textureBytes": 96814688,
+          "files": 20
+        },
+        "frameCount": 118,
+        "camera": {
+          "position": [
+            -0.14260087444326267,
+            5.830733227321101,
+            12.374569938349833
+          ],
+          "yaw": 0,
+          "obstruction": 1
+        }
+      },
+      "self": {
+        "id": 0,
+        "name": "Desktop_A",
+        "spawned": true,
+        "heading": 0,
+        "position": [
+          0,
+          13.697293932297384,
+          10
+        ],
+        "rotation": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "velocity": [
+          0,
+          0,
+          0
+        ],
+        "mode": "driver",
+        "vehicleId": 1,
+        "seat": 0,
+        "keys": 0
+      },
+      "presentation": {
+        "self": {
+          "visible": true,
+          "animation": "seated",
+          "position": [
+            -0.41999998688697815,
+            13.577293934979593,
+            9.550000011920929
+          ]
+        },
+        "peers": [
+          {
+            "id": 1,
+            "visible": true,
+            "animation": "seated",
+            "position": [
+              0.41999998688697815,
+              13.577293934979593,
+              9.550000011920929
+            ]
+          }
+        ]
+      },
+      "textureStorageBytes": 284623808,
+      "unsupportedTextureFormats": []
+    },
+    {
+      "name": "passenger",
+      "scene": {
+        "id": "neighborhood",
+        "revision": "4ab5612ad0c7953d",
+        "ready": true
+      },
+      "graphics": {
+        "preset": "standard",
+        "antialias": "FXAA at native resolution",
+        "sceneDownloadBytes": 46023763,
+        "memory": {
+          "geometries": 253,
+          "textures": 62,
+          "programs": 69
+        },
+        "renderScale": 1,
+        "renderSize": [
+          1280,
+          720
+        ],
+        "triangles": 5070531,
+        "calls": 857,
+        "assets": {
+          "bytes": 45297408,
+          "textureBytes": 96814688,
+          "files": 20
+        },
+        "frameCount": 121,
+        "camera": {
+          "position": [
+            0.0008130600093676132,
+            6.134658470203522,
+            12.379721342266537
+          ],
+          "yaw": 0,
+          "obstruction": 1
+        }
+      },
+      "self": {
+        "id": 1,
+        "name": "Desktop_B",
+        "spawned": true,
+        "heading": 0,
+        "position": [
+          0,
+          13.697294235229492,
+          10
+        ],
+        "rotation": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "velocity": [
+          0,
+          0,
+          0
+        ],
+        "mode": "passenger",
+        "vehicleId": 1,
+        "seat": 1,
+        "keys": 0
+      },
+      "presentation": {
+        "self": {
+          "visible": true,
+          "animation": "seated",
+          "position": [
+            0.41999998688697815,
+            13.577082508345303,
+            9.550000011920929
+          ]
+        },
+        "peers": [
+          {
+            "id": 0,
+            "visible": true,
+            "animation": "seated",
+            "position": [
+              -0.41999998688697815,
+              13.577082508345303,
+              9.550000011920929
+            ]
+          }
+        ]
+      },
+      "textureStorageBytes": 284623808,
+      "unsupportedTextureFormats": []
+    },
+    {
+      "name": "low",
+      "scene": {
+        "id": "neighborhood",
+        "revision": "4ab5612ad0c7953d",
+        "ready": true
+      },
+      "graphics": {
+        "preset": "low",
+        "antialias": "FXAA at native resolution",
+        "sceneDownloadBytes": 46023763,
+        "memory": {
+          "geometries": 253,
+          "textures": 62,
+          "programs": 81
+        },
+        "renderScale": 1,
+        "renderSize": [
+          1280,
+          720
+        ],
+        "triangles": 1625750,
+        "calls": 229,
+        "assets": {
+          "bytes": 45297408,
+          "textureBytes": 96814688,
+          "files": 20
+        },
+        "frameCount": 202,
+        "camera": {
+          "position": [
+            -2.4941370606435373e-37,
+            6.139777042954355,
+            12.379750882185277
+          ],
+          "yaw": 0,
+          "obstruction": 1
+        }
+      },
+      "self": {
+        "id": 0,
+        "name": "Desktop_A",
+        "spawned": true,
+        "heading": 0,
+        "position": [
+          0,
+          13.697293932297384,
+          10
+        ],
+        "rotation": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "velocity": [
+          0,
+          0,
+          0
+        ],
+        "mode": "driver",
+        "vehicleId": 1,
+        "seat": 0,
+        "keys": 0
+      },
+      "presentation": {
+        "self": {
+          "visible": true,
+          "animation": "seated",
+          "position": [
+            -0.41999998688697815,
+            13.577293934979593,
+            9.550000011920929
+          ]
+        },
+        "peers": [
+          {
+            "id": 1,
+            "visible": true,
+            "animation": "seated",
+            "position": [
+              0.41999998688697815,
+              13.577293934979593,
+              9.550000011920929
+            ]
+          }
+        ]
+      },
+      "textureStorageBytes": 284623808,
+      "unsupportedTextureFormats": []
+    }
+  ],
+  "serverEvidence": {
+    "observationCount": 4307,
+    "transitions": [
+      {
+        "event": "connect",
+        "player": 0,
+        "name": "Desktop_A",
+        "npc": 0,
+        "tick": 959698
+      },
+      {
+        "event": "state",
+        "player": 0,
+        "state": 8,
+        "oldState": 0,
+        "vehicle": 0,
+        "tick": 959742
+      },
+      {
+        "event": "state",
+        "player": 0,
+        "state": 1,
+        "oldState": 8,
+        "vehicle": 0,
+        "tick": 959743
+      },
+      {
+        "event": "connect",
+        "player": 1,
+        "name": "Desktop_B",
+        "npc": 0,
+        "tick": 1014928
+      },
+      {
+        "event": "state",
+        "player": 1,
+        "state": 8,
+        "oldState": 0,
+        "vehicle": 0,
+        "tick": 1014988
+      },
+      {
+        "event": "state",
+        "player": 1,
+        "state": 1,
+        "oldState": 8,
+        "vehicle": 0,
+        "tick": 1014988
+      },
+      {
+        "event": "chat",
+        "player": 0,
+        "text": "Afternoon in Arroyo",
+        "tick": 1015084
+      },
+      {
+        "event": "state",
+        "player": 0,
+        "state": 2,
+        "oldState": 1,
+        "vehicle": 1,
+        "tick": 1119458
+      },
+      {
+        "event": "state",
+        "player": 1,
+        "state": 3,
+        "oldState": 1,
+        "vehicle": 1,
+        "tick": 1119549
+      },
+      {
+        "event": "state",
+        "player": 0,
+        "state": 1,
+        "oldState": 2,
+        "vehicle": 0,
+        "tick": 1237856
+      },
+      {
+        "event": "state",
+        "player": 1,
+        "state": 1,
+        "oldState": 3,
+        "vehicle": 0,
+        "tick": 1261408
+      },
+      {
+        "event": "disconnect",
+        "player": 0,
+        "reason": 1,
+        "tick": 1262653
+      },
+      {
+        "event": "disconnect",
+        "player": 1,
+        "reason": 1,
+        "tick": 1264876
+      }
+    ],
+    "maximumVehicleDistanceFromInitial": 7.696999999999999
+  },
+  "rawEvidenceSha256": {
+    "artifacts/desktop-visual/summary.json": "10ddc3de48b33b0a81bb82a3e5c859999043b669660ec42e96fcb334f82b4bb8",
+    "artifacts/desktop-visual/observations.json": "e36901ca4cb696ca4b08cab0b5f82db1e4c239a9e950f272e6fb9959f508294a",
+    "artifacts/desktop-visual/street.png": "ba2f643a571ae5b027b7a7fe0b2c9ab541bf5c2b9e2238c134b73720fba641da",
+    "artifacts/desktop-visual/pedestrian.png": "036195a2f4b7c14442f760ffa2b1cecaf189cb313296a77b6424360e4a6ccf27",
+    "artifacts/desktop-visual/driving.png": "1cef6d10159ade72daa17c73224c28cf48d780afddcd112adb6f64e2991157fc",
+    "artifacts/desktop-visual/passenger.png": "e1decc8d83b98069310d102720c3a9998ff27cf0283df497720757ed54c2cde9",
+    "artifacts/desktop-visual/low.png": "2db2f92dcb126bce6f11088adbf52f52804618022ecfba8a068d7cc9d7b5c2f3"
+  },
+  "retainedTraces": [
+    "artifacts/desktop-visual/player-0.zip",
+    "artifacts/desktop-visual/player-1.zip"
+  ],
+  "limitations": [
+    "Software rendering; no hardware GPU benchmark.",
+    "Low retains already uploaded Standard resources after switching; cold Low storage is reported separately.",
+    "Texture estimates exclude driver overhead and process memory."
+  ]
+}

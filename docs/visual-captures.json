@@ -1,0 +1,188 @@
+{
+  "capturedAt": "2026-09-08T07:30:24.901Z",
+  "implementationCommit": "d8f0210",
+  "browser": "152.0.7977.82",
+  "display": ":1",
+  "renderer": "SwiftShader; software rendering",
+  "complete": true,
+  "errors": [],
+  "views": [
+    {
+      "name": "pedestrian",
+      "screenshot": "images/visual-pedestrian.png",
+      "screenshotSha256": "0ab528de5f8e1de34b8573dbff0d72ab91f35a60936fcc9928dbb4e2da1fb019",
+      "scene": {
+        "id": "neighborhood",
+        "revision": "4ab5612ad0c7953d",
+        "ready": true
+      },
+      "preset": "standard",
+      "renderScale": 1,
+      "renderSize": [
+        1672,
+        941
+      ],
+      "triangles": 4879211,
+      "drawCalls": 847,
+      "sceneDownloadBytes": 46023763,
+      "player": {
+        "id": 1,
+        "name": "DreamPlayer",
+        "spawned": true,
+        "heading": 0,
+        "position": [
+          4,
+          1.1666666666666665,
+          10
+        ],
+        "rotation": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "velocity": [
+          0,
+          0,
+          0
+        ],
+        "mode": "onFoot",
+        "vehicleId": 0,
+        "seat": 0,
+        "keys": 0
+      },
+      "camera": {
+        "position": [
+          3.999995359579816,
+          -4.647083467341107,
+          12.234423755527137
+        ],
+        "yaw": 0,
+        "obstruction": 1
+      }
+    },
+    {
+      "name": "driving",
+      "screenshot": "images/visual-driving.png",
+      "screenshotSha256": "479df9227e9ff7e38afe439518702b47a84429f1930f8553ef0488906aa4899d",
+      "scene": {
+        "id": "neighborhood",
+        "revision": "4ab5612ad0c7953d",
+        "ready": true
+      },
+      "preset": "standard",
+      "renderScale": 1,
+      "renderSize": [
+        1672,
+        941
+      ],
+      "triangles": 4864981,
+      "drawCalls": 841,
+      "sceneDownloadBytes": 46023763,
+      "player": {
+        "id": 1,
+        "name": "DreamPlayer",
+        "spawned": true,
+        "heading": 0,
+        "position": [
+          0,
+          6,
+          10
+        ],
+        "rotation": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "velocity": [
+          0,
+          0,
+          0
+        ],
+        "mode": "driver",
+        "vehicleId": 1,
+        "seat": 0,
+        "keys": 0
+      },
+      "camera": {
+        "position": [
+          0.007106774471118366,
+          -1.563006108931935,
+          12.379492680107312
+        ],
+        "yaw": 0,
+        "obstruction": 1
+      }
+    },
+    {
+      "name": "street",
+      "screenshot": "images/visual-street.png",
+      "screenshotSha256": "dbe959a83aa61b11174508b2a46d30e169e8efb94c41160d207153adb31651a4",
+      "scene": {
+        "id": "neighborhood",
+        "revision": "4ab5612ad0c7953d",
+        "ready": true
+      },
+      "preset": "standard",
+      "renderScale": 1,
+      "renderSize": [
+        1672,
+        941
+      ],
+      "triangles": 5139319,
+      "drawCalls": 893,
+      "sceneDownloadBytes": 46023763,
+      "player": {
+        "id": 1,
+        "name": "DreamPlayer",
+        "spawned": true,
+        "heading": 0,
+        "position": [
+          0,
+          6,
+          10
+        ],
+        "rotation": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "velocity": [
+          0,
+          0,
+          0
+        ],
+        "mode": "driver",
+        "vehicleId": 1,
+        "seat": 0,
+        "keys": 0
+      },
+      "camera": {
+        "position": [
+          -7.126062365156071,
+          4.1976480865196235,
+          13.050201586195866
+        ],
+        "yaw": -1.3250000000000002,
+        "obstruction": 1
+      }
+    }
+  ],
+  "artReview": {
+    "round": 8,
+    "driving": 5,
+    "pedestrian": 5,
+    "street": 5,
+    "highestPassedTier": 1,
+    "target": 8,
+    "targetMet": false
+  },
+  "limitations": [
+    "Screenshot evidence does not establish network acceptance.",
+    "Frame history mixes setup and preset switches and is not a warmed benchmark.",
+    "Static local probe does not provide position-dependent reflections around the full route.",
+    "Hardware GPU performance unmeasured."
+  ]
+}

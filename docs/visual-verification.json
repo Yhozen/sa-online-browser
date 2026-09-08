@@ -1,0 +1,945 @@
+{
+  "verifiedAt": "2026-09-08T08:49:22.370Z",
+  "command": "npm run verify:poc",
+  "environment": {
+    "node": "v24.14.0",
+    "platform": "linux",
+    "architecture": "x64",
+    "chromium": "Google Chrome for Testing 147.0.7727.15",
+    "headed": true,
+    "rendering": "SwiftShader under Xvfb; functional rendering only"
+  },
+  "upstream": {
+    "version": "v1.5.8.3079",
+    "sourceCommit": "c6759bd8d265171ae3d86598895a23d5a8d92a3b",
+    "url": "https://github.com/openmultiplayer/open.mp/releases/download/v1.5.8.3079/open.mp-linux-x86.tar.gz",
+    "sha256": "5df708898cbbb97f6c299ad5c1ff663a52ad4d3d39b3d561f1fe08a32df424f4",
+    "binarySha256": "4c402c280168447b841b862386ccc1bc1fd3126cfaad3481be493d84a04689ff"
+  },
+  "browserScenarios": [
+    {
+      "title": "graphics: software WebGL starts the playground",
+      "status": "expected",
+      "durationMs": 9994
+    },
+    {
+      "title": "graphics: both presets preserve native screen resolution after resize and reload",
+      "status": "expected",
+      "durationMs": 104399
+    },
+    {
+      "title": "graphics: disabled WebGL shows recovery without starting a session",
+      "status": "expected",
+      "durationMs": 1237
+    },
+    {
+      "title": "graphics: context exceptions are handled and retry can recover",
+      "status": "expected",
+      "durationMs": 5291
+    },
+    {
+      "title": "neighborhood: failed assets and scene mismatch never simulate a joined player",
+      "status": "expected",
+      "durationMs": 33416
+    },
+    {
+      "title": "neighborhood: walking, fences, camera, occupants, loop and role swap",
+      "status": "expected",
+      "durationMs": 446404
+    },
+    {
+      "title": "neighborhood: twenty reconnects release browser workers and server slots",
+      "status": "expected",
+      "durationMs": 119637
+    },
+    {
+      "title": "neighborhood: ten minute recorded active session",
+      "status": "expected",
+      "durationMs": 672900
+    },
+    {
+      "title": "neighborhood: two full-resolution cloud views meet the low graphics budget",
+      "status": "expected",
+      "durationMs": 109658
+    },
+    {
+      "title": "neighborhood: rejoining the same tab releases skeleton textures",
+      "status": "expected",
+      "durationMs": 67306
+    },
+    {
+      "title": "end-to-end: normal players walk, chat, share a car and recover",
+      "status": "expected",
+      "durationMs": 45205
+    },
+    {
+      "title": "failures: duplicate name, worker crash, unavailable server and restart",
+      "status": "expected",
+      "durationMs": 81331
+    },
+    {
+      "title": "lifecycle: twenty browser connection cycles release sessions",
+      "status": "expected",
+      "durationMs": 121527
+    },
+    {
+      "title": "edges: jump, wall collision, safe passenger exit and hidden-tab cleanup",
+      "status": "expected",
+      "durationMs": 37149
+    },
+    {
+      "title": "soak: ten minutes of active two-player walking chat and driving",
+      "status": "expected",
+      "durationMs": 639137
+    }
+  ],
+  "durationMs": 2498538.071,
+  "normalPlayers": [
+    {
+      "name": "Proof_A",
+      "player": 0,
+      "npc": 0
+    },
+    {
+      "name": "Proof_B",
+      "player": 1,
+      "npc": 0
+    },
+    {
+      "name": "Proof_B",
+      "player": 1,
+      "npc": 0
+    }
+  ],
+  "browserCyclesReleased": 20,
+  "sustainedSession": {
+    "durationMs": 605988,
+    "rounds": 79,
+    "playerIds": [
+      0,
+      1
+    ],
+    "errors": []
+  },
+  "neighborhood": {
+    "performance": {
+      "recording": false,
+      "targetMedianFPS": 4,
+      "cloudTargetPassed": false,
+      "performanceIsDiagnostic": true,
+      "budgets": {
+        "sceneDownloadBytes": 48000000,
+        "renderedTriangles": 6000000,
+        "drawCalls": 1000,
+        "textureStorageBytes": 201326592,
+        "cloudTargetMedianFPS": 4
+      },
+      "warmupMs": 10000,
+      "durationMs": 30515,
+      "rounds": 11,
+      "metrics": [
+        {
+          "preset": "low",
+          "viewport": [
+            1280,
+            720
+          ],
+          "renderScale": 1,
+          "renderSize": [
+            1280,
+            720
+          ],
+          "measuredFrames": 26,
+          "medianFrameMs": 1166.7000000000116,
+          "medianFPS": 0.9,
+          "p95FrameMs": 1283.300000000003,
+          "triangles": 1638712,
+          "calls": 231,
+          "bytes": 45297408,
+          "textureBytes": 96814688,
+          "files": 20,
+          "sceneDownloadBytes": 46023763,
+          "textureStorageBytes": 88897680
+        },
+        {
+          "preset": "low",
+          "viewport": [
+            1280,
+            720
+          ],
+          "renderScale": 1,
+          "renderSize": [
+            1280,
+            720
+          ],
+          "measuredFrames": 26,
+          "medianFrameMs": 1183.4000000000087,
+          "medianFPS": 0.8,
+          "p95FrameMs": 1266.699999999997,
+          "triangles": 1638712,
+          "calls": 231,
+          "bytes": 45297408,
+          "textureBytes": 96814688,
+          "files": 20,
+          "sceneDownloadBytes": 46023763,
+          "textureStorageBytes": 88897680
+        }
+      ]
+    },
+    "residentRejoins": [
+      {
+        "geometries": 144,
+        "textures": 30,
+        "programs": 39,
+        "observedFrame": 9
+      },
+      {
+        "geometries": 144,
+        "textures": 30,
+        "programs": 39,
+        "observedFrame": 14
+      },
+      {
+        "geometries": 144,
+        "textures": 30,
+        "programs": 39,
+        "observedFrame": 19
+      },
+      {
+        "geometries": 144,
+        "textures": 30,
+        "programs": 39,
+        "observedFrame": 24
+      },
+      {
+        "geometries": 144,
+        "textures": 30,
+        "programs": 39,
+        "observedFrame": 29
+      },
+      {
+        "geometries": 144,
+        "textures": 30,
+        "programs": 39,
+        "observedFrame": 34
+      },
+      {
+        "geometries": 144,
+        "textures": 30,
+        "programs": 39,
+        "observedFrame": 39
+      },
+      {
+        "geometries": 144,
+        "textures": 30,
+        "programs": 39,
+        "observedFrame": 44
+      },
+      {
+        "geometries": 144,
+        "textures": 30,
+        "programs": 39,
+        "observedFrame": 49
+      },
+      {
+        "geometries": 144,
+        "textures": 30,
+        "programs": 39,
+        "observedFrame": 54
+      },
+      {
+        "geometries": 144,
+        "textures": 30,
+        "programs": 39,
+        "observedFrame": 59
+      },
+      {
+        "geometries": 144,
+        "textures": 30,
+        "programs": 39,
+        "observedFrame": 64
+      },
+      {
+        "geometries": 144,
+        "textures": 30,
+        "programs": 39,
+        "observedFrame": 69
+      },
+      {
+        "geometries": 144,
+        "textures": 30,
+        "programs": 39,
+        "observedFrame": 74
+      },
+      {
+        "geometries": 144,
+        "textures": 30,
+        "programs": 39,
+        "observedFrame": 79
+      },
+      {
+        "geometries": 144,
+        "textures": 30,
+        "programs": 39,
+        "observedFrame": 84
+      },
+      {
+        "geometries": 144,
+        "textures": 30,
+        "programs": 39,
+        "observedFrame": 89
+      },
+      {
+        "geometries": 144,
+        "textures": 30,
+        "programs": 39,
+        "observedFrame": 94
+      },
+      {
+        "geometries": 144,
+        "textures": 30,
+        "programs": 39,
+        "observedFrame": 99
+      },
+      {
+        "geometries": 144,
+        "textures": 30,
+        "programs": 39,
+        "observedFrame": 104
+      }
+    ],
+    "sustainedSession": {
+      "durationMs": 600635,
+      "rounds": 92,
+      "metrics": [
+        {
+          "preset": "low",
+          "viewport": [
+            1280,
+            720
+          ],
+          "renderScale": 1,
+          "renderSize": [
+            1280,
+            720
+          ],
+          "measuredFrames": 300,
+          "medianFrameMs": 1216.6999999999534,
+          "medianFPS": 0.8,
+          "p95FrameMs": 1316.5999999999767,
+          "triangles": 1638512,
+          "calls": 230,
+          "bytes": 45297408,
+          "textureBytes": 96814688,
+          "files": 20,
+          "sceneDownloadBytes": 46023763,
+          "textureStorageBytes": 88897680
+        },
+        {
+          "preset": "low",
+          "viewport": [
+            1280,
+            720
+          ],
+          "renderScale": 1,
+          "renderSize": [
+            1280,
+            720
+          ],
+          "measuredFrames": 300,
+          "medianFrameMs": 1216.6999999999534,
+          "medianFPS": 0.8,
+          "p95FrameMs": 1316.5,
+          "triangles": 1597370,
+          "calls": 223,
+          "bytes": 45297408,
+          "textureBytes": 96814688,
+          "files": 20,
+          "sceneDownloadBytes": 46023763,
+          "textureStorageBytes": 88897680
+        }
+      ]
+    },
+    "routes": [
+      [
+        {
+          "goal": [
+            0,
+            9
+          ],
+          "position": [
+            0,
+            6.097541628885433,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 1961,
+            "vehicle": 1,
+            "driver": 0,
+            "passenger": 1,
+            "x": 0,
+            "y": 6.016,
+            "z": 10,
+            "heading": 0,
+            "tick": 392578,
+            "receivedAt": 1788855366322
+          }
+        },
+        {
+          "goal": [
+            5,
+            12
+          ],
+          "position": [
+            3.040198127193871,
+            10.232933358751414,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 1969,
+            "vehicle": 1,
+            "driver": 0,
+            "passenger": 1,
+            "x": 2.634,
+            "y": 9.857,
+            "z": 10,
+            "heading": 312.741,
+            "tick": 394177,
+            "receivedAt": 1788855367922
+          }
+        },
+        {
+          "goal": [
+            53,
+            12
+          ],
+          "position": [
+            50.20670868567354,
+            12.099092311331423,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 2008,
+            "vehicle": 1,
+            "driver": 0,
+            "passenger": 1,
+            "x": 50.099,
+            "y": 12.106,
+            "z": 10,
+            "heading": 265.851,
+            "tick": 401979,
+            "receivedAt": 1788855375725
+          }
+        },
+        {
+          "goal": [
+            58,
+            7
+          ],
+          "position": [
+            55.88960968101449,
+            8.60898141198025,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 2017,
+            "vehicle": 1,
+            "driver": 0,
+            "passenger": 1,
+            "x": 55.568,
+            "y": 8.854,
+            "z": 10,
+            "heading": 232.572,
+            "tick": 403779,
+            "receivedAt": 1788855377523
+          }
+        },
+        {
+          "goal": [
+            58,
+            -43
+          ],
+          "position": [
+            58.217508489114856,
+            -40.22786695334722,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 2058,
+            "vehicle": 1,
+            "driver": 0,
+            "passenger": 1,
+            "x": 58.244,
+            "y": -39.983,
+            "z": 10,
+            "heading": 173.755,
+            "tick": 411980,
+            "receivedAt": 1788855385723
+          }
+        },
+        {
+          "goal": [
+            53,
+            -48
+          ],
+          "position": [
+            54.784317270364156,
+            -45.830533723087235,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 2067,
+            "vehicle": 1,
+            "driver": 0,
+            "passenger": 1,
+            "x": 55.013,
+            "y": -45.512,
+            "z": 10,
+            "heading": 144.24,
+            "tick": 413780,
+            "receivedAt": 1788855387523
+          }
+        },
+        {
+          "goal": [
+            5,
+            -48
+          ],
+          "position": [
+            7.868667844776986,
+            -47.75157611332475,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 2106,
+            "vehicle": 1,
+            "driver": 0,
+            "passenger": 1,
+            "x": 8.248,
+            "y": -47.72,
+            "z": 10,
+            "heading": 94.651,
+            "tick": 421581,
+            "receivedAt": 1788855395324
+          }
+        },
+        {
+          "goal": [
+            0,
+            -43
+          ],
+          "position": [
+            2.352258587386875,
+            -44.78073722191726,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 2115,
+            "vehicle": 1,
+            "driver": 0,
+            "passenger": 1,
+            "x": 2.558,
+            "y": -44.934,
+            "z": 10,
+            "heading": 53.266,
+            "tick": 423381,
+            "receivedAt": 1788855397124
+          }
+        },
+        {
+          "goal": [
+            0,
+            6
+          ],
+          "position": [
+            0.22674418047019967,
+            3.3126279745134704,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 2154,
+            "vehicle": 1,
+            "driver": 0,
+            "passenger": 1,
+            "x": 0.285,
+            "y": 2.83,
+            "z": 10,
+            "heading": 6.964,
+            "tick": 431181,
+            "receivedAt": 1788855404925
+          }
+        }
+      ],
+      [
+        {
+          "goal": [
+            0,
+            9
+          ],
+          "position": [
+            0,
+            6.057181821926734,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 2171,
+            "vehicle": 1,
+            "driver": 1,
+            "passenger": 0,
+            "x": 0,
+            "y": 6,
+            "z": 10,
+            "heading": 0,
+            "tick": 434583,
+            "receivedAt": 1788855408326
+          }
+        },
+        {
+          "goal": [
+            5,
+            12
+          ],
+          "position": [
+            2.8718900256416218,
+            10.227132635143523,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 2179,
+            "vehicle": 1,
+            "driver": 1,
+            "passenger": 0,
+            "x": 2.355,
+            "y": 9.745,
+            "z": 10,
+            "heading": 313.027,
+            "tick": 436181,
+            "receivedAt": 1788855409926
+          }
+        },
+        {
+          "goal": [
+            53,
+            12
+          ],
+          "position": [
+            50.203158227300804,
+            11.926452754512345,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 2218,
+            "vehicle": 1,
+            "driver": 1,
+            "passenger": 0,
+            "x": 49.691,
+            "y": 11.943,
+            "z": 10,
+            "heading": 268.132,
+            "tick": 443984,
+            "receivedAt": 1788855417727
+          }
+        },
+        {
+          "goal": [
+            58,
+            7
+          ],
+          "position": [
+            55.73159320789818,
+            8.689452487457157,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 2227,
+            "vehicle": 1,
+            "driver": 1,
+            "passenger": 0,
+            "x": 55.359,
+            "y": 8.945,
+            "z": 10,
+            "heading": 237.825,
+            "tick": 445783,
+            "receivedAt": 1788855419527
+          }
+        },
+        {
+          "goal": [
+            58,
+            -43
+          ],
+          "position": [
+            58.14786318706191,
+            -40.28309960624217,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 2267,
+            "vehicle": 1,
+            "driver": 1,
+            "passenger": 0,
+            "x": 58.196,
+            "y": -39.75,
+            "z": 10,
+            "heading": 174.834,
+            "tick": 453784,
+            "receivedAt": 1788855427528
+          }
+        },
+        {
+          "goal": [
+            53,
+            -48
+          ],
+          "position": [
+            54.81441711323929,
+            -45.61178478676421,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 2276,
+            "vehicle": 1,
+            "driver": 1,
+            "passenger": 0,
+            "x": 55.111,
+            "y": -45.165,
+            "z": 10,
+            "heading": 146.342,
+            "tick": 455584,
+            "receivedAt": 1788855429328
+          }
+        },
+        {
+          "goal": [
+            5,
+            -48
+          ],
+          "position": [
+            7.804710295522549,
+            -47.70229714103372,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 2315,
+            "vehicle": 1,
+            "driver": 1,
+            "passenger": 0,
+            "x": 7.96,
+            "y": -47.683,
+            "z": 10,
+            "heading": 97.027,
+            "tick": 463385,
+            "receivedAt": 1788855437128
+          }
+        },
+        {
+          "goal": [
+            0,
+            -43
+          ],
+          "position": [
+            2.138526918547753,
+            -44.65661340179932,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 2324,
+            "vehicle": 1,
+            "driver": 1,
+            "passenger": 0,
+            "x": 2.574,
+            "y": -44.975,
+            "z": 10,
+            "heading": 53.828,
+            "tick": 465184,
+            "receivedAt": 1788855438929
+          }
+        },
+        {
+          "goal": [
+            0,
+            6
+          ],
+          "position": [
+            -0.09049075879731441,
+            3.055570251272215,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 2363,
+            "vehicle": 1,
+            "driver": 1,
+            "passenger": 0,
+            "x": -0.143,
+            "y": 2.499,
+            "z": 10,
+            "heading": 354.553,
+            "tick": 472986,
+            "receivedAt": 1788855446729
+          }
+        }
+      ]
+    ],
+    "cycles": {
+      "cycles": 20,
+      "ids": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "positionChecks": {
+      "count": 200,
+      "maxServerDistance": 0.06684595238250246,
+      "maxPeerDistance": 0.020309593454792108
+    },
+    "errors": []
+  },
+  "demoSupervisor": {
+    "termination": {
+      "startup": true,
+      "normalWorkerSpawn": true,
+      "signal": "SIGTERM",
+      "exitCode": 0,
+      "pidFileRemoved": true,
+      "allSupervisedProcessesExited": true,
+      "upstreamAbort": false
+    },
+    "keyboardInterrupt": {
+      "startup": true,
+      "normalWorkerSpawn": true,
+      "signal": "process-group SIGINT",
+      "exitCode": 0,
+      "pidFileRemoved": true,
+      "allSupervisedProcessesExited": true,
+      "upstreamAbort": false
+    }
+  },
+  "positionChecks": {
+    "count": 167,
+    "maxDistance": 0.49274548526200945,
+    "maxSampleAgeMs": 202,
+    "requiredDistance": 0.5,
+    "deadlineMs": 1000
+  },
+  "uncaughtBrowserErrors": [],
+  "testedSourceSha256": {
+    "apps/browser/src/main.ts": "b50824ff79428c1f915d0e7d6522edf2d9ba56745118be52abc0f16a5a355571",
+    "apps/browser/src/bootstrap.ts": "d512c6fc9eaf612fc44cc93013b113ed233eabb17fe08ef560fad6af0fb3b98f",
+    "apps/browser/src/graphics.ts": "22b713f3ab445dd4a8effb2160c631515b1e65a14d7ad97731e4db8ca615b297",
+    "services/gateway/server.mjs": "eae8e486a13d5df508932f24d004a86a34ad68048bd16ad5ccd80c8b65f9d1b6",
+    "native/worker.cpp": "805debb07a1504151f4deb487cc10d41f589d20f359bdd53cab147f2f10567e9",
+    "tools/setup-protocol.py": "fcaa0ce80cb14bf33a007d6bec1687e832e7d31a9a13b8a469e43110e0cfb2d4",
+    "test-server/poc.pwn": "4eff00e771aad1ecb1ade9905375889bdc252b1361b4a5ee7d08b262007b5fc7",
+    "test-server/arena.json": "b1dcd0a602599ba894d4bbe7a30a713a01daa61ae55bd9b5067135922019b53d",
+    "tests/browser/poc.spec.mjs": "195e1360ac7b424df1fae2120aa3d4f4662ce327d691f6fbc911c8354c963c04",
+    "tests/browser/graphics.spec.mjs": "8658ed73d4e316fb623bc2836c2a866ec62e0abea6edb0923c49cb9fa6dd03e8",
+    "tools/browser-options.mjs": "da82bba99f0482e135f2b4b1cebca475db053cd39e6a722f917fe7f85477877c",
+    "tools/open-browser.mjs": "34d1a3bd96e72f94b819e6ffe36f88eab093a589b416d1b84c5fef731df78d1c",
+    "playwright.config.mjs": "308117fb539a8f9fca3257ee1cefeb8fbd6ce48f7d9ec51cf72c95b3526741f3",
+    "tools/dev.mjs": "a32709f89229838bf118130367b16a016e375df0dc94ff1cabe75d5585ef0104",
+    "tools/verify-supervisor.py": "c0a2e0594b98236a2a1d7114e66d2ca0a8ddbba05e1ae77e4134ff7fa2cd0bd9",
+    "package-lock.json": "b99e5c05368deae7d0cd82a86505d33671cc2275c0852eed3f08afbd0b07bd74",
+    "apps/browser/src/assets.ts": "80900514260d504f66716480195459f070d0e52bd14566f42809c1eea35ae65e",
+    "apps/browser/src/environment.ts": "39e39f95717469ef8ccd52856c7c09d5180421fd4dc6a5529c90a2346172c856",
+    "apps/browser/src/characters.ts": "0362d915cd15692bb7259140836d6a90fff610f73735357e0121e497e4432c96",
+    "apps/browser/src/collision.ts": "bc98b1275031f6b3de5d753bc572f1ce2f77fa5d8d7b54e5b7bb5c65749cd110",
+    "apps/browser/src/camera.ts": "ab610c86911ff9f33ae3a91a5cb7cf2f16f4528028bc8abe0eff055a635c9ed6",
+    "apps/browser/src/hud.ts": "af1dee461a169484731193bf2f5d123aa70dd8473311323dc670ce1564409b9f",
+    "apps/browser/src/shadows.ts": "5201573101a62ae060534d77123c496f03b8b07617a1da5109341603b86c7be0",
+    "apps/browser/src/antialias.ts": "4b431578258f5e4c822f07b3003b58f9f802767a99f86a300cdf8f8a5392f602",
+    "apps/browser/src/simulation-clock.ts": "925d2bac83f1f99838b708e9a4649c8ec0666aeb465e4a5fc374e65553731379",
+    "tests/simulation-clock.test.mjs": "8d687b3a274269d16049354b75fd8a860afc9afbdd2b386dc53ec80976d9699a",
+    "tests/character-animation.test.mjs": "bf8f6b8cd4248ac2277fee47ad03d6993b32bbd97fa6b00e6558704846b8d39c",
+    "tests/foliage-mips.test.mjs": "21733557b8f82358e7828eca4f6e7db09b5357f8293aa8ef318fdf07d329bc04",
+    "apps/browser/src/lighting.ts": "ef572ae9c541bf21b113ae777bd28fa33bd1dfacd0d8b4df6f55f629e7fb0ff1",
+    "apps/browser/src/warmup.ts": "183def3b17b329c0f6878a6efb81e231c5b2feb2a80c4070ae50c050eddb89ff",
+    "apps/browser/src/foliage-mips.ts": "bf7fe1414777bf98dc331fcf323a747dd6a1d20e1df857cde5e5ad47a98cb15c",
+    "apps/browser/src/character-animation.ts": "0782bb10ef3fedfe9744937687dd63566e32abafae70d75e1420c4a62922e8bb",
+    "apps/browser/src/reflection-storage.ts": "8b7f07a99248d1885e509aa3e916b87982ad33019348ae87fd04e09635c13720",
+    "tools/bake-reflections.mjs": "0a60f1f00ec13e520ecf7912f5961ee6f677f291d2ed4c032d251cfb82f87955",
+    "tests/reflection.test.mjs": "68e29b1c865ca646671504378e7d67193612eeaba536ffe48d2e0d19198ad997",
+    "apps/browser/src/horizon.ts": "a89de1ab6fd43bd7a43e06cfc95c10f43de872b5342629cf085869802f9ed481",
+    "apps/browser/src/road-detail.ts": "c86c9dc38d2b45274475a9eb7509a27be259d72da48da9ded30157e3ff491592",
+    "apps/browser/src/verges.ts": "fd047ac898359f13d59d53e70d3246ca3a092517dfe745bdb2f11dc06836f337",
+    "apps/browser/src/surface-textures.ts": "26d9599707b24302c0486989d4d2e15f8777d8e93d706fb68ec3341b8ea032bd",
+    "tools/assets/environment-kit.py": "5468989a040a25f7c85143058d24d460fdf9ca1bad996641904ebbb1b5811183",
+    "tools/assets/heroes.py": "176150afacfe9b03b952865dfcf1f6b392ae528b49b10ca7865ed758a9fb2519",
+    "tests/assets.test.mjs": "ace1533f7eebcece13e5690db3ade4babeac4abece88dd38271614e71772025f",
+    "tests/verges.test.mjs": "fb190594d3952c0d5495158bd1ddbc26d7e789a571f14222458aab2350f0f665",
+    "tools/visual-budgets.mjs": "e7db612b8cc4d35dd14253960006f8a59c16e382d26b5c0835b51ce0b170a48e",
+    "packages/shared/scenes/neighborhood.json": "cce8c3bfc9bb5c4ddc7a7b96a71f72e6349cab4c07fa85d87a324a003cd056c2",
+    "apps/browser/public/assets/inventory.json": "90431684cfa72facf66f6e582acc8ecee1044a7041c06771273b480fa7213bcc",
+    "tests/browser/neighborhood.spec.mjs": "dde087eab7c4fd879a1e3d2d9d1671cffd51f9bc255849c4e286f9aa973b0459",
+    "tools/texture-audit.mjs": "63f31cce5de94af40edaa72f3f873c96a291b65d3f139f5713f6394bb07cb707",
+    "tools/verify-desktop.mjs": "353e9a79fbb3a5ca3f8448927cbe2e28bc74d9b24365bf3b7ecb33c373e597fe",
+    "tools/create-scenes.mjs": "fcf8761843314956beea845f0acfa416bcffa31423b73f6275f2751dbaf52deb",
+    "tools/build-assets.mjs": "c2b322d886dc3724b09cca94e08cb8be623aa7f72e4643b0c8329858e59ea350",
+    "tools/assets/build.py": "0fc4a111850bb31d0a7e25e7b131fe0d243a2316e983c5bc039251a3382df706",
+    "packages/shared/scene.mjs": "bf854bf1c671d16b9ac3ec47a08b02bfbd78b32a545bdb2d39ce814d621c5cd4",
+    "tools/setup-runtime.py": "d5f25a2dcbf91567ee20da8de05068cddda236b0b739148ecbb8963357716be3",
+    "packages/shared/scenes/yard.json": "eafd501e8fef4ffa7df59050ec41059c4d86b53e510aa83e7479e936497ed5ac",
+    "apps/browser/src/style.css": "33e340bf401787473e31dfd3b18a2ab63edca9016dd462217cdd29530a56e0aa",
+    "package.json": "1f2d46278fb3f0ae6ee93d9b70b8b337486515cc36ce2de8b3663616686d7f90"
+  },
+  "nativeWorkerSha256": "4b1cb23ed915be631b5aa27bd48f625d79420c4380bc6ccb2762eb9625843c3d",
+  "evidence": [
+    "results.json",
+    "server-observations.json",
+    "position-agreements.json",
+    "browser-errors.json",
+    "soak.json",
+    "walking-chat.png",
+    "driver-passenger.png",
+    "wall-exit.png",
+    "soak-complete.png",
+    "report/",
+    "videos/",
+    "*.zip"
+  ],
+  "unverified": [
+    "original GTA clients",
+    "original SA-MP servers",
+    "public servers",
+    "non-Chromium browsers",
+    "hardware GPU performance",
+    "WAN behavior",
+    "GTA assets and realistic physics",
+    "full legacy protocol coverage"
+  ]
+}

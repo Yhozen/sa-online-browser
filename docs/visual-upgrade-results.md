@@ -6,11 +6,13 @@ The user reports that the game runs fine on their own machine. No hardware-GPU b
 
 ## Actual game captures
 
-These are live Standard-mode Chrome 152 captures on the actual cloud display `:1`, at **1672×941, DPR 1**, using normal server-routed player controls. They are not generated target images. The complete capture has no browser errors. Working targets, earlier captures, traces and eight independent verdicts are in ignored `.dream-loop/`.
+These are live Standard-mode Chrome 152 captures on the actual cloud display `:1`, at **1672×941, DPR 1**, using normal server-routed player controls. They are not generated target images. The complete capture has no browser errors; [capture metadata and screenshot checksums](visual-captures.json) identify the views. Working targets, earlier captures, traces and eight independent verdicts are in ignored `.dream-loop/`.
 
 ![Street and coupe in the running game](images/visual-street.png)
 
-[Pedestrian view](images/visual-pedestrian.png) · [Rear driving view](images/visual-driving.png)
+[Pedestrian view](images/visual-pedestrian.png) · [Rear driving view](images/visual-driving.png) · [Live entry screen](images/visual-entry.png)
+
+[Two visible occupants from the passenger view](images/visual-passenger.png) is a separate native 1280×720 capture from the final actual-desktop verification.
 
 ## Implemented changes
 
@@ -25,20 +27,36 @@ The shared playable layout and collision manifest remain unchanged. Decorative g
 
 ## Verification status
 
-The complete final-asset headed suite is running on implementation commit `d8f0210`. Do not treat historical neighborhood/yard results as acceptance of these assets. The final source-hashed summary and actual-desktop two-player result will be linked here after verification finishes.
+**`npm run verify:poc` passed completely on September 8 at 08:49 UTC:** 15 headed browser scenarios in 41.6 minutes, 3 gateway tests, 19 scene/asset/timing checks, 3 native tests and 2 supervisor shutdown probes. The [source-hashed acceptance summary](visual-verification.json) identifies all 57 recorded source files and the native worker binary. Browser verification used Chrome for Testing 147 under Xvfb/SwiftShader. No unexpected browser errors were recorded.
 
-Focused exported-asset checks passed before the complete run: exact vehicle anchors/envelope, animated cabin fit, four house opening cavities, canopy normal fields, planting triangle clearance, cutout mip coverage and bounded reflection-cache decoding. The full run additionally exercises graphics startup/recovery, native DPR1/2 resizing/reloading, loading failures, walking/chat/driving, both routes/seat assignments, safe exits, server corrections, failures, twenty reconnects, resident resource stability and both ten-minute active sessions. The networking threshold remains **0.5 world units within one second**.
+| Acceptance evidence | Final result |
+| --- | --- |
+| Neighborhood sustained session | 92 active rounds / 600.635 seconds |
+| Yard sustained session | 79 active rounds / 605.988 seconds |
+| Neighborhood fresh comparisons | 200; max server difference 0.066846, max peer difference 0.020310 units |
+| Yard fresh comparisons | 167; max server difference 0.492746 units, maximum server sample age 202 ms |
+| Fresh reconnects | Twenty in each fixture; observed server-slot and worker release |
+| Resident-tab rejoins | Twenty; 144 geometries / 30 textures / 39 programs at both first and last samples |
+| Driving and lifecycle | Both neighborhood loops/role assignments, contention, safe exits, corrections, crash/restart and hidden-tab cleanup passed |
+
+The earlier run hit its two-minute overall yard lifecycle timeout while admitting the twentieth browser after nineteen clean releases. Only that case's total allowance changed to three minutes; every cycle and individual assertion stayed. The complete clean rerun above passed. Earlier incomplete runs remain in ignored `.dream-loop/verification-failed-*/`; their results are not substituted for the final run.
+
+**The actual cloud-desktop pass also succeeded at 09:11 UTC**, using Chrome 152 on display `:1`, native 1280×720 Standard/Low. It verified two normal players, exactly-once peer chat, walking, both visible occupants, driving, exits and worker cleanup, with zero recorded errors. Its [summary and independent server observations](visual-desktop.json) retain 4,307 observed server events by checksum and selected transitions; the vehicle moved 7.697 units from its initial position. The second attempt observed a server-confirmed driver transition in 97 ms but its animation-frame wait timed out. State observation now polls at 100 ms independently of paint, with the mode timeout unchanged. The full-suite source record remains an exact snapshot of its tested revision: only the subsequent texture-budget constant and desktop observer polling differ, and no application/asset source changed. The [budget revision and allocation breakdown](visual-budget-revision.json) record those test-only differences and verify every other recorded source hash.
+
+Focused exported-asset checks passed before the complete run: exact vehicle anchors/envelope, animated cabin fit, four house opening cavities, canopy normal fields, planting triangle clearance, cutout mip coverage and bounded reflection-cache decoding. The full run additionally exercises graphics startup/recovery, native DPR1/2 resizing/reloading, loading failures, walking/chat/driving, both routes/seat assignments, safe exits, server corrections, failures, twenty reconnects, resident resource stability and both ten-minute active sessions. The networking threshold remains **0.5 world units within one second**. Yard gameplay and screenshots use native 1440×960 buffers; its stored test videos are encoded at 960×640. Video encoding size does not change the game drawing buffer. Neighborhood functional views use native 1280×720, and the art comparison views use native 1672×941.
 
 ## Resource measurements and explicit tradeoffs
 
-The selected native Standard views download **46,023,763 bytes**, submit at most **5,139,319 triangles including shadow passes**, and use at most **893 draw calls**. These are measured view samples, not worst-case bounds across every possible camera. Final texture allocation and warmed two-view frame times are pending the complete audit. Mixed setup/preset-switching frame history is not used as a warmed benchmark.
+The selected native Standard views download **46,023,763 bytes**, submit at most **5,139,319 triangles including shadow passes**, and use at most **893 draw calls**. These are measured view samples, not worst-case bounds across every possible camera. The final recorded neighborhood soak measured **0.8 FPS median / about 1,317 ms p95** in both full-native 1280×720 Low views, with **88,897,680 bytes (84.78 MiB)** logical texture storage each. The 4 FPS cloud target is missed and remains diagnostic. Without recording, a **30.515-second** sample after **10 seconds of warm-up** measured **0.9 / 0.8 FPS median**, with **1,283.3 / 1,266.7 ms p95** across the two views (26 measured frames each), with the same texture storage. The first actual-desktop Standard audit measured **284,623,808 bytes (271.44 MiB)** and correctly failed the prior 192 MiB ceiling. The pinned renderer allocates both a **64 MiB RGBA8 color attachment and a 64 MiB depth attachment** for the 4096² sun shadow; counting only the depth attachment had underestimated this cost. Environment maps, material mipmaps and native postprocessing buffers account for the remainder. The explicit logical-texture ceiling is now **320 MiB** at the tested native view sizes; larger DPR/viewports can cost more. No runtime/rendering change was made for this budget revision. The complete functional suite passed under the prior stricter limit; the fresh Standard desktop audit passed the revised ceiling in all four Standard captures. It consistently measured **271.44 MiB**; switching back to Low retained those uploaded resources for reuse. Cold Low measured 84.78 MiB as reported above. Mixed setup/preset-switching frame history is not used as a warmed benchmark.
+
+Generated local artifacts remain under `artifacts/verification/`, `artifacts/neighborhood/`, and `artifacts/desktop-visual/` (ignored videos, traces and raw observations). Committed summaries and selected screenshots identify the delivered result.
 
 | Resource | Initial neighborhood budget | Current explicit fidelity ceiling |
 | --- | ---: | ---: |
 | Scene downloads | 15 MB | 48 MB |
 | Geometry | 300,000 visible triangles | 6,000,000 submitted triangles including shadow passes |
 | Draw calls | 250 | 1,000 |
-| Logical texture storage | 96 MiB | 192 MiB |
+| Logical texture storage | 96 MiB | 320 MiB |
 | Cloud median frame rate | User revised to 4 FPS | Diagnostic only |
 
 The original budgets are exceeded. Visible faces and submitted triangles are different measurements; the latter repeats geometry for shadow rendering. The larger reflection cache trades download size for reproducible startup, while denser models, planting and expanded shadows increase rendering work. Texture storage estimates exclude driver overhead, buffers and process memory. No fidelity adjustment reduces internal resolution, and slower cloud results do not trigger downscaling.

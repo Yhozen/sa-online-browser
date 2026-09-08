@@ -1,0 +1,174 @@
+{
+  "reason": "Two verification-only delivery adjustments: measured Standard texture ceiling and paint-independent desktop observation; runtime and assets unchanged.",
+  "fullSuiteRecord": "visual-verification.json",
+  "fullSuiteBudget": {
+    "sceneDownloadBytes": 48000000,
+    "renderedTriangles": 6000000,
+    "drawCalls": 1000,
+    "textureStorageBytes": 201326592,
+    "cloudTargetMedianFPS": 4
+  },
+  "deliveryBudget": {
+    "sceneDownloadBytes": 48000000,
+    "renderedTriangles": 6000000,
+    "drawCalls": 1000,
+    "textureStorageBytes": 335544320,
+    "cloudTargetMedianFPS": 4
+  },
+  "differencesAmongRecordedSourceFiles": [
+    {
+      "path": "tools/visual-budgets.mjs",
+      "previousSha256": "e7db612b8cc4d35dd14253960006f8a59c16e382d26b5c0835b51ce0b170a48e",
+      "deliverySha256": "39018d5b960556c5054b2106168f53cd63e9cb6e12e92293946ddab228cb09fb"
+    },
+    {
+      "path": "tools/verify-desktop.mjs",
+      "previousSha256": "353e9a79fbb3a5ca3f8448927cbe2e28bc74d9b24365bf3b7ecb33c373e597fe",
+      "deliverySha256": "e9c24c1f2a03d6426fde6efaa5f59da85d542caf93d6d9d64d7c8a4ed7189cce"
+    }
+  ],
+  "otherRecordedSourceHashesMatch": true,
+  "firstDesktopStandardAudit": {
+    "viewport": [
+      1280,
+      720
+    ],
+    "nativeDPR": 1,
+    "bytes": 284623808,
+    "unsupported": [],
+    "largestAllocations": [
+      {
+        "baseSize": [
+          4096,
+          4096
+        ],
+        "baseFormat": 32856,
+        "levels": 1,
+        "bytes": 67108864
+      },
+      {
+        "baseSize": [
+          4096,
+          4096
+        ],
+        "baseFormat": 33190,
+        "levels": 1,
+        "bytes": 67108864
+      },
+      {
+        "baseSize": [
+          1536,
+          2048
+        ],
+        "baseFormat": 34842,
+        "levels": 1,
+        "bytes": 25165824
+      },
+      {
+        "baseSize": [
+          887,
+          887
+        ],
+        "baseFormat": 35907,
+        "levels": 60,
+        "bytes": 25150272
+      },
+      {
+        "baseSize": [
+          1774,
+          887
+        ],
+        "baseFormat": 35907,
+        "levels": 12,
+        "bytes": 8386716
+      },
+      {
+        "baseSize": [
+          1254,
+          1254
+        ],
+        "baseFormat": 35907,
+        "levels": 12,
+        "bytes": 8384076
+      },
+      {
+        "baseSize": [
+          1254,
+          1254
+        ],
+        "baseFormat": 32856,
+        "levels": 12,
+        "bytes": 8384076
+      },
+      {
+        "baseSize": [
+          1254,
+          1254
+        ],
+        "baseFormat": 32856,
+        "levels": 12,
+        "bytes": 8384076
+      },
+      {
+        "baseSize": [
+          1254,
+          1254
+        ],
+        "baseFormat": 35907,
+        "levels": 11,
+        "bytes": 8384072
+      },
+      {
+        "baseSize": [
+          1280,
+          720
+        ],
+        "baseFormat": 34842,
+        "levels": 1,
+        "bytes": 7372800
+      },
+      {
+        "baseSize": [
+          1280,
+          720
+        ],
+        "baseFormat": 34842,
+        "levels": 1,
+        "bytes": 7372800
+      },
+      {
+        "baseSize": [
+          768,
+          1024
+        ],
+        "baseFormat": 34842,
+        "levels": 1,
+        "bytes": 6291456
+      },
+      {
+        "baseSize": [
+          1280,
+          720
+        ],
+        "baseFormat": 33190,
+        "levels": 1,
+        "bytes": 3686400
+      },
+      {
+        "baseSize": [
+          1280,
+          720
+        ],
+        "baseFormat": 33190,
+        "levels": 1,
+        "bytes": 3686400
+      }
+    ]
+  },
+  "limitations": "Logical texture storage includes shadow/environment/postprocessing allocations, but excludes driver overhead and process memory. Larger viewport/DPR can allocate more.",
+  "desktopObserverCorrection": {
+    "pollingMs": 100,
+    "modeTimeoutMs": 30000,
+    "reason": "Server reached DRIVER 97 ms after seat grant; default animation-frame polling timed out. Observe state independently of rendering."
+  }
+}
