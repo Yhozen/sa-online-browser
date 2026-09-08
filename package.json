@@ -16,7 +16,8 @@
     "verify:poc": "node tools/verify.mjs",
     "test:gateway": "node --test tests/gateway.test.mjs",
     "build:assets": "node tools/build-assets.mjs",
-    "verify:neighborhood": "node tools/verify.mjs tests/browser/neighborhood.spec.mjs"
+    "verify:neighborhood": "node tools/verify.mjs tests/browser/neighborhood.spec.mjs",
+    "verify:desktop": "node tools/verify-desktop.mjs"
   },
   "dependencies": {
     "three": "0.185.1",

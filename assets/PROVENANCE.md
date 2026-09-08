@@ -7,7 +7,7 @@ Created September 7, 2026 for this repository. Original modeling, rigging, anima
 - `source/*.blend`: editable Blender 4.5.13 sources, including weighted character mesh, armature and actions; script creates deterministic geometry with explicit weights.
 - `../tools/assets/build.py`: authoritative editable modeling/export recipe.
 - `../apps/browser/public/assets/*.glb`: committed meter-scale exports, Blender Z-up/+Y forward converted by standard glTF exporter to Y-up/-Z forward; browser normalizes once.
-- Blender binary SHA256 `da4e69b06b75b9e642d106496c50e7e240218b411d2f6e18271c1d1d819cef91`, version 4.5.13, official mirror URL recorded in `tools/build-assets.mjs`. Blender itself remains ignored in .runtime, under its upstream GPL license.
+- Blender 4.5.13 archive SHA256 `da4e69b06b75b9e642d106496c50e7e240218b411d2f6e18271c1d1d819cef91`; extracted executable SHA256 `e3ce4e960a2fd3beb1f9d2299e38b3804475ccd395193013aec239a4b75bfbfe`. The official mirror URL and both checks are recorded in `tools/build-assets.mjs`. Blender itself remains ignored in .runtime, under its upstream GPL license.
 
 ## Built-in imagegen prompts
 

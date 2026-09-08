@@ -54,6 +54,8 @@ The suite runs type checks, gateway and native tests, then two independent heade
 
 Screenshots, videos, traces, JSON results, and server observations are written to ignored `artifacts/verification/`. Gateway worker transitions are in `.runtime/logs/gateway.jsonl`. Reproduce these artifacts when moving to a fresh workspace; large recordings are not committed.
 
+For the actual cloud desktop, start `dev:poc` with no other players, then run `npm run verify:desktop`. It opens two Google Chrome windows on display `:1` (or `$DISPLAY`), checks walking/chat/driving and occupants through UI input, audits texture allocations, and saves screenshots, traces and server observations to `artifacts/desktop/`. This is separate from the Xvfb performance test. Close extra software-rendered game windows before performance verification.
+
 ## Scope and project record
 
 This demonstrates a narrow browser/open.mp protocol subset with original placeholder geometry. Original GTA clients, original SA-MP servers, arbitrary public servers, GTA assets, combat, realistic physics, WAN hosting, and hardware GPU performance are not verified. Software WebGL rendering is functional evidence only.

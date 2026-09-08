@@ -25,6 +25,38 @@ test("manifest geometry, clear spawn/exit areas and bounded camera obstruction",
   assert.equal(index.fraction([-4, 0, 11], [-4, -7, 13]), 1);
   assert.ok(index.fraction([-15, -18, 11], [-30, -18, 11]) < 1);
   assert.equal(index.fraction([-15, -18, 30], [-30, -18, 30]), 1);
+  for (const p of n.props.filter((p) => ["tree", "palm"].includes(p.asset))) {
+    assert.ok(
+      n.barriers.some(
+        (b) =>
+          b.id.startsWith(p.asset) &&
+          b.position[0] === p.position[0] &&
+          b.position[1] === p.position[1],
+      ),
+      `${p.asset} at ${p.position}: missing trunk collider`,
+    );
+  }
+  for (const p of n.props.filter((p) => ["pole", "lamp"].includes(p.asset))) {
+    const [x, y] = p.position;
+    assert.ok(
+      Math.hypot(x - n.culdesac.center[0], y - n.culdesac.center[1]) >
+        n.culdesac.radius,
+      `${p.asset}: obstructs turning circle`,
+    );
+    for (const road of n.roads)
+      for (let i = 1; i < road.points.length; i++) {
+        const a = road.points[i - 1],
+          b = road.points[i],
+          r = road.width / 2;
+        assert.ok(
+          x < Math.min(a[0], b[0]) - r ||
+            x > Math.max(a[0], b[0]) + r ||
+            y < Math.min(a[1], b[1]) - r ||
+            y > Math.max(a[1], b[1]) + r,
+          `${p.asset} at ${p.position}: obstructs road`,
+        );
+      }
+  }
 });
 test("grid collision matches exhaustive reference on deterministic neighborhood samples", () => {
   const scene = loadScene(),

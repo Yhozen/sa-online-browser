@@ -4,6 +4,7 @@ import { spawn } from "node:child_process";
 import { mkdirSync, writeFileSync, createWriteStream } from "node:fs";
 import { createGateway } from "../../services/gateway/server.mjs";
 import { loadScene } from "../../packages/shared/scene.mjs";
+import { installTextureAudit } from "../../tools/texture-audit.mjs";
 const URL = "http://127.0.0.1:3300",
   manifest = loadScene("neighborhood"),
   dir = "artifacts/neighborhood";
@@ -87,6 +88,7 @@ async function session(browser, name, recording = true) {
   if (recording)
     await context.tracing.start({ screenshots: true, snapshots: true });
   const page = await context.newPage();
+  await context.addInitScript(installTextureAudit);
   page.on("pageerror", (e) => errors.push({ name, message: e.message }));
   await page.goto(URL);
   await page.getByTestId("nickname").fill(name);
@@ -443,7 +445,15 @@ test("neighborhood: ten minute recorded active session", async ({
           });
         }
     }
-    const metrics = [await snap(a.page), await snap(b.page)].map((s) => {
+    const textureAudits = await Promise.all(
+      [a.page, b.page].map((p) => p.evaluate(() => window.__textureAudit)),
+    );
+    expect(
+      textureAudits.flatMap((contexts) =>
+        contexts.flatMap((c) => c.unsupported),
+      ),
+    ).toEqual([]);
+    const metrics = [await snap(a.page), await snap(b.page)].map((s, i) => {
       const times = s.graphics.frameTimes.slice(-300).sort((a, b) => a - b);
       return {
         preset: s.graphics.preset,
@@ -459,6 +469,7 @@ test("neighborhood: ten minute recorded active session", async ({
         calls: s.graphics.calls,
         ...s.graphics.assets,
         sceneDownloadBytes: s.graphics.sceneDownloadBytes,
+        textureStorageBytes: textureAudits[i].reduce((n, c) => n + c.bytes, 0),
       };
     });
     writeFileSync(
@@ -504,7 +515,15 @@ test("neighborhood: two active cloud views meet the low graphics budget", async 
       await agreement(driver, passenger);
       rounds++;
     }
-    const metrics = [await snap(a.page), await snap(b.page)].map((s) => {
+    const textureAudits = await Promise.all(
+      [a.page, b.page].map((p) => p.evaluate(() => window.__textureAudit)),
+    );
+    expect(
+      textureAudits.flatMap((contexts) =>
+        contexts.flatMap((c) => c.unsupported),
+      ),
+    ).toEqual([]);
+    const metrics = [await snap(a.page), await snap(b.page)].map((s, i) => {
       const times = s.graphics.frameTimes.slice(-300).sort((a, b) => a - b);
       return {
         preset: s.graphics.preset,
@@ -520,6 +539,7 @@ test("neighborhood: two active cloud views meet the low graphics budget", async 
         calls: s.graphics.calls,
         ...s.graphics.assets,
         sceneDownloadBytes: s.graphics.sceneDownloadBytes,
+        textureStorageBytes: textureAudits[i].reduce((n, c) => n + c.bytes, 0),
       };
     });
     writeFileSync(
@@ -543,6 +563,7 @@ test("neighborhood: two active cloud views meet the low graphics budget", async 
       expect(m.calls).toBeLessThanOrEqual(250);
       expect(m.sceneDownloadBytes).toBeLessThan(15e6);
       expect(m.textureBytes).toBeLessThan(96 * 1024 * 1024);
+      expect(m.textureStorageBytes).toBeLessThan(96 * 1024 * 1024);
     }
     expect(errors).toEqual([]);
   } finally {

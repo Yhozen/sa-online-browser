@@ -344,7 +344,7 @@ function handle(m: ServerMessage) {
           position: [...m.position],
         } as PlayerState;
         p.streamed = true;
-        p.mesh.visible = p.state.mode === "onFoot";
+        p.mesh.visible = true;
         if (p.mesh.position.lengthSq() === 0)
           p.mesh.position.set(...m.position);
       }

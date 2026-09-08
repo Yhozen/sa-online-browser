@@ -173,26 +173,37 @@ export function buildEnvironment(scene: THREE.Scene, manifest: SceneManifest) {
     // Closed south access gate is visible scenery, backed by the shared boundary collider.
     for (let x = -5; x <= 5; x += 0.35)
       box([x, -88, 11], [0.08, 0.12, 4], mat("metal", 0x485751));
-    for (const x of [-9, 9])
+    // Wires use the actual pole placements, including the widened turning circle.
+    const wireMaterial = new THREE.LineBasicMaterial({ color: 0x363e39 });
+    for (const side of [-1, 1]) {
+      const poles = manifest.props
+        .filter((p) => p.asset === "pole" && Math.sign(p.position[0]) === side)
+        .sort((a, b) => a.position[1] - b.position[1]);
       for (const offset of [-1, 0, 1]) {
-        const pts = [];
-        for (let y = -62; y <= 34; y += 1) {
-          const local = (y + 62) % 32;
-          pts.push(
-            new THREE.Vector3(
-              x + offset,
-              y,
-              z + 9.4 - 1.1 * Math.sin((local / 32) * Math.PI),
-            ),
-          );
+        const pts: THREE.Vector3[] = [];
+        for (let i = 1; i < poles.length; i++) {
+          const a = poles[i - 1].position,
+            b = poles[i].position;
+          const steps = Math.ceil(Math.hypot(b[0] - a[0], b[1] - a[1]));
+          for (let j = i === 1 ? 0 : 1; j <= steps; j++) {
+            const t = j / steps;
+            pts.push(
+              new THREE.Vector3(
+                a[0] + (b[0] - a[0]) * t + offset,
+                a[1] + (b[1] - a[1]) * t,
+                z + 9.4 - 1.1 * Math.sin(t * Math.PI),
+              ),
+            );
+          }
         }
         scene.add(
           new THREE.Line(
             new THREE.BufferGeometry().setFromPoints(pts),
-            new THREE.LineBasicMaterial({ color: 0x363e39 }),
+            wireMaterial,
           ),
         );
       }
+    }
     // Distant original silhouettes close the horizon without playable terrain slopes.
     for (let i = 0; i < 18; i++) {
       const a = (i * Math.PI * 2) / 18;
@@ -223,6 +234,7 @@ export function buildEnvironment(scene: THREE.Scene, manifest: SceneManifest) {
     );
     sign.rotation.x = Math.PI / 2;
     sign.position.set(-8, 14, 12);
+    box([-8, 14.08, z + 1.5], [0.09, 0.09, 3], mat("metal", 0x485751));
     scene.add(sign);
   }
   for (const [material, matrices] of batches) {

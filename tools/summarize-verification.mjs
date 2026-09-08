@@ -68,7 +68,11 @@ const residentRejoins = JSON.parse(
 if (
   neighborhoodPerformance.recording !== false ||
   neighborhoodPerformance.metrics.some(
-    (m) => m.medianFPS < 20 || m.p95FrameMs >= 100,
+    (m) =>
+      m.medianFPS < 20 ||
+      m.p95FrameMs >= 100 ||
+      !Number.isFinite(m.textureStorageBytes) ||
+      m.textureStorageBytes >= 96 * 1024 * 1024,
   ) ||
   residentRejoins.length !== 20
 )
@@ -125,6 +129,16 @@ const sourceFiles = [
   "packages/shared/scenes/neighborhood.json",
   "apps/browser/public/assets/inventory.json",
   "tests/browser/neighborhood.spec.mjs",
+  "tools/texture-audit.mjs",
+  "tools/verify-desktop.mjs",
+  "tools/create-scenes.mjs",
+  "tools/build-assets.mjs",
+  "tools/assets/build.py",
+  "packages/shared/scene.mjs",
+  "tools/setup-runtime.py",
+  "packages/shared/scenes/yard.json",
+  "apps/browser/src/style.css",
+  "package.json",
 ];
 const hash = (file) =>
   createHash("sha256").update(readFileSync(file)).digest("hex");
