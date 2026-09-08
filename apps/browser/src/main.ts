@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import * as THREE from "three";
+import { SimulationClock } from "./simulation-clock";
 import { nativeAntialias } from "./antialias";
 import { installAtmosphere, updateSun } from "./lighting";
 import { createRenderer, applyQuality } from "./graphics";
@@ -228,6 +229,7 @@ function clearWorld() {
   sequence = 0;
   controlRevision = 0;
   lastServerSequence = -1;
+  simulationClock.reset(performance.now());
 }
 function disconnect(reason: string) {
   terminalReason = reason;
@@ -402,6 +404,7 @@ function handle(m: ServerMessage) {
       toast(m.text ?? "");
       break;
     case "selfPosition":
+      simulationClock.reset(performance.now());
       if (m.position) {
         self.position = [...m.position];
         self.velocity = [0, 0, 0];
@@ -414,10 +417,12 @@ function handle(m: ServerMessage) {
       }
       break;
     case "selfHeading":
+      simulationClock.reset(performance.now());
       heading = ((m.heading ?? 0) * Math.PI) / 180;
       self.rotation = rotationFromHeading(heading);
       break;
     case "seat": {
+      simulationClock.reset(performance.now());
       self.vehicleId = m.vehicleId ?? 0;
       self.seat = m.seat ?? 0;
       self.mode = self.seat === 0 ? "driver" : "passenger";
@@ -432,6 +437,7 @@ function handle(m: ServerMessage) {
       break;
     }
     case "exitVehicle": {
+      simulationClock.reset(performance.now());
       const v = vehicles.get(self.vehicleId);
       // Explicit server placements win; otherwise choose a nearby clear doorway.
       if (m.position) self.position = [...m.position];
@@ -521,6 +527,7 @@ function isTyping() {
   return document.activeElement instanceof HTMLInputElement;
 }
 window.addEventListener("keydown", (event) => {
+  advanceSimulation(performance.now());
   if (event.code === "Enter" && !isTyping() && self.spawned) {
     event.preventDefault();
     keys.clear();
@@ -548,8 +555,12 @@ window.addEventListener("keydown", (event) => {
       jumpSpeed = 5.8;
   }
 });
-window.addEventListener("keyup", (event) => keys.delete(event.code));
+window.addEventListener("keyup", (event) => {
+  advanceSimulation(performance.now());
+  keys.delete(event.code);
+});
 function suspend() {
+  advanceSimulation(performance.now());
   keys.clear();
   self.keys = 0;
   self.velocity = [0, 0, 0];
@@ -662,25 +673,26 @@ const cameraTarget = new THREE.Vector3(0, 2, 10),
   desiredCamera = new THREE.Vector3();
 camera.position.set(0, -13, 23);
 camera.lookAt(0, 6, 10);
-let previous = performance.now(),
-  accumulator = 0,
-  lastHud = 0;
+const simulationClock = new SimulationClock(performance.now(), step);
+function advanceSimulation(now: number) {
+  if (!simulationClock.advance(now) &&
+      (keys.size > 0 || Math.abs(speed) > .05 || Math.abs(jumpSpeed) > .05))
+    disconnectSuspendedPage("page suspended");
+  // A long shader compilation while stationary has no movement debt to replay.
+  // Visibility/freeze events still explicitly release every suspended session.
+}
+function simulateAndPublish(now: number) {
+  advanceSimulation(now);
+  if (self.spawned && now - lastSend >= (self.mode === "onFoot" ? onFootRate : inCarRate)) publishState(now);
+}
+setInterval(() => simulateAndPublish(performance.now()), 16);
+let previous = performance.now(), lastHud = 0;
 function frame(now: number) {
   requestAnimationFrame(frame);
   const elapsed = now - previous;
   const delta = Math.max(0, Math.min(elapsed / 1000, 0.1));
   previous = now;
-  accumulator += delta;
-  while (accumulator >= 1 / 60) {
-    step(1 / 60);
-    accumulator -= 1 / 60;
-  }
-  if (
-    self.spawned &&
-    now - lastSend >= (self.mode === "onFoot" ? onFootRate : inCarRate)
-  ) {
-    publishState(now);
-  }
+  simulateAndPublish(now);
   selfMesh.visible = self.spawned;
   selfMesh.position.set(...self.position);
   setRotation(selfMesh, self.rotation);
