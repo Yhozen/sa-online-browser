@@ -45,7 +45,7 @@ async function player(name) {
   await page.goto(url);
   await page.getByTestId("nickname").fill(name);
   await page.getByTestId("join").click({ timeout: 180000 });
-  await page.waitForFunction(() => window.__poc.self.spawned, {}, { timeout: 180000 });
+  await page.waitForFunction(() => window.__poc.self.spawned, {}, { timeout: 180000, polling: 100 });
   return page;
 }
 async function key(p, key, duration = 0) {
@@ -108,9 +108,10 @@ try {
     .toBeGreaterThan(1);
   await capture(a, "pedestrian");
   await key(a, "e");
-  await a.waitForFunction(() => window.__poc.self.mode === "driver");
+  // Protocol state must be observed independently of occluded/slow paint frames.
+  await a.waitForFunction(() => window.__poc.self.mode === "driver", {}, { polling: 100 });
   await key(b, "g");
-  await b.waitForFunction(() => window.__poc.self.mode === "passenger");
+  await b.waitForFunction(() => window.__poc.self.mode === "passenger", {}, { polling: 100 });
   await key(a, "w", 1000);
   await a.waitForTimeout(1500);
   await capture(a, "driving");
@@ -133,7 +134,7 @@ try {
   await key(a, "f");
   await key(b, "f");
   for (const p of [a, b]) {
-    await p.waitForFunction(() => window.__poc.self.mode === "onFoot");
+    await p.waitForFunction(() => window.__poc.self.mode === "onFoot", {}, { polling: 100 });
     await p.getByTestId("disconnect").click();
   }
   await expect
