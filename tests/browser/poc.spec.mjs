@@ -167,6 +167,9 @@ test('failures: duplicate name, worker crash, unavailable server and restart', a
 });
 
 test('lifecycle: twenty browser connection cycles release sessions', async ({ browser }, info) => {
+  // Twenty fresh native-resolution asset admissions plus trace flushes exceed
+  // two minutes on SwiftShader. Keep every cycle and its cleanup assertions.
+  test.setTimeout(180000);
   for (let i = 0; i < 20; i++) {
     const s = await session(browser, `BrowserCycle_${i}`, info);
     const id = await spawned(s), connectedAt = last('connect', id)?.receivedAt;
