@@ -7,7 +7,7 @@ export function mountHUD() {
 <aside class="left"><section class="panel join" id="join-panel"><div class="kicker">WELCOME TO THE NEIGHBORHOOD</div><h1>Your block.<br>Your people.</h1><p class="muted">Afternoon sun. An open road.<br>Join your friends in Arroyo.</p><form id="join-form"><label for="nickname">YOUR NAME</label><input id="nickname" data-testid="nickname" minlength="3" maxlength="20" pattern="[A-Za-z0-9_]+" value="BrowserPlayer" autocomplete="off" required/><button class="primary" data-testid="join" id="join" disabled>Join neighborhood ↗</button></form><p id="loading" role="status">Preparing the scene…</p><button id="retry-assets" class="secondary hidden">Retry loading</button></section>
 <section class="panel info" id="diagnostics"><div class="kicker">Session diagnostics</div><div class="row"><span>Player</span><strong id="self-name">—</strong></div><div class="row"><span>Server ID</span><strong id="server-id" data-testid="server-id">—</strong></div><div class="row"><span>Mode</span><strong id="mode" data-testid="mode">Exploring soon</strong></div><div class="row"><span>Nearby</span><strong id="player-count">0</strong></div><div id="roster"></div></section></aside>
 <div class="corner"><div class="arena-name">Arroyo</div><div class="arena-detail">A PLACE TO MEET</div><div class="speed"><span id="speed">00</span><small>KM/H</small></div><button class="secondary hidden" data-testid="disconnect" id="disconnect">Leave session</button></div>
-<div class="map-wrap"><canvas id="minimap" width="210" height="210" aria-label="Neighborhood minimap"></canvas><div class="map-caption"><b>N</b><span>ARROYO AVE</span></div></div>
+<div class="map-wrap"><b class="map-north" aria-label="North">N</b><canvas id="minimap" width="210" height="210" aria-label="Neighborhood minimap"></canvas><div class="map-caption"><span>ARROYO AVE</span></div></div>
 <section class="chat panel"><div class="chat-head"><button id="chat-toggle" aria-expanded="true">Neighborhood chat</button><span class="tag">ENTER ↵</span></div><div id="chat-content"><div data-testid="chat-log" id="chat-log" class="chat-log" role="log" aria-live="polite"></div><form id="chat-form"><input id="chat-input" data-testid="chat-input" placeholder="Say hello · /reset to start over" maxlength="128" autocomplete="off" disabled/><button type="submit" aria-label="Send chat">↗</button></form></div></section>
 <aside class="bottom"><div class="controls"><span><kbd>W A S D</kbd> move</span><span><kbd>E / G</kbd> drive / ride</span><span><kbd>F</kbd> exit</span><span><kbd>SPACE</kbd> jump</span><span>Right drag · orbit &nbsp; Scroll · zoom</span></div></aside><div id="toast" class="toast hidden" role="alert"></div><div class="footer-label">BROWSER → NATIVE GATEWAY → OPEN.MP</div>`;
   document.getElementById("debug-toggle")!.onclick = () =>
@@ -28,10 +28,12 @@ export function minimap(
   vehicles: { position: number[] }[],
 ) {
   const canvas = document.getElementById("minimap") as HTMLCanvasElement,
-    c = canvas.getContext("2d")!,
-    s = canvas.width / (manifest.halfSize * 2 + 12),
-    cx = canvas.width / 2,
-    cy = canvas.height / 2;
+    c = canvas.getContext("2d")!;
+  const width = Math.max(1, Math.floor(canvas.clientWidth * devicePixelRatio)),
+    height = Math.max(1, Math.floor(canvas.clientHeight * devicePixelRatio));
+  if (canvas.width !== width || canvas.height !== height) { canvas.width = width; canvas.height = height; }
+  c.setTransform(width / 210, 0, 0, height / 210, 0, 0);
+  const s = 210 / (manifest.halfSize * 2 + 12), cx = 105, cy = 105;
   const p = (v: number[]) => [cx + v[0] * s, cy - v[1] * s];
   c.fillStyle = "#536146";
   c.fillRect(0, 0, 210, 210);

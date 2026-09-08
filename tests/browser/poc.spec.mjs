@@ -47,6 +47,9 @@ test.afterAll(async () => {
 async function session(browser, name, testInfo) {
   const traceId = ++traceCounter;
   const context = await browser.newContext({ viewport: { width: 1440, height: 960 }, recordVideo: { dir: 'artifacts/verification/videos', size: { width: 960, height: 640 } } });
+  // Network/lifecycle fixtures use the explicit Low fallback at full native size.
+  // Standard and both DPRs are exercised independently by graphics/desktop cases.
+  await context.addInitScript(() => localStorage.setItem('poc-quality', 'low'));
   await context.tracing.start({ screenshots: true, snapshots: true });
   const page = await context.newPage(); const errors = [];
   page.on('pageerror', e => errors.push(e.message));

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import { cutoutMipmaps } from "./foliage-mips";
 import * as THREE from "three";
 import { GLTFLoader, type GLTF } from "three/addons/loaders/GLTFLoader.js";
 import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
@@ -86,8 +87,8 @@ export async function loadAssets(
               const physical = new THREE.MeshPhysicalMaterial();
               THREE.MeshStandardMaterial.prototype.copy.call(physical, m);
               physical.defines = { STANDARD: "", PHYSICAL: "" };
-              physical.clearcoat = 1; physical.clearcoatRoughness = .24; physical.envMapIntensity = 1.3;
-              physical.metalness = .45; physical.roughness = .29; physical.color.set(0x193d5a);
+              physical.clearcoat = 1; physical.clearcoatRoughness = .12; physical.envMapIntensity = 1.3;
+              physical.metalness = .45; physical.roughness = .22; physical.color.set(0x193d5a);
               canonical.set(m.name, physical); m.dispose();
             } else canonical.set(m.name, m);
           }
@@ -157,9 +158,19 @@ export async function loadAssets(
   assetStats.textureBytes += 1254 * 1254 * 4 * 4 / 3 * 3;
   asphaltInput.close();
   const leaves = await textureInput("arroyo-foliage.png");
-  const leafTexture = new THREE.Texture(leaves);
+  const leafCanvas = document.createElement("canvas");
+  leafCanvas.width = leaves.width; leafCanvas.height = leaves.height;
+  const leafContext = leafCanvas.getContext("2d", {willReadFrequently:true});
+  if (!leafContext) throw Error("Foliage texture preparation failed. Reload and retry.");
+  leafContext.drawImage(leaves, 0, 0);
+  const leafLevels = cutoutMipmaps({width:leaves.width, height:leaves.height,
+    data:new Uint8Array(leafContext.getImageData(0,0,leaves.width,leaves.height).data)});
+  const leafTexture = new THREE.DataTexture(leafLevels[0].data, leaves.width, leaves.height);
+  leafTexture.mipmaps = leafLevels; leafTexture.generateMipmaps = false;
+  leafTexture.minFilter = THREE.LinearMipmapLinearFilter; leafTexture.magFilter = THREE.LinearFilter;
   leafTexture.colorSpace = THREE.SRGBColorSpace; leafTexture.needsUpdate = true; leafTexture.flipY = false;
   assetStats.textureBytes += leaves.width * leaves.height * 4 * 4 / 3;
+  leaves.close();
   for (const name of ["foliage", "foliage-light"]) {
     const m = canonical.get(name);
     if (m instanceof THREE.MeshStandardMaterial) {

@@ -8,10 +8,10 @@ export function installAtmosphere(scene: THREE.Scene, renderer: THREE.WebGLRende
   const ambient = new THREE.HemisphereLight(0xc6ddef, 0x80725e, .8);
   const sun = new THREE.DirectionalLight(0xffdfb0, 3.6);
   sun.castShadow = true;
-  sun.shadow.mapSize.set(2048, 2048);
-  Object.assign(sun.shadow.camera, { left: -48, right: 48, top: 48, bottom: -48, near: 1, far: 180 });
-  sun.shadow.normalBias = 0.065;
-  sun.shadow.bias = -0.0003;
+  sun.shadow.mapSize.set(4096, 4096);
+  Object.assign(sun.shadow.camera, { left: -128, right: 128, top: 128, bottom: -128, near: 1, far: 320 });
+  sun.shadow.normalBias = 0.04;
+  sun.shadow.bias = -0.00008;
   sun.shadow.radius = 2;
   scene.add(ambient, sun, sun.target);
   const offset = new THREE.Vector3(-48, -35, 65);
@@ -63,7 +63,7 @@ export function installAtmosphere(scene: THREE.Scene, renderer: THREE.WebGLRende
 }
 export function updateSun(rig: ReturnType<typeof installAtmosphere>, target: THREE.Vector3) {
   // Quantize in shadow texels to prevent crawling shadows during camera motion.
-  const texel = 96 / 2048;
+  const texel = 256 / 4096;
   rig.sun.target.position.set(Math.round(target.x / texel) * texel, Math.round(target.y / texel) * texel, 9);
   rig.sun.position.copy(rig.sun.target.position).add(rig.offset);
   rig.sun.target.updateMatrixWorld();

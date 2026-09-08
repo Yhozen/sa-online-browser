@@ -101,6 +101,19 @@ def hero_uv(o):
             uv.data[loop].uv = (p[coords[0]], p[coords[1]])
 
 
+def formed_pillar(name,points,width,depth,mat):
+    verts=[];faces=[]
+    for j,p in enumerate(points):
+        p=Vector(p);d=Vector(points[min(j+1,len(points)-1)])-Vector(points[max(0,j-1)])
+        d.normalize();side=Vector((1 if p.x>0 else -1,0,0));across=d.cross(side).normalized();out=across.cross(d).normalized()
+        for u,v in [(-.5,-.35),(-.42,-.5),(.42,-.5),(.5,-.35),(.5,.35),(.42,.5),(-.42,.5),(-.5,.35)]:
+            verts.append(p+across*(u*width)+out*(v*depth))
+    for j in range(len(points)-1):
+        for i in range(8):faces.append((j*8+i,j*8+(i+1)%8,(j+1)*8+(i+1)%8,(j+1)*8+i))
+    faces.extend([tuple(reversed(range(8))),tuple((len(points)-1)*8+i for i in range(8))])
+    return mesh(name,verts,[tuple(reversed(f)) for f in faces],mat)
+
+
 def empty(name, p):
     o = bpy.data.objects.new(name, None)
     bpy.context.collection.objects.link(o)
@@ -335,8 +348,8 @@ roof_skin=smooth(mesh('continuous roof skin',roof_vertices,roof_faces,paint))
 mod=roof_skin.modifiers.new('roof sheet thickness','SOLIDIFY');mod.thickness=.022
 bpy.context.view_layer.objects.active=roof_skin;bpy.ops.object.modifier_apply(modifier=mod.name)
 for side in [-1,1]:
-    tube('A pillar',[(side*.81,.91,-.13),(side*.76,.75,.08),(side*.66,.42,.39),(side*.58,.33,.47)],.024,paint,10)
-    tube('C pillar',[(side*.84,-1.19,-.12),(side*.78,-1.05,.15),(side*.64,-.75,.43),(side*.57,-.62,.48)],.03675,paint,10)
+    formed_pillar('formed A pillar',[(side*.81,.91,-.13),(side*.76,.75,.08),(side*.66,.42,.39),(side*.58,.33,.47)],.036,.019,paint)
+    formed_pillar('formed C pillar',[(side*.84,-1.19,-.12),(side*.78,-1.05,.15),(side*.64,-.75,.43),(side*.57,-.62,.48)],.055,.021,paint)
     window=[(side*.80,.84,-.075),(side*.65,.36,.424),(side*.64,-.62,.427),(side*.78,-1.035,-.065)]
     rounded_panel('clear side glazing',window if side > 0 else list(reversed(window)),glass,.003,0)
     tube('rubber window seal',window,.0105,dark,8,True)
@@ -481,6 +494,36 @@ def part(o,bone):
     parts.append((o,bone));return o
 
 
+def smooth_section(profile,z):
+    def tangent(index,k):
+        if index==0:return (profile[1][k]-profile[0][k])/(profile[1][0]-profile[0][0])
+        if index==len(profile)-1:return (profile[-1][k]-profile[-2][k])/(profile[-1][0]-profile[-2][0])
+        a,b,c=profile[index-1:index+2]
+        dl=(b[k]-a[k])/(b[0]-a[0]);dr=(c[k]-b[k])/(c[0]-b[0])
+        return 2*dl*dr/(dl+dr) if dl*dr>0 else 0
+    for j,(a,b) in enumerate(zip(profile,profile[1:])):
+        if a[0]<=z<=b[0]:
+            h=b[0]-a[0];t=(z-a[0])/h
+            return tuple((2*t**3-3*t*t+1)*a[k]+(t**3-2*t*t+t)*h*tangent(j,k)+(-2*t**3+3*t*t)*b[k]+(t**3-t*t)*h*tangent(j+1,k) for k in range(1,len(a)))
+    return profile[-1][1:]
+
+def cloth_uv(o,kind='torso',center_x=0):
+    uv=o.data.uv_layers.active or o.data.uv_layers.new(name='UVMap')
+    for polygon in o.data.polygons:
+        center=polygon.center
+        sleeve=kind=='torso' and abs(center.x)>.245 and center.z>1.01
+        cx=(.245+.085*max(0,min(1,(1.40-center.z)/.26)))*(1 if center.x>0 else -1) if sleeve else center_x
+        circumference=.46 if sleeve else .56 if kind=='leg' else 1.10
+        angles=[]
+        for loop in polygon.loop_indices:
+            p=o.data.vertices[o.data.loops[loop].vertex_index].co
+            angles.append(math.atan2(p.y+.006,p.x-cx))
+        seam=max(angles)-min(angles)>math.pi
+        for loop,angle in zip(polygon.loop_indices,angles):
+            p=o.data.vertices[o.data.loops[loop].vertex_index].co
+            if seam and angle<0:angle+=math.tau
+            uv.data[loop].uv=(angle/math.tau*circumference*6,p.z*6)
+
 # Torso folds deliberately interrupt the regular circular loft. The fitted
 # white tee is framed by an open overshirt instead of a toy-like solid trunk.
 torso=[]
@@ -493,22 +536,22 @@ torso_profile=[(.805,.239,.160,.0),(.842,.244,.167,-.010),(.887,.238,.169,-.007)
 for j in range(len(torso_profile)-1):
     a,b=torso_profile[j:j+2]
     for k in range(4):
-        t=k/4;z,w,d,cy=[a[n]*(1-t)+b[n]*t for n in range(4)]
+        t=k/4;z=a[0]*(1-t)+b[0]*t;w,d,cy=smooth_section(torso_profile,z)
         torso.append(((0,cy,z),w,d))
 a=torso_profile[-1];torso.append(((0,a[3],a[0]),a[1],a[2]))
 body=part(ring_mesh('tailored overshirt',torso,shirt,sides=56),'spine')
 # Creases are sculpted into the surface rather than painted striped ribbons.
 for v in body.data.vertices:
     angle=math.atan2(v.co.y,v.co.x)
-    if v.co.z<1.36:
-        waist=math.exp(-((v.co.z-.98)/.16)**2)
-        # Sparse, oblique drape and vertical gravity folds replace the evenly
-        # spaced horizontal padding rings that made the shirt look inflated.
-        fold=.0025*math.cos(angle*9+v.co.z*3)
-        fold+=.004*waist*math.sin(v.co.z*34+angle*3.7)
-        diagonal=1.235-.22*abs(v.co.x)
-        fold+=.004*math.exp(-((v.co.z-diagonal)/.018)**2)*max(0,-math.sin(angle))
-        fold*=.55+.45*abs(math.sin(angle))
+    if v.co.z<1.39:
+        back=max(0,-math.sin(angle))**2;fold=0
+        # Individual tension folds terminate naturally; no periodic whole-body
+        # sine rings or regular longitudinal columns remain in the surface.
+        for px,pz,slope,amplitude,length,radius in [(-.095,1.265,.45,.008,.10,.012),(.11,1.222,-.38,.007,.095,.014),(-.13,1.005,.30,.009,.080,.013),(.060,.947,-.20,.008,.115,.016),(.155,.895,.35,.007,.065,.012)]:
+            line=pz+slope*(v.co.x-px);along=math.exp(-((v.co.x-px)/length)**2)
+            ridge=math.exp(-((v.co.z-line)/radius)**2)-.45*math.exp(-((v.co.z-line-.020)/(radius*1.5))**2)
+            fold+=back*amplitude*along*ridge
+        fold+=abs(math.cos(angle))*.004*math.exp(-((v.co.z-.98)/.08)**2)
         v.co.x*=1+fold/.22;v.co.y*=1+fold/.15
     if v.co.y<0:
         v.co.y-=.004*math.exp(-((v.co.z-1.335)/.012)**2)
@@ -525,62 +568,105 @@ for z in [1.00,1.10,1.20,1.30]:
     part(sphere('shirt button',(-.081,.187,z),(.004,.002,.004),dark,8,4),'spine')
 # Neck is connected to jaw with a shaped trapezius transition.
 part(ring_mesh('neck',[((0,-.008,1.445),.087,.079),((0,-.014,1.49),.071,.072),((0,-.006,1.528),.072,.073)],skin,sides=24),'head')
-head=part(ring_mesh('sculpted face',[
-    ((0,.031,1.582),.039,.046),((0,.020,1.608),.073,.073),
-    ((0,.004,1.649),.099,.101),((0,-.002,1.702),.122,.116),
-    ((0,-.010,1.752),.126,.116),((0,-.015,1.802),.125,.112),
-    ((0,-.017,1.845),.111,.101),((0,-.018,1.88),.078,.077),
-    ((0,-.018,1.903),.018,.020)],skin,sides=40),'head')
-# Flatten the forward face slightly, add cheek/jaw shaping to the mesh itself.
-for v in head.data.vertices:
-    if v.co.y>.055:
-        front=(v.co.y-.055)/.06
-        if 1.70<v.co.z<1.79:v.co.y-=.006*front
-        v.co.y+=.004*math.exp(-((abs(v.co.x)-.08)/.032)**2)*math.exp(-((v.co.z-1.72)/.06)**2)
-# Sample the actual skull profile and maintain positive clearance along the
-# entire shell. Merely pulling a cap's rim down made intermediate rings cut
-# through the scalp, producing exposed bands in the rear gameplay camera.
-skull_profile=[(1.702,.122,.116,-.002),(1.752,.126,.116,-.010),
- (1.802,.125,.112,-.015),(1.845,.111,.101,-.017),(1.880,.078,.077,-.018),
- (1.903,.018,.020,-.018),(1.908,.001,.001,-.018)]
+# Dense continuous anatomy carries the nose, orbital sockets, cheeks and
+# muzzle in one surface. Independent flat facial props caused the toy look.
+head_profile=[(1.582,.039,.046,.031),(1.608,.073,.073,.020),(1.649,.095,.101,.004),
+ (1.702,.121,.116,-.002),(1.752,.126,.116,-.010),(1.790,.125,.113,-.017)]
 def skull_section(z):
-    for a,b in zip(skull_profile,skull_profile[1:]):
-        if a[0]<=z<=b[0]:
-            t=(z-a[0])/(b[0]-a[0])
-            return tuple(a[k]*(1-t)+b[k]*t for k in [1,2,3])
-    return skull_profile[-1][1:]
-hair_vertices=[];hair_faces=[];hair_segments=64;hair_rows=24
+    if z>=1.790:
+        t=max(0,min(.99999,(z-1.790)/.117));r=math.sqrt(1-t*t)
+        return (.125*r,.113*r,-.017)
+    return smooth_section(head_profile,z)
+def face_relief(x,z):
+    value=.013*math.exp(-(x/.016)**2-((z-1.736)/.050)**2)
+    value+=.017*math.exp(-(x/.025)**2-((z-1.709)/.017)**2)
+    value+=.005*math.exp(-(x/.044)**2-((z-1.664)/.023)**2)
+    value+=.005*math.exp(-(x/.051)**2-((z-1.619)/.025)**2)
+    for sign in [-1,1]:
+        value-=.008*math.exp(-((x-sign*.048)/.029)**2-((z-1.756)/.016)**2)
+        value+=.007*math.exp(-((x-sign*.047)/.032)**2-((z-1.783)/.011)**2)
+        value+=.005*math.exp(-((x-sign*.078)/.030)**2-((z-1.709)/.032)**2)
+    return value
+def face_front(x,z):
+    w,d,cy=skull_section(z);f=math.sqrt(max(0,1-(x/w)**2))
+    return cy+d*f+face_relief(x,z)*f*f
+head_rings=[]
+for j in range(81):
+    z=1.582+(1.903-1.582)*j/80;w,d,cy=skull_section(z)
+    head_rings.append(((0,cy,z),w,d))
+head=part(ring_mesh('continuous sculpted head',head_rings,skin,sides=96),'head')
+for v in head.data.vertices:
+    w,d,cy=skull_section(v.co.z);front=max(0,(v.co.y-cy)/d)
+    v.co.y+=face_relief(v.co.x,v.co.z)*front*front
+hair_vertices=[];hair_faces=[];hair_segments=96;hair_rows=40
 for row in range(hair_rows+1):
     t=row/hair_rows
     for i in range(hair_segments):
         angle=i*math.tau/hair_segments
-        hairline=1.794-.062*max(0,-math.sin(angle))-.014*abs(math.cos(angle))
+        hairline=1.794-.062*max(0,-math.sin(angle))-.014*abs(math.cos(angle))+.0008*math.sin(angle*17)+.0005*math.sin(angle*29+.7)
         z=hairline+(1.907-hairline)*t
         w,d,cy=skull_section(z)
-        relief=.0006*math.sin(angle*19+z*207)*math.cos(angle*13-z*131)
-        hair_vertices.append((math.cos(angle)*(w+.004+relief),cy+math.sin(angle)*(d+.004+relief),z))
+        relief=.00035*math.sin(angle*31+z*417)*math.cos(angle*19-z*311)
+        clearance=.0015+.001*min(1,t*10)+relief*.55*min(1,t*12)
+        hair_vertices.append((math.cos(angle)*(w+clearance),cy+math.sin(angle)*(d+clearance),z))
 for row in range(hair_rows):
     for i in range(hair_segments):
         hair_faces.append((row*hair_segments+i,row*hair_segments+(i+1)%hair_segments,
           (row+1)*hair_segments+(i+1)%hair_segments,(row+1)*hair_segments+i))
 hair_faces.append(tuple(hair_rows*hair_segments+i for i in range(hair_segments)))
-part(smooth(mesh('continuous cropped hair',hair_vertices,hair_faces,hair)),'head')
+hair_fade=material('hair-fade',(.8,.8,.8),.99)
+scalp=part(smooth(mesh('continuous cropped hair',hair_vertices,hair_faces,hair_fade)),'head')
+color=scalp.data.color_attributes.new(name='HairColor',type='FLOAT_COLOR',domain='CORNER')
+scalp.data.color_attributes.active_color=color
+attr=hair_fade.node_tree.nodes.new('ShaderNodeVertexColor');attr.layer_name='HairColor'
+hair_fade.node_tree.links.new(attr.outputs['Color'],hair_fade.node_tree.nodes.get('Principled BSDF').inputs['Base Color'])
+for poly in scalp.data.polygons:
+    for loop in poly.loop_indices:
+        vertex=scalp.data.loops[loop].vertex_index;row=vertex//hair_segments
+        fade=max(0,1-row/4.5)
+        noise=.88+.12*math.sin(vertex*2.399)
+        c=Vector((.032,.024,.017))*(1-fade)+Vector((.25,.14,.084))*fade
+        color.data[loop].color=(*[v*noise for v in c],1)
+
 for sign in [-1,1]:
-    part(sphere('ear',(sign*.123,-.007,1.719),(.025,.030,.044),skin,16,10),'head')
-    part(sphere('ear concha',(sign*.143,.001,1.72),(.007,.017,.025),lip,12,8),'head')
-    # Eyelid rims keep the small eyes recessed instead of bulging goggles.
-    part(sphere('eye socket',(sign*.048,.101,1.756),(.027,.008,.012),lip,16,8),'head')
-    part(sphere('eye white',(sign*.048,.107,1.757),(.020,.004,.006),white,16,8),'head')
-    part(sphere('iris',(sign*.048,.111,1.757),(.006,.002,.006),eyebrown,12,8),'head')
-    part(sphere('pupil',(sign*.048,.113,1.757),(.003,.001,.004),hair,10,6),'head')
-    part(tube('upper eyelid',[(sign*.069,.108,1.758),(sign*.049,.112,1.764),(sign*.028,.110,1.759)],.0029,skin,6),'head')
-    part(tube('eyebrow',[(sign*.080,.100,1.786),(sign*.052,.111,1.791),(sign*.025,.110,1.783)],.006,hair,8),'head')
-# Nose with a bridged ridge, nostril wings and shadowed bores.
-part(smooth(mesh('sculpted nose',[(-.012,.107,1.781),(.012,.107,1.781),(-.016,.130,1.722),(.016,.130,1.722),(-.024,.127,1.704),(.024,.127,1.704),(0,.154,1.709),(0,.126,1.698)],[(0,1,3,2),(2,3,6),(2,6,4),(3,5,6),(4,6,7),(6,5,7)],skin)),'head')
-for sign in [-1,1]:part(sphere('nostril',(sign*.015,.133,1.704),(.006,.007,.003),lip,10,6),'head')
-part(tube('upper lip',[(-.027,.111,1.667),(-.010,.121,1.671),(0,.120,1.669),(.010,.121,1.671),(.027,.111,1.667)],.0044,lip,8),'head')
-part(tube('lower lip',[(-.025,.111,1.665),(0,.121,1.659),(.025,.111,1.665)],.0045,skin,8),'head')
-part(tube('mouth shadow',[(-.025,.115,1.665),(0,.124,1.666),(.025,.115,1.665)],.0016,hair,5),'head')
+    ear_points=[((sign*.124,.000,1.677),.010,.013),((sign*.133,-.004,1.691),.015,.023),
+      ((sign*.134,-.008,1.719),.015,.030),((sign*.130,-.010,1.745),.011,.025),((sign*.123,-.006,1.756),.006,.013)]
+    part(ring_mesh('anatomical ear',ear_points,skin,sides=20),'head')
+    part(tube('ear helix',[(sign*.143,.009,1.690),(sign*.146,-.022,1.703),(sign*.143,-.033,1.73),(sign*.132,-.019,1.749)],.003,skin,8),'head')
+    part(sphere('ear concha',(sign*.146,-.003,1.716),(.003,.015,.018),lip,12,8),'head')
+    # Surface-fitted almond eyes: no protruding ellipsoid whites. The orbital
+    # depression and upper lid shape are carried by continuous facial anatomy.
+    ex=sign*.048;ez=1.756
+    points=[]
+    for j in range(33):
+        t=-1+j/16;x=ex+t*.018
+        half=.0048*max(0,1-t*t)**.70
+        for z in [ez-half,ez+half]:points.append((x,face_front(x,z)+.0011,z))
+    part(mesh('recessed almond eye',points,[(i*2,i*2+1,i*2+3,i*2+2) for i in range(32)],white),'head')
+    # Tiny iris lenses stand one millimetre proud of the eye surface so
+    # separate triangulations cannot produce speckled interpenetration.
+    ey=face_front(ex,ez)
+    part(sphere('iris',(ex,ey+.0018,ez),(.0043,.0013,.0043),eyebrown,24,16),'head')
+    part(sphere('pupil',(ex,ey+.0030,ez),(.0020,.00045,.0020),hair,20,12),'head')
+    # Dense fitted ribbons follow the actual brow surface instead of broad
+    # chords cutting through forehead geometry and producing broken marks.
+    brow_points=[]
+    for j in range(25):
+        t=j/24;bx=sign*(.075-.049*t);bz=1.775+.006*math.sin(t*math.pi)-.001*t
+        bw=.0004+.0016*math.sin(t*math.pi)**.6
+        for dz in [-bw,bw]:brow_points.append((bx,face_front(bx,bz+dz)+.0016,bz+dz))
+    part(mesh('attached eyebrow',brow_points,[(i*2,i*2+1,i*2+3,i*2+2) for i in range(24)],hair),'head')
+    nx=sign*.014;nz=1.706
+    part(sphere('nostril',(nx,face_front(nx,nz)+.0003,nz),(.004,.0017,.002),lip,12,8),'head')
+# Restrained mouth ribbons sit directly on the muzzle surface.
+for name,z,width,mat in [('upper lip',1.669,.002,lip),('lower lip',1.661,.0028,skin)]:
+    verts=[]
+    for i in range(9):
+        x=-.026+i*.0065;dz=width*max(0,1-(x/.026)**2)
+        for zz in [z-dz,z+dz]:verts.append((x,face_front(x,zz)+.0007,zz))
+    part(mesh(name,verts,[(i*2,i*2+1,i*2+3,i*2+2) for i in range(8)],mat),'head')
+points=[(x,face_front(x,1.665)+.001,1.665) for x in [-.024,-.012,0,.012,.024]]
+part(tube('mouth crease',points,.0008,lip,6),'head')
 # Short beard is a close facial strip, retaining an anatomical chin silhouette.
 part(ring_mesh('close beard',[((0,.020,1.602),.054,.057),((0,.013,1.619),.074,.076),((0,.006,1.642),.088,.088)],hair,sides=32,caps=False),'head')
 
@@ -589,10 +675,25 @@ part(tube('waistband',[(math.cos(i*math.tau/40)*.194,math.sin(i*math.tau/40)*.13
 part(box('belt buckle',(0,.141,.946),(.040,.013,.033),chrome,.004),'hips')
 for sign,side in [(-1,'L'),(1,'R')]:
     x=sign*.15;ax=sign*.245
-    leg=ring_mesh('shaped denim leg',[
-      ((x,.018,.118),.074,.068),((x,.012,.16),.079,.074),((x,-.003,.245),.078,.082),
-      ((x,-.018,.36),.083,.087),((x,.013,.455),.094,.097),((x,.018,.49),.100,.103),
-      ((x,-.003,.59),.106,.109),((x*.92,-.004,.735),.104,.104),((x*.84,-.002,.87),.100,.099)],denim,sides=32)
+    leg_profile=[(.118,x,.018,.074,.068),(.16,x,.012,.079,.074),(.245,x,-.003,.078,.082),
+      (.36,x,-.018,.083,.087),(.455,x,.013,.094,.097),(.49,x,.018,.100,.103),
+      (.59,x,-.003,.106,.109),(.735,x*.92,-.004,.104,.104),(.87,x*.84,-.002,.100,.099)]
+    leg_rings=[]
+    for j in range(len(leg_profile)-1):
+        a,b=leg_profile[j:j+2]
+        for k in range(7):
+            t=k/7;z,cx,cy,w,d=[a[n]*(1-t)+b[n]*t for n in range(5)]
+            leg_rings.append(((cx,cy,z),w,d))
+    a=leg_profile[-1];leg_rings.append(((a[1],a[2],a[0]),a[3],a[4]))
+    leg=ring_mesh('shaped denim leg',leg_rings,denim,sides=36)
+    for v in leg.data.vertices:
+        angle=math.atan2(v.co.y,v.co.x-x);front=max(0,math.sin(angle));back=max(0,-math.sin(angle))
+        fold=.006*front*math.exp(-((v.co.z-(.49+sign*.19*(v.co.x-x)))/.017)**2)
+        fold-=.004*front*math.exp(-((v.co.z-(.458-sign*.12*(v.co.x-x)))/.013)**2)
+        fold+=.005*back*math.sin(v.co.z*111+angle)*math.exp(-((v.co.z-.445)/.048)**2)
+        fold+=.004*math.sin(v.co.z*122+angle*2)*math.exp(-((v.co.z-.17)/.050)**2)
+        v.co.x+=(v.co.x-x)*fold/.09;v.co.y+=math.sin(angle)*fold
+    cloth_uv(leg,'leg',x)
     parts.append((leg,f'thigh{side}'))
     # Long side seam and restrained hem folds retain the relaxed jean silhouette.
     part(tube('denim outer seam',[(x+sign*.076,.013,.15),(x+sign*.083,-.010,.35),(x+sign*.096,.011,.48),(x+sign*.114,-.010,.83)],.0021,stitch,5),f'thigh{side}')
@@ -633,17 +734,20 @@ for sign,side in [(-1,'L'),(1,'R')]:
     part(ring_mesh('anatomical forearm',[((ax,.083,.837),.035,.032),((ax,.081,.883),.041,.038),((ax,.075,.93),.048,.043),((ax,.068,.986),.053,.052)],skin,sides=24),f'forearm{side}')
     part(ring_mesh('palm',[((ax,.102,.756),.036,.027),((ax,.093,.782),.042,.030),((ax,.084,.822),.040,.032),((ax,.083,.856),.034,.031)],skin,sides=20),f'forearm{side}')
     for finger in range(4):
-        fx=ax+(finger-1.5)*.020
-        length=[.070,.088,.085,.067][finger]
-        part(ring_mesh('finger',[((fx,.145,.773-length),.007,.008),((fx,.127,.768-length*.56),.0085,.011),((fx,.102,.764),.009,.012)],skin,sides=10),f'forearm{side}')
-    part(tube('thumb',[(ax-sign*.031,.089,.817),(ax-sign*.060,.111,.792),(ax-sign*.059,.140,.772)],.013,skin,10),f'forearm{side}')
+        fx=ax+(finger-1.5)*.023
+        length=[.070,.088,.083,.064][finger]
+        # Knuckle, middle joint and curled distal pad are one continuous digit.
+        finger_rings=[((fx,.146,.775-length),.0055,.007),((fx,.149,.792-length),.007,.009),
+          ((fx,.131,.782-length*.60),.008,.0095),((fx,.114,.766-length*.24),.008,.010),((fx,.102,.765),.008,.011)]
+        part(ring_mesh('articulated finger',finger_rings,skin,sides=12),f'forearm{side}')
+    part(ring_mesh('thumb saddle',[((ax-sign*.063,.141,.769),.008,.011),((ax-sign*.065,.12,.784),.011,.014),
+      ((ax-sign*.052,.101,.804),.015,.019),((ax-sign*.029,.091,.822),.020,.024)],skin,sides=16),f'forearm{side}')
 
 # Back yoke and hem are sculpted into the unified shirt surface above.
 # Avoid detached seam tubes that intersect cloth folds and sparkle at distance.
 for sign in [-1,1]:
     part(rounded_panel('denim rear pocket',[(sign*.071,-.122,.793),(sign*.214,-.113,.793),(sign*.207,-.118,.675),(sign*.136,-.131,.650),(sign*.076,-.137,.679)],denim,.006,.009),f'thigh{"L" if sign<0 else "R"}')
     part(tube('pocket double seam',[(sign*.080,-.141,.78),(sign*.204,-.122,.781),(sign*.198,-.13,.687),(sign*.136,-.143,.665),(sign*.084,-.147,.689),(sign*.080,-.141,.78)],.0023,stitch,5),f'thigh{"L" if sign<0 else "R"}')
-    part(tube('denim knee crease',[(sign*.09,.102,.491),(sign*.147,.124,.475),(sign*.216,.092,.482)],.004,denim,7),f'thigh{"L" if sign<0 else "R"}')
 
 # A voxel union makes the shoulders and armholes genuinely continuous, rather
 # than hiding separate capsule shoulders under seams. Preserve the cleanly
@@ -661,7 +765,7 @@ soften=garment.modifiers.new('relaxed cotton surface','SMOOTH');soften.factor=.3
 bpy.ops.object.modifier_apply(modifier=soften.name)
 decimate=garment.modifiers.new('cloth topology budget','DECIMATE');decimate.ratio=.40
 bpy.ops.object.modifier_apply(modifier=decimate.name)
-smooth(garment);parts.append((garment,'spine'))
+smooth(garment);cloth_uv(garment);parts.append((garment,'spine'))
 
 # Bind lofted limbs with soft knee/hip transitions, preserving authored actions.
 for o,bone in parts:
@@ -669,8 +773,11 @@ for o,bone in parts:
     bpy.ops.object.transform_apply(location=True,rotation=True,scale=True)
     if bone=='head' and o.name!='neck':
         for v in o.data.vertices:
-            v.co.z-=.075
+            v.co.z-=.0815
             v.co.x*=.84
+    if not o.data.color_attributes.get('HairColor'):
+        neutral=o.data.color_attributes.new(name='HairColor',type='FLOAT_COLOR',domain='CORNER')
+        for item in neutral.data:item.color=(1,1,1,1)
     g=o.vertex_groups.new(name=bone)
     g.add(list(range(len(o.data.vertices))),1,'REPLACE')
     if o.name.startswith('shaped denim leg') or o.name.startswith('denim outer seam'):

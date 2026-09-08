@@ -47,3 +47,5 @@ A replacement browser client that joins an existing multiplayer server through a
 - **Reflection bake:** a static, prefiltered HDR texture captured from original scene geometry with no player session; cached as bounded lossless RGBA16F PMR1 data. It is lighting input, not networking evidence.
 - **Canopy normal:** an authored outward shading direction shared across neighboring leaf cards; it changes light response without changing geometry or alpha coverage.
 - **Graphics warm-up:** shader compilation and geometry uploads completed in a native-size offscreen target before joining is enabled. Temporary asset models never enter protocol or player state.
+- **Cutout mip coverage:** alpha-weighted linear-color reduction and per-level alpha coverage for original foliage; preserves visible leaves through distance filtering without changing source art or output resolution.
+- **Animation clock:** character clip selection/mixer time and wheel motion follow the existing fixed simulation; camera interpolation and seat-anchor placement remain presentation work. No animation RPCs.

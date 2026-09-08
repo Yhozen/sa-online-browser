@@ -381,51 +381,70 @@ for j in range(1,50):
  t=j/50;c=Vector((.20*t+.35*math.sin(t*math.pi),.12*math.sin(t*math.pi*.8),10*t));r=.242-.092*t
  bpy.ops.mesh.primitive_torus_add(major_radius=r,minor_radius=.018,major_segments=12,minor_segments=4,location=c);add(bpy.context.object,'palm growth ring',wood)
 base=centers[-1]
-for i in range(28):
- a=i*2.399;direction=Vector((math.cos(a),math.sin(a),0));side=Vector((-math.sin(a),math.cos(a),0));length=2.85+(i%5)*.25
+# Three botanical age cohorts: hanging mature outer fronds, spreading middle
+# feathers and upright new growth. Leaflets are staggered, curved and overlapping.
+for i in range(32):
+ a=i*2.399+.11*math.sin(i*1.3);direction=Vector((math.cos(a),math.sin(a),0));side=Vector((-math.sin(a),math.cos(a),0))
+ age=0 if i<10 else 1 if i<24 else 2
+ length=(3.1+.55*math.sin(i*1.77)) if age!=2 else (2.25+.35*math.sin(i))
  points=[]
- for j in range(13):
-  t=j/12;points.append(base+direction*(length*t)+Vector((0,0,.16+1.28*math.sin(t*math.pi*.90)-t*(2.65 if i<10 else 1.45 if i<20 else .22))))
- for j in range(12):cyl('palm frond rib',points[j],points[j+1],.028*(1-j/14),palmgreen,5,.018*(1-j/13))
- for j in range(1,25):
-  t=j/25;f=t*12;k=min(11,int(f));root=points[k].lerp(points[k+1],f-k);blade_length=(.24+.84*math.sin(t*math.pi))*(.91+(i%3)*.08)
+ for j in range(15):
+  t=j/14;z=.18+(1.1 if age<2 else 1.7)*math.sin(t*math.pi*.75)-t*(3.8 if age==0 else 1.75 if age==1 else .16)
+  points.append(base+direction*(length*t)+side*(.13*math.sin(t*math.pi)*math.sin(i))+Vector((0,0,z)))
+ for j in range(14):cyl('palm frond rib',points[j],points[j+1],.027*(1-j/16),palmgreen,5,.020*(1-j/15))
+ for j in range(1,21):
   for sign in [-1,1]:
-   tip=root+side*(sign*blade_length)+direction*(.15+.30*t)+Vector((0,0,-.12-.25*t));mid=root.lerp(tip,.48)+Vector((0,0,.045));width=direction*(.060+.042*math.sin(t*math.pi))
-   mesh('feather leaflet',[root,mid-width,mid+Vector((0,0,.018)),mid+width,tip],[(0,1,2),(0,2,3),(1,4,2),(2,4,3)],palmgreen if i%3 else palmlight)
+   t=(j+.22*math.sin(i*3.1+j*1.7)+sign*.22)/22;f=t*14;k=min(13,int(f));root=points[k].lerp(points[k+1],f-k)
+   leaflet_length=(.14+.93*math.sin(t*math.pi)**.70)*(.85+.17*math.sin(i*1.7+j*.71))
+   tip=root+side*(sign*leaflet_length)+direction*(.18+.33*t)+Vector((0,0,-.24-.24*t))
+   verts=[]
+   for row in range(5):
+    q=row/4;center=root.lerp(tip,q)+Vector((0,0,.095*math.sin(q*math.pi)))
+    width=(.023+.068*math.sin(t*math.pi))*math.sin(math.pi*q)**.65
+    verts.extend([center-direction*width,center+direction*width])
+   blade=mesh('curved overlapping palm leaflet',verts,[(r*2,r*2+1,r*2+3,r*2+2) for r in range(4)],palmgreen if (i+j)%5 else palmlight)
+   for face in blade.data.polygons:face.use_smooth=True
 # A small brown crownshaft makes the crown transition botanical, not a star glued to a pole.
 for i in range(12):
  a=i*math.tau/12;cyl('old frond base',base+Vector((math.cos(a)*.17,math.sin(a)*.17,-.30)),base+Vector((math.cos(a)*.43,math.sin(a)*.43,.16)),.055,wood,5,.025)
 env_finish('palm')
 
-# Asymmetric live oak: continuous crooked limbs, secondary twigs and attached sprays.
-# The single trunk collision remains centered at the origin; every broad branch is >2.4m high.
+# Full, asymmetric live oak built as interlocking three-dimensional branch volumes.
+# Root footprint is identical; every broad scaffold starts above 2.4m clearance.
 start();woody_curve('oak trunk',[(0,0,0),(.035,-.04,.8),(.11,.015,1.65),(.15,.06,2.45),(.26,.07,3.10)],.32)
 for root_angle in range(0,360,60):
  a=math.radians(root_angle);cyl('root flare',(math.cos(a)*.30,math.sin(a)*.30,.035),(0,0,.65),.11,wood,6,.075)
-# Different heights, reaches and azimuths create interlocking lobes, not identical umbrellas.
-boughs=[(.15,2.3,4.75),(.97,1.45,6.05),(1.91,2.00,5.37),(2.73,2.5,4.92),(3.51,1.48,6.43),(4.60,2.30,5.45),(5.46,1.67,6.06)]
-for b,(angle,reach,height) in enumerate(boughs):
- d=Vector((math.cos(angle),math.sin(angle),0));s=Vector((-d.y,d.x,0))
- root=Vector((.15,.05,2.45+(b%3)*.20));end=d*reach+Vector((.08,-.03,height))
- points=[root,root.lerp(end,.32)+s*.13+Vector((0,0,.3)),root.lerp(end,.64)-s*.17+Vector((0,0,.17)),end]
- woody_curve('oak scaffold limb',points,.135 if b%3 else .17)
- for fork in range(5):
-  t=.50+fork*.12;segment=min(2,int(t*3));forkroot=points[segment].lerp(points[segment+1],t*3-segment)
-  yaw=angle+(fork-2)*.55+.12*math.sin(b);fd=Vector((math.cos(yaw),math.sin(yaw),0))
-  tip=forkroot+fd*(.67+.11*(fork%3))+Vector((0,0,.28+.21*((fork+b)%3)))
-  forkmid=forkroot.lerp(tip,.5)+Vector((0,0,.14))
-  woody_curve('oak lateral branch',[forkroot,forkmid,tip],.045)
+# The crown has unequal overlapping lobes with central rising leaders. Lower
+# spreading boughs merge into upper clusters instead of ending as flat sprays.
+lobes=[(-1.85,-.35,5.4,1.30,.90,1.0),(.95,-1.55,5.2,1.05,1.15,.85),(1.9,.45,5.7,1.05,.85,1.15),(-.4,1.8,5.9,1.2,.95,.95),(-.25,-.15,6.6,1.1,1.0,1.0),(-1.25,1.0,6.4,.9,.85,.9),(.8,.8,6.7,.8,.85,.8)]
+for b,(cx,cy,cz,rx,ry,rz) in enumerate(lobes):
+ center=Vector((cx,cy,cz));root=Vector((.15,.05,2.45+(b%3)*.18));delta=center-root
+ points=[root,root+delta*.34+Vector((.12*math.sin(b),.14*math.cos(b),.30)),root+delta*.69+Vector((-.10*math.sin(b),.05,.18)),center]
+ woody_curve('oak curved scaffold',points,.13 if b%3 else .17)
+ for leader in range(6):
+  a=leader*2.399+b*.81
+  vertical=-.30+.26*((leader+b)%5)
+  axis=Vector((math.cos(a)*rx,math.sin(a)*ry,vertical*rz)).normalized()
+  forkroot=points[2].lerp(center,.35+(leader%3)*.20)
+  tip=center+Vector((axis.x*rx*.66,axis.y*ry*.66,axis.z*rz*.66))
+  mid=forkroot.lerp(tip,.53)+Vector((0,0,.11))
+  woody_curve('oak volume leader',[forkroot,mid,tip],.045)
   for twig in range(3):
-   t=.31+twig*.26;attach=forkroot.lerp(forkmid,t*2) if t<.5 else forkmid.lerp(tip,(t-.5)*2)
-   az=yaw+(twig-1)*.71;td=Vector((math.cos(az)*.83,math.sin(az)*.83,.32 if twig!=1 else .64)).normalized()
-   twig_end=attach+td*(.42+.09*((twig+b)%3))
-   twigmid=attach.lerp(twig_end,.5)+Vector((0,0,.07))
-   woody_curve('oak leafy twig',[attach,twigmid,twig_end],.019)
-   for spray in range(3):
-    t=.30+spray*.31;anchor=attach.lerp(twigmid,t*2) if t<.5 else twigmid.lerp(twig_end,(t-.5)*2)
-    direction=(td+Vector((math.sin(b+spray)*.24,math.cos(fork+spray)*.24,.04))).normalized()
-    # Overlapping planes share an actual stem, while moderate roll exposes lit upper leaf faces.
-    attached_leaf_spray(anchor,direction,1.25+.15*((fork+b+twig)%4),(spray-1)*.79+.13*math.sin(b+fork),leaf2 if (b+fork+twig+spray)%5==0 else leaf)
+   t=.20+twig*.36;anchor=forkroot.lerp(mid,t*2) if t<.5 else mid.lerp(tip,(t-.5)*2)
+   angle=a+(twig-1)*.73
+   elevation=-.35+.26*((twig+leader+b)%5)
+   growing=Vector((math.cos(angle)*math.sqrt(1-min(.9,elevation**2)),math.sin(angle)*math.sqrt(1-min(.9,elevation**2)),elevation)).normalized()
+   branch_end=anchor+growing*(.35+.06*(twig%2))
+   cyl('oak fine connected twig',anchor,branch_end,.012,wood,5,.0035)
+   for spray in range(5):
+    # Fans occupy five distinct planes/depths around each living twig. Alternating
+    # upward/side/down shoots give full crown volume and natural interior gaps.
+    basepoint=anchor.lerp(branch_end,.16+spray*.19)
+    orbit=angle+(spray-2)*.43
+    pitch=elevation+(spray-2)*.24
+    direction=Vector((math.cos(orbit)*math.cos(pitch),math.sin(orbit)*math.cos(pitch),math.sin(pitch)))
+    length=1.12+.13*((spray+leader+twig)%4)
+    attached_leaf_spray(basepoint,direction,length,(spray-2)*.58+.21*math.sin(b+leader),leaf2 if (b+leader+twig+spray)%4==0 else leaf)
 sculpt_canopy_normals()
 env_finish('tree')
-print('Detailed original architecture and vegetation exported.')
+print('Volumetric original oak and palm exported.')

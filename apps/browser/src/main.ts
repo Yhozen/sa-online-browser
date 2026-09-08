@@ -11,7 +11,7 @@ import { warmupActors } from "./warmup";
 import { buildEnvironment } from "./environment";
 import {
   createCharacter,
-  animateCharacter,
+  advanceCharacter, placeCharacter,
   disposeActor,
   createCar,
   animateCar,
@@ -676,7 +676,16 @@ const cameraTarget = new THREE.Vector3(0, 2, 10),
   desiredCamera = new THREE.Vector3();
 camera.position.set(0, -13, 23);
 camera.lookAt(0, 6, 10);
-const simulationClock = new SimulationClock(performance.now(), step);
+const simulationClock = new SimulationClock(performance.now(), dt => {
+  step(dt);
+  if (!self.spawned) return;
+  // Clip time follows the fixed simulation, so slow rendering cannot skip the
+  // animation state transition or turn walking into slow-motion playback.
+  advanceCharacter(selfMesh, self, dt, arena.groundZ);
+  for (const peer of peers.values())
+    if (peer.streamed) advanceCharacter(peer.mesh, peer.state, dt, arena.groundZ);
+  for (const vehicle of vehicles.values()) animateCar(vehicle.mesh, vehicle.velocity, dt);
+});
 function advanceSimulation(now: number) {
   if (!simulationClock.advance(now) &&
       (keys.size > 0 || Math.abs(speed) > .05 || Math.abs(jumpSpeed) > .05))
@@ -715,14 +724,12 @@ function frame(now: number) {
     );
     v.mesh.quaternion.slerp(target, 1 - Math.exp(-delta * 14));
   }
-  animateCharacter(
+  placeCharacter(
     selfMesh,
     self,
-    delta,
     arena.groundZ,
     vehicles.get(self.vehicleId)?.mesh,
   );
-  for (const v of vehicles.values()) animateCar(v.mesh, v.velocity, delta);
   for (const p of peers.values()) {
     p.mesh.visible = p.streamed;
     p.mesh.position.lerp(
@@ -739,12 +746,12 @@ function frame(now: number) {
       1 - Math.exp(-delta * 14),
     );
     const vehicle = vehicles.get(p.state.vehicleId);
-    animateCharacter(p.mesh, p.state, delta, arena.groundZ, vehicle?.mesh);
+    placeCharacter(p.mesh, p.state, arena.groundZ, vehicle?.mesh);
     const labelPos =
       p.state.mode !== "onFoot" && vehicle
         ? vehicle.mesh.position.clone()
         : p.mesh.position.clone();
-    labelPos.z += 1.7;
+    labelPos.z += p.state.mode === "onFoot" ? .95 : .8;
     const projected = labelPos.project(camera);
     p.label.style.left = `${(projected.x * 0.5 + 0.5) * innerWidth}px`;
     p.label.style.top = `${(-projected.y * 0.5 + 0.5) * innerHeight}px`;

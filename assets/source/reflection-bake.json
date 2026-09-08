@@ -1,31 +1,33 @@
 {
   "version": 1,
-  "generatedAt": "2026-09-08T05:35:36.919Z",
+  "generatedAt": "2026-09-08T06:17:28.041Z",
   "format": "PMR1: uint32-le magic,width,height; RGBA16F PMREM atlas; gzip",
   "width": 1536,
   "height": 2048,
-  "compressedBytes": 10669507,
+  "compressedBytes": 10873346,
   "uncompressedBytes": 25165836,
-  "sha256": "e38c4b931caef0874ece49d8fcd197c381576a1af3d39949b0aea6a4c1a7e82b",
-  "uncompressedSha256": "5cc2154299e8076303d82a9d0fced536659ae5def7bc1e8191d78c17437d51a7",
+  "sha256": "011408ad172b31d4c2199a7c79d9d1e777863d5f04056c640e68780aced72796",
+  "uncompressedSha256": "fda33d2256ef03a8a32fbdc93e59792f7394067599c1216cda0986d32d00c31f",
   "browser": "147.0.7727.15",
   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
   "scene": {
     "id": "neighborhood",
-    "revision": "8654197ee0a83e36"
+    "revision": "b8988d67e036c7b5"
   },
   "sources": {
-    "apps/browser/src/lighting.ts": "257cee72bcda3fc80b25ec5a5a2da2a600333477a00021eaba395b41fafb3430",
+    "apps/browser/src/lighting.ts": "ef572ae9c541bf21b113ae777bd28fa33bd1dfacd0d8b4df6f55f629e7fb0ff1",
     "apps/browser/src/environment.ts": "de25c62af6a5ea13b29c312339870cc855b980d5d355f48178af687cb1889589",
-    "apps/browser/src/assets.ts": "846741dcb78053aad754595a97fa31b32043927e03e5e55ea394911f59269980",
-    "apps/browser/src/main.ts": "ac00f09e2c98e005684d277fb1cd75f1ec06ad254b6546b3147804f2da7a8de9",
+    "apps/browser/src/assets.ts": "5ec5ddb3fd4e40d282fb5ca8da446bf1664df7ebc780100c21fe4b737d5495e8",
+    "apps/browser/src/main.ts": "b5cd574f8fbc7e6bc56fb032f003b2881786cd9d11dd6b3effa3934fc120eb55",
     "apps/browser/src/reflection-storage.ts": "8b7f07a99248d1885e509aa3e916b87982ad33019348ae87fd04e09635c13720",
     "apps/browser/src/warmup.ts": "183def3b17b329c0f6878a6efb81e231c5b2feb2a80c4070ae50c050eddb89ff",
-    "apps/browser/src/horizon.ts": "91f4718e04dddf6133dcf7815a724d4ca5e39385aac467f5075c0b2b53b0d3a5",
-    "apps/browser/src/road-detail.ts": "f0f3cd99ffbaa5862d89c9b85de8a0ce08fdd4a0cf7cf2ce400920530d574c61",
+    "apps/browser/src/foliage-mips.ts": "bf7fe1414777bf98dc331fcf323a747dd6a1d20e1df857cde5e5ad47a98cb15c",
+    "apps/browser/src/character-animation.ts": "0782bb10ef3fedfe9744937687dd63566e32abafae70d75e1420c4a62922e8bb",
+    "apps/browser/src/horizon.ts": "30842d6ced3f8a6c4c9fa32254b3280a2f45fef314b290aa3353abe1b5072bd6",
+    "apps/browser/src/road-detail.ts": "c86c9dc38d2b45274475a9eb7509a27be259d72da48da9ded30157e3ff491592",
     "apps/browser/src/verges.ts": "e11fc73e8194a3a8f0113005ad0a1901ddbbfb1804fd0324725a9a0da4f6612c",
     "packages/shared/scenes/neighborhood.json": "cce8c3bfc9bb5c4ddc7a7b96a71f72e6349cab4c07fa85d87a324a003cd056c2",
-    "tools/bake-reflections.mjs": "1bba9fefc88bcd08e8555d504825a817e7e7ae1aa7f86ac917ffa34d8f60931a",
+    "tools/bake-reflections.mjs": "0a60f1f00ec13e520ecf7912f5961ee6f677f291d2ed4c032d251cfb82f87955",
     "package-lock.json": "b99e5c05368deae7d0cd82a86505d33671cc2275c0852eed3f08afbd0b07bd74"
   },
   "inputs": {
@@ -51,11 +53,11 @@
     },
     "bin.glb": {
       "bytes": 26804,
-      "sha256": "bd48fe7e88b401f73205b4382c383106ee2aa3dbd5c42bc410b7347dc3ce13d7"
+      "sha256": "0398c5fab01f793506d7f8c1d66f840045385ffd562848eaeceb7ad841f672fa"
     },
     "coupe.glb": {
-      "bytes": 2040832,
-      "sha256": "b1b588242d13a646595a8e42597255c67a1fa88367782961fec7613def226225"
+      "bytes": 2046976,
+      "sha256": "0959cc162cdf643979dc4d78e10f91c6b54700d2c31ff2ec83960cae520376c2"
     },
     "fence-low.glb": {
       "bytes": 9696,
@@ -67,47 +69,47 @@
     },
     "house-0.glb": {
       "bytes": 1940112,
-      "sha256": "ad97c0c8a2d9d418c1d98c36ae05e9b9bf7059554cf43f6dfdd6f998de3c2161"
+      "sha256": "391404d773fc08d15ba4b4aa31843037a60a6b7bf67de2d1187c9c59a293c26a"
     },
     "house-1.glb": {
       "bytes": 1722508,
-      "sha256": "721035c4205996eae4c52be9cd5a29ff3517b45c838f3caf77016e0707226a84"
+      "sha256": "9bf5bd612a7aac1ecbff294e56a356cbf6faa0a814409034e6665a978ba5e05e"
     },
     "house-2.glb": {
       "bytes": 1560136,
-      "sha256": "7f6504ffbcf6aff4b84f2683471807676cf4ce87d75b5a3056d3a808a6050082"
+      "sha256": "fe9bac30aabe43a6fa1fdc12c026088287b18c93a59ab86b504b6cf65101e4b3"
     },
     "house-3.glb": {
       "bytes": 2039156,
-      "sha256": "f10a11cc8f0ba75ce370bca7888d164df015ed5f531e22ccefa8301de168809a"
+      "sha256": "b7779094bc7efb8bbdb0290294ff8d843b47645dd3c4384568d8ebdbec504b03"
     },
     "lamp.glb": {
       "bytes": 15624,
-      "sha256": "e820db4dfda357b0099471db44168e07d432c1938f02c0a62d6712dba200e0a7"
+      "sha256": "b5e7483d898bd02f2a291e2bf1a38691ac783e9f2ad2e787042d9e74400f5385"
     },
     "mailbox.glb": {
       "bytes": 12356,
-      "sha256": "be1bf4eae8993f5ab0f59d66212da0cf4db44345ef1545e9a5ea2529bdb5d865"
+      "sha256": "dd1cbadd8390842dac0199976401d2f6b4a79e712f576aacd079a145cd0483d4"
     },
     "neighbor.glb": {
-      "bytes": 3092176,
-      "sha256": "e3c66e0d3ce740884b6539f1d5fce34bfd0a18369cc50ed6b9b5ed2e16f0f9f7"
+      "bytes": 7109104,
+      "sha256": "74f21ceb2a1c662f7e6b18334dc08391be63068319140a192b59983210e6583f"
     },
     "neighborhood-atlas.png": {
       "bytes": 3529016,
       "sha256": "03157ab45abb63aaf697823c9e6a8d927ac1b062ca27fdf21fcf7a8bd0948269"
     },
     "palm.glb": {
-      "bytes": 1708476,
-      "sha256": "36fa63d855bb07fca59a5e5be6de373d4d49d1bf2be0f2d7aa24226be254a7c3"
+      "bytes": 1777472,
+      "sha256": "c818602e9276dacf113e43d4222fc0c8366c7c40ff5495673146321cb6bb83a6"
     },
     "pole.glb": {
       "bytes": 10416,
       "sha256": "4a0fea05e8451630f0030e999b284cd50bd3ba6e0d237fb416043c6b549227c0"
     },
     "tree.glb": {
-      "bytes": 545452,
-      "sha256": "7917c2adddebe715bbd97412bd143fb63c2d29a12e0361516cd3b79798e3bfb6"
+      "bytes": 768184,
+      "sha256": "20e970321752a37bb381856f94ce115fd05082abceb23859684439d527bf38c1"
     }
   },
   "network": {

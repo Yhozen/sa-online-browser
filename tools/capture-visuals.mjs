@@ -40,7 +40,7 @@ try {
   await friend.goto('http://127.0.0.1:3000');await friend.getByTestId('nickname').fill('DreamFriend');
   await friend.getByTestId('join').click({timeout:60000});await friend.waitForFunction(()=>window.__poc.self.spawned);
   await friend.locator('#viewport canvas').focus();
-  for(const [axis,goal,positive,negative] of [[0,1.25,'d','a'],[1,5.3,'w','s']]) {
+  for(const [axis,goal,positive,negative] of [[0,1.7,'d','a'],[1,5.65,'w','s']]) {
     for(let attempt=0;attempt<16;attempt++) {
       const value=await friend.evaluate(axis=>window.__poc.self.position[axis],axis);
       if(Math.abs(value-goal)<.24)break;
@@ -49,7 +49,7 @@ try {
   }
   await friend.keyboard.press('s',{delay:35});
   const placed = await friend.evaluate(()=>window.__poc.self.position);
-  if(Math.hypot(placed[0]-1.25,placed[1]-5.3)>1)throw Error(`Reference player setup did not settle: ${placed}`);
+  if(Math.hypot(placed[0]-1.7,placed[1]-5.65)>1)throw Error(`Reference player setup did not settle: ${placed}`);
   await page.setViewportSize({width:1672,height:941});
   await page.bringToFront();
   await page.locator('#quality').selectOption('standard');

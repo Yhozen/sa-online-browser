@@ -42,7 +42,10 @@ test('graphics: both presets preserve native screen resolution after resize and 
                     const gl = canvas.getContext('webgl2');
                     const width = Math.floor(innerWidth * devicePixelRatio);
                     const height = Math.floor(innerHeight * devicePixelRatio);
-                    return canvas.width === width && canvas.height === height &&
+                    const radar = document.querySelector('#minimap');
+                    const radarNative = radar.width === Math.floor(radar.clientWidth * devicePixelRatio) &&
+                        radar.height === Math.floor(radar.clientHeight * devicePixelRatio);
+                    return radarNative && canvas.width === width && canvas.height === height &&
                         gl.drawingBufferWidth === width && gl.drawingBufferHeight === height;
                 })).toBe(true);
             }

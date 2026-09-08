@@ -135,7 +135,7 @@ try {
   const sources = [
     "apps/browser/src/lighting.ts", "apps/browser/src/environment.ts",
     "apps/browser/src/assets.ts", "apps/browser/src/main.ts",
-    "apps/browser/src/reflection-storage.ts", "apps/browser/src/warmup.ts", "apps/browser/src/horizon.ts",
+    "apps/browser/src/reflection-storage.ts", "apps/browser/src/warmup.ts", "apps/browser/src/foliage-mips.ts", "apps/browser/src/character-animation.ts", "apps/browser/src/horizon.ts",
     "apps/browser/src/road-detail.ts", "apps/browser/src/verges.ts",
     "packages/shared/scenes/neighborhood.json", "tools/bake-reflections.mjs", "package-lock.json",
   ];

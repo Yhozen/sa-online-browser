@@ -628,8 +628,13 @@ test("neighborhood: rejoining the same tab releases skeleton textures", async ({
           .poll(async () => (await snap(s.page)).self.spawned)
           .toBe(true);
       }
-      await sleep(i === 0 ? 1500 : 300);
-      samples.push((await snap(s.page)).graphics.memory);
+      // Count completed native render submissions, not a fixed sleep that can
+      // expire before the first cold camera/asset upload on software graphics.
+      const firstFrame = (await snap(s.page)).graphics.frameCount;
+      await expect.poll(async () => (await snap(s.page)).graphics.frameCount,
+        {timeout:30000}).toBeGreaterThan(firstFrame + (i === 0 ? 5 : 0));
+      const sampled = (await snap(s.page)).graphics;
+      samples.push({...sampled.memory, observedFrame:sampled.frameCount});
       const at = observations.length,
         id = (await snap(s.page)).self.id;
       await s.page.getByTestId("disconnect").click();

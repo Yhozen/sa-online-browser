@@ -49,7 +49,7 @@ body:not(.playing) .corner,body:not(.playing) .chat,body:not(.playing) .bottom {
 .playing .map-wrap {visibility:visible}
 .map-wrap canvas {width:100%;height:100%;border-radius:50%;opacity:.96}
 .map-caption {position:absolute;bottom:-20px;left:0;right:0;text-align:center;font-size:9px;letter-spacing:1px;font-weight:bold;text-shadow:1px 1px 2px #000}
-.map-caption b {position:absolute;left:73px;bottom:14px;background:#101310;border-radius:50%;font-size:14px;padding:3px}
+.map-north {position:absolute;left:50%;top:-10px;transform:translateX(-50%);z-index:2;background:#101310;border-radius:50%;font-size:14px;padding:3px}
 .map-caption span {display:block}
 .chat {position:fixed;left:32px;top:26px;width:min(430px,42vw);padding:0;background:none;border:0;text-shadow:1px 1px 2px #000,0 1px 4px #000}
 .chat-head {display:flex;gap:12px;align-items:center;margin-bottom:7px;opacity:.85}
@@ -78,5 +78,5 @@ kbd {font:700 9px Arial,sans-serif;padding:2px 3px;background:#111b2388;border:1
 .graphics-error details {margin-top:20px;font-size:12px;color:#b1c0bd}
 .graphics-error summary {cursor:pointer}
 .graphics-error pre {white-space:pre-wrap;overflow-wrap:anywhere}
-@media(max-width:800px) {.top {left:20px;right:18px}.left {left:20px;top:135px;width:280px}.brand .title {font-size:44px}.connection {max-width:230px}.chat {left:18px;top:20px;width:40vw}.map-wrap {left:20px;bottom:50px;width:140px;height:140px}.map-caption b {left:55px}.corner {right:20px}.corner #disconnect {right:18px;top:86px}.controls {flex-wrap:wrap;gap:6px}.bottom {left:18px;right:18px}.arena-name {font-size:34px}}
-@media(max-height:650px) {.left {top:105px}.join {padding:15px 20px}.join h1 {font-size:30px;margin:12px 0}.join label {margin-top:12px}.muted {margin:8px 0}.map-wrap {width:136px;height:136px}.map-caption b {left:52px}.chat-log {height:65px}}
+@media(max-width:800px) {.top {left:20px;right:18px}.left {left:20px;top:135px;width:280px}.brand .title {font-size:44px}.connection {max-width:230px}.chat {left:18px;top:20px;width:40vw}.map-wrap {left:20px;bottom:50px;width:140px;height:140px}.corner {right:20px}.corner #disconnect {right:18px;top:86px}.controls {flex-wrap:wrap;gap:6px}.bottom {left:18px;right:18px}.arena-name {font-size:34px}}
+@media(max-height:650px) {.left {top:105px}.join {padding:15px 20px}.join h1 {font-size:30px;margin:12px 0}.join label {margin-top:12px}.muted {margin:8px 0}.map-wrap {width:136px;height:136px}.chat-log {height:65px}}

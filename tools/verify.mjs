@@ -15,6 +15,8 @@ run(process.execPath, [
   "tests/scene.test.mjs",
   "tests/simulation-clock.test.mjs",
   "tests/reflection.test.mjs",
+  "tests/foliage-mips.test.mjs",
+  "tests/character-animation.test.mjs",
 ]);
 run(process.execPath, ["--test", "tests/assets.test.mjs"]);
 run("ctest", ["--test-dir", "native/build", "--output-on-failure"]);

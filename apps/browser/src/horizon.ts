@@ -19,7 +19,11 @@ export function buildHorizon(scene: THREE.Scene, groundZ: number) {
     const segments = 480, rings = 60;
     const vertices: number[] = [], colors: number[] = [], uv: number[] = [], mix: number[] = [], indices: number[] = [];
     for (let j = 0; j <= rings; j++) for (let i = 0; i <= segments; i++) {
-      const a = i / segments * Math.PI * 2, r = 130 + layer * 125 + j * 4;
+      // Preserve the skyline's angular size and crest distance, but give each
+      // ridge a narrower physical apron. Broad low dunes could not catch a
+      // directional sun; steeper valley walls reveal separate lit/shaded faces.
+      const width = 90 + layer * 50;
+      const a = i / segments * Math.PI * 2, r = 250 + layer * 125 - width * .47 + j / rings * width;
       const t = j / rings, x = Math.cos(a) * r, y = Math.sin(a) * r;
       // Preserve the broad accepted skyline, then shape individual watersheds beneath it.
       const broad = (34 + layer * 13 + 22 * Math.sin(a * 3 + layer) + 15 * Math.sin(a * 7 + 1.2)) * .45;
@@ -94,7 +98,7 @@ export function buildHorizon(scene: THREE.Scene, groundZ: number) {
     return side === 0 ? [-edge, along] : side === 1 ? [edge, along] : side === 2 ? [along, -edge] : [along, edge];
   }
   for (let side = 0; side < 4; side++) {
-    // Tree foliage occupies local Z≈3.85–8.26m and ±4m horizontally. Derive
+    // Tree foliage occupies local Z≈4.15–8.46m and ±4m horizontally. Derive
     // buried-root heights from those actual bounds: upper leaves span 0.7–6.7m,
     // lower leaves span −0.25–4.4m. Both tiers extend across the wall's inner ±89m
     // face, while every root stays outside ±90m. This masks the full 4m wall,
@@ -102,12 +106,12 @@ export function buildHorizon(scene: THREE.Scene, groundZ: number) {
     for (let along = -99; along < 105; along += 9.5 + random() * 3.5) {
       const [x, y] = point(side, along, 91.2 + random() * .55);
       const width = 2.15 + random() * .6, height = 1.15 + random() * .22;
-      const upperRootDepth = height * 3.85 - .7;
+      const upperRootDepth = height * 4.15 - .7;
       placements.push({ asset: "tree", position: [x, y, groundZ - upperRootDepth],
         rotation: random() * Math.PI * 2, scale: [width, width * (.92 + random() * .13), height] });
       const [bx, by] = point(side, along + 3.2 + random() * 1.5, 92.2 + random() * .8);
       const lowerWidth = 2.1 + random() * .65, lowerHeight = .88 + random() * .18;
-      placements.push({ asset: "tree", position: [bx, by, groundZ - lowerHeight * 3.85 - .25],
+      placements.push({ asset: "tree", position: [bx, by, groundZ - lowerHeight * 4.15 - .25],
         rotation: random() * Math.PI * 2, scale: [lowerWidth, lowerWidth * (.95 + random() * .12), lowerHeight] });
     }
     // Taller trees are clustered well behind the scrub, rather than a fence-height row.

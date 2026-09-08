@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import * as THREE from "three";
+import { CharacterAnimation } from "./character-animation";
 import { contactShadow } from "./shadows";
 import { disposeQualityMaterial } from "./graphics";
 import { asset, clips } from "./assets";
@@ -7,9 +8,7 @@ import type { PlayerState } from "../../../packages/shared/protocol";
 const actors = new WeakMap<
   THREE.Group,
   {
-    mixer: THREE.AnimationMixer;
-    actions: Map<string, THREE.AnimationAction>;
-    current: string;
+    animation: CharacterAnimation;
     outfit: THREE.Material[];
   }
 >();
@@ -31,38 +30,24 @@ export function createCharacter(variant = 0) {
       o.material = Array.isArray(o.material) ? replaced : replaced[0];
     }
   });
-  const mixer = new THREE.AnimationMixer(group);
-  const actions = new Map<string, THREE.AnimationAction>();
-  for (const clip of clips()) {
-    const name = clip.name.split("|").pop()!;
-    actions.set(name, mixer.clipAction(clip));
-  }
-  actors.set(group, { mixer, actions, current: "", outfit });
+  actors.set(group, { animation: new CharacterAnimation(group, clips()), outfit });
   return group;
 }
-export function animateCharacter(
+export function advanceCharacter(
   group: THREE.Group,
   state: PlayerState,
   dt: number,
   groundZ: number,
-  vehicle?: THREE.Group,
 ) {
   const a = actors.get(group);
   if (!a) return;
-  const name =
-    state.mode !== "onFoot"
-      ? "seated"
-      : state.position[2] > groundZ + 1.06
-        ? "jump"
-        : Math.hypot(...state.velocity.slice(0, 2)) > 0.2
-          ? "walk"
-          : "idle";
-  if (a.current !== name) {
-    a.actions.get(a.current)?.fadeOut(0.12);
-    a.actions.get(name)?.reset().fadeIn(0.12).play();
-    a.current = name;
-  }
-  a.mixer.update(dt);
+  a.animation.advance(state, dt, groundZ);
+  group.userData.animation = a.animation.current;
+  group.userData.seated = state.mode !== "onFoot";
+}
+/** Render-only placement follows the interpolated vehicle, independently of clip time. */
+export function placeCharacter(group: THREE.Group, state: PlayerState, groundZ: number, vehicle?: THREE.Group) {
+  if (!actors.has(group)) return;
   if (vehicle && state.mode !== "onFoot") {
     const anchor = vehicle.getObjectByName(
       state.mode === "driver" ? "seat_driver" : "seat_passenger",
@@ -75,8 +60,6 @@ export function animateCharacter(
   const shadow = group.getObjectByName("contact-shadow")!;
   shadow.visible = state.mode === "onFoot";
   shadow.position.z = groundZ + 0.02 - group.position.z;
-  group.userData.animation = name;
-  group.userData.seated = state.mode !== "onFoot";
 }
 export function disposeActor(group: THREE.Group) {
   const a = actors.get(group);
@@ -84,8 +67,7 @@ export function disposeActor(group: THREE.Group) {
     group.traverse((o) => {
       if (o instanceof THREE.SkinnedMesh) o.skeleton.dispose();
     });
-    a.mixer.stopAllAction();
-    a.mixer.uncacheRoot(group);
+    a.animation.dispose();
     a.outfit.forEach(disposeQualityMaterial);
     actors.delete(group);
   }
