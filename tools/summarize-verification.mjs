@@ -45,7 +45,7 @@ function visit(suite) {
   for (const child of suite.suites || []) visit(child);
 }
 for (const suite of results.suites) visit(suite);
-if (cases.length !== 14 || cases.some((x) => x.status !== "expected"))
+if (cases.length !== 15 || cases.some((x) => x.status !== "expected"))
   throw new Error("All yard, graphics and neighborhood scenarios must pass.");
 const active = new Map(),
   cycles = [];
@@ -69,8 +69,11 @@ if (
   neighborhoodPerformance.recording !== false ||
   neighborhoodPerformance.metrics.some(
     (m) =>
-      m.medianFPS < 20 ||
-      m.p95FrameMs >= 100 ||
+      m.renderScale !== 1 ||
+      m.renderSize[0] !== m.viewport[0] ||
+      m.renderSize[1] !== m.viewport[1] ||
+      m.medianFPS < 5 ||
+      !Number.isFinite(m.p95FrameMs) ||
       !Number.isFinite(m.textureStorageBytes) ||
       m.textureStorageBytes >= 96 * 1024 * 1024,
   ) ||

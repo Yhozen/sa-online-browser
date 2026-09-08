@@ -39,7 +39,7 @@ const camera = new THREE.PerspectiveCamera(
 );
 camera.up.set(0, 0, 1);
 const renderer = createRenderer();
-renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
+renderer.setPixelRatio(devicePixelRatio);
 renderer.setSize(innerWidth, innerHeight);
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -820,6 +820,7 @@ requestAnimationFrame(frame);
 window.addEventListener("resize", () => {
   camera.aspect = innerWidth / innerHeight;
   camera.updateProjectionMatrix();
+  renderer.setPixelRatio(devicePixelRatio);
   renderer.setSize(innerWidth, innerHeight);
 });
 // A fresh immutable observation snapshot, never a control or test bypass.
@@ -911,9 +912,8 @@ function setQuality(value: string) {
   quality = value === "standard" ? "standard" : "low";
   localStorage.setItem("poc-quality", quality);
   document.body.dataset.quality = quality;
-  renderer.setPixelRatio(
-    quality === "low" ? 0.3 : Math.min(devicePixelRatio, 1.5),
-  );
+  // Presets change lighting/material cost, never the screen's native resolution.
+  renderer.setPixelRatio(devicePixelRatio);
   renderer.shadowMap.enabled = quality === "standard";
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.05;

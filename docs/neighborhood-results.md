@@ -1,6 +1,6 @@
 # Arroyo neighborhood results
 
-Verified September 8, 2026. The neighborhood milestone is implemented and its local acceptance gates pass. Scene revision: `eb61086b5bfd46f6`. Implementation commit: `b9093d8`; the [machine result record](neighborhood-verification.json) contains exact SHA256 hashes of the tested source, asset inventory and native worker.
+Historical reduced-resolution verification, September 8, 2026. **Superseded for rendering/performance by the [full-resolution correction](resolution-results.md).** The following acceptance results belong to the earlier renderer and are retained as evidence; they are not a current full-resolution FPS claim. Scene revision: `eb61086b5bfd46f6`. Implementation commit: `b9093d8`; the [machine result record](neighborhood-verification.json) contains exact SHA256 hashes of the tested source, asset inventory and native worker.
 
 ![Arroyo on the actual cloud desktop, Standard graphics](images/neighborhood-street.png)
 

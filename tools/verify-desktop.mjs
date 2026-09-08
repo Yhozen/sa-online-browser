@@ -8,7 +8,7 @@ const display =
   process.env.DISPLAY || (existsSync("/tmp/.X11-unix/X1") ? ":1" : undefined);
 if (!display) throw Error("Start the cloud desktop or set DISPLAY first.");
 const url = "http://127.0.0.1:3000",
-  dir = "artifacts/desktop";
+  dir = process.env.POC_DESKTOP_ARTIFACTS || "artifacts/desktop";
 const scene = await (await fetch(`${url}/scene`)).json();
 if (scene.id !== "neighborhood")
   throw Error("Start dev:poc with the default neighborhood scene.");

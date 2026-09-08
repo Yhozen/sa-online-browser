@@ -33,6 +33,6 @@ A replacement browser client that joins an existing multiplayer server through a
 - **Asset kit:** original reusable Blender exports and their editable source scripts; independent of protocol entities.
 - **Seat anchor:** visual local transform for a replicated driver/passenger, not a seat reservation or networking message.
 - **Arroyo:** original browser neighborhood, not part of the native GTA map.
-- **Drawing buffer:** the pixel resolution used for the 3D scene. Low uses 384 × 216 inside a 1280 × 720 view; HTML controls retain the view's resolution.
+- **Drawing buffer:** the pixel resolution used for the 3D scene. Both presets use viewport dimensions multiplied by the native device pixel ratio, including after resizing. Resolution must not be reduced to reach an FPS target.
 - **Texture storage audit:** test-only accounting of WebGL texture allocations, including mipmaps, skeletons and shadows. Logical texture bytes exclude driver overhead and total browser memory.
 - **Recorded soak:** a sustained functional session captured with video/traces. Its capture cost is reported separately from an unrecorded ordinary-play benchmark.

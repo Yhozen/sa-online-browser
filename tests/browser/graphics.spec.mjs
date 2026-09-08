@@ -20,6 +20,37 @@ test('graphics: software WebGL starts the playground', async ({ page }) => {
     expect(errors).toEqual([]);
 });
 
+test('graphics: both presets preserve native screen resolution after resize and reload', async ({ browser }) => {
+    for (const deviceScaleFactor of [1, 2]) {
+        const context = await browser.newContext({ viewport: { width: 640, height: 360 }, deviceScaleFactor });
+        try {
+            const page = await context.newPage();
+            await page.goto(url);
+            await expect(page.getByTestId('join')).toBeEnabled();
+            async function nativeResolution() {
+                await expect.poll(() => page.evaluate(() => {
+                    const canvas = document.querySelector('#viewport canvas');
+                    const gl = canvas.getContext('webgl2');
+                    const width = Math.floor(innerWidth * devicePixelRatio);
+                    const height = Math.floor(innerHeight * devicePixelRatio);
+                    return canvas.width === width && canvas.height === height &&
+                        gl.drawingBufferWidth === width && gl.drawingBufferHeight === height;
+                })).toBe(true);
+            }
+            for (const preset of ['low', 'standard', 'low']) {
+                await page.locator('#quality').selectOption(preset);
+                await nativeResolution();
+                await page.setViewportSize({ width: 800, height: 450 });
+                await nativeResolution();
+                await page.setViewportSize({ width: 640, height: 360 });
+            }
+            await page.reload();
+            await expect(page.getByTestId('join')).toBeEnabled();
+            await nativeResolution();
+        } finally { await context.close(); }
+    }
+});
+
 test('graphics: disabled WebGL shows recovery without starting a session', async ({}, info) => {
     // Real browser-level failure, independent of the normal SwiftShader config.
     const browser = await chromium.launch({ headless: info.project.use.headless, args: ['--disable-webgl'] });
