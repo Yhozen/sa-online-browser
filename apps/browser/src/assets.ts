@@ -73,6 +73,7 @@ export async function loadAssets(
         const list = Array.isArray(o.material) ? o.material : [o.material];
         o.material = list.map((m) => {
           if (m.name.startsWith("foliage") || m.name.startsWith("palm-frond")) m.side = THREE.DoubleSide;
+          if (m.name === "ivory" && m instanceof THREE.MeshStandardMaterial) m.color.set(0xe3dfcf);
           if (m.name === "chrome" && m instanceof THREE.MeshStandardMaterial) {
             m.color.set(0x70766b); m.roughness = .5;
           }
@@ -81,11 +82,15 @@ export async function loadAssets(
               const physical = new THREE.MeshPhysicalMaterial();
               THREE.MeshStandardMaterial.prototype.copy.call(physical, m);
               physical.clearcoat = 1; physical.clearcoatRoughness = .14;
-              physical.metalness = .55; physical.roughness = .25;
+              physical.metalness = .45; physical.roughness = .29; physical.color.set(0x123148);
               canonical.set(m.name, physical); m.dispose();
             } else canonical.set(m.name, m);
           }
-          else if (canonical.get(m.name) !== m) m.dispose();
+          else if (canonical.get(m.name) !== m) {
+            const shared = canonical.get(m.name)!;
+            if (m.vertexColors) shared.vertexColors = true;
+            m.dispose();
+          }
           return canonical.get(m.name)!;
         });
         if (o.material.length === 1) o.material = o.material[0];
@@ -94,6 +99,14 @@ export async function loadAssets(
     models.set(name, gltf);
     assetStats.files = ++count;
   }
+  for (const gltf of models.values()) gltf.scene.traverse(o => {
+    if (!(o instanceof THREE.Mesh) || o.geometry.getAttribute("color")) return;
+    const materials = Array.isArray(o.material) ? o.material : [o.material];
+    if (materials.some(m => m.vertexColors)) {
+      const color = new Float32Array(o.geometry.getAttribute("position").count * 3).fill(1);
+      o.geometry.setAttribute("color", new THREE.Float32BufferAttribute(color, 3));
+    }
+  });
   async function textureInput(name: string) {
     progress(`Loading materials · ${name}`);
     const response = await fetch(`/assets/${name}`, { signal: AbortSignal.timeout(30000) });
@@ -114,12 +127,17 @@ export async function loadAssets(
       const material = new THREE.MeshStandardMaterial({ ...maps, roughness: .95, normalScale: new THREE.Vector2(.45, .45) });
       if (name === "asphalt") { material.color.set(0x9a9a96); material.roughness = .88; }
       if (name === "grass") material.color.set(0xabb787);
+      if (name === "concrete") material.color.set(0xded8c8);
       surfaceMaterials.set(name, material);
       const existing = canonical.get(name);
       if (existing instanceof THREE.MeshStandardMaterial) {
         Object.assign(existing, maps);
-        existing.color.set(name === "wood" ? 0xb0a490 : name === "denim" ? 0x9caebd : 0xffffff);
+        existing.color.set(name === "wood" ? 0xb0a490 : name === "stucco" ? 0xe1d9c7 : name === "concrete" ? 0xded8c8 : 0xffffff);
         existing.normalScale.set(.35, .35); existing.needsUpdate = true;
+      }
+      if (name === "denim") {
+        const cloth=canonical.get("outfit");
+        if(cloth instanceof THREE.MeshStandardMaterial) { cloth.normalMap=maps.normalMap; cloth.roughnessMap=maps.roughnessMap; cloth.normalScale.set(.28,.28); cloth.needsUpdate=true; }
       }
       assetStats.textureBytes += size * size * 4 * 4 / 3 * 3;
     }

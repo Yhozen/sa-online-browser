@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import * as THREE from "three";
+import { nativeAntialias } from "./antialias";
 import { installAtmosphere, updateSun } from "./lighting";
 import { createRenderer, applyQuality } from "./graphics";
 import yard from "../../../packages/shared/scenes/yard.json";
@@ -52,6 +53,8 @@ renderer.domElement.setAttribute(
 );
 el("viewport").append(renderer.domElement);
 const sun = installAtmosphere(scene, renderer);
+const antialias = nativeAntialias(renderer, scene, camera);
+antialias.resize();
 interface Peer {
   id: number;
   name: string;
@@ -760,7 +763,7 @@ function frame(now: number) {
       collisionIndex,
     );
   updateSun(sun, target);
-  if (!document.hidden) renderer.render(scene, camera);
+  if (!document.hidden) antialias.render(quality === "standard");
   if (sceneReady) {
     frameTimes.push(elapsed);
     if (frameTimes.length > 1800) frameTimes.shift();
@@ -809,6 +812,7 @@ window.addEventListener("resize", () => {
   camera.updateProjectionMatrix();
   renderer.setPixelRatio(devicePixelRatio);
   renderer.setSize(innerWidth, innerHeight);
+  antialias.resize();
 });
 // A fresh immutable observation snapshot, never a control or test bypass.
 function snapshot() {
@@ -818,6 +822,7 @@ function snapshot() {
       scene: { id: arena.id, revision: arena.revision, ready: sceneReady },
       graphics: {
         preset: quality,
+        antialias: "FXAA at native resolution",
         sceneDownloadBytes: [
           ...performance.getEntriesByType("resource"),
           ...performance.getEntriesByType("navigation"),

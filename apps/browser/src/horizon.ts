@@ -4,19 +4,28 @@ import { instantiateStatic, surfaceMaterials } from "./assets";
 
 /** Continuous ridgelines beyond the closed fixture; no change to playable terrain. */
 export function buildHorizon(scene: THREE.Scene, groundZ: number) {
+  const noise=(x:number,y:number)=> {
+    const ix=Math.floor(x),iy=Math.floor(y),u=x-ix,v=y-iy;
+    const hash=(a:number,b:number)=>{const q=Math.sin(a*127.1+b*311.7)*43758.5453;return q-Math.floor(q);};
+    const sx=u*u*(3-2*u),sy=v*v*(3-2*v);
+    return THREE.MathUtils.lerp(THREE.MathUtils.lerp(hash(ix,iy),hash(ix+1,iy),sx),THREE.MathUtils.lerp(hash(ix,iy+1),hash(ix+1,iy+1),sx),sy);
+  };
   for (let layer = 0; layer < 3; layer++) {
-    const segments = 240, rings = 12, vertices: number[] = [], colors: number[] = [], uv: number[] = [], indices: number[] = [];
+    const segments = 480, rings = 60, vertices: number[] = [], colors: number[] = [], uv: number[] = [], indices: number[] = [];
     for (let j = 0; j <= rings; j++) for (let i = 0; i <= segments; i++) {
-      const a = i / segments * Math.PI * 2, r = 130 + layer * 125 + j * 20;
-      const ridge = 34 + layer * 13 + 22 * Math.sin(a * 3 + layer) + 15 * Math.sin(a * 7 + 1.2) + 8 * Math.sin(a * 13 + j * .13);
+      const a = i / segments * Math.PI * 2, r = 130 + layer * 125 + j * 4;
+      const ridge = 34 + layer * 13 + 22 * Math.sin(a * 3 + layer) + 15 * Math.sin(a * 7 + 1.2) + 8 * Math.sin(a * 13 + j * .026);
       const envelope = Math.sin(j / rings * Math.PI);
-      const detail = Math.sin(a * 31 + j * 1.2) * 2.8 + Math.cos(a * 57 - j) * 1.5;
-      const z = Math.max(-3, ridge * envelope + detail * envelope - 9);
       const x = Math.cos(a) * r, y = Math.sin(a) * r;
+      const erosion=1-Math.abs(noise(x/22+noise(x/55,y/55)*3,y/22)*2-1);
+      const detail=erosion*10+(noise(x/7,y/7)-.5)*3+(noise(x/3,y/3)-.5)*1.3;
+      const z = Math.max(-3, (ridge * .45 + detail - 3) * envelope - 6);
       vertices.push(x, y, groundZ + z);
       uv.push(x / 8, y / 8);
-      const shade = .88 + Math.sin(a * 23 + j * 2.3) * .055;
-      const c = new THREE.Color(layer === 0 ? 0x8e886d : layer === 1 ? 0x939a8e : 0x9eaaa2).multiplyScalar(shade);
+      const shade = .87 + erosion * .22;
+      const c = new THREE.Color(layer === 0 ? 0xb6a383 : layer === 1 ? 0xb3b09b : 0xb6bdb1).multiplyScalar(shade);
+      const scrub=noise(x/9,y/9);
+      if(scrub>.55) c.lerp(new THREE.Color(0x858b66),Math.min(.52,(scrub-.55)*2));
       colors.push(c.r,c.g,c.b);
       if (j < rings && i < segments) { const k = j * (segments + 1) + i; indices.push(k,k+segments+1,k+1,k+1,k+segments+1,k+segments+2); }
     }
@@ -39,7 +48,10 @@ export function buildHorizon(scene: THREE.Scene, groundZ: number) {
     const height=1.2+(Math.sin(i*2.9)+1)*.55;
     placements.push({asset:'tree',position:[x,y,groundZ],rotation:i*2.4,scale:[height,height,height]});
     // Layered low scrub masks the wall face while keeping the boundary visibly closed.
-    placements.push({asset:'tree',position:[x,y,groundZ-4.7],rotation:i*1.7,scale:[1.9,1.9,1.25]});
+    placements.push({asset:'tree',position:[side===0 ? -92 : side===1 ? 92 : t,side===2 ? -92 : side===3 ? 92 : t,groundZ-4.2],rotation:i*1.7,scale:[2.7,2.7,1.3]});
   }
+  // The lower scrub tier fills the trunk void beneath the upper hedge crowns.
+  for (const p of placements.filter((_,i)=>i%2===1))
+    placements.push({...p,position:[p.position[0],p.position[1],p.position[2]-1.7],rotation:p.rotation+1});
   instantiateStatic(scene,placements);
 }

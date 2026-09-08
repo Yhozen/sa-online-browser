@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import * as THREE from "three";
+import { plantVerges } from "./verges";
 import { roadDetail } from "./road-detail";
 import { buildHorizon } from "./horizon";
 import type { SceneManifest } from "../../../packages/shared/scene";
@@ -90,6 +91,15 @@ export function buildEnvironment(scene: THREE.Scene, manifest: SceneManifest) {
           concrete,
         );
       }
+    const joint = mat("sidewalk-joint", 0x89867b);
+    for (const road of manifest.roads) for (let i=1;i<road.points.length;i++) {
+      const a=road.points[i-1],b=road.points[i],vertical=a[0]===b[0],length=Math.hypot(b[0]-a[0],b[1]-a[1]);
+      for(let t=1.5;t<length;t+=1.5) for(const side of [-1,1]) {
+        const x=a[0]+(b[0]-a[0])*t/length+(vertical?side*(road.width/2+1.25):0);
+        const y=a[1]+(b[1]-a[1])*t/length+(vertical?0:side*(road.width/2+1.25));
+        box([x,y,z+.017],vertical?[2.4,.018,.005]:[.018,2.4,.005],joint);
+      }
+    }
     const c = manifest.culdesac!;
     for (const [r, h, m] of [
       [c.radius + 2.5, 0.025, concrete],
@@ -124,15 +134,12 @@ export function buildEnvironment(scene: THREE.Scene, manifest: SceneManifest) {
               y = a[1] + ((b[1] - a[1]) * t) / length;
             if (Math.hypot(x - c.center[0], y - c.center[1]) < c.radius)
               continue;
-            box(
-              [
-                x + (vertical ? offset : 0),
-                y + (vertical ? 0 : offset),
-                z + 0.075,
-              ],
-              vertical ? [0.1, 3.7, 0.008] : [3.7, 0.1, 0.008],
-              yellow,
-            );
+            for(let segment=0;segment<20;segment++) {
+              if ((segment + Math.floor(t)) % 7 === 0) continue;
+              const along=(segment-9.5)*.185;
+              box([x+(vertical?offset:along),y+(vertical?along:offset),z+.075],
+                vertical?[.1,.18,.008]:[.18,.1,.008],yellow);
+            }
           }
         // Sidewalk joints and low curb stones, with flush driveable road intersections.
         for (let t = 0; t < length; t += 2.5)
@@ -168,6 +175,7 @@ export function buildEnvironment(scene: THREE.Scene, manifest: SceneManifest) {
           }
       }
     roadDetail(scene, manifest);
+    plantVerges(scene, manifest);
     instantiateStatic(scene, [...manifest.houses, ...manifest.props]);
     for (const b of manifest.barriers.filter((b) =>
       b.id?.startsWith("boundary"),

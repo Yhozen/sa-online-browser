@@ -13,11 +13,11 @@ export function createRenderer(): WebGLRenderer {
     // Use the same context for the check and renderer: a separate probe
     // would allocate another GPU context and could pass while this one fails.
     const context = canvas.getContext("webgl2", {
-      antialias: true,
+      antialias: false,
       alpha: false,
     });
     if (!context) throw new Error(reason);
-    return new WebGLRenderer({ canvas, context, antialias: true });
+    return new WebGLRenderer({ canvas, context, antialias: false });
   } catch (error) {
     throw new GraphicsUnavailableError(
       error instanceof Error ? error.message : reason,

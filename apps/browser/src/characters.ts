@@ -24,7 +24,7 @@ export function createCharacter(variant = 0) {
       const replaced = list.map((m) => {
         if (m.name !== "outfit") return m;
         const c = (m as THREE.MeshStandardMaterial).clone();
-        c.color.set(variant % 2 ? 0xa95032 : 0x2d7774);
+        c.color.set(variant % 2 ? 0x8f4931 : 0x2d7774);
         outfit.push(c);
         return c;
       });
@@ -98,7 +98,9 @@ export function createCar() {
 export function animateCar(group: THREE.Group, velocity: number[], dt: number) {
   const distance = Math.hypot(velocity[0], velocity[1]) * dt;
   group.traverse((o) => {
-    if (o.name.startsWith("wheel") || o.name.startsWith("hub"))
-      o.rotateY(distance / 0.41);
+    // glTF converts the authored Blender axle to local Z. Only complete
+    // assemblies rotate; wheel-well liners are fixed parts of the body.
+    if (/^wheel_(left|right)_\d+$/.test(o.name))
+      o.rotateZ(distance / 0.41);
   });
 }

@@ -4,7 +4,7 @@ import type { CollisionIndex } from "./collision";
 export class FollowCamera {
   yaw = 0;
   pitch = 0.25;
-  distance = 6.6;
+  distance = 6.0;
   obstruction = 1;
   private dragging = false;
   private lastOrbit = 0;
@@ -76,9 +76,9 @@ export class FollowCamera {
     const target = new THREE.Vector3(
         position[0],
         position[1],
-        position[2] + 0.55,
+        position[2] + 0.75,
       ),
-      d = this.distance + (driving ? 2 : 0);
+      d = this.distance + (driving ? 1.8 : 0);
     const desired = target
       .clone()
       .add(
