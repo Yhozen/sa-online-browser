@@ -4,9 +4,9 @@ A cloud-local browser multiplayer prototype: two players walk, chat, and drive a
 
 The browser renders and simulates locally. A Node WebSocket gateway starts one native C++ protocol worker per browser. All peer gameplay travels through the real upstream UDP server; the gateway does not broadcast gameplay between browsers.
 
-![Arroyo running in cloud Chrome](docs/images/neighborhood-street.png)
+![Arroyo running in cloud Chrome](docs/images/visual-street.png)
 
-The image above is an actual Standard-mode cloud desktop capture. In-engine screenshots and measured results are recorded in [the neighborhood result record](docs/neighborhood-results.md); the original [concept reference](assets/reference/arroyo-concept.png) remains part of the editable asset record.
+The image above is an actual Standard-mode cloud desktop capture. The [visual upgrade record](docs/visual-upgrade-results.md) distinguishes tested behavior from the remaining art target; [earlier neighborhood results](docs/neighborhood-results.md) are historical. The original [concept reference](assets/reference/arroyo-concept.png) remains part of the editable asset record.
 
 ## Run
 
@@ -58,7 +58,7 @@ For the actual cloud desktop, start `dev:poc` with no other players, then run `n
 
 ## Scope and project record
 
-This demonstrates a narrow browser/open.mp protocol subset with an original stylized neighborhood. Original GTA clients, original SA-MP servers, arbitrary public servers, GTA assets, combat, realistic physics, WAN hosting, and hardware GPU performance are not verified. Software WebGL rendering is functional evidence only.
+This demonstrates a narrow browser/open.mp protocol subset with an original neighborhood. Original GTA clients, original SA-MP servers, arbitrary public servers, GTA assets, combat, realistic physics, WAN hosting, and hardware GPU performance are not verified. Software WebGL rendering is functional evidence only.
 
 - [Accepted PoC specification](docs/poc-plan.md) and [scope decision](docs/decisions/0002-placeholder-poc.md)
 - [Current status and continuation](docs/status.md)
@@ -72,14 +72,14 @@ Original PoC code is **GPL-3.0-or-later**. Preserve [third-party licenses and no
 
 `npm run dev:poc` selects Arroyo by default. `POC_SCENE=yard npm run dev:poc` retains the original test yard. Scene selection is a server setting; browsers load the selected manifest before joining. A stale manifest or asset hash produces an explicit loading/join error. Restart the demo after changing manifests or exports.
 
-Use **Low graphics** in the cloud desktop. Both presets render at the full viewport resolution and native device pixel density, without a resolution cap or automatic downscaling. Low uses baked vertex shading and simplified fence wires; **Standard** uses PBR materials and soft shadow maps. The software-rendering target is 4 FPS for two cloud views; report slower results without reducing resolution. Hardware GPU performance is measured separately. The minimap shows north, players and the car; chat collapses through its heading, and the top-right diagnostics button reveals protocol details. Keep each player tab visible in its own window.
+**Standard is the default for new installations**; explicitly saved preferences are preserved. **Low** remains an optional fallback. Both presets render at the full viewport resolution and native device pixel density, without a resolution cap or automatic downscaling. Low uses baked vertex shading and simplified fence wires; **Standard** uses physical materials, cached neighborhood reflections, contact shading, and soft shadow maps. The software-rendering target is 4 FPS for two cloud views; report slower results without reducing resolution. Measured hardware GPU performance remains unverified; cloud measurements are not estimates of it. The minimap shows north, players and the car; chat collapses through its heading, and the top-right diagnostics button reveals protocol details. Keep each player tab visible in its own window.
 
 ```sh
-npm run build:assets                 # installs pinned Blender 4.5.13 in .runtime if absent
+npm run build:assets                 # pinned Blender 4.5.13 exports + static reflection bake
 node tools/create-scenes.mjs          # regenerate the committed layout manifests
 npm run build:browser
 ```
 
-Normal `setup:poc` consumes committed GLBs and image inputs; it does not install Blender or call an image service. Edit `tools/assets/build.py` to regenerate the kit, or inspect the editable `assets/source/*.blend` files. The script is the authoritative source; rebuilding replaces those .blend exports. Geometry is modeled in meters, Z-up and +Y forward, normalized once after glTF loading. Texture inputs, prompts, licenses and source pins are in [asset provenance](assets/PROVENANCE.md). The imagegen authoring skill is included under `.agents/skills/imagegen` with its own license.
+Normal `setup:poc` consumes committed GLBs and image inputs; it does not install Blender or call an image service. Edit `tools/assets/build.py`, `environment-kit.py`, and `heroes.py` to regenerate the kit, or inspect the editable `assets/source/*.blend` files. The scripts are authoritative; rebuilding replaces those .blend exports. The reflection bake uses installed pinned Chromium without player connections, saves a lossless RGBA16F atlas and provenance under `assets/source/reflection-bake.json`, and refreshes the asset inventory and browser build. Geometry is modeled in meters, Z-up and +Y forward, normalized once after glTF loading. Texture inputs, prompts, licenses and source pins are in [asset provenance](assets/PROVENANCE.md). The imagegen authoring skill is included under `.agents/skills/imagegen` with its own license.
 
 The [accepted plan](docs/neighborhood-plan.md) defines the current scope. Next: a shared checkpoint driving challenge, then private remote invitations and latency testing, then an original GTA/SA-MP interoperability slice. Arroyo's custom map does not establish native GTA world compatibility.
