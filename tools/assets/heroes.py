@@ -133,15 +133,14 @@ def rounded_panel(name, points, mat, thickness=.008, bevel=.008):
 
 
 start()
-# Central body has 45 cross sections. Shoulder crease and lower sill surfaces
-# are modeled independently so tires occupy actual openings rather than
-# intersecting a cuboid chassis.
+# Exterior sheet geometry follows a dense continuous longitudinal profile.
+# The wheel arches are real openings and the glasshouse shares its boundaries.
 profiles = [
-    (-2.20, .72, -.29), (-2.12, .835, -.235), (-1.92, .905, -.18),
-    (-1.58, .93, -.14), (-1.28, .914, -.12), (-.90, .89, -.12),
+    (-2.20, .80, -.29), (-2.12, .835, -.235), (-1.92, .905, -.18),
+    (-1.58, .951, -.14), (-1.28, .914, -.12), (-.90, .89, -.12),
     (-.25, .89, -.14), (.45, .89, -.15), (.95, .914, -.16),
-    (1.38, .93, -.18), (1.78, .898, -.22), (2.04, .85, -.26),
-    (2.20, .72, -.295),
+    (1.38, .954, -.18), (1.78, .898, -.22), (2.04, .85, -.26),
+    (2.20, .80, -.295),
 ]
 
 
@@ -185,25 +184,8 @@ def body_profile(y):
 
 
 def sheet_height(x,y):
-    width=body_profile(y)[0]-.065
-    return sheet_center(y)-.008*(x/width)**2
-
-
-def sheet_normal(x,y):
-    epsilon=.0001
-    dx=(sheet_height(x+epsilon,y)-sheet_height(x-epsilon,y))/(2*epsilon)
-    dy=(sheet_height(x,min(2.2,y+epsilon))-sheet_height(x,max(-2.2,y-epsilon)))/(min(2.2,y+epsilon)-max(-2.2,y-epsilon))
-    return Vector((-dx,-dy,1)).normalized()
-
-
-def set_sheet_normals(o,edge_only=False):
-    # Preserve one analytic tangent across the separately editable hood/quarter
-    # boundary. Other side rows retain their rolled-shoulder and door normals.
-    normals=[]
-    for vertex in o.data.vertices:
-        normals.append(sheet_normal(vertex.co.x,vertex.co.y) if not edge_only or vertex.index%6==0 else vertex.normal.copy())
-    o.data.normals_split_custom_set_from_vertices(normals)
-    return o
+    width=body_profile(y)[0]-.115
+    return sheet_center(y)-.014*(x/width)**2
 
 
 def arch_bottom(y):
@@ -214,81 +196,91 @@ def arch_bottom(y):
     return -.74
 
 
-ys = sorted(set([round(-2.2 + i * .025, 4) for i in range(177)] +
-                [round(wy + math.cos(i * math.pi / 32) * .445, 4)
-                 for wy in [-1.38, 1.38] for i in range(33)]))
-for sign in [-1, 1]:
-    verts = []; faces = []
-    for y in ys:
-        width, top = body_profile(y); low = arch_bottom(y)
-        # Six tightly controlled rows retain the shoulder crease, then a
-        # largely planar door skin. Extra rows avoid interpolating one swollen
-        # normal across the full door height.
-        shoulder = top
-        verts += [(sign*(width-.065),y,shoulder+.004),
-                  (sign*(width-.006),y,shoulder),
-                  (sign*width,y,shoulder*.88+low*.12),
-                  (sign*width,y,shoulder*.40+low*.60),
-                  (sign*(width-.008),y,shoulder*.12+low*.88),
-                  (sign*(width-.015),y,low)]
+# One welded exterior shell: a shallow crowned hood/deck rolls into a
+# continuously shaped fender shoulder. Wheel arches cut actual openings.
+body_shells=[]
+ys=sorted(set([round(-2.2+i*.025,6) for i in range(177)]+[.82,-1.205]+
+ [round(wy+math.cos(i*math.pi/48)*.445,6) for wy in [-1.38,1.38] for i in range(49)]))
+def shell_row(y,sign):
+    w,_=body_profile(y);edge=sheet_height(w-.115,y);low=arch_bottom(y)
+    # A real 115mm rolled shoulder replaces the former near-vertical plate.
+    # Lower door skin has one subtle concavity rather than a balloon section.
+    upper=[(w-.115,edge),(w-.075,edge-.003),(w-.035,edge-.014),
+      (w-.008,edge-.036),(w,edge-.061)]
+    shoulder_z=upper[-1][1]
+    lower=[(w-.003,shoulder_z*.80+low*.20),(w-.011,shoulder_z*.50+low*.50),
+      (w-.016,shoulder_z*.22+low*.78),(w-.018,low)]
+    # At arch apices only the narrow folded sheet above the wheel remains.
+    # Remap vertical depth monotonically to avoid self-intersections.
+    if low>shoulder_z-.015:
+        upper=[(x,edge+(low-edge)*i/12) for i,(x,z) in enumerate(upper)]
+        shoulder_z=upper[-1][1]
+        lower=[(w-.003,shoulder_z*.80+low*.20),(w-.011,shoulder_z*.50+low*.50),
+          (w-.016,shoulder_z*.22+low*.78),(w-.018,low)]
+    return [(sign*x,y,z) for x,z in upper+lower]
+for sign in [-1,1]:
+    verts=[p for y in ys for p in shell_row(y,sign)];faces=[]
     for j in range(len(ys)-1):
-        for k in range(5):
-            ids=(j*6+k,j*6+k+1,(j+1)*6+k+1,(j+1)*6+k)
+        for k in range(8):
+            ids=(j*9+k,j*9+k+1,(j+1)*9+k+1,(j+1)*9+k)
             faces.append(ids if sign>0 else tuple(reversed(ids)))
-    shell = set_sheet_normals(smooth(mesh('sculpted quarter and door', verts, faces, paint)),edge_only=True)
-    for wy in [-1.38, 1.38]:
-        lip = []
-        for i in range(41):
-            a = i * math.pi / 40
-            y = wy + math.cos(a) * .445
-            lip.append((sign * (body_profile(y)[0]+.009), y, -.59+math.sin(a)*.445))
-        tube('rolled wheel arch', lip, .011, paint, 8)
-        # Dark inner wheel well around the open arch; it catches real shadows.
-        verts = []
-        for p in lip:
-            verts += [p, (p[0]-sign*.16, p[1], p[2]-.015)]
-        smooth(mesh('wheel well', verts, [(i*2,i*2+1,i*2+3,i*2+2) for i in range(40)], dark))
-    # Slightly inset swept side skirt between wheel openings.
-    ring_mesh('side skirt', [((sign*.865,y,-.70),w,d) for y,w,d in
-              [(-.92,.025,.035),(-.82,.055,.055),(.80,.055,.055),(.92,.025,.035)]], paint, 'y', 12)
+    body_shells.append(smooth(mesh('continuous stamped side skin',verts,faces,paint)))
+    for wy in [-1.38,1.38]:
+        points=[]
+        for i in range(65):
+            a=i*math.pi/64;y=wy+math.cos(a)*.445;z=-.59+math.sin(a)*.445
+            x=sign*(body_profile(y)[0]-.018)
+            points.extend([(x,y,z),(x-sign*.032,y,z-.004),(x-sign*.160,y,z-.030)])
+        # Folded arch return has a narrow painted edge and a black inner liner.
+        smooth(mesh('folded wheel arch return',points,[(i*3,i*3+1,i*3+4,i*3+3) if sign>0 else (i*3+3,i*3+4,i*3+1,i*3) for i in range(64)],paint))
+        smooth(mesh('deep wheel arch liner',points,[(i*3+1,i*3+2,i*3+5,i*3+4) if sign>0 else (i*3+4,i*3+5,i*3+2,i*3+1) for i in range(64)],dark))
+    # Formed flat rocker with a rolled edge, not a tube along the door.
+    verts=[]
+    for y,end in [(-.925,.02),(-.83,0),(.83,0),(.925,.02)]:
+        for x,z in [(.837,-.653),(.899-end,-.680),(.905-end,-.712),(.865-end,-.735)]:verts.append((sign*x,y,z))
+    fs=[(j*4+i,j*4+i+1,(j+1)*4+i+1,(j+1)*4+i) for j in range(3) for i in range(3)]
+    smooth(mesh('formed rocker panel',verts,fs if sign>0 else [tuple(reversed(f)) for f in fs],paint))
 
-
-def body_top(name, y0, y1, rows):
-    verts = []; faces = []
-    for j in range(rows+1):
-        y = y0 + (y1-y0)*j/rows
-        w,z = body_profile(y)
-        for i in range(17):
-            x = (i/8-1)*(w-.065)
-            # A single shallow cross-crown, with analytic continuous normals.
-            # No wheel-radius maxima or repeated raised swage ridges enter here.
-            zc=sheet_height(x,y)
-            verts.append((x,y,zc))
-    for j in range(rows):
-        for i in range(16):
-            a=j*17+i;faces.append((a,a+1,a+18,a+17))
-    return set_sheet_normals(smooth(mesh(name, verts, faces, paint)))
-
-body_top('sculpted hood', .82, 2.2, 72)
-body_top('rear deck', -2.2, -1.205, 64)
-# The rear deck terminates at the glazing sill instead of passing through the
-# lower pane. A narrow painted flange closes the gap without coplanar overlap.
-sill_vertices=[]
-for i in range(17):
-    nx=i/8-1;x=nx*.79;w,z=body_profile(-1.205)
-    deck_z=sheet_height(x,-1.205)
-    sill_vertices.extend([(x,-1.205,deck_z),(x,-1.17-.028*(1-nx*nx),-.105+.014*(1-nx*nx))])
-smooth(mesh('rear glass sill flange',sill_vertices,[(i*2,i*2+2,i*2+3,i*2+1) for i in range(16)],paint))
-ring_mesh('integrated rear lip', [((0,y,z),w,d) for y,z,w,d in [(-2.05,sheet_center(-2.05)+.013,.80,.019),(-1.98,sheet_center(-1.98)+.023,.87,.027),(-1.91,sheet_center(-1.91)+.014,.87,.020)]],paint,'y',28)
+def body_top(name,y0,y1):
+    rows=[y for y in ys if y0<=y<=y1];verts=[]
+    for y in rows:
+        w,_=body_profile(y)
+        for i in range(33):
+            x=(i/16-1)*(w-.115);verts.append((x,y,sheet_height(x,y)))
+    fs=[(j*33+i,j*33+i+1,(j+1)*33+i+1,(j+1)*33+i) for j in range(len(rows)-1) for i in range(32)]
+    o=smooth(mesh(name,verts,fs,paint));body_shells.append(o);return o
+body_top('formed hood skin',.82,2.2)
+body_top('formed rear deck',-2.2,-1.205)
+# Weld matching side/hood vertices to produce actual continuous shared normals.
+bpy.ops.object.select_all(action='DESELECT')
+for o in body_shells:o.select_set(True)
+bpy.context.view_layer.objects.active=body_shells[0];bpy.ops.object.join()
+body_shell=body_shells[0];body_shell.name='welded exterior sheet metal'
+bpy.ops.object.mode_set(mode='EDIT');bpy.ops.mesh.select_all(action='SELECT')
+bpy.ops.mesh.remove_doubles(threshold=.00002);bpy.ops.mesh.normals_make_consistent(inside=False)
+bpy.ops.object.mode_set(mode='OBJECT')
+# Precise rear sill closes the glazing base to the deck boundary.
+sv=[]
+for i in range(33):
+    nx=i/16-1;x=nx*.79;sv.extend([(x,-1.205,sheet_height(x,-1.205)),
+      (x,-1.17-.020*(1-nx*nx),-.105+.014*(1-nx*nx))])
+smooth(mesh('rear glass sill flange',sv,[(i*2,i*2+2,i*2+3,i*2+1) for i in range(32)],paint))
+# Integrated deck trailing lip is a formed shallow blade, not an inflated ring.
+sv=[]
+for y,h in [(-2.12,.008),(-2.085,.027),(-2.05,.018)]:
+    w=body_profile(y)[0]-.04
+    for i in range(33):
+        x=(i/16-1)*w;sv.append((x,y,sheet_height(x,y)+h))
+smooth(mesh('formed deck trailing lip',sv,[(j*33+i,j*33+i+1,(j+1)*33+i+1,(j+1)*33+i) for j in range(2) for i in range(32)],paint))
 for side in [-1,1]:
     # Continuous painted belt shoulder connects the fitted glass sill to
     # the main door skin, eliminating an open dark slot under the side window.
     belt_vertices=[]
     for j in range(25):
         t=j/24;y=-1.035+1.875*t
-        w,z=body_profile(y);edge=sheet_height(w-.065,y)
+        w,z=body_profile(y);edge=sheet_height(w-.115,y)
         belt_vertices.extend([(side*(.78+.02*t),y,-.065-.01*t),
-                              (side*(w-.065),y,edge)])
+                              (side*(w-.115),y,edge)])
     belt_faces=[(j*2,j*2+1,j*2+3,j*2+2) for j in range(24)]
     smooth(mesh('continuous door belt',belt_vertices,
         belt_faces if side>0 else [tuple(reversed(f)) for f in belt_faces],paint))
@@ -302,12 +294,16 @@ for side in [-1,1]:
 
 # Front and rear fascias follow the outline of the continuous shell.
 for y, facing in [(2.15,1),(-2.15,-1)]:
-    top = -.245 if facing > 0 else -.24
-    py=y-facing*.06
-    panel=[(-.78,py,top),(.78,py,top),(.83,py,-.46),(.75,py,-.69),(-.75,py,-.69),(-.83,py,-.46)]
-    rounded_panel('continuous fascia',panel if facing<0 else list(reversed(panel)),paint,.044,.025)
-    ring_mesh('curved bumper',[((0,y+facing*t,z),w,d) for t,z,w,d in
-              [(-.052,-.56,.824,.104),(0,-.55,.814,.116),(.038,-.55,.746,.088)]],paint,'y',28)
+    # End cover uses exactly the same outer ring as the side shell: each
+    # stamped return meets the hood, shoulder and lower side without gaps.
+    ring=shell_row(facing*2.20,1);verts=[]
+    for row,(width,_,z) in enumerate(ring):
+        for i in range(49):
+            nx=i/24-1;bow=.018*(1-nx*nx)
+            verts.append((nx*width,facing*(2.20-bow),z+.014*(1-nx*nx)*(1-row/8)))
+    fs=[(j*49+i,j*49+i+1,(j+1)*49+i+1,(j+1)*49+i) for j in range(8) for i in range(48)]
+    smooth(mesh('continuous fitted end cover',verts,fs if facing>0 else [tuple(reversed(f)) for f in fs],paint))
+    box('lower impact strip',(0,facing*2.210,-.626),(1.34,.028,.028),dark,.009)
     box('lower grille',(0,y+facing*.066,-.56),(.94,.018,.115),dark,.04)
     for i in (range(-6,7) if facing > 0 else [-5,0,5]):
         box('grille blades',(i*.064,y+facing*.08,-.56),(.016,.012,.09),brake,.004)
@@ -319,11 +315,11 @@ for side in [-1,1]:
     # Recessed smoked surround, twin projector optics and narrow running strip.
     x=side*.59
     ring_mesh('headlamp housing',[((x,y,z),w,d) for y,z,w,d in
-               [(2.074,-.32,.24,.077),(2.135,-.335,.205,.057)]],dark,'y',20)
+               [(2.140,-.32,.24,.077),(2.201,-.335,.205,.057)]],dark,'y',20)
     for dx in [-.093,.072]:
-        cyl('projector surround',(x+dx,2.137,-.33),(x+dx,2.147,-.33),.050,chrome,20)
-        sphere('projector lens',(x+dx,2.153,-.33),(.038,.018,.038),lampglass,16,8)
-    box('running light',(x,2.145,-.285),(.30,.012,.012),white,.006)
+        cyl('projector surround',(x+dx,2.203,-.33),(x+dx,2.213,-.33),.050,chrome,20)
+        sphere('projector lens',(x+dx,2.219,-.33),(.038,.018,.038),lampglass,16,8)
+    box('running light',(x,2.211,-.285),(.30,.012,.012),white,.006)
     # Keep the complete fitted light assembly beyond the fascia at y=-2.20.
     # Lens / optic layering uses explicit 8–10 mm clearance, avoiding z fighting.
     box('tail smoked surround',(side*.60,-2.219,-.305),(.45,.018,.105),dark,.025)
@@ -333,46 +329,95 @@ for side in [-1,1]:
     cyl('exhaust metal',(side*.60,-2.15,-.70),(side*.60,-2.28,-.70),.055,chrome,16)
     cyl('exhaust dark bore',(side*.60,-2.283,-.70),(side*.60,-2.287,-.70),.043,dark,16)
 
-# Glasshouse: closed compound-curved roof, thin A pillars and broad haunches.
-# A continuous thin roof skin meets both glass grids exactly; no pillow/visor cap.
-roof_rows=[(-.68,.598,.419),(-.51,.637,.467),(-.28,.657,.49),(.02,.656,.49),(.25,.637,.465),(.42,.607,.413)]
-roof_vertices=[]
-for y,w,z in roof_rows:
-    for i in range(25):
-        nx=i/12-1;roof_vertices.append((nx*w,y,z+.022*(1-nx*nx)))
-roof_faces=[]
-for j in range(len(roof_rows)-1):
-    for i in range(24):
-        k=j*25+i;roof_faces.append((k,k+1,k+26,k+25))
-roof_skin=smooth(mesh('continuous roof skin',roof_vertices,roof_faces,paint))
-mod=roof_skin.modifiers.new('roof sheet thickness','SOLIDIFY');mod.thickness=.022
+# Glasshouse is authored from shared boundaries. Roof, glazing and stamped
+# pillar patches share every edge; no freestanding tubes or visor overhang.
+def car_interp(profile,y):
+    for j,(a,b) in enumerate(zip(profile,profile[1:])):
+        if a[0]<=y<=b[0]:
+            h=b[0]-a[0];t=(y-a[0])/h;out=[]
+            for k in range(1,len(a)):
+                def slope(index):
+                    if index==0:return (profile[1][k]-profile[0][k])/(profile[1][0]-profile[0][0])
+                    if index==len(profile)-1:return (profile[-1][k]-profile[-2][k])/(profile[-1][0]-profile[-2][0])
+                    p,q,r=profile[index-1:index+2];dl=(q[k]-p[k])/(q[0]-p[0]);dr=(r[k]-q[k])/(r[0]-q[0]);return 2*dl*dr/(dl+dr) if dl*dr>0 else 0
+                out.append((2*t**3-3*t*t+1)*a[k]+(t**3-2*t*t+t)*h*slope(j)+(-2*t**3+3*t*t)*b[k]+(t**3-t*t)*h*slope(j+1))
+            return out
+    return profile[0][1:] if y<profile[0][0] else profile[-1][1:]
+roof_profile=[(-.68,.598,.419),(-.51,.637,.467),(-.28,.657,.490),(.02,.656,.490),(.25,.637,.465),(.42,.607,.413)]
+def roof_edge(y,side):
+    w,z=car_interp(roof_profile,y);return Vector((side*w,y,z))
+def roof_point(y,u):
+    w,z=car_interp(roof_profile,y);return Vector((u*w,y,z+.022*(1-u*u)))
+verts=[]
+ry=sorted(set([-.68+i*1.10/64 for i in range(65)]+[-.51,-.28,.02,.25,.42]))
+for y in ry:
+    for i in range(33):verts.append(roof_point(y,i/16-1))
+faces=[(j*33+i,j*33+i+1,(j+1)*33+i+1,(j+1)*33+i) for j in range(len(ry)-1) for i in range(32)]
+roof_skin=smooth(mesh('fitted compound roof sheet',verts,faces,paint))
+mod=roof_skin.modifiers.new('inward roof skin','SOLIDIFY');mod.thickness=.022
 bpy.context.view_layer.objects.active=roof_skin;bpy.ops.object.modifier_apply(modifier=mod.name)
+
+def patch(name,left,right,mat,reverse=False,rows=32,columns=6,bulge=0):
+    verts=[]
+    for j in range(rows+1):
+        t=j/rows;a=Vector(left(t));b=Vector(right(t))
+        for i in range(columns+1):
+            u=i/columns;p=a.lerp(b,u)
+            p.x+= (1 if p.x>0 else -1)*bulge*math.sin(u*math.pi)*math.sin(t*math.pi)
+            verts.append(p)
+    fs=[]
+    for j in range(rows):
+        for i in range(columns):
+            q=j*(columns+1)+i;f=(q,q+1,q+columns+2,q+columns+1);fs.append(tuple(reversed(f)) if reverse else f)
+    return smooth(mesh(name,verts,fs,mat))
+
+def glazing(name,bottom_y,bottom_z,bottom_w,top_y,front):
+    def point(t,u):
+        base=Vector((u*bottom_w,bottom_y+(.032 if front else -.020)*(1-u*u),bottom_z+.014*(1-u*u)))
+        top=roof_point(top_y,u);p=base.lerp(top,t)
+        p.y+=(.012 if front else -.010)*math.sin(t*math.pi)*(1-u*u)
+        return p
+    # Frit is assigned to boundary polygons in the same surface, never a
+    # coplanar overlay. This removes a source of glass-edge depth fighting.
+    cols=64;rows=40
+    verts=[point(j/rows,i/cols*2-1) for j in range(rows+1) for i in range(cols+1)]
+    fs=[(j*(cols+1)+i,j*(cols+1)+i+1,(j+1)*(cols+1)+i+1,(j+1)*(cols+1)+i) for j in range(rows) for i in range(cols)]
+    pane=smooth(mesh(name,verts,[tuple(reversed(f)) for f in fs] if front else fs,glass))
+    pane.data.materials.append(dark)
+    for j in range(rows):
+        for i in range(cols):
+            if j in [0,rows-1] or i in [0,cols-1]:pane.data.polygons[j*cols+i].material_index=1
+    return point
+front_glass=glazing('fitted windshield',.91,-.105,.78,.42,True)
+rear_glass=glazing('fitted rear glass',-1.17,-.105,.79,-.68,False)
 for side in [-1,1]:
-    formed_pillar('formed A pillar',[(side*.81,.91,-.13),(side*.76,.75,.08),(side*.66,.42,.39),(side*.58,.33,.47)],.036,.019,paint)
-    formed_pillar('formed C pillar',[(side*.84,-1.19,-.12),(side*.78,-1.05,.15),(side*.64,-.75,.43),(side*.57,-.62,.48)],.055,.021,paint)
-    window=[(side*.80,.84,-.075),(side*.65,.36,.424),(side*.64,-.62,.427),(side*.78,-1.035,-.065)]
-    rounded_panel('clear side glazing',window if side > 0 else list(reversed(window)),glass,.003,0)
-    tube('rubber window seal',window,.0105,dark,8,True)
-    tube('polished belt trim',[(side*.83,.87,-.095),(side*.85,-1.09,-.09)],.009,chrome)
-    tube('rear quarter divider',[(side*.69,-.62,.413),(side*.79,-.63,-.07)],.0135,paint)
-    # Sculpted side mirror with reflective front face.
+    def side_top(t):
+        p=roof_edge(-.57+.87*t,side);p.x-=side*.006;p.z-=.035;return p
+    def side_bottom(t):return Vector((side*(.790+.010*t),-1.01+1.80*t,-.065-.010*t))
+    # Single convex side pane ends at the exact stamped pillar edges.
+    patch('fitted side glazing',side_bottom,side_top,glass,reverse=side<0,rows=40,columns=8,bulge=.005)
+    patch('stamped roof side rail',side_top,lambda t:roof_edge(-.57+.87*t,side),paint,reverse=side<0,rows=40,columns=3)
+    # A/C pillars are broad curved sheet patches sharing the glass boundary.
+    patch('continuous A pillar',lambda t:front_glass(t,side),lambda t:side_bottom(1).lerp(side_top(1),t),paint,reverse=side>0,rows=24,columns=8,bulge=.003)
+    patch('continuous C pillar',lambda t:side_bottom(0).lerp(side_top(0),t),lambda t:rear_glass(t,side),paint,reverse=side>0,rows=24,columns=10,bulge=.007)
+    # Close each rail's corner to the roof edge, a missing surface previously.
+    patch('A pillar roof corner',lambda t:side_top(1).lerp(front_glass(1,side),t),lambda t:roof_edge(.30+.12*t,side),paint,reverse=side<0,rows=10,columns=3)
+    patch('C pillar roof corner',lambda t:rear_glass(1,side).lerp(side_top(0),t),lambda t:roof_edge(-.68+.11*t,side),paint,reverse=side<0,rows=10,columns=3)
+    # A flat 8mm sill seal gives a clean termination at the door belt.
+    patch('flat side sill seal',side_bottom,lambda t:side_bottom(t)+Vector((side*.001,0,.008)),dark,reverse=side<0,rows=40,columns=1)
+    # Shallow formed quarter divider, kept within the pane and painted body.
+    q=.23
+    patch('flat quarter divider',lambda t:side_bottom(q-.006).lerp(side_top(q-.006),t),lambda t:side_bottom(q+.006).lerp(side_top(q+.006),t),paint,reverse=side<0,rows=24,columns=1)
+    # Existing mirror bounds are intentionally preserved.
     ring_mesh('mirror shell',[((side*x,y,z),w,d) for x,y,z,w,d in
        [(.81,.57,.04,.045,.023),(.99,.55,.068,.13,.061),(1.045,.44,.07,.11,.055)]],paint,'y',16)
     rounded_panel('mirror reflection',[(side*.95,.418,.027),(side*1.15,.418,.04),(side*1.14,.421,.106),(side*.95,.427,.115)],chrome,.004,.01)
-# Bowed windshield and rear window grids, with per-row curvature.
-for name, rows in [('windshield',[(.91,-.105,.78),(.77,.077,.735),(.61,.245,.686),(.42,.413,.607)]),
-                   ('rear glazing',[(-1.17,-.105,.79),(-1.03,.085,.741),(-.87,.282,.669),(-.68,.419,.598)])]:
-    verts=[]
-    for y,z,w in rows:
-        for i in range(17):
-            nx=i/8-1;verts.append((nx*w,y+(1-nx*nx)*(.045 if y>0 else -.028),z+.014*(1-nx*nx)))
-    faces=[(j*17+i,j*17+i+1,(j+1)*17+i+1,(j+1)*17+i) for j in range(3) for i in range(16)]
-    smooth(mesh(name,verts,[tuple(reversed(f)) for f in faces] if name == 'windshield' else faces,glass))
-    for j in [0,3]:tube('glazing lower seal',verts[j*17:j*17+17],.012,dark)
-# Wipers rest naturally at the lower windshield edge.
-for x in [-.36,.18]:
-    tube('wiper arm',[(x,.865,-.065),(x+.12,.813,.019),(x+.27,.785,.043)],.007,dark,6)
-    tube('wiper blade',[(x+.04,.811,.022),(x+.40,.769,.049)],.008,dark,6)
+# Wipers lie flush to the exact lower glazing surface.
+for center in [-.38,.25]:
+    points=[]
+    for i in range(9):
+        p=front_glass(.065,center-.19+i*.38/8);p.y+=.004;points.append(p)
+    formed_pillar('flat wiper blade',points,.010,.007,dark)
 
 # Finished cabin and two generous seat openings. Mesh origin conventions are
 # unchanged, including the invariant floor and ceiling inspection anchors.

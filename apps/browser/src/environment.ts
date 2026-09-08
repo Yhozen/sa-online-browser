@@ -180,7 +180,7 @@ export function buildEnvironment(scene: THREE.Scene, manifest: SceneManifest) {
           }
       }
     roadDetail(scene, manifest);
-    plantVerges(scene, manifest);
+    plantVerges(scene, manifest, surfaceMaterials.get("grass"));
     instantiateStatic(scene, [...manifest.houses, ...manifest.props]);
     for (const b of manifest.barriers.filter((b) =>
       b.id?.startsWith("boundary"),

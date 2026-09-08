@@ -88,7 +88,7 @@ export async function loadAssets(
               THREE.MeshStandardMaterial.prototype.copy.call(physical, m);
               physical.defines = { STANDARD: "", PHYSICAL: "" };
               physical.clearcoat = 1; physical.clearcoatRoughness = .12; physical.envMapIntensity = 1.3;
-              physical.metalness = .45; physical.roughness = .22; physical.color.set(0x193d5a);
+              physical.metalness = .45; physical.roughness = .22; physical.color.set(0x233d50);
               canonical.set(m.name, physical); m.dispose();
             } else canonical.set(m.name, m);
           }
@@ -128,10 +128,12 @@ export async function loadAssets(
   ] as const) {
     const bitmap = await textureInput(file);
     for (const [i, name] of slots.entries()) {
-      const size = name === "asphalt" ? 1024 : 512;
+      // The dedicated road input below replaces this atlas quadrant. Avoid
+      // allocating a second, unused set of asphalt maps and counting it as live.
+      if (name === "asphalt") continue;
+      const size = 512;
       const maps = surfaceTexture(bitmap, i, size);
       const material = new THREE.MeshStandardMaterial({ ...maps, roughness: .95, normalScale: new THREE.Vector2(.45, .45) });
-      if (name === "asphalt") { material.color.set(0xb1b1aa); material.roughness = .88; }
       if (name === "grass") material.color.set(0xabb787);
       if (name === "concrete") material.color.set(0xded8c8);
       surfaceMaterials.set(name, material);
@@ -149,12 +151,15 @@ export async function loadAssets(
     }
     bitmap.close();
   }
-  // A 12m authored material carries connected repair/crack structure at street scale.
+  // The original 12m road study is displayed over 9.6m to bring aggregate and
+  // fissures toward street scale while retaining its connected repair structure.
   const asphaltInput = await textureInput("arroyo-asphalt.png");
   const asphaltMaps = surfaceTexture(asphaltInput, -1, 1254);
-  for (const texture of Object.values(asphaltMaps)) texture.repeat.setScalar(1 / 3);
-  Object.assign(surfaceMaterials.get("asphalt")!, asphaltMaps);
-  surfaceMaterials.get("asphalt")!.normalScale.set(.55, .55);
+  for (const texture of Object.values(asphaltMaps)) texture.repeat.setScalar(1 / 2.4);
+  surfaceMaterials.set("asphalt", new THREE.MeshStandardMaterial({
+    name:"asphalt", ...asphaltMaps, color:0xb1b1aa, roughness:.88,
+    normalScale:new THREE.Vector2(.4, .4),
+  }));
   assetStats.textureBytes += 1254 * 1254 * 4 * 4 / 3 * 3;
   asphaltInput.close();
   const leaves = await textureInput("arroyo-foliage.png");

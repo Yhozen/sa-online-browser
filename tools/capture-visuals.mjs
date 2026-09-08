@@ -13,20 +13,37 @@ try {
   await reserve.addInitScript(()=>localStorage.setItem('poc-quality','low'));
   await reserve.goto('http://127.0.0.1:3000');
   await reserve.getByTestId('nickname').fill('DreamReference');
-  await reserve.getByTestId('join').click({timeout:60000});
+  await reserve.getByTestId('join').click({timeout:180000});
   await reserve.waitForFunction(()=>window.__poc.self.spawned);
   await context.tracing.start({screenshots:true,snapshots:true});
   const page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));page.on('console',message=>{if(message.type()==='error' && /THREE|WebGL|shader/i.test(message.text()))errors.push(message.text())});
   await page.goto('http://127.0.0.1:3000');
   await page.getByTestId('join').waitFor({state:'visible'});
-  await page.waitForFunction(()=>window.__poc?.scene.ready,{},{timeout:60000});
+  await page.waitForFunction(()=>window.__poc?.scene.ready,{},{timeout:180000});
   await page.locator('#quality').selectOption('standard');
-  await page.waitForTimeout(1500);await page.screenshot({path:`${dir}/entry.png`});
+  await page.waitForTimeout(1500);await page.screenshot({path:`${dir}/entry.png`,timeout:180000});
   await page.getByTestId('nickname').fill('DreamPlayer');await page.getByTestId('join').click();
   await page.waitForFunction(()=>window.__poc.self.spawned);
   await reserve.close();
+  // Frame the parked car from one ordinary step closer, matching the target's
+  // pedestrian projection. This is real server-routed walking, not pose injection.
+  await page.locator('#quality').selectOption('low');
+  await page.setViewportSize({width:480,height:270});
+  await page.locator('#viewport canvas').focus();
+  for(let attempt=0;attempt<12;attempt++) {
+    const y=await page.evaluate(()=>window.__poc.self.position[1]);
+    if(Math.abs(y-1.2)<.18)break;
+    await page.keyboard.press(y<1.2?'w':'s',{delay:Math.min(100,Math.abs(y-1.2)*140)});
+  }
+  await page.setViewportSize({width:1672,height:941});
+  await page.locator('#quality').selectOption('standard');
   await page.locator('#chat-toggle').click();
-  async function capture(name){await page.waitForTimeout(1500);await page.screenshot({path:`${dir}/${name}.png`});records.push({name,state:await page.evaluate(()=>window.__poc)});}
+  async function capture(name){
+    await page.waitForTimeout(1500);
+    await page.screenshot({path:`${dir}/${name}.png`,timeout:180000});
+    records.push({name,state:await page.evaluate(()=>window.__poc)});
+    writeFileSync(`${dir}/observations.json`,JSON.stringify({at:new Date().toISOString(),browser:browser.version(),errors,records,complete:false},null,2));
+  }
   await capture('pedestrian');
   await page.locator('#viewport canvas').focus();await page.keyboard.press('e');
   await page.waitForFunction(()=>window.__poc.self.mode==='driver');await capture('driving');
@@ -38,7 +55,7 @@ try {
   await friend.addInitScript(()=>localStorage.setItem('poc-quality','low'));
   friend.on('pageerror',e=>errors.push('friend: '+e.message));
   await friend.goto('http://127.0.0.1:3000');await friend.getByTestId('nickname').fill('DreamFriend');
-  await friend.getByTestId('join').click({timeout:60000});await friend.waitForFunction(()=>window.__poc.self.spawned);
+  await friend.getByTestId('join').click({timeout:180000});await friend.waitForFunction(()=>window.__poc.self.spawned);
   await friend.locator('#viewport canvas').focus();
   for(const [axis,goal,positive,negative] of [[0,1.7,'d','a'],[1,5.65,'w','s']]) {
     for(let attempt=0;attempt<16;attempt++) {
@@ -58,7 +75,7 @@ try {
   await friend.close();
   await page.getByTestId('disconnect').click();
   await context.tracing.stop({path:`${dir}/trace.zip`});
-  writeFileSync(`${dir}/observations.json`,JSON.stringify({at:new Date().toISOString(),browser:browser.version(),errors,records},null,2));
+  writeFileSync(`${dir}/observations.json`,JSON.stringify({at:new Date().toISOString(),browser:browser.version(),errors,records,complete:true},null,2));
   if(errors.length)throw Error(errors.join('\n'));
 }catch(error){
   for (const [i,p] of browser.contexts().flatMap(c=>c.pages()).entries()) {

@@ -14,9 +14,10 @@ function noise(x: number, y: number) {
 
 /** Eroded ridge networks beyond the closed, level playable fixture. */
 export function buildHorizon(scene: THREE.Scene, groundZ: number) {
-  const dry = new THREE.Color(0xb5a184), rock = new THREE.Color(0xc1ad91), scrub = new THREE.Color(0x768260);
+  const dry = new THREE.Color(0xb5a184), rock = new THREE.Color(0xcbb495), scrub = new THREE.Color(0x626d45);
   for (let layer = 0; layer < 3; layer++) {
     const segments = 480, rings = 60;
+    const acceptedHeights: number[] = [];
     const vertices: number[] = [], colors: number[] = [], uv: number[] = [], mix: number[] = [], indices: number[] = [];
     for (let j = 0; j <= rings; j++) for (let i = 0; i <= segments; i++) {
       // Preserve the skyline's angular size and crest distance, but give each
@@ -42,13 +43,24 @@ export function buildHorizon(scene: THREE.Scene, groundZ: number) {
       // Broad rounded ridge shoulders retain drainage detail on their flanks;
       // suppress channel relief at the crest so it cannot form isolated conic peaks.
       const erosionMask = Math.pow(profile, .7) * (1 - .8 * Math.pow(slope, 6));
-      const z = Math.max(-3, broad * profile + (shoulder * 2.8 - gully * 3 - rill * 1.4 + ridgeBreak * .55) * erosionMask - 6);
+      // Broad weathered outcrops descend into connected vegetated washes. The
+      // relief is only a subtractive flank cut: the accepted crest and apron
+      // stay fixed, while a few 20–50m rock shoulders replace uniform pillows.
+      const watershed = noise(x / 47 + 9.2, y / 47 - 3.1);
+      const bedding = noise(x / 31 + noise(x / 75, y / 75) * 1.7, y / 56 + layer * 2);
+      const flankCut = THREE.MathUtils.smoothstep(watershed, .33, .71) * 1.65 *
+        Math.sin(slope * Math.PI) ** 2 * profile * (1 - THREE.MathUtils.smoothstep(slope, .55, .78));
+      const accepted = Math.max(-3, broad * profile + (shoulder * 2.8 - gully * 3 - rill * 1.4 + ridgeBreak * .55) * erosionMask - 6);
+      const z = Math.max(-3, accepted - flankCut);
+      acceptedHeights.push(groundZ + accepted * .84);
       vertices.push(x, y, groundZ + z * .84);
       uv.push(x / 8, y / 8);
-      const stony = THREE.MathUtils.clamp(shoulder * .68 + coarse * .60 - .30, 0, 1);
-      const vegetation = THREE.MathUtils.smoothstep(noise(x / 15.5 + 17, y / 15.5), .40, .69) * (1 - stony * .6);
+      const exposed = THREE.MathUtils.smoothstep(bedding + shoulder * .16 - gully * .12, .39, .63);
+      const stony = THREE.MathUtils.clamp(exposed * .88 + shoulder * .12, 0, 1);
+      const vegetation = THREE.MathUtils.clamp(
+        THREE.MathUtils.smoothstep(watershed + gully * .18, .35, .61) * (1 - exposed * .83), 0, 1);
       mix.push(stony, vegetation);
-      const color = dry.clone().lerp(rock, stony * .6).lerp(scrub, vegetation * .60);
+      const color = dry.clone().lerp(rock, stony * .82).lerp(scrub, vegetation * .88);
       color.multiplyScalar(.95 + shoulder * .12 - gully * .09);
       if (layer) color.lerp(new THREE.Color(layer === 1 ? 0xb7b2a0 : 0xc0c2b6), layer * .14);
       colors.push(color.r, color.g, color.b);
@@ -57,12 +69,35 @@ export function buildHorizon(scene: THREE.Scene, groundZ: number) {
         indices.push(k, k + segments + 1, k + 1, k + 1, k + segments + 1, k + segments + 2);
       }
     }
+    // Lock the upper one-metre crest band on each azimuth, including unusually
+    // low saddles: the new geology cannot change the accepted skyline.
+    for (let i = 0; i <= segments; i++) {
+      let crestHeight = -Infinity;
+      for (let j = 0; j <= rings; j++) crestHeight = Math.max(crestHeight, acceptedHeights[j * (segments + 1) + i]);
+      for (let j = 0; j <= rings; j++) {
+        const k = j * (segments + 1) + i;
+        if (acceptedHeights[k] >= crestHeight - 1) vertices[k * 3 + 2] = acceptedHeights[k];
+      }
+    }
     const geometry = new THREE.BufferGeometry();
     geometry.setAttribute("position", new THREE.Float32BufferAttribute(vertices, 3));
     geometry.setAttribute("color", new THREE.Float32BufferAttribute(colors, 3));
     geometry.setAttribute("uv", new THREE.Float32BufferAttribute(uv, 2));
     geometry.setAttribute("terrainMix", new THREE.Float32BufferAttribute(mix, 2));
     geometry.setIndex(indices); geometry.computeVertexNormals();
+    // Subtle warm mineral faces and cooler sheltered plant regions reinforce
+    // the real normal/sun lighting, without baking a dark fake shadow mask.
+    // This static ridge material keeps contrast broad; grain stays in maps.
+    const normals = geometry.getAttribute("normal"), colorAttribute = geometry.getAttribute("color");
+    const sunward = new THREE.Vector3(-48, -35, 0).normalize();
+    for (let k = 0; k < normals.count; k++) {
+      const aspect = THREE.MathUtils.clamp((normals.getX(k) * sunward.x + normals.getY(k) * sunward.y) * 2.5, -1, 1);
+      const warm = Math.max(0, aspect), cool = Math.max(0, -aspect);
+      colorAttribute.setXYZ(k,
+        colorAttribute.getX(k) * (1 + .10 * warm - .045 * cool),
+        colorAttribute.getY(k) * (1 + .025 * warm + .012 * cool),
+        colorAttribute.getZ(k) * (1 - .055 * warm + .10 * cool));
+    }
     const grass = surfaceMaterials.get("grass"), concrete = surfaceMaterials.get("concrete");
     const material = new THREE.MeshStandardMaterial({ color: 0xf1e9d9, vertexColors: true, roughness: 1,
       map: grass?.map, normalMap: grass?.normalMap, normalScale: new THREE.Vector2(.24, .24) });
@@ -78,14 +113,14 @@ export function buildHorizon(scene: THREE.Scene, groundZ: number) {
               vec3 mineral = texture2D(arroyoRock, vMapUv * .41 + vec2(.17,.31)).rgb;
               // Original concrete supplies exposed mineral grain; grass supplies dry scrub.
               mineral = mix(vec3(dot(mineral, vec3(.3,.59,.11))), mineral, .22);
-              mineral *= vec3(.84,.80,.72);
-              vec3 terrain = mix(dryCover, mineral, vTerrainMix.x * .82);
-              terrain = mix(terrain, dryCover * vec3(.82,.90,.73), vTerrainMix.y * .32);
+              mineral *= vec3(.98,.90,.77);
+              vec3 terrain = mix(dryCover, mineral, vTerrainMix.x * .95);
+              terrain = mix(terrain, dryCover * vec3(.64,.75,.47), vTerrainMix.y * .70);
               diffuseColor.rgb *= terrain;
             #endif
           `);
       };
-      material.customProgramCacheKey = () => "arroyo-eroded-terrain-v1";
+      material.customProgramCacheKey = () => "arroyo-watershed-terrain-v2";
     }
     const mesh = new THREE.Mesh(geometry, material); mesh.name = `Arroyo eroded ridge ${layer}`;
     mesh.receiveShadow = true; scene.add(mesh);

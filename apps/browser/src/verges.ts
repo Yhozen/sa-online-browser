@@ -3,7 +3,7 @@ import * as THREE from "three";
 import type { SceneManifest } from "../../../packages/shared/scene";
 
 /** Small curved grass clumps, with bare gaps and varied depth outside the sidewalks. */
-export function plantVerges(scene: THREE.Scene, manifest: SceneManifest) {
+export function plantVerges(scene: THREE.Scene, manifest: SceneManifest, ground?: THREE.MeshStandardMaterial) {
   let seed = 918;
   const random = () => { seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0; return seed / 4294967296; };
   const material = new THREE.MeshStandardMaterial({ vertexColors: true, side: THREE.DoubleSide, roughness: 1 });
@@ -12,7 +12,7 @@ export function plantVerges(scene: THREE.Scene, manifest: SceneManifest) {
     const count = 8 + variant * 2;
     for (let blade = 0; blade < count; blade++) {
       const angle = random() * Math.PI * 2, h = .055 + random() * (.105 + variant * .024);
-      const width = .0015 + random() * .002, bend = .026 + random() * .07;
+      const width = .005 + random() * .0035, bend = .026 + random() * .07;
       const dx = Math.cos(angle), dy = Math.sin(angle), root = random() * .05;
       const start = positions.length / 3;
       const baseColor = new THREE.Color(blade % 4 === 0 ? 0x80774e : blade % 3 === 0 ? 0x565f3d : 0x647348);
@@ -91,8 +91,8 @@ export function plantVerges(scene: THREE.Scene, manifest: SceneManifest) {
   // Additional yard planting is generated only after the original verge matrices:
   // its RNG use cannot alter the existing sidewalk clump positions or source frame.
   const yardCells = new Map<string, { matrices: THREE.Matrix4[][]; tones: THREE.Color[][] }>();
-  const maxYardTufts = 1250; // 12 blades × 10 triangles × 1250 = at most 150k added triangles.
-  const quota = Math.floor(maxYardTufts / Math.max(1, manifest.houses.length));
+  const maxYardTufts = 3400; // At most 408k triangles globally, spatially culled in 24m cells.
+  const quota = Math.floor(2800 / Math.max(1, manifest.houses.length));
   let yardCount = 0;
   function clearYard(x: number, y: number) {
     if (!clearGround(x, y)) return false;
@@ -116,25 +116,60 @@ export function plantVerges(scene: THREE.Scene, manifest: SceneManifest) {
         (lx > -4.7 && lx < -1.3 && ly > -21 && ly < -5.5);
     });
   }
+  // Soil triangles can bridge a thin fence even when all three vertices are
+  // outside it. Conservative triangle bounds keep all fixture obstacles clear.
+  const soilObstacleBounds = manifest.barriers.map(b => new THREE.Box2(
+    new THREE.Vector2(b.position[0] - b.size[0] / 2, b.position[1] - b.size[1] / 2),
+    new THREE.Vector2(b.position[0] + b.size[0] / 2, b.position[1] + b.size[1] / 2)));
+  const soilPositions: number[] = [], soilColors: number[] = [], soilUVs: number[] = [];
+  function soilTransition(x: number, y: number, radiusX: number, radiusY: number, orientation: number) {
+    const rings: { x: number; y: number; alpha: number }[][] = [];
+    for (const radius of [0, .62, 1]) {
+      const row = [];
+      for (let i = 0; i < 14; i++) {
+        const a = i / 14 * Math.PI * 2;
+        const rough = 1 + .16 * Math.sin(a * 3 + x) + .11 * Math.cos(a * 5 + y);
+        const dx = Math.cos(a) * radiusX * radius * rough, dy = Math.sin(a) * radiusY * radius * rough;
+        row.push({x:x + dx*Math.cos(orientation) - dy*Math.sin(orientation), y:y + dx*Math.sin(orientation) + dy*Math.cos(orientation), alpha:radius===1 ? 0 : radius===0 ? .57 : .43});
+      }
+      rings.push(row);
+    }
+    for(let ring=0;ring<2;ring++)for(let i=0;i<14;i++) {
+      const next=(i+1)%14;
+      for(const triangle of [[rings[ring][i],rings[ring+1][i],rings[ring+1][next]],[rings[ring][i],rings[ring+1][next],rings[ring][next]]]) {
+        const [ta,tb,tc]=triangle;
+        if(Math.abs((tb.x-ta.x)*(tc.y-ta.y)-(tb.y-ta.y)*(tc.x-ta.x))<1e-8)continue;
+        if(!triangle.every(p=>clearYard(p.x,p.y)))continue;
+        const bounds = new THREE.Box2().setFromPoints(triangle.map(p => new THREE.Vector2(p.x,p.y)));
+        if(soilObstacleBounds.some(obstacle => obstacle.intersectsBox(bounds)))continue;
+        for(const p of triangle) {
+          soilPositions.push(p.x,p.y,manifest.groundZ+.008);
+          soilUVs.push(p.x/2,p.y/2);
+          soilColors.push(1,.92,.74,p.alpha);
+        }
+      }
+    }
+  }
   for (const house of manifest.houses) {
     const c = Math.cos(house.rotation), s = Math.sin(house.rotation);
     let planted = 0;
-    for (let patch = 0; patch < 75 && planted < quota && yardCount < maxYardTufts; patch++) {
+    for (let patch = 0; patch < 110 && planted < quota && yardCount < maxYardTufts; patch++) {
       const left = random() < .48;
       const cx = left ? -9.2 + random() * 4 : -.9 + random() * 4;
       const cy = -19.5 + random() * 10.2;
-      const spreadX = .18 + random() * .65, spreadY = .25 + random() * .85;
-      const shoots = 7 + Math.floor(random() * 12);
+      const spreadX = .30 + random() * .85, spreadY = .5 + random() * 1.15;
+      const shoots = 18 + Math.floor(random() * 19);
+      soilTransition(house.position[0]+cx*c-cy*s, house.position[1]+cx*s+cy*c, spreadX*1.18, spreadY*1.18, house.rotation);
       for (let n = 0; n < shoots && planted < quota && yardCount < maxYardTufts; n++) {
         const angle = random() * Math.PI * 2, radius = Math.sqrt(random());
         const lx = cx + Math.cos(angle) * radius * spreadX, ly = cy + Math.sin(angle) * radius * spreadY;
         const x = house.position[0] + lx * c - ly * s, y = house.position[1] + lx * s + ly * c;
         if (!clearYard(x, y)) continue;
-        const dryShoot = random() < .23;
+        const dryShoot = random() < .14;
         dummy.position.set(x, y, manifest.groundZ - .006);
         dummy.rotation.set(0, 0, random() * Math.PI * 2);
         const width = .9 + random() * .85;
-        dummy.scale.set(width, width * (.75 + random() * .35), dryShoot ? .24 + random() * .3 : .85 + random() * .30);
+        dummy.scale.set(width, width * (.75 + random() * .35), dryShoot ? .42 + random() * .3 : .98 + random() * .18);
         dummy.updateMatrix();
         const key = `${Math.floor(x / 24)},${Math.floor(y / 24)}`;
         if (!yardCells.has(key)) yardCells.set(key, { matrices: [[], [], []], tones: [[], [], []] });
@@ -147,13 +182,47 @@ export function plantVerges(scene: THREE.Scene, manifest: SceneManifest) {
       }
     }
   }
+  // Wider rings around existing trunks and fence ends populate foreground grass
+  // left empty by house-local bands; every placement remains below 0.25m.
+  for (const prop of manifest.props.filter(p => ["palm", "tree", "pole"].includes(p.asset))) {
+    for(let patch=0;patch<8 && yardCount<maxYardTufts;patch++) {
+      const a=random()*Math.PI*2, distance=.8+random()*1.7;
+      const cx=prop.position[0]+Math.cos(a)*distance, cy=prop.position[1]+Math.sin(a)*distance;
+      soilTransition(cx,cy,.45+random()*.4,.55+random()*.6,a);
+      for(let n=0;n<10 && yardCount<maxYardTufts;n++) {
+        const x=cx+(random()-.5)*.85,y=cy+(random()-.5)*.85;
+        if(!clearYard(x,y))continue;
+        dummy.position.set(x,y,manifest.groundZ-.006);dummy.rotation.set(0,0,random()*Math.PI*2);
+        dummy.scale.set(1+random()*.7,1+random()*.6,.98+random()*.18);dummy.updateMatrix();
+        const key=`${Math.floor(x/24)},${Math.floor(y/24)}`;
+        if(!yardCells.has(key))yardCells.set(key,{matrices:[[],[],[]],tones:[[],[],[]]});
+        const cell=yardCells.get(key)!,variant=Math.floor(random()*3);
+        cell.matrices[variant].push(dummy.matrix.clone());cell.tones[variant].push(new THREE.Color(0xb8bb94));yardCount++;
+      }
+    }
+  }
+  if (soilPositions.length) {
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute("position",new THREE.Float32BufferAttribute(soilPositions,3));
+    geometry.setAttribute("color",new THREE.Float32BufferAttribute(soilColors,4));
+    geometry.setAttribute("uv",new THREE.Float32BufferAttribute(soilUVs,2));geometry.computeVertexNormals();
+    const soil=new THREE.MeshStandardMaterial({...(ground?.map ? {map:ground.map} : {}),color:0xb2a281,vertexColors:true,roughness:1,transparent:true,opacity:1,depthWrite:false});
+    // Reuse original grass/soil grain, without creating another bitmap or texture.
+    soil.onBeforeCompile=shader=>{shader.fragmentShader=shader.fragmentShader.replace("#include <map_fragment>",`#ifdef USE_MAP
+      vec3 groundGrain=texture2D(map,vMapUv).rgb;
+      float grain=dot(groundGrain,vec3(.3,.59,.11));
+      diffuseColor.rgb*=vec3(grain*.86,grain*.78,grain*.62);
+    #endif`);};
+    soil.customProgramCacheKey=()=>"arroyo-original-soil-transition-v1";
+    const mesh=new THREE.Mesh(geometry,soil);mesh.name="Arroyo original soil transitions";mesh.receiveShadow=true;mesh.renderOrder=1;scene.add(mesh);
+  }
   for (const [key, cell] of yardCells) geometries.forEach((geometry, variant) => {
     if (!cell.matrices[variant].length) return;
     const mesh = new THREE.InstancedMesh(geometry, material, cell.matrices[variant].length);
     mesh.name = `Arroyo yard grass ${key} ${variant}`;
     mesh.userData.yardCell = key;
     cell.matrices[variant].forEach((matrix, i) => { mesh.setMatrixAt(i, matrix); mesh.setColorAt(i, cell.tones[variant][i]); });
-    mesh.receiveShadow = true; mesh.computeBoundingBox(); mesh.computeBoundingSphere(); scene.add(mesh);
+    mesh.receiveShadow = true; mesh.castShadow = true; mesh.computeBoundingBox(); mesh.computeBoundingSphere(); scene.add(mesh);
   });
   geometries.forEach((geometry, variant) => {
     const mesh = new THREE.InstancedMesh(geometry, material, matrices[variant].length);

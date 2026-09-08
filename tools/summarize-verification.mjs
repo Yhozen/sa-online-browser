@@ -146,7 +146,7 @@ const sourceFiles = [
   "apps/browser/src/surface-textures.ts",
   "tools/assets/environment-kit.py",
   "tools/assets/heroes.py",
-  "tests/assets.test.mjs",
+  "tests/assets.test.mjs", "tests/verges.test.mjs",
   "tools/visual-budgets.mjs",
   "packages/shared/scenes/neighborhood.json",
   "apps/browser/public/assets/inventory.json",

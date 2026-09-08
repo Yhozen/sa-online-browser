@@ -49,3 +49,6 @@ A replacement browser client that joins an existing multiplayer server through a
 - **Graphics warm-up:** shader compilation and geometry uploads completed in a native-size offscreen target before joining is enabled. Temporary asset models never enter protocol or player state.
 - **Cutout mip coverage:** alpha-weighted linear-color reduction and per-level alpha coverage for original foliage; preserves visible leaves through distance filtering without changing source art or output resolution.
 - **Animation clock:** character clip selection/mixer time and wheel motion follow the existing fixed simulation; camera interpolation and seat-anchor placement remain presentation work. No animation RPCs.
+
+- **Native viewport synchronization:** the drawing buffer and post-processing targets track CSS viewport dimensions multiplied by device pixel ratio, checked by the ordinary update timer as well as resize events. A delayed software-renderer resize is a readiness issue; it is not an adaptive resolution policy.
+- **Planting clearance:** triangle-level checks keep nonblocking low grass/soil decoration away from fixture barriers, roads, sidewalks and house-access strips; decorative detail does not change shared collision or playable geography.

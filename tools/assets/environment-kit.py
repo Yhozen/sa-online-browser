@@ -93,7 +93,7 @@ def sculpt_canopy_normals():
  Runtime foliage shading must retain this outward field on backfaces as well.
  """
  bpy.context.view_layer.update()
- center=Vector((0,0,5.15));radius=Vector((4.25,4.1,2.65))
+ center=Vector((0,0,6.05));radius=Vector((3.85,3.75,2.25))
  count=0
  for o in bpy.context.scene.objects:
   if o.type!='MESH' or not o.name.startswith('leaf-card'):continue
@@ -159,25 +159,28 @@ def env_finish(name):
  # Vertex AO needs surface samples away from existing box corners. Only surfaces
  # that show spatially varying contact shade are tessellated; decorative parts stay light.
  for o in meshes:
-  cuts=15 if o.name.startswith('stucco walls') else 7 if o.name.startswith(('porch soffit','porch slab','porch roof')) else 3 if o.name.startswith(('window cavity','window reflective pane','painted door','driveway slab')) else 0
+  cuts=7 if o.name.startswith('stucco walls') else 7 if o.name.startswith(('porch soffit','porch slab','porch roof')) else 3 if o.name.startswith(('window cavity','window reflective pane','painted door','driveway slab')) else 0
   if cuts:
    bm=bmesh.new();bm.from_mesh(o.data);bmesh.ops.subdivide_edges(bm,edges=list(bm.edges),cuts=cuts,use_grid_fill=True);bm.to_mesh(o.data);bm.free()
  ao,ao_values=house_ao_sampler(meshes) if name.startswith('house') else (None,[])
  for o in meshes:
   mat=o.data.materials[0];used.add(mat)
-  if not o.name.startswith('leaf-card'):env_uv(o,2 if mat in [stucco,white,concrete] else 1)
+  if not o.name.startswith('leaf-card'):env_uv(o,.30 if o.name.startswith('foundation') else 2 if mat in [stucco,white,concrete] else 1)
   normal_matrix=o.matrix_world.to_3x3().inverted().transposed()
   color=o.data.color_attributes.new(name='Color',type='FLOAT_COLOR',domain='CORNER')
   o.data.color_attributes.active_color=color
   for polygon in o.data.polygons:
    for loop in polygon.loop_indices:
     v=o.matrix_world @ o.data.vertices[o.data.loops[loop].vertex_index].co
-    n=noise.noise(Vector((v.x*.71,v.y*.71,v.z*.92)))
+    kit_phase=(int(name[-1])*7.31 if name.startswith('house-') and name[-1].isdigit() else 0)
+    n=noise.noise(Vector((v.x*.71+kit_phase,v.y*.71,v.z*.92)))
     shade=.91+.075*n
     if name.startswith('house'):
      if mat in [stucco,white,concrete,trim,wood,brick]:
       # Dust splash at the base, eave shade, and rain trails under the sills.
-      shade-=.26*math.exp(-max(0,v.z-.18)*2.8)
+      # Irregular splash/grime height, not a uniform repeating horizontal band.
+      grime_height=.14+.28*(.5+.5*noise.noise(Vector((v.x*.82+kit_phase,v.y*.82,0))))
+      shade-=.27*math.exp(-max(0,v.z-grime_height)*3.7)
       if o.name.startswith('stucco walls'):
        if v.y < -5.95:
         shade-=sum(.105*math.exp(-((v.x-x)/.70)**2)*math.exp(-abs(v.z-1.18)*2.2) for x in [-6,0,2.6])
@@ -220,21 +223,35 @@ def agave(x,y,size=1):
   mesh('agave blade',[root,middle-side,middle+Vector((0,0,.027)),middle+side,tip],[(0,1,2),(0,2,3),(1,4,2),(2,4,3)],palmgreen if i%3 else palmlight)
 
 
+def carve_recess(center,size,side=False):
+ """Real shallow masonry opening; the server's solid shell collision is unchanged."""
+ if 'house_shell' not in globals() or house_shell.name not in bpy.context.scene.objects:return
+ cutter=box('temporary window masonry cutter',center,size,interior)
+ if side:
+  cutter.location=Vector((cutter.location.y,-cutter.location.x,cutter.location.z));cutter.rotation_euler.z=-math.pi/2
+  if side<0:cutter.location.x*=-1;cutter.location.y*=-1;cutter.rotation_euler.z+=math.pi
+ bpy.context.view_layer.objects.active=house_shell
+ modifier=house_shell.modifiers.new('Recessed masonry opening','BOOLEAN');modifier.operation='DIFFERENCE';modifier.solver='EXACT';modifier.object=cutter
+ bpy.ops.object.modifier_apply(modifier=modifier.name);bpy.data.objects.remove(cutter,do_unlink=True)
+
+
 def window(x,y,z,w,h,paint,side=False):
- # Recessed glazing sits 18cm behind projecting jamb fronts; original wall envelope unchanged.
+ # Carved reveal places the glass behind the actual wall face, not on an applied box.
+ carve_recess((x,y+.16,z),(w+.13,.64,h+.13),side)
  prior=set(bpy.context.scene.objects)
- box('window cavity',(x,y,z),(w+.15,.07,h+.15),interior)
- box('window reflective pane',(x,y-.055,z),(w-.10,.015,h-.10),windowglass)
- for xx in [x-w/2,x+w/2]:box('window jamb',(xx,y-.15,z),(.10,.34,h+.16),paint,.022)
- for zz in [z-h/2,z+h/2]:box('window header',(x,y-.15,zz),(w+.12,.34,.10),paint,.022)
- box('window mullion',(x,y-.075,z),(.042,.065,h),white)
- box('window sash',(x,y-.08,z-.1),(w,.055,.04),white)
+ box('window cavity',(x,y+.39,z),(w+.15,.04,h+.15),interior)
+ box('window reflective pane',(x,y+.24,z),(w-.10,.015,h-.10),windowglass)
+ for xx in [x-w/2,x+w/2]:box('window jamb',(xx,y+.06,z),(.11,.42,h+.16),paint,.022)
+ for zz in [z-h/2,z+h/2]:box('window header',(x,y+.06,zz),(w+.12,.42,.11),paint,.022)
+ box('window mullion',(x,y+.22,z),(.042,.065,h),white)
+ box('window sash',(x,y+.22,z-.1),(w,.055,.04),white)
  box('window sill',(x,y-.18,z-h/2-.055),(w+.31,.46,.11),paint,.024)
  # A subtle curtain stripe reads as occupied home without an interior render.
- for xx in [x-w*.37,x+w*.37]:box('window curtain',(xx,y-.067,z),(w*.10,.01,h-.20),wood)
+ for xx in [x-w*.37,x+w*.37]:box('window curtain',(xx,y+.29,z),(w*.10,.01,h-.20),wood)
  if side:
   for o in set(bpy.context.scene.objects)-prior:
    o.location=Vector((o.location.y,-o.location.x,o.location.z));o.rotation_euler.z=-math.pi/2
+   if side<0:o.location.x*=-1;o.location.y*=-1;o.rotation_euler.z+=math.pi
 
 
 def roof_shell(v,paint):
@@ -276,12 +293,27 @@ def roof_shell(v,paint):
 
 
 def detailed_house(v):
+ global house_shell
  start();paint=[trim,white,white,wood][v];wall=white if v==2 else stucco
  box('foundation',(0,0,.18),(16.4,12.4,.36),concrete)
- box('stucco walls',(0,0,1.95),(16,12,3.5),wall)
+ house_shell=box('stucco walls',(0,0,1.95),(16,12,3.5),wall)
  if v==1:
   # Shallow overlapping clapboard, with genuine shadow lines rather than painted bands.
-  for i in range(20):box('ranch clapboard',(0,-6.025,.42+i*.16),(16,.055,.145),trim)
+  for i in range(20):
+   z=.42+i*.16;intervals=[(-8,8)]
+   openings=[(-3.62,-2.38)] if z<2.65 else []
+   if z<2.88:openings.append((3.85,7.75))
+   if 1.16<z<2.84:openings += [(-6.93,-5.07),(-.93,.93),(1.85,3.35)]
+   for lo,hi in openings:
+    pieces=[]
+    for a,b in intervals:
+     if hi<=a or lo>=b:pieces.append((a,b))
+     else:
+      if lo>a:pieces.append((a,lo))
+      if hi<b:pieces.append((hi,b))
+    intervals=pieces
+   for a,b in intervals:box('ranch clapboard',((a+b)/2,-6.025,z),(b-a,.055,.145),trim)
+
  if v==3:
   for x in [-7.9,7.9]:box('craftsman corner trim',(x,-6.04,1.95),(.20,.14,3.55),paint)
  roof_shell(v,paint)
@@ -299,15 +331,18 @@ def detailed_house(v):
  for x0,x1 in [(-5.7,-4.5),(-1.5,-.3)]:
   for z in [.72,1.23]:box('porch rail',((x0+x1)/2,-8.04,z),(x1-x0,.07,.08),paint)
   for i in range(6):box('porch baluster',(x0+(x1-x0)*i/5,-8.04,.98),(.045,.045,.48),paint)
+ carve_recess((-3,-5.88,1.40),(1.16,.55,2.38))
  box('door frame',(-3,-6.07,1.41),(1.32,.15,2.53),white)
- box('door recess',(-3,-6.16,1.39),(1.14,.045,2.38),interior)
- box('painted door',(-3,-6.19,1.39),(1.05,.04,2.3),paint,.018)
+ box('door recess',(-3,-5.73,1.39),(1.14,.045,2.38),interior)
+ box('painted door',(-3,-5.81,1.39),(1.05,.04,2.3),paint,.018)
  for x in [-3.25,-2.75]:
-  for z in [.64,1.35,2.10]:box('raised door panel',(x,-6.225,z),(.34,.018,.48),paint,.009)
- sphere('door knob',(-2.58,-6.29,1.28),(.042,.048,.042),chrome)
+  for z in [.64,1.35,2.10]:box('raised door panel',(x,-5.845,z),(.34,.018,.48),paint,.009)
+ sphere('door knob',(-2.58,-5.91,1.28),(.042,.048,.042),chrome)
  # Separate glazing material prevents the vehicle's transparent glass settings affecting windows.
  for x in [-6,0,2.6]:window(x,-6.09,2.0,1.65 if x!=2.6 else 1.30,1.43,white)
- for x in [-3.5,2.6]:window(x,-8.035,2,1.65,1.43,white,True)
+ for x in [-3.5,2.6]:
+  window(x,-8.035,2,1.65,1.43,white,True)
+  window(x,-8.035,2,1.65,1.43,white,-1)
  # Louvered shutters, corner boards and a small gable vent break broad clean facades.
  if v in [0,1,3]:
   for x in [-6,0,2.6]:
@@ -334,8 +369,8 @@ def detailed_house(v):
   box('porch light bracket',(x,-6.2,2.62),(.12,.16,.08),dark)
   box('porch light lantern',(x,-6.29,2.48),(.16,.17,.21),white,.025)
  if v==3:
-  box('dormer',(0,-2.2,4.65),(2.5,2.4,1.4),wall)
-  window(0,-3.43,4.72,1.5,.90,white)
+  main_shell=house_shell;house_shell=box('dormer',(0,-2.2,4.65),(2.5,2.4,1.4),wall)
+  window(0,-3.43,4.72,1.5,.90,white);house_shell=main_shell
   mesh('dormer pitched cap',[(-1.45,-3.62,5.26),(1.45,-3.62,5.26),(0,-3.62,5.85),(-1.45,-.86,5.26),(1.45,-.86,5.26),(0,-.86,5.85)],[(0,3,5,2),(2,5,4,1)],roof)
  box('chimney',(5,3,4.55),(.90,.90,1.85),brick)
  for zz in [3.9,4.18,4.46,4.74,5.02,5.3]:box('chimney mortar line',(5,3,zz),(.918,.918,.026),concrete)
