@@ -13,3 +13,5 @@ artifacts/
 .env.*
 !.env.example
 *.blend1
+
+.dream-loop/
