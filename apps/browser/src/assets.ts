@@ -85,6 +85,7 @@ export async function loadAssets(
             if (m.name === "paint" && m instanceof THREE.MeshStandardMaterial) {
               const physical = new THREE.MeshPhysicalMaterial();
               THREE.MeshStandardMaterial.prototype.copy.call(physical, m);
+              physical.defines = { STANDARD: "", PHYSICAL: "" };
               physical.clearcoat = 1; physical.clearcoatRoughness = .24; physical.envMapIntensity = 1.3;
               physical.metalness = .45; physical.roughness = .29; physical.color.set(0x193d5a);
               canonical.set(m.name, physical); m.dispose();
@@ -176,12 +177,18 @@ export async function loadAssets(
       material.emissive.copy(material.color); material.emissiveIntensity = .10;
       material.emissiveMap = material.map;
       material.onBeforeCompile = shader => {
+        if (name.startsWith("foliage")) {
+          // Use a view-facing shading normal for GGX. A back-facing custom normal
+          // makes its visibility term singular; diffuse uses the authored field below.
+          shader.fragmentShader = shader.fragmentShader.replace("#include <normal_fragment_begin>",
+            THREE.ShaderChunk.normal_fragment_begin.replace("normal *= faceDirection;", "normal *= dot(normal, vViewPosition) < 0.0 ? -1.0 : 1.0;"));
+        }
         shader.fragmentShader = shader.fragmentShader.replace("#include <lights_physical_pars_fragment>",
           THREE.ShaderChunk.lights_physical_pars_fragment.replace(
-            "float dotNL = saturate( dot( geometryNormal, directLight.direction ) );",
-            "float dotNL = saturate( dot( geometryNormal, directLight.direction ) * 0.65 + 0.35 );"));
+            "reflectedLight.directDiffuse += irradiance * BRDF_Lambert( material.diffuseContribution );",
+            `reflectedLight.directDiffuse += saturate(dot(${name.startsWith("foliage") ? "normalize(vNormal)" : "geometryNormal"}, directLight.direction) * 0.65 + 0.35) * directLight.color * BRDF_Lambert(material.diffuseContribution);`));
       };
-      material.customProgramCacheKey = () => "arroyo-thin-leaf-v1";
+      material.customProgramCacheKey = () => `arroyo-thin-leaf-diffuse-v3-${name.startsWith("foliage") ? "canopy" : "palm"}`;
       material.needsUpdate = true;
     }
     if (name === "glass") { material.envMapIntensity = 1.4; material.roughness = .24; if(material instanceof THREE.MeshPhysicalMaterial)material.specularIntensity=.12; }

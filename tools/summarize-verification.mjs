@@ -134,6 +134,7 @@ const sourceFiles = [
   "apps/browser/src/simulation-clock.ts",
   "tests/simulation-clock.test.mjs",
   "apps/browser/src/lighting.ts",
+  "apps/browser/src/warmup.ts",
   "apps/browser/src/reflection-storage.ts",
   "tools/bake-reflections.mjs",
   "tests/reflection.test.mjs",

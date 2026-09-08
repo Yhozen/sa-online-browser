@@ -15,6 +15,7 @@ let gateway,
   agreements = [],
   errors = [],
   ready = false;
+const sessionTransitions = [];
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const snap = (p) => p.evaluate(() => window.__poc);
 const distance = (a, b) => Math.hypot(...a.map((v, i) => v - b[i]));
@@ -73,6 +74,7 @@ test.afterAll(async () => {
   writeFileSync(`${dir}/observations.json`, JSON.stringify(observations));
   writeFileSync(`${dir}/agreements.json`, JSON.stringify(agreements, null, 2));
   writeFileSync(`${dir}/errors.json`, JSON.stringify(errors));
+  writeFileSync(`${dir}/session-transitions.json`, JSON.stringify(sessionTransitions, null, 2));
 });
 async function session(browser, name, recording = true) {
   const context = await browser.newContext({
@@ -92,6 +94,12 @@ async function session(browser, name, recording = true) {
   const page = await context.newPage();
   await context.addInitScript(installTextureAudit);
   page.on("pageerror", (e) => errors.push({ name, message: e.message }));
+  page.on("console", message => {
+    if (message.text().startsWith("Arroyo session ended:")) {
+      const event = {name, at:Date.now(), reason:message.text()};
+      sessionTransitions.push(event);console.log(JSON.stringify(event));
+    }
+  });
   await page.goto(URL);
   await page.getByTestId("nickname").fill(name);
   await page.getByTestId("join").click();
@@ -100,8 +108,13 @@ async function session(browser, name, recording = true) {
     page,
     context,
     async close() {
-      if (recording) await context.tracing.stop({ path: `${dir}/${name}.zip` });
-      await context.close();
+      let timer;
+      try {
+        if (recording) await Promise.race([
+          context.tracing.stop({ path: `${dir}/${name}.zip` }),
+          new Promise((_, reject) => {timer=setTimeout(() => reject(Error(`Trace flush timed out for ${name}`)),30000);}),
+        ]);
+      } finally { clearTimeout(timer);await context.close(); }
     },
   };
 }

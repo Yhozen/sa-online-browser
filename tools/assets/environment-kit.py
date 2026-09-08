@@ -83,6 +83,38 @@ def woody_curve(name,points,radius):
  return o
 
 
+def sculpt_canopy_normals():
+ """Canopy lighting normals, independent of each alpha card's arbitrary plane.
+
+ The original tree's leaf normals all point up and flip down when viewed below in
+ a conventional DOUBLE_SIDED shader. Use a shared ellipsoid field to give attached
+ sprays coherent sun-facing shoulders and shaded opposite sides. Preserve 25% of
+ the folded leaf normal, the exact positions/UVs, and opaque branch geometry.
+ Runtime foliage shading must retain this outward field on backfaces as well.
+ """
+ bpy.context.view_layer.update()
+ center=Vector((0,0,5.15));radius=Vector((4.25,4.1,2.65))
+ count=0
+ for o in bpy.context.scene.objects:
+  if o.type!='MESH' or not o.name.startswith('leaf-card'):continue
+  normal_matrix=o.matrix_world.to_3x3().inverted().transposed()
+  world_to_local_normal=normal_matrix.inverted()
+  # Cache the actual folded normals before enabling smooth custom interpolation.
+  normals=[]
+  for polygon in o.data.polygons:
+   real=(normal_matrix @ polygon.normal).normalized()
+   for loop in polygon.loop_indices:
+    position=o.matrix_world @ o.data.vertices[o.data.loops[loop].vertex_index].co
+    delta=position-center
+    radial=Vector((delta.x/(radius.x*radius.x),delta.y/(radius.y*radius.y),delta.z/(radius.z*radius.z)))
+    if radial.length_squared<1e-8:radial=Vector((0,0,1))
+    radial.normalize();blended=(radial*.75+real*.25).normalized()
+    normals.append((world_to_local_normal @ blended).normalized())
+   polygon.use_smooth=True
+  o.data.normals_split_custom_set(normals);o.data.update();count+=len(normals)
+ print(f'Sculpted canopy lighting field on {count} leaf corners; positions/UVs unchanged.')
+
+
 def house_ao_sampler(meshes):
  """Bake real cosine-weighted hemisphere visibility into vertices, without lighting.
 
@@ -394,5 +426,6 @@ for b,(angle,reach,height) in enumerate(boughs):
     direction=(td+Vector((math.sin(b+spray)*.24,math.cos(fork+spray)*.24,.04))).normalized()
     # Overlapping planes share an actual stem, while moderate roll exposes lit upper leaf faces.
     attached_leaf_spray(anchor,direction,1.25+.15*((fork+b+twig)%4),(spray-1)*.79+.13*math.sin(b+fork),leaf2 if (b+fork+twig+spray)%5==0 else leaf)
+sculpt_canopy_normals()
 env_finish('tree')
 print('Detailed original architecture and vegetation exported.')

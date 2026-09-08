@@ -132,12 +132,65 @@ profiles = [
 ]
 
 
+def sheet_center(y):
+    """Deliberate longitudinal sheet contour; wheel openings never drive it.
+
+    Front is a single cubic descent from the cowl to the nose; the rear deck is
+    a matching single descent toward the tail. The derivatives vanish at the
+    cowl/deck joins, so reflected horizons cannot kink at profile knots.
+    """
+    if y >= .96:
+        t=min(1,(y-.96)/1.24)
+        return -.100-.145*t*t*t
+    if y <= -1.205:
+        t=min(1,(-y-1.205)/.995)
+        return -.090-.165*t*t*t
+    t=max(0,min(1,(y+1.205)/2.025))
+    return -.090-.010*t*t*(3-2*t)
+
+
+def width_slope(index):
+    if index==0:return (profiles[1][1]-profiles[0][1])/(profiles[1][0]-profiles[0][0])
+    if index==len(profiles)-1:return (profiles[-1][1]-profiles[-2][1])/(profiles[-1][0]-profiles[-2][0])
+    a,b,c=profiles[index-1:index+2]
+    left=(b[1]-a[1])/(b[0]-a[0]);right=(c[1]-b[1])/(c[0]-b[0])
+    if left*right<=0:return 0
+    # Shape-preserving harmonic tangent cannot overshoot authored widths.
+    h0=b[0]-a[0];h1=c[0]-b[0]
+    w0=2*h1+h0;w1=h1+2*h0
+    return (w0+w1)/(w0/left+w1/right)
+
+
 def body_profile(y):
-    for a, b in zip(profiles, profiles[1:]):
-        if a[0] <= y <= b[0]:
-            t = (y - a[0]) / (b[0] - a[0])
-            return (a[1] * (1-t) + b[1] * t, a[2] * (1-t) + b[2] * t)
-    return profiles[-1][1:]
+    for j,(a,b) in enumerate(zip(profiles,profiles[1:])):
+        if a[0]<=y<=b[0]:
+            h=b[0]-a[0];t=(y-a[0])/h
+            width=(2*t**3-3*t*t+1)*a[1]+(t**3-2*t*t+t)*h*width_slope(j)
+            width+=(-2*t**3+3*t*t)*b[1]+(t**3-t*t)*h*width_slope(j+1)
+            return width,sheet_center(y)-.012
+    return profiles[-1][1],sheet_center(y)-.012
+
+
+def sheet_height(x,y):
+    width=body_profile(y)[0]-.065
+    return sheet_center(y)-.008*(x/width)**2
+
+
+def sheet_normal(x,y):
+    epsilon=.0001
+    dx=(sheet_height(x+epsilon,y)-sheet_height(x-epsilon,y))/(2*epsilon)
+    dy=(sheet_height(x,min(2.2,y+epsilon))-sheet_height(x,max(-2.2,y-epsilon)))/(min(2.2,y+epsilon)-max(-2.2,y-epsilon))
+    return Vector((-dx,-dy,1)).normalized()
+
+
+def set_sheet_normals(o,edge_only=False):
+    # Preserve one analytic tangent across the separately editable hood/quarter
+    # boundary. Other side rows retain their rolled-shoulder and door normals.
+    normals=[]
+    for vertex in o.data.vertices:
+        normals.append(sheet_normal(vertex.co.x,vertex.co.y) if not edge_only or vertex.index%6==0 else vertex.normal.copy())
+    o.data.normals_split_custom_set_from_vertices(normals)
+    return o
 
 
 def arch_bottom(y):
@@ -148,7 +201,7 @@ def arch_bottom(y):
     return -.74
 
 
-ys = sorted(set([round(-2.2 + i * .05, 4) for i in range(89)] +
+ys = sorted(set([round(-2.2 + i * .025, 4) for i in range(177)] +
                 [round(wy + math.cos(i * math.pi / 32) * .445, 4)
                  for wy in [-1.38, 1.38] for i in range(33)]))
 for sign in [-1, 1]:
@@ -158,8 +211,8 @@ for sign in [-1, 1]:
         # Six tightly controlled rows retain the shoulder crease, then a
         # largely planar door skin. Extra rows avoid interpolating one swollen
         # normal across the full door height.
-        shoulder = max(top, low + .026)
-        verts += [(sign*(width-.065),y,shoulder+.025),
+        shoulder = top
+        verts += [(sign*(width-.065),y,shoulder+.004),
                   (sign*(width-.006),y,shoulder),
                   (sign*width,y,shoulder*.88+low*.12),
                   (sign*width,y,shoulder*.40+low*.60),
@@ -169,7 +222,7 @@ for sign in [-1, 1]:
         for k in range(5):
             ids=(j*6+k,j*6+k+1,(j+1)*6+k+1,(j+1)*6+k)
             faces.append(ids if sign>0 else tuple(reversed(ids)))
-    shell = smooth(mesh('sculpted quarter and door', verts, faces, paint))
+    shell = set_sheet_normals(smooth(mesh('sculpted quarter and door', verts, faces, paint)),edge_only=True)
     for wy in [-1.38, 1.38]:
         lip = []
         for i in range(41):
@@ -194,39 +247,33 @@ def body_top(name, y0, y1, rows):
         w,z = body_profile(y)
         for i in range(17):
             x = (i/8-1)*(w-.065)
-            # Match the quarter-panel inner edge exactly. Independent hood
-            # and arch heights previously created a bent-looking open seam.
-            xn=x/(w-.065)
-            edge=max(z,arch_bottom(y)+.026)+.025
-            center=max(z+.030,arch_bottom(y)+.035)
-            zc=center+(edge-center)*abs(xn)**3
-            zc+=.007*math.exp(-((abs(xn)-.65)/.13)**2)*(1-abs(xn))
+            # A single shallow cross-crown, with analytic continuous normals.
+            # No wheel-radius maxima or repeated raised swage ridges enter here.
+            zc=sheet_height(x,y)
             verts.append((x,y,zc))
     for j in range(rows):
         for i in range(16):
             a=j*17+i;faces.append((a,a+1,a+18,a+17))
-    return smooth(mesh(name, verts, faces, paint))
+    return set_sheet_normals(smooth(mesh(name, verts, faces, paint)))
 
-body_top('sculpted hood', .82, 2.2, 24)
-body_top('rear deck', -2.2, -1.205, 20)
+body_top('sculpted hood', .82, 2.2, 72)
+body_top('rear deck', -2.2, -1.205, 64)
 # The rear deck terminates at the glazing sill instead of passing through the
 # lower pane. A narrow painted flange closes the gap without coplanar overlap.
 sill_vertices=[]
 for i in range(17):
     nx=i/8-1;x=nx*.79;w,z=body_profile(-1.205)
-    xn=x/(w-.065);edge=max(z,arch_bottom(-1.205)+.026)+.025
-    center=max(z+.030,arch_bottom(-1.205)+.035)
-    deck_z=center+(edge-center)*abs(xn)**3+.007*math.exp(-((abs(xn)-.65)/.13)**2)*(1-abs(xn))
+    deck_z=sheet_height(x,-1.205)
     sill_vertices.extend([(x,-1.205,deck_z),(x,-1.17-.028*(1-nx*nx),-.105+.014*(1-nx*nx))])
 smooth(mesh('rear glass sill flange',sill_vertices,[(i*2,i*2+2,i*2+3,i*2+1) for i in range(16)],paint))
-ring_mesh('integrated rear lip', [((0,y,z),w,d) for y,z,w,d in [(-2.05,-.172,.80,.019),(-1.98,-.118,.87,.027),(-1.91,-.145,.87,.020)]],paint,'y',28)
+ring_mesh('integrated rear lip', [((0,y,z),w,d) for y,z,w,d in [(-2.05,sheet_center(-2.05)+.013,.80,.019),(-1.98,sheet_center(-1.98)+.023,.87,.027),(-1.91,sheet_center(-1.91)+.014,.87,.020)]],paint,'y',28)
 for side in [-1,1]:
     # Continuous painted belt shoulder connects the fitted glass sill to
     # the main door skin, eliminating an open dark slot under the side window.
     belt_vertices=[]
     for j in range(25):
         t=j/24;y=-1.035+1.875*t
-        w,z=body_profile(y);edge=max(z,arch_bottom(y)+.026)+.025
+        w,z=body_profile(y);edge=sheet_height(w-.065,y)
         belt_vertices.extend([(side*(.78+.02*t),y,-.065-.01*t),
                               (side*(w-.065),y,edge)])
     belt_faces=[(j*2,j*2+1,j*2+3,j*2+2) for j in range(24)]

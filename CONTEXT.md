@@ -43,3 +43,7 @@ A replacement browser client that joins an existing multiplayer server through a
 - **Native FXAA:** edge antialiasing after rendering at viewport × native DPR; no reduced-resolution scene buffer or upscaling.
 - **Baked vertex occlusion:** original Blender geometry is ray-tested to store local shelter shading in GLB vertex colors; preserved by both graphics presets.
 - **Cloud FPS diagnostic:** the historical 4 FPS target is reported, while fidelity and native resolution remain mandatory. Hardware GPU performance needs separate measurement.
+
+- **Reflection bake:** a static, prefiltered HDR texture captured from original scene geometry with no player session; cached as bounded lossless RGBA16F PMR1 data. It is lighting input, not networking evidence.
+- **Canopy normal:** an authored outward shading direction shared across neighboring leaf cards; it changes light response without changing geometry or alpha coverage.
+- **Graphics warm-up:** shader compilation and geometry uploads completed in a native-size offscreen target before joining is enabled. Temporary asset models never enter protocol or player state.

@@ -39,7 +39,7 @@ export function buildHorizon(scene: THREE.Scene, groundZ: number) {
       // suppress channel relief at the crest so it cannot form isolated conic peaks.
       const erosionMask = Math.pow(profile, .7) * (1 - .8 * Math.pow(slope, 6));
       const z = Math.max(-3, broad * profile + (shoulder * 2.8 - gully * 3 - rill * 1.4 + ridgeBreak * .55) * erosionMask - 6);
-      vertices.push(x, y, groundZ + z);
+      vertices.push(x, y, groundZ + z * .84);
       uv.push(x / 8, y / 8);
       const stony = THREE.MathUtils.clamp(shoulder * .68 + coarse * .60 - .30, 0, 1);
       const vegetation = THREE.MathUtils.smoothstep(noise(x / 15.5 + 17, y / 15.5), .40, .69) * (1 - stony * .6);

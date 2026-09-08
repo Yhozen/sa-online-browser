@@ -37,3 +37,22 @@ test('character retains four animated states and an actual skinned mesh',async()
   const skins=[];root.traverse(o=>{if(o.isSkinnedMesh)skins.push(o)});
   assert.ok(skins.length);assert.ok(skins.every(s=>s.geometry.getAttribute('skinWeight').count>100));
 });
+test('exported oak retains a coherent outward foliage normal field and alpha UV coverage',async()=>{
+  const {root}=await load('tree');let count=0,alignment=0,lower=0;
+  root.traverse(o=>{
+    if(!o.isMesh || !o.material.name.startsWith('foliage'))return;
+    const positions=o.geometry.getAttribute('position'), normals=o.geometry.getAttribute('normal'),uv=o.geometry.getAttribute('uv');
+    assert.equal(uv.count,positions.count);
+    const matrix=new THREE.Matrix3().getNormalMatrix(o.matrixWorld);
+    for(let i=0;i<positions.count;i++){
+      const p=new THREE.Vector3().fromBufferAttribute(positions,i).applyMatrix4(o.matrixWorld);
+      const n=new THREE.Vector3().fromBufferAttribute(normals,i).applyMatrix3(matrix).normalize();
+      assert.ok(Number.isFinite(n.x+n.y+n.z));
+      assert.ok(uv.getX(i)>=-1e-6 && uv.getX(i)<=1.000001 && uv.getY(i)>=-1e-6 && uv.getY(i)<=1.000001);
+      const radial=new THREE.Vector3(p.x/(4.25**2),p.y/(4.1**2),(p.z-5.15)/(2.65**2)).normalize();
+      alignment+=n.dot(radial);if(n.z<0)lower++;count++;
+    }
+  });
+  assert.ok(count>1000);assert.ok(alignment/count>.9,'canopy light must follow the crown, not arbitrary card planes');
+  assert.ok(lower/count>.05 && lower/count<.3,'retain downward shaded lower crown normals');
+});

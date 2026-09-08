@@ -6,7 +6,8 @@ import { installAtmosphere, updateSun } from "./lighting";
 import { createRenderer, applyQuality } from "./graphics";
 import yard from "../../../packages/shared/scenes/yard.json";
 import type { SceneManifest } from "../../../packages/shared/scene";
-import { loadAssets, assetStats } from "./assets";
+import { loadAssets, assetStats, bakingReflections } from "./assets";
+import { warmupActors } from "./warmup";
 import { buildEnvironment } from "./environment";
 import {
   createCharacter,
@@ -233,6 +234,7 @@ function clearWorld() {
   simulationClock.reset(performance.now());
 }
 function disconnect(reason: string) {
+  console.info("Arroyo session ended:", reason);
   terminalReason = reason;
   clearWorld();
   setStatus(reason);
@@ -776,7 +778,7 @@ function frame(now: number) {
       collisionIndex,
     );
   updateSun(sun, target);
-  if (!document.hidden) antialias.render(quality === "standard");
+  if (!document.hidden && sceneReady) antialias.render(quality === "standard");
   if (sceneReady) {
     frameCount++;
     frameTimes.push(elapsed);
@@ -965,7 +967,13 @@ async function initializeScene() {
     document.querySelector(".arena-name")!.textContent =
       arena.name;
     applyQuality(scene, quality === "low");
+    if (!bakingReflections) {
+      el("loading").textContent = "Preparing player and vehicle graphics…";
+      await warmupActors(renderer, scene, camera, arena.spawns[0], arena.vehicle.position, quality === "low");
+    }
     renderer.compile(scene, camera);
+    simulationClock.reset(performance.now());
+    el("loading").textContent = "Ready · " + arena.name;
     sceneReady = true;
     el<HTMLButtonElement>("join").disabled = false;
   } catch (error) {
