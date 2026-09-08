@@ -4,9 +4,9 @@ A cloud-local browser multiplayer prototype: two players walk, chat, and drive a
 
 The browser renders and simulates locally. A Node WebSocket gateway starts one native C++ protocol worker per browser. All peer gameplay travels through the real upstream UDP server; the gateway does not broadcast gameplay between browsers.
 
-![Arroyo art direction](assets/reference/arroyo-concept.png)
+![Arroyo running in cloud Chrome](docs/images/neighborhood-street.png)
 
-The image above is the original concept target. In-engine screenshots and measured results are recorded in [the neighborhood result record](docs/neighborhood-results.md).
+The image above is an actual Standard-mode cloud desktop capture. In-engine screenshots and measured results are recorded in [the neighborhood result record](docs/neighborhood-results.md); the original [concept reference](assets/reference/arroyo-concept.png) remains part of the editable asset record.
 
 ## Run
 
@@ -58,7 +58,7 @@ For the actual cloud desktop, start `dev:poc` with no other players, then run `n
 
 ## Scope and project record
 
-This demonstrates a narrow browser/open.mp protocol subset with original placeholder geometry. Original GTA clients, original SA-MP servers, arbitrary public servers, GTA assets, combat, realistic physics, WAN hosting, and hardware GPU performance are not verified. Software WebGL rendering is functional evidence only.
+This demonstrates a narrow browser/open.mp protocol subset with an original stylized neighborhood. Original GTA clients, original SA-MP servers, arbitrary public servers, GTA assets, combat, realistic physics, WAN hosting, and hardware GPU performance are not verified. Software WebGL rendering is functional evidence only.
 
 - [Accepted PoC specification](docs/poc-plan.md) and [scope decision](docs/decisions/0002-placeholder-poc.md)
 - [Current status and continuation](docs/status.md)

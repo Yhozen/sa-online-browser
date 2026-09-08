@@ -1,0 +1,1028 @@
+{
+  "verifiedAt": "2026-09-08T00:56:57.451Z",
+  "command": "npm run verify:poc",
+  "environment": {
+    "node": "v24.14.0",
+    "platform": "linux",
+    "architecture": "x64",
+    "chromium": "Google Chrome for Testing 147.0.7727.15",
+    "headed": true,
+    "rendering": "SwiftShader under Xvfb; functional rendering only"
+  },
+  "upstream": {
+    "version": "v1.5.8.3079",
+    "sourceCommit": "c6759bd8d265171ae3d86598895a23d5a8d92a3b",
+    "url": "https://github.com/openmultiplayer/open.mp/releases/download/v1.5.8.3079/open.mp-linux-x86.tar.gz",
+    "sha256": "5df708898cbbb97f6c299ad5c1ff663a52ad4d3d39b3d561f1fe08a32df424f4",
+    "binarySha256": "4c402c280168447b841b862386ccc1bc1fd3126cfaad3481be493d84a04689ff"
+  },
+  "browserScenarios": [
+    {
+      "title": "graphics: software WebGL starts the playground",
+      "status": "expected",
+      "durationMs": 983
+    },
+    {
+      "title": "graphics: disabled WebGL shows recovery without starting a session",
+      "status": "expected",
+      "durationMs": 714
+    },
+    {
+      "title": "graphics: context exceptions are handled and retry can recover",
+      "status": "expected",
+      "durationMs": 727
+    },
+    {
+      "title": "neighborhood: failed assets and scene mismatch never simulate a joined player",
+      "status": "expected",
+      "durationMs": 2050
+    },
+    {
+      "title": "neighborhood: walking, fences, camera, occupants, loop and role swap",
+      "status": "expected",
+      "durationMs": 118638
+    },
+    {
+      "title": "neighborhood: twenty reconnects release browser workers and server slots",
+      "status": "expected",
+      "durationMs": 23747
+    },
+    {
+      "title": "neighborhood: ten minute recorded active session",
+      "status": "expected",
+      "durationMs": 628008
+    },
+    {
+      "title": "neighborhood: two active cloud views meet the low graphics budget",
+      "status": "expected",
+      "durationMs": 44458
+    },
+    {
+      "title": "neighborhood: rejoining the same tab releases skeleton textures",
+      "status": "expected",
+      "durationMs": 21735
+    },
+    {
+      "title": "end-to-end: normal players walk, chat, share a car and recover",
+      "status": "expected",
+      "durationMs": 16732
+    },
+    {
+      "title": "failures: duplicate name, worker crash, unavailable server and restart",
+      "status": "expected",
+      "durationMs": 26981
+    },
+    {
+      "title": "lifecycle: twenty browser connection cycles release sessions",
+      "status": "expected",
+      "durationMs": 24053
+    },
+    {
+      "title": "edges: jump, wall collision, safe passenger exit and hidden-tab cleanup",
+      "status": "expected",
+      "durationMs": 10508
+    },
+    {
+      "title": "soak: ten minutes of active two-player walking chat and driving",
+      "status": "expected",
+      "durationMs": 625290
+    }
+  ],
+  "durationMs": 1549027.331,
+  "normalPlayers": [
+    {
+      "name": "Proof_A",
+      "player": 0,
+      "npc": 0
+    },
+    {
+      "name": "Proof_B",
+      "player": 1,
+      "npc": 0
+    },
+    {
+      "name": "Proof_B",
+      "player": 1,
+      "npc": 0
+    }
+  ],
+  "browserCyclesReleased": 20,
+  "sustainedSession": {
+    "durationMs": 602448,
+    "rounds": 78,
+    "playerIds": [
+      0,
+      1
+    ],
+    "errors": []
+  },
+  "neighborhood": {
+    "performance": {
+      "recording": false,
+      "warmupMs": 10000,
+      "durationMs": 30421,
+      "rounds": 11,
+      "metrics": [
+        {
+          "preset": "low",
+          "viewport": [
+            1280,
+            720
+          ],
+          "renderScale": 0.3,
+          "renderSize": [
+            384,
+            216
+          ],
+          "medianFrameMs": 50,
+          "medianFPS": 20,
+          "p95FrameMs": 66.59999999999854,
+          "triangles": 50550,
+          "calls": 74,
+          "bytes": 4406536,
+          "textureBytes": 5941930.666666666,
+          "files": 15,
+          "sceneDownloadBytes": 5087107,
+          "textureStorageBytes": 5974052
+        },
+        {
+          "preset": "low",
+          "viewport": [
+            1280,
+            720
+          ],
+          "renderScale": 0.3,
+          "renderSize": [
+            384,
+            216
+          ],
+          "medianFrameMs": 50,
+          "medianFPS": 20,
+          "p95FrameMs": 66.69999999999709,
+          "triangles": 50550,
+          "calls": 74,
+          "bytes": 4406536,
+          "textureBytes": 5941930.666666666,
+          "files": 15,
+          "sceneDownloadBytes": 5087107,
+          "textureStorageBytes": 5974052
+        }
+      ]
+    },
+    "residentRejoins": [
+      {
+        "geometries": 66,
+        "textures": 11,
+        "programs": 13
+      },
+      {
+        "geometries": 67,
+        "textures": 11,
+        "programs": 13
+      },
+      {
+        "geometries": 67,
+        "textures": 11,
+        "programs": 13
+      },
+      {
+        "geometries": 67,
+        "textures": 11,
+        "programs": 13
+      },
+      {
+        "geometries": 67,
+        "textures": 11,
+        "programs": 13
+      },
+      {
+        "geometries": 68,
+        "textures": 11,
+        "programs": 13
+      },
+      {
+        "geometries": 68,
+        "textures": 11,
+        "programs": 13
+      },
+      {
+        "geometries": 68,
+        "textures": 11,
+        "programs": 13
+      },
+      {
+        "geometries": 68,
+        "textures": 11,
+        "programs": 13
+      },
+      {
+        "geometries": 68,
+        "textures": 11,
+        "programs": 13
+      },
+      {
+        "geometries": 68,
+        "textures": 11,
+        "programs": 13
+      },
+      {
+        "geometries": 68,
+        "textures": 11,
+        "programs": 13
+      },
+      {
+        "geometries": 68,
+        "textures": 11,
+        "programs": 13
+      },
+      {
+        "geometries": 68,
+        "textures": 11,
+        "programs": 13
+      },
+      {
+        "geometries": 68,
+        "textures": 11,
+        "programs": 13
+      },
+      {
+        "geometries": 68,
+        "textures": 11,
+        "programs": 13
+      },
+      {
+        "geometries": 68,
+        "textures": 11,
+        "programs": 13
+      },
+      {
+        "geometries": 68,
+        "textures": 11,
+        "programs": 13
+      },
+      {
+        "geometries": 68,
+        "textures": 11,
+        "programs": 13
+      },
+      {
+        "geometries": 68,
+        "textures": 11,
+        "programs": 13
+      }
+    ],
+    "sustainedSession": {
+      "durationMs": 603097,
+      "rounds": 92,
+      "metrics": [
+        {
+          "preset": "low",
+          "viewport": [
+            1280,
+            720
+          ],
+          "renderScale": 0.3,
+          "renderSize": [
+            384,
+            216
+          ],
+          "medianFrameMs": 66.69999999995343,
+          "medianFPS": 15,
+          "p95FrameMs": 83.30000000004657,
+          "triangles": 50554,
+          "calls": 76,
+          "bytes": 4406536,
+          "textureBytes": 5941930.666666666,
+          "files": 15,
+          "sceneDownloadBytes": 5087107,
+          "textureStorageBytes": 5974052
+        },
+        {
+          "preset": "low",
+          "viewport": [
+            1280,
+            720
+          ],
+          "renderScale": 0.3,
+          "renderSize": [
+            384,
+            216
+          ],
+          "medianFrameMs": 66.69999999995343,
+          "medianFPS": 15,
+          "p95FrameMs": 83.30000000004657,
+          "triangles": 50552,
+          "calls": 75,
+          "bytes": 4406536,
+          "textureBytes": 5941930.666666666,
+          "files": 15,
+          "sceneDownloadBytes": 5087107,
+          "textureStorageBytes": 5974052
+        }
+      ]
+    },
+    "routes": [
+      [
+        {
+          "goal": [
+            0,
+            9
+          ],
+          "position": [
+            0,
+            6.040945631191406,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 165,
+            "vehicle": 1,
+            "driver": 0,
+            "passenger": 1,
+            "x": 0,
+            "y": 6,
+            "z": 10,
+            "heading": 0,
+            "tick": 33320,
+            "receivedAt": 1788827493014
+          }
+        },
+        {
+          "goal": [
+            5,
+            12
+          ],
+          "position": [
+            2.862869838789152,
+            10.102626702202244,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 173,
+            "vehicle": 1,
+            "driver": 0,
+            "passenger": 1,
+            "x": 2.525,
+            "y": 9.809,
+            "z": 10,
+            "heading": 310.996,
+            "tick": 34926,
+            "receivedAt": 1788827494619
+          }
+        },
+        {
+          "goal": [
+            53,
+            12
+          ],
+          "position": [
+            50.343845103888896,
+            11.860199250031505,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 211,
+            "vehicle": 1,
+            "driver": 0,
+            "passenger": 1,
+            "x": 49.953,
+            "y": 11.813,
+            "z": 10,
+            "heading": 276.886,
+            "tick": 42526,
+            "receivedAt": 1788827502219
+          }
+        },
+        {
+          "goal": [
+            58,
+            7
+          ],
+          "position": [
+            55.733886901042425,
+            8.784589749909683,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 221,
+            "vehicle": 1,
+            "driver": 0,
+            "passenger": 1,
+            "x": 55.733,
+            "y": 8.784,
+            "z": 10,
+            "heading": 233.862,
+            "tick": 44526,
+            "receivedAt": 1788827504220
+          }
+        },
+        {
+          "goal": [
+            58,
+            -43
+          ],
+          "position": [
+            58.0519747659471,
+            -40.396552496562585,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 261,
+            "vehicle": 1,
+            "driver": 0,
+            "passenger": 1,
+            "x": 58.067,
+            "y": -40.209,
+            "z": 10,
+            "heading": 175.231,
+            "tick": 52527,
+            "receivedAt": 1788827512220
+          }
+        },
+        {
+          "goal": [
+            53,
+            -48
+          ],
+          "position": [
+            54.67910994123036,
+            -45.72632719124354,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 270,
+            "vehicle": 1,
+            "driver": 0,
+            "passenger": 1,
+            "x": 54.957,
+            "y": -45.374,
+            "z": 10,
+            "heading": 141.698,
+            "tick": 54327,
+            "receivedAt": 1788827514021
+          }
+        },
+        {
+          "goal": [
+            5,
+            -48
+          ],
+          "position": [
+            7.818565951280107,
+            -47.91333436523619,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 309,
+            "vehicle": 1,
+            "driver": 0,
+            "passenger": 1,
+            "x": 8.444,
+            "y": -47.918,
+            "z": 10,
+            "heading": 89.503,
+            "tick": 62129,
+            "receivedAt": 1788827521824
+          }
+        },
+        {
+          "goal": [
+            0,
+            -43
+          ],
+          "position": [
+            2.134632958396832,
+            -44.561060450305646,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 319,
+            "vehicle": 1,
+            "driver": 0,
+            "passenger": 1,
+            "x": 2.333,
+            "y": -44.704,
+            "z": 10,
+            "heading": 54.077,
+            "tick": 64128,
+            "receivedAt": 1788827523822
+          }
+        },
+        {
+          "goal": [
+            0,
+            6
+          ],
+          "position": [
+            -0.21960356945348297,
+            3.048902929274023,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 358,
+            "vehicle": 1,
+            "driver": 0,
+            "passenger": 1,
+            "x": -0.219,
+            "y": 2.684,
+            "z": 10,
+            "heading": 0.014,
+            "tick": 71934,
+            "receivedAt": 1788827531628
+          }
+        }
+      ],
+      [
+        {
+          "goal": [
+            0,
+            9
+          ],
+          "position": [
+            0,
+            6.097541628885433,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 375,
+            "vehicle": 1,
+            "driver": 1,
+            "passenger": 0,
+            "x": 0,
+            "y": 6.04,
+            "z": 10,
+            "heading": 0,
+            "tick": 75337,
+            "receivedAt": 1788827535030
+          }
+        },
+        {
+          "goal": [
+            5,
+            12
+          ],
+          "position": [
+            2.8932594475332376,
+            10.22834655330704,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 383,
+            "vehicle": 1,
+            "driver": 1,
+            "passenger": 0,
+            "x": 2.566,
+            "y": 9.93,
+            "z": 10,
+            "heading": 312.303,
+            "tick": 76935,
+            "receivedAt": 1788827536628
+          }
+        },
+        {
+          "goal": [
+            53,
+            12
+          ],
+          "position": [
+            50.11467334060317,
+            12.141430074785026,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 422,
+            "vehicle": 1,
+            "driver": 1,
+            "passenger": 0,
+            "x": 50.114,
+            "y": 12.141,
+            "z": 10,
+            "heading": 265.488,
+            "tick": 84736,
+            "receivedAt": 1788827544430
+          }
+        },
+        {
+          "goal": [
+            58,
+            7
+          ],
+          "position": [
+            55.739548437910784,
+            8.7018401243939,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 431,
+            "vehicle": 1,
+            "driver": 1,
+            "passenger": 0,
+            "x": 55.617,
+            "y": 8.786,
+            "z": 10,
+            "heading": 235.03,
+            "tick": 86536,
+            "receivedAt": 1788827546229
+          }
+        },
+        {
+          "goal": [
+            58,
+            -43
+          ],
+          "position": [
+            58.208128105713385,
+            -40.080566732325295,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 471,
+            "vehicle": 1,
+            "driver": 1,
+            "passenger": 0,
+            "x": 58.212,
+            "y": -39.899,
+            "z": 10,
+            "heading": 178.731,
+            "tick": 94537,
+            "receivedAt": 1788827554230
+          }
+        },
+        {
+          "goal": [
+            53,
+            -48
+          ],
+          "position": [
+            54.885603613627936,
+            -45.71322976433312,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 480,
+            "vehicle": 1,
+            "driver": 1,
+            "passenger": 0,
+            "x": 55.199,
+            "y": -45.308,
+            "z": 10,
+            "heading": 144.585,
+            "tick": 96337,
+            "receivedAt": 1788827556030
+          }
+        },
+        {
+          "goal": [
+            5,
+            -48
+          ],
+          "position": [
+            7.9314911749603025,
+            -48.05110505421592,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 519,
+            "vehicle": 1,
+            "driver": 1,
+            "passenger": 0,
+            "x": 8.462,
+            "y": -48.064,
+            "z": 10,
+            "heading": 88.544,
+            "tick": 104136,
+            "receivedAt": 1788827563831
+          }
+        },
+        {
+          "goal": [
+            0,
+            -43
+          ],
+          "position": [
+            2.1840309726994462,
+            -44.749831398586025,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 529,
+            "vehicle": 1,
+            "driver": 1,
+            "passenger": 0,
+            "x": 2.184,
+            "y": -44.749,
+            "z": 10,
+            "heading": 53.976,
+            "tick": 106137,
+            "receivedAt": 1788827565831
+          }
+        },
+        {
+          "goal": [
+            0,
+            6
+          ],
+          "position": [
+            0.18075415589971816,
+            3.5052360091203636,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 569,
+            "vehicle": 1,
+            "driver": 1,
+            "passenger": 0,
+            "x": 0.259,
+            "y": 2.815,
+            "z": 10,
+            "heading": 6.478,
+            "tick": 114138,
+            "receivedAt": 1788827573832
+          }
+        }
+      ]
+    ],
+    "cycles": {
+      "cycles": 20,
+      "ids": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "positionChecks": {
+      "count": 200,
+      "maxServerDistance": 0.07366511367371409,
+      "maxPeerDistance": 0.026256561279296875
+    },
+    "errors": []
+  },
+  "demoSupervisor": {
+    "termination": {
+      "startup": true,
+      "normalWorkerSpawn": true,
+      "signal": "SIGTERM",
+      "exitCode": 0,
+      "pidFileRemoved": true,
+      "allSupervisedProcessesExited": true,
+      "upstreamAbort": false
+    },
+    "keyboardInterrupt": {
+      "startup": true,
+      "normalWorkerSpawn": true,
+      "signal": "process-group SIGINT",
+      "exitCode": 0,
+      "pidFileRemoved": true,
+      "allSupervisedProcessesExited": true,
+      "upstreamAbort": false
+    }
+  },
+  "positionChecks": {
+    "count": 165,
+    "maxDistance": 0.4636038131713871,
+    "maxSampleAgeMs": 204,
+    "requiredDistance": 0.5,
+    "deadlineMs": 1000
+  },
+  "uncaughtBrowserErrors": [],
+  "testedSourceSha256": {
+    "apps/browser/src/main.ts": "3fa28ed78dcb5ac67e4a18092862dad3e445e62137ecf80ba9e19eb9ae2a6aaa",
+    "apps/browser/src/bootstrap.ts": "d512c6fc9eaf612fc44cc93013b113ed233eabb17fe08ef560fad6af0fb3b98f",
+    "apps/browser/src/graphics.ts": "8e4d4553d662aaa8b77419d52fb0a8200187396aa9643f1367f873b317bbcd03",
+    "services/gateway/server.mjs": "eae8e486a13d5df508932f24d004a86a34ad68048bd16ad5ccd80c8b65f9d1b6",
+    "native/worker.cpp": "805debb07a1504151f4deb487cc10d41f589d20f359bdd53cab147f2f10567e9",
+    "tools/setup-protocol.py": "fcaa0ce80cb14bf33a007d6bec1687e832e7d31a9a13b8a469e43110e0cfb2d4",
+    "test-server/poc.pwn": "4eff00e771aad1ecb1ade9905375889bdc252b1361b4a5ee7d08b262007b5fc7",
+    "test-server/arena.json": "b1dcd0a602599ba894d4bbe7a30a713a01daa61ae55bd9b5067135922019b53d",
+    "tests/browser/poc.spec.mjs": "9c78ca956ff627eea3ffeaad2c14e7eeca8bf082800b58d17e99b4cbeca68775",
+    "tests/browser/graphics.spec.mjs": "87011734081e045a3d535e68e1a47c6365b5f635aa5c6af4673f5137f10da034",
+    "tools/browser-options.mjs": "da82bba99f0482e135f2b4b1cebca475db053cd39e6a722f917fe7f85477877c",
+    "tools/open-browser.mjs": "34d1a3bd96e72f94b819e6ffe36f88eab093a589b416d1b84c5fef731df78d1c",
+    "playwright.config.mjs": "308117fb539a8f9fca3257ee1cefeb8fbd6ce48f7d9ec51cf72c95b3526741f3",
+    "tools/dev.mjs": "a32709f89229838bf118130367b16a016e375df0dc94ff1cabe75d5585ef0104",
+    "tools/verify-supervisor.py": "c0a2e0594b98236a2a1d7114e66d2ca0a8ddbba05e1ae77e4134ff7fa2cd0bd9",
+    "package-lock.json": "b99e5c05368deae7d0cd82a86505d33671cc2275c0852eed3f08afbd0b07bd74",
+    "apps/browser/src/assets.ts": "21055c36904c38da631d1cd08985eddfbe9590e667c7461b4c65d2cc5b04e7a9",
+    "apps/browser/src/environment.ts": "80834186499892738270a5cbd2480e017a4059046db44188404d35342634cc08",
+    "apps/browser/src/characters.ts": "147d9cd796e765f5560ea966ae49f49d3a47e9e622bf103a4ef09c832338c1c1",
+    "apps/browser/src/collision.ts": "bc98b1275031f6b3de5d753bc572f1ce2f77fa5d8d7b54e5b7bb5c65749cd110",
+    "apps/browser/src/camera.ts": "5e9689b5e753d13961e248285dfe68edbd5eff458f387bc2159f777bdf2f9ea1",
+    "apps/browser/src/hud.ts": "0606996c1d63c8e61adf86d3e253169a84cb44c7f5f652d13d13d7363cb3e783",
+    "apps/browser/src/shadows.ts": "5201573101a62ae060534d77123c496f03b8b07617a1da5109341603b86c7be0",
+    "packages/shared/scenes/neighborhood.json": "cce8c3bfc9bb5c4ddc7a7b96a71f72e6349cab4c07fa85d87a324a003cd056c2",
+    "apps/browser/public/assets/inventory.json": "7187c61b3efd56358a18703af80b30fcd5702a703ff62ce199f2976868a71cdb",
+    "tests/browser/neighborhood.spec.mjs": "8d1ff89b135e2d8272e2ef46768792c4c0fe3b75dbd72212ec36864239325885",
+    "tools/texture-audit.mjs": "63f31cce5de94af40edaa72f3f873c96a291b65d3f139f5713f6394bb07cb707",
+    "tools/verify-desktop.mjs": "ecc98742042ef070bde2e2dba209c4cf271e0866a26d6643c9f3c56cb6a689af",
+    "tools/create-scenes.mjs": "fcf8761843314956beea845f0acfa416bcffa31423b73f6275f2751dbaf52deb",
+    "tools/build-assets.mjs": "1198c5f8b084b0d54f9856d81eae4433487b6bf325528a4c1888cf68a640283b",
+    "tools/assets/build.py": "c9c3c6d9f594dd14ff71a8af4a0fba2733b0818a28e4f2cbc95349ab297a37c8",
+    "packages/shared/scene.mjs": "bf854bf1c671d16b9ac3ec47a08b02bfbd78b32a545bdb2d39ce814d621c5cd4",
+    "tools/setup-runtime.py": "d5f25a2dcbf91567ee20da8de05068cddda236b0b739148ecbb8963357716be3",
+    "packages/shared/scenes/yard.json": "eafd501e8fef4ffa7df59050ec41059c4d86b53e510aa83e7479e936497ed5ac",
+    "apps/browser/src/style.css": "f6deaf31d3c6fafb995aeb37b9070677e082339e0aaa8f14baceb09ef02dddad",
+    "package.json": "1f2d46278fb3f0ae6ee93d9b70b8b337486515cc36ce2de8b3663616686d7f90"
+  },
+  "nativeWorkerSha256": "4b1cb23ed915be631b5aa27bd48f625d79420c4380bc6ccb2762eb9625843c3d",
+  "evidence": [
+    "results.json",
+    "server-observations.json",
+    "position-agreements.json",
+    "browser-errors.json",
+    "soak.json",
+    "walking-chat.png",
+    "driver-passenger.png",
+    "wall-exit.png",
+    "soak-complete.png",
+    "report/",
+    "videos/",
+    "*.zip",
+    "../neighborhood/observations.json",
+    "../neighborhood/agreements.json",
+    "../neighborhood/routes.json",
+    "../neighborhood/soak.json",
+    "../neighborhood/performance.json",
+    "../neighborhood/cycles.json",
+    "../neighborhood/resident-rejoins.json",
+    "../neighborhood/errors.json",
+    "../neighborhood/*.zip",
+    "../neighborhood/videos/"
+  ],
+  "unverified": [
+    "original GTA clients",
+    "original SA-MP servers",
+    "public servers",
+    "non-Chromium browsers",
+    "hardware GPU performance",
+    "WAN behavior",
+    "GTA assets and realistic physics",
+    "full legacy protocol coverage"
+  ],
+  "scene": {
+    "id": "neighborhood",
+    "revision": "eb61086b5bfd46f6"
+  },
+  "implementationCommit": "b9093d8",
+  "checks": {
+    "typecheck": "passed",
+    "gatewayTests": 3,
+    "sceneTests": 6,
+    "nativeTests": 3,
+    "headedBrowserScenarios": 14,
+    "supervisorProbes": 2,
+    "actualDesktop": "passed"
+  },
+  "desktop": {
+    "verifiedAt": "2026-09-08T00:28:52.422Z",
+    "display": ":1",
+    "browser": "152.0.7977.82",
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "viewport": [
+      1280,
+      720
+    ],
+    "scene": {
+      "id": "neighborhood",
+      "revision": "eb61086b5bfd46f6"
+    },
+    "errors": [],
+    "normalPlayers": [
+      {
+        "name": "Desktop_A",
+        "player": 0,
+        "npc": 0
+      },
+      {
+        "name": "Desktop_B",
+        "player": 1,
+        "npc": 0
+      }
+    ],
+    "views": [
+      {
+        "name": "street",
+        "preset": "standard",
+        "triangles": 140444,
+        "drawCalls": 122,
+        "renderSize": [
+          1280,
+          720
+        ],
+        "textureStorageBytes": 14363684,
+        "unaccountedTextureFormats": []
+      },
+      {
+        "name": "pedestrian",
+        "preset": "standard",
+        "triangles": 140444,
+        "drawCalls": 122,
+        "renderSize": [
+          1280,
+          720
+        ],
+        "textureStorageBytes": 14363684,
+        "unaccountedTextureFormats": []
+      },
+      {
+        "name": "driving",
+        "preset": "standard",
+        "triangles": 143868,
+        "drawCalls": 125,
+        "renderSize": [
+          1280,
+          720
+        ],
+        "textureStorageBytes": 14363684,
+        "unaccountedTextureFormats": []
+      },
+      {
+        "name": "passenger",
+        "preset": "standard",
+        "triangles": 143868,
+        "drawCalls": 125,
+        "renderSize": [
+          1280,
+          720
+        ],
+        "textureStorageBytes": 14363684,
+        "unaccountedTextureFormats": []
+      },
+      {
+        "name": "low",
+        "preset": "low",
+        "triangles": 50548,
+        "drawCalls": 73,
+        "renderSize": [
+          384,
+          216
+        ],
+        "textureStorageBytes": 14363684,
+        "unaccountedTextureFormats": []
+      }
+    ],
+    "evidence": [
+      "artifacts/desktop/summary.json",
+      "artifacts/desktop/observations.json",
+      "artifacts/desktop/street.png",
+      "artifacts/desktop/pedestrian.png",
+      "artifacts/desktop/driving.png",
+      "artifacts/desktop/passenger.png",
+      "artifacts/desktop/cloud-desktop.png",
+      "artifacts/desktop/player-0.zip",
+      "artifacts/desktop/player-1.zip"
+    ]
+  },
+  "evidenceSha256": {
+    "artifacts/verification/results.json": "b55d9fd5cbbd6fe45589203fddeced2bc257cdeb4d37dcb2459d9435622e1bdd",
+    "artifacts/verification/server-observations.json": "f3de71acda8e942e418ad53897261839494b6d73be80776c78bbf58b82bf992c",
+    "artifacts/verification/position-agreements.json": "dd2056ed8e86db1cad1951c402210af7b62661ea37e2938de94e6e5ff6b952ea",
+    "artifacts/verification/soak.json": "f02fcea990710bba0787d91f5b77253e5df02231370057f10de515aec51c79b1",
+    "artifacts/neighborhood/observations.json": "cfce90688acd0457485d911112eabbbfda030176fbb0f90f67e45d4f56324026",
+    "artifacts/neighborhood/agreements.json": "e03a47bfe5e04c3dbbe95b1c7406831b989be6da1c8f73c6adbea000d3f84d88",
+    "artifacts/neighborhood/routes.json": "66ca1f4ba5c9e951c1063be6688322ab95c0c03e3a47432d5e9e27efbefa78a1",
+    "artifacts/neighborhood/performance.json": "daf5db51cb89dfc0b54081a982e26a335972aeff1f642cbe6d79c726d921029e",
+    "artifacts/neighborhood/soak.json": "d0f721f49406ac0937fe81acec4545af095e5e428262c7f2569949736c23a2ff",
+    "artifacts/neighborhood/cycles.json": "2fe31e312c89a96f4a6f6ca48fe73b264cbc8e39881bb72908e9783c9b52d92c",
+    "artifacts/neighborhood/resident-rejoins.json": "447f5420a7f7cb522cc2aa96ad29ebb4cfa1407c5730b9c378d285b292c27799",
+    "artifacts/neighborhood/errors.json": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "artifacts/desktop/summary.json": "d005ffba7b0faa34b82849cdd872df6810934fd00d244e230682071e516e199e",
+    "artifacts/desktop/observations.json": "c8a5ab8c9909d134361e7c240cd2bf28dfbc1f6fcf4229e13a389384fc97d6b7",
+    "docs/images/neighborhood-street.png": "c5498ea6b318b81f83639c094c0882cfb1f38505a6ff02628ec9c5123757c045",
+    "docs/images/neighborhood-occupants.png": "7bd8be8517dd28abca14d84f24ff73e4b961e3590f2c13b3c559958f84073ede"
+  },
+  "evidenceRoot": "artifacts/verification"
+}

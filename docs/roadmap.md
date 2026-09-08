@@ -2,6 +2,14 @@
 
 Date: 2026-09-07. This research roadmap is retained as historical context. The narrower browser/open.mp PoC is implemented; the current accepted milestone is [Arroyo neighborhood](neighborhood-plan.md), followed by a shared checkpoint challenge, private remote invitations/latency tests, and native-client interoperability. Consult [project status](status.md) for measured results rather than treating the original gates below as current status.
 
+## Next implementation slices after Arroyo
+
+1. **Shared checkpoint challenge.** Add a short ordered course to the scene manifest. Pawn owns the countdown, race generation, checkpoint order, elapsed time, finish and reset. Render course markers and a compact score panel from server state. Start with the existing shared coupe; verify both driver/passenger assignments, missed/out-of-order checkpoints, rematch, disconnect cancellation and server restart. Scores must follow server observations; local HUD state cannot award a finish. Browser-owned arcade movement remains a prototype, without an anti-cheat claim.
+2. **Private remote play.** Place the existing gateway behind HTTPS/WSS, keep its upstream destination fixed, and add expiring invitations plus concurrent-player/worker limits. Select hosting that can run the native UDP workers and server. Test two separate networks, reconnects and 50/100/200 ms latency before increasing capacity. Provisioning credentials and publishing the endpoint belong to that milestone, after a concrete deployment is prepared for review.
+3. **Native interoperability slice.** Establish a user-provided, legitimately installed GTA/SA-MP reference client and one aligned world fixture. Compare walking, chat, vehicle 411, headings, both seats, animation transitions and corrections beside a browser player. Reconcile geometry and world coordinates before testing an original SA-MP server build. The custom Arroyo map is retained as a browser experience and is not evidence of native map compatibility.
+
+Keep the full yard/neighborhood regressions and their source-hashed result record as the baseline for each slice. Interiors, ambient pedestrians/traffic, combat, streaming terrain and a day/night cycle remain separate work.
+
 ## Product target and dependency order
 
 First playable result: a desktop browser user opens the game, selects an available server, supplies supported local assets if needed, spawns beside a native SA-MP friend, chats, walks, enters the same supported vehicle as driver/passenger, and completes a short drive. Start with 2 players; expand to an 8-player private session. No native helper should be required on the browser user's machine.

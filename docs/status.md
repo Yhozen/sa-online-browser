@@ -1,6 +1,10 @@
 # Project status and continuation
 
-Updated 2026-09-07. The current accepted scope is [the Arroyo neighborhood plan](neighborhood-plan.md), preserving the working [browser PoC subset](poc-plan.md). Full neighborhood and retained-yard acceptance is running; preliminary route, collision, loading and lifecycle checks have passed. SA-MP 0.3.7 through separate native workers remains the selected protocol architecture.
+Updated 2026-09-08. **The Arroyo neighborhood milestone is complete for the cloud-local browser/open.mp scope.** See [measured neighborhood results](neighborhood-results.md), [source-hashed verification](neighborhood-verification.json), and the [accepted plan](neighborhood-plan.md). SA-MP 0.3.7 through separate native workers remains the protocol architecture.
+
+Final acceptance: **14 headed browser scenarios**, 3 gateway tests, 6 scene tests, 3 native tests and 2 supervisor probes passed. The final neighborhood soak completed 92 active rounds in 603.1 seconds; the yard completed 78 rounds in 602.4 seconds. Both role assignments completed the neighborhood loop; all reconnect/cleanup and 0.5-unit agreement gates passed. Actual cloud desktop verification also passed.
+
+Two 1280×720 Low views measured 20 FPS median / about 67 ms p95 using 384×216 internal 3D rendering. Complete scene load: 5.09 MB. Audited texture storage: 5.70 MiB cold Low / 13.70 MiB after Standard switching. Standard desktop views submitted at most 143,868 triangles / 125 calls. These are SwiftShader results; native GTA world compatibility, WAN behavior and hardware GPU performance remain unverified.
 
 ## Current implementation
 
@@ -8,7 +12,9 @@ The unchanged official open.mp release runs locally. Two ordinary, non-NPC proto
 
 The cloud desktop WebGL startup failure is fixed with `npm run open:poc`, which launches a separate Chrome profile with the same SwiftShader graphics flags used by verification. The failing desktop Chrome was running with `--disable-gpu`; the earlier acceptance results only covered explicitly enabled software WebGL. Unavailable graphics now produce a recovery screen before networking starts. See [run and recovery instructions](../README.md#webgl-startup-errors).
 
-Validation of this fix: three headed graphics regressions passed (software WebGL, browser-disabled WebGL, context exception/retry), plus type checking, production build, three gateway tests, and three native CTests. The unchanged headed multiplayer end-to-end scenario passed against an isolated fixture on HTTP 3200 / UDP 7778, with only test paths and ports adapted. An initial run missed the timed car-distance threshold while an extra software-rendered game window was open; the next attempt encountered a concurrently restarted demo on port 3000, so verification moved to the isolated fixture. The launcher was also visually checked on the actual cloud desktop. The historical full acceptance/soak results below were not rerun for this fix; future full verification includes all eight browser scenarios.
+The original WebGL recovery fix is preserved by all three graphics checks in the current 14-scenario suite. The current neighborhood result record supersedes the initial PoC acceptance snapshot below.
+
+### Historical initial PoC milestones
 
 | Milestone | Status | Evidence |
 | --- | --- | --- |
@@ -33,17 +39,17 @@ Validation of this fix: three headed graphics regressions passed (software WebGL
 
 ## Continuing work
 
-The approved local PoC is complete. See [the result record](poc-results.md) and [machine summary](poc-verification.json). Run `npm run setup:poc`, then `npm run verify:poc` with ports 3000/7777 free to reproduce acceptance. Start the demo with `npm run dev:poc`. Keep generated runtime downloads and recordings ignored; committed summaries and source hashes identify the tested implementation.
+The approved local PoC and neighborhood are complete. See [neighborhood results](neighborhood-results.md) and [current machine summary](neighborhood-verification.json). The earlier [PoC result](poc-results.md) remains historical evidence. Run `npm run setup:poc`, then `npm run verify:poc` with ports 3000/7777 free to reproduce acceptance. Start the demo with `npm run dev:poc`. Keep generated runtime downloads and recordings ignored; committed summaries and source hashes identify the tested implementation.
 
-The accepted continuation is Arroyo, then a server-scored checkpoint challenge and private remote play, followed by a native-reference interoperability slice with user-provided assets and an original/native comparison fixture. Public-server admission, broader RPC coverage, cross-browser behavior, network impairment, realistic GTA collision/handling, asset streaming, and deployment remain separate gates in the long-horizon roadmap.
+The next slices are a server-scored checkpoint challenge and private remote play, followed by a native-reference interoperability slice with user-provided assets and an original/native comparison fixture. Public-server admission, broader RPC coverage, cross-browser behavior, network impairment, realistic GTA collision/handling, asset streaming, and deployment remain separate gates in the long-horizon roadmap.
 
 ## History
 
 Research compared MTA, SA-MP/open.mp, and browser/runtime feasibility with parallel agents. MTA's unavailable transport/anti-cheat internals made SA-MP the more inspectable initial target. The user then approved the narrower placeholder PoC and its local two-browser acceptance criteria. Parallel implementation covered the runtime fixture, native protocol, and browser; the primary agent integrated the gateway, verification, and durable project record.
 
-## Active: Arroyo neighborhood
+## Neighborhood implementation history
 
-Accepted neighborhood implementation is underway. The existing yard remains the multiplayer regression fixture. Art direction and gates: [neighborhood plan](neighborhood-plan.md). Original concept and texture inputs generated with the imagegen skill; official Blender download returned a Cloudflare challenge, and the official mirror supplies the pinned release/checksum.
+The neighborhood implementation is complete; these notes preserve the experiments and corrections. The existing yard remains the multiplayer regression fixture. Art direction and gates: [neighborhood plan](neighborhood-plan.md). Original concept and texture inputs generated with the imagegen skill; official Blender download returned a Cloudflare challenge, and the official mirror supplies the pinned release/checksum.
 
 Scene contract and first asset kit are implemented. The original Blender rig exports all four requested clips. Initial desktop inspection caught a minimap covering the join button at 720p and competing old/new camera updates; both are fixed before acceptance testing. Imported geometry and materials are shared rather than disposed on player reconnect.
 
@@ -51,4 +57,4 @@ Cloud graphics tuning: first two-view PBR run was below the FPS target. Low mode
 
 Final review caught head/roof clipping after the coupe's cabin was lowered. Seat anchors and the seated pose now fit a measured ceiling/floor envelope, checked from the exported skin and animation. Same-tab reconnects explicitly dispose skeleton textures. An initial recorded ten-minute neighborhood session completed 92 active rounds / 603.756 seconds without networking divergence, but missed the FPS target with capture overhead (~15 FPS). Ordinary-play performance is now measured separately from the recorded soak; both measurements will be retained. The first unrecorded benchmark reached about 20 FPS / 67 ms p95. Initial warm-up geometry uploads are excluded from the resident-tab leak check.
 
-September 8: the complete 14-scenario run passed, including both ten-minute soaks and both supervisor shutdown probes. Final placement review then moved poles/lamps off the turning circle and road edges, attached wires to actual pole placements, added the missing four decorative palm colliders and grounded the street sign. Geometry checks now enforce those constraints. Actual desktop automation passed after removing a leftover packet-handler flag that briefly marked seated peers hidden between frames. Its Standard captures submitted at most 143,870 triangles / 126 calls, and a test-only WebGL storage audit measured 13.7 MiB including bones and shadow textures. The final source revision is being rerun through full acceptance before publishing the result record.
+September 8: the complete 14-scenario run passed, including both ten-minute soaks and both supervisor shutdown probes. Final placement review then moved poles/lamps off the turning circle and road edges, attached wires to actual pole placements, added the missing four decorative palm colliders and grounded the street sign. Geometry checks now enforce those constraints. Actual desktop automation passed after removing a leftover packet-handler flag that briefly marked seated peers hidden between frames. Its Standard captures submitted at most 143,870 triangles / 126 calls, and a test-only WebGL storage audit measured 13.7 MiB including bones and shadow textures. The final source revision subsequently passed the full acceptance rerun; its hashes and results are recorded in neighborhood-verification.json.

@@ -1,6 +1,6 @@
 # ADR 0004: original neighborhood presentation over the existing protocol subset
 
-Status: accepted and being verified, 2026-09-07.
+Status: implemented and verified for the local scope, 2026-09-08. See [results](../neighborhood-results.md).
 
 ## Decision
 
