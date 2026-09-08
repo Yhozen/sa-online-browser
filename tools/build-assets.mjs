@@ -49,6 +49,9 @@ copyFileSync(
   "apps/browser/public/assets/neighborhood-atlas.png",
 );
 
-for (const name of ["surfaces", "details", "foliage", "sky"])
+for (const name of ["surfaces", "details", "foliage", "sky", "asphalt"])
   copyFileSync(`assets/textures/arroyo-${name}.png`, `apps/browser/public/assets/arroyo-${name}.png`);
 run(process.execPath, ["tools/asset-inventory.mjs"]);
+
+// Capture static scene lighting once; normal setup consumes the committed cache.
+run(process.execPath, ["tools/bake-reflections.mjs"]);

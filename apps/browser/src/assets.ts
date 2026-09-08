@@ -4,7 +4,10 @@ import { GLTFLoader, type GLTF } from "three/addons/loaders/GLTFLoader.js";
 import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
 import { clone } from "three/addons/utils/SkeletonUtils.js";
 import { surfaceTexture } from "./surface-textures";
+import { decodeReflection } from "./reflection-storage";
 export let environmentTexture: THREE.Texture | undefined;
+export let reflectionTexture: THREE.Texture | undefined;
+export const bakingReflections = new URLSearchParams(location.search).get("bake-reflections") === "1";
 const models = new Map<string, GLTF>();
 export const surfaceMaterials = new Map<string, THREE.MeshStandardMaterial>();
 export const assetStats = { bytes: 0, textureBytes: 0, files: 0 };
@@ -27,6 +30,7 @@ const names = [
 export async function loadAssets(
   progress: (text: string) => void,
   inventory?: { files: Record<string, { bytes: number; sha256: string }> },
+  neighborhoodReflections = true,
 ) {
   const loader = new GLTFLoader();
   let count = 0;
@@ -81,8 +85,8 @@ export async function loadAssets(
             if (m.name === "paint" && m instanceof THREE.MeshStandardMaterial) {
               const physical = new THREE.MeshPhysicalMaterial();
               THREE.MeshStandardMaterial.prototype.copy.call(physical, m);
-              physical.clearcoat = 1; physical.clearcoatRoughness = .14;
-              physical.metalness = .45; physical.roughness = .29; physical.color.set(0x123148);
+              physical.clearcoat = 1; physical.clearcoatRoughness = .24; physical.envMapIntensity = 1.3;
+              physical.metalness = .45; physical.roughness = .29; physical.color.set(0x193d5a);
               canonical.set(m.name, physical); m.dispose();
             } else canonical.set(m.name, m);
           }
@@ -125,7 +129,7 @@ export async function loadAssets(
       const size = name === "asphalt" ? 1024 : 512;
       const maps = surfaceTexture(bitmap, i, size);
       const material = new THREE.MeshStandardMaterial({ ...maps, roughness: .95, normalScale: new THREE.Vector2(.45, .45) });
-      if (name === "asphalt") { material.color.set(0x9a9a96); material.roughness = .88; }
+      if (name === "asphalt") { material.color.set(0xb1b1aa); material.roughness = .88; }
       if (name === "grass") material.color.set(0xabb787);
       if (name === "concrete") material.color.set(0xded8c8);
       surfaceMaterials.set(name, material);
@@ -143,6 +147,14 @@ export async function loadAssets(
     }
     bitmap.close();
   }
+  // A 12m authored material carries connected repair/crack structure at street scale.
+  const asphaltInput = await textureInput("arroyo-asphalt.png");
+  const asphaltMaps = surfaceTexture(asphaltInput, -1, 1254);
+  for (const texture of Object.values(asphaltMaps)) texture.repeat.setScalar(1 / 3);
+  Object.assign(surfaceMaterials.get("asphalt")!, asphaltMaps);
+  surfaceMaterials.get("asphalt")!.normalScale.set(.55, .55);
+  assetStats.textureBytes += 1254 * 1254 * 4 * 4 / 3 * 3;
+  asphaltInput.close();
   const leaves = await textureInput("arroyo-foliage.png");
   const leafTexture = new THREE.Texture(leaves);
   leafTexture.colorSpace = THREE.SRGBColorSpace; leafTexture.needsUpdate = true; leafTexture.flipY = false;
@@ -155,12 +167,40 @@ export async function loadAssets(
       m.roughness = .85; m.needsUpdate = true;
     }
   }
+  // Thin foliage admits light across a wider hemisphere than opaque masonry.
+  // Preserve actual shadow visibility and alpha depth; add only local leaf fill.
+  for (const [name, material] of canonical) {
+    if (!(material instanceof THREE.MeshStandardMaterial)) continue;
+    if (name.startsWith("foliage") || name.startsWith("palm-frond")) {
+      material.envMapIntensity = 1.75;
+      material.emissive.copy(material.color); material.emissiveIntensity = .10;
+      material.emissiveMap = material.map;
+      material.onBeforeCompile = shader => {
+        shader.fragmentShader = shader.fragmentShader.replace("#include <lights_physical_pars_fragment>",
+          THREE.ShaderChunk.lights_physical_pars_fragment.replace(
+            "float dotNL = saturate( dot( geometryNormal, directLight.direction ) );",
+            "float dotNL = saturate( dot( geometryNormal, directLight.direction ) * 0.65 + 0.35 );"));
+      };
+      material.customProgramCacheKey = () => "arroyo-thin-leaf-v1";
+      material.needsUpdate = true;
+    }
+    if (name === "glass") { material.envMapIntensity = 1.4; material.roughness = .24; if(material instanceof THREE.MeshPhysicalMaterial)material.specularIntensity=.12; }
+  }
   const sky = await textureInput("arroyo-sky.png");
   environmentTexture = new THREE.Texture(sky);
   environmentTexture.colorSpace = THREE.SRGBColorSpace;
   environmentTexture.needsUpdate = true; environmentTexture.flipY = false;
   assetStats.textureBytes += sky.width * sky.height * 4 * 4 / 3;
-
+  if (neighborhoodReflections && !bakingReflections) {
+    const name = "arroyo-reflections.pmrem.gz";
+    progress("Loading neighborhood reflections");
+    const response = await fetch(`/assets/${name}`, {signal:AbortSignal.timeout(30000)});
+    if (!response.ok) throw Error(`${name} could not load. Run npm run build:assets and retry.`);
+    const bytes = await response.arrayBuffer(); await verify(name, bytes);
+    const decoded = await decodeReflection(bytes);
+    reflectionTexture = decoded.texture;
+    assetStats.textureBytes += decoded.bytes; assetStats.bytes += bytes.byteLength; assetStats.files++;
+  }
 }
 export function asset(name: string): THREE.Group {
   const gltf = models.get(name);
@@ -175,6 +215,26 @@ export function asset(name: string): THREE.Group {
 }
 export function clips() {
   return models.get("neighbor")!.animations;
+}
+export function bindAssetEnvironment(texture: THREE.Texture, localProbe?: THREE.Texture) {
+  const seen = new Set<THREE.Material>();
+  for (const model of models.values()) model.scene.traverse(object => {
+    if (!(object instanceof THREE.Mesh)) return;
+    for (const material of Array.isArray(object.material) ? object.material : [object.material]) {
+      if (!(material instanceof THREE.MeshStandardMaterial) || seen.has(material)) continue;
+      seen.add(material);
+      const leaf = material.name.startsWith("foliage") || material.name.startsWith("palm-frond");
+      if (!leaf && !["paint", "glass", "denim"].includes(material.name)) continue;
+      // Three uses scene.environmentIntensity when material.envMap is null.
+      // Explicitly bind this shared PMREM to retain per-surface light response.
+      const local = localProbe && ["paint", "glass"].includes(material.name);
+      material.envMap = local ? localProbe : texture;
+      material.envMapRotation.x = local ? 0 : Math.PI / 2;
+      material.envMapIntensity = leaf ? 1.55 : material.name === "denim" ? .8 : .85;
+      if (leaf) material.emissiveIntensity = .085;
+      material.needsUpdate = true;
+    }
+  });
 }
 export function instantiateStatic(
   scene: THREE.Scene,

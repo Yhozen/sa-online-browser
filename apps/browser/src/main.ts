@@ -55,6 +55,7 @@ renderer.domElement.setAttribute(
 el("viewport").append(renderer.domElement);
 const sun = installAtmosphere(scene, renderer);
 const antialias = nativeAntialias(renderer, scene, camera);
+window.addEventListener("pagehide", event => { if (!event.persisted) sun.dispose(); });
 antialias.resize();
 interface Peer {
   id: number;
@@ -777,6 +778,7 @@ function frame(now: number) {
   updateSun(sun, target);
   if (!document.hidden) antialias.render(quality === "standard");
   if (sceneReady) {
+    frameCount++;
     frameTimes.push(elapsed);
     if (frameTimes.length > 1800) frameTimes.shift();
   }
@@ -855,6 +857,7 @@ function snapshot() {
         calls: renderer.info.render.calls,
         assets: assetStats,
         frameTimes,
+        frameCount,
         camera: {
           position: camera.position.toArray(),
           yaw: followCamera.yaw,
@@ -911,6 +914,7 @@ Object.defineProperty(window, "__poc", {
 });
 
 const frameTimes: number[] = [];
+let frameCount = 0;
 let quality = localStorage.getItem("poc-quality") || "standard";
 function setQuality(value: string) {
   quality = value === "standard" ? "standard" : "low";
@@ -949,9 +953,11 @@ async function initializeScene() {
     await loadAssets(
       (text) => (el("loading").textContent = text),
       arena.assets,
+      arena.id === "neighborhood",
     );
     buildEnvironment(scene, arena);
-    await sun.environment();
+    el("loading").textContent = "Preparing neighborhood light and reflections…";
+    await sun.environment(arena.id === "neighborhood" ? arena.vehicle.position : undefined);
     selfMesh = capsule(0);
     selfMesh.visible = false;
     el("loading").textContent = "Ready · " + arena.name;

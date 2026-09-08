@@ -76,7 +76,7 @@ export class FollowCamera {
     const target = new THREE.Vector3(
         position[0],
         position[1],
-        position[2] + 0.75,
+        position[2] + (driving ? 0.45 : 0.75),
       ),
       d = this.distance + (driving ? 1.8 : 0);
     const desired = target

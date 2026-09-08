@@ -14,15 +14,19 @@ glass_shader=glass.node_tree.nodes.get('Principled BSDF')
 glass_shader.inputs['Base Color'].default_value=(.045,.070,.085,1)
 glass_shader.inputs['Alpha'].default_value=.30
 glass_shader.inputs['Roughness'].default_value=.105
-glass_shader.inputs['Metallic'].default_value=.08
-glass_shader.inputs['Coat Weight'].default_value=.20
+glass_shader.inputs['Metallic'].default_value=0
+glass_shader.inputs['Specular IOR Level'].default_value=.24
+glass_shader.inputs['IOR'].default_value=1.38
+glass_shader.inputs['Coat Weight'].default_value=0
 glass_shader.inputs['Coat Roughness'].default_value=.08
 paint = material('paint', (.018, .105, .13), .23, .68)
 paint.node_tree.nodes.get('Principled BSDF').inputs['Coat Weight'].default_value = .65
 paint.node_tree.nodes.get('Principled BSDF').inputs['Coat Roughness'].default_value = .16
 leather = material('leather', (.055, .063, .061), .78)
 stitch = material('stitch', (.37, .36, .30), .92)
-alloy = material('alloy', (.42, .46, .47), .22, .88)
+alloy = material('alloy', (.33, .36, .37), .36, .75)
+interior_metal=material('interior-metal',(.055,.063,.067),.72,.22)
+tire_rubber=material('tire-rubber',(.011,.013,.014),.96)
 brake = material('brake', (.17, .185, .19), .46, .7)
 lampglass = material('lampglass', (.74, .83, .86), .12, .2)
 indicator = material('indicator', (.80, .27, .025), .29)
@@ -120,11 +124,11 @@ start()
 # are modeled independently so tires occupy actual openings rather than
 # intersecting a cuboid chassis.
 profiles = [
-    (-2.20, .67, -.38), (-2.12, .82, -.27), (-1.92, .91, -.21),
-    (-1.58, .94, -.16), (-1.28, .92, -.13), (-.90, .89, -.12),
-    (-.25, .89, -.14), (.45, .89, -.16), (.95, .92, -.19),
-    (1.38, .94, -.22), (1.78, .90, -.26), (2.04, .83, -.34),
-    (2.20, .67, -.43),
+    (-2.20, .72, -.29), (-2.12, .835, -.235), (-1.92, .905, -.18),
+    (-1.58, .93, -.14), (-1.28, .914, -.12), (-.90, .89, -.12),
+    (-.25, .89, -.14), (.45, .89, -.15), (.95, .914, -.16),
+    (1.38, .93, -.18), (1.78, .898, -.22), (2.04, .85, -.26),
+    (2.20, .72, -.295),
 ]
 
 
@@ -139,36 +143,40 @@ def body_profile(y):
 def arch_bottom(y):
     for wy in [-1.38, 1.38]:
         dy = abs(y-wy)
-        if dy < .465:
-            return -.59 + math.sqrt(.465**2 - dy**2)
+        if dy < .445:
+            return -.59 + math.sqrt(.445**2 - dy**2)
     return -.74
 
 
 ys = sorted(set([round(-2.2 + i * .05, 4) for i in range(89)] +
-                [round(wy + math.cos(i * math.pi / 32) * .465, 4)
+                [round(wy + math.cos(i * math.pi / 32) * .445, 4)
                  for wy in [-1.38, 1.38] for i in range(33)]))
 for sign in [-1, 1]:
     verts = []; faces = []
     for y in ys:
         width, top = body_profile(y); low = arch_bottom(y)
-        # The wheel lip rises above the shoulder very near the tire's apex.
-        shoulder = max(top, low + .045)
-        verts += [(sign * (width-.095), y, shoulder+.045),
-                  (sign * width, y, shoulder),
-                  (sign * (width+.006), y, shoulder*.35+low*.65),
-                  (sign * (width-.025), y, low)]
+        # Six tightly controlled rows retain the shoulder crease, then a
+        # largely planar door skin. Extra rows avoid interpolating one swollen
+        # normal across the full door height.
+        shoulder = max(top, low + .026)
+        verts += [(sign*(width-.065),y,shoulder+.025),
+                  (sign*(width-.006),y,shoulder),
+                  (sign*width,y,shoulder*.88+low*.12),
+                  (sign*width,y,shoulder*.40+low*.60),
+                  (sign*(width-.008),y,shoulder*.12+low*.88),
+                  (sign*(width-.015),y,low)]
     for j in range(len(ys)-1):
-        for k in range(3):
-            ids = (j*4+k, j*4+k+1, (j+1)*4+k+1, (j+1)*4+k)
-            faces.append(ids if sign > 0 else tuple(reversed(ids)))
+        for k in range(5):
+            ids=(j*6+k,j*6+k+1,(j+1)*6+k+1,(j+1)*6+k)
+            faces.append(ids if sign>0 else tuple(reversed(ids)))
     shell = smooth(mesh('sculpted quarter and door', verts, faces, paint))
     for wy in [-1.38, 1.38]:
         lip = []
         for i in range(41):
             a = i * math.pi / 40
-            y = wy + math.cos(a) * .465
-            lip.append((sign * (body_profile(y)[0]+.013), y, -.59+math.sin(a)*.465))
-        tube('rolled wheel arch', lip, .017, paint, 8)
+            y = wy + math.cos(a) * .445
+            lip.append((sign * (body_profile(y)[0]+.009), y, -.59+math.sin(a)*.445))
+        tube('rolled wheel arch', lip, .011, paint, 8)
         # Dark inner wheel well around the open arch; it catches real shadows.
         verts = []
         for p in lip:
@@ -186,9 +194,13 @@ def body_top(name, y0, y1, rows):
         w,z = body_profile(y)
         for i in range(17):
             x = (i/8-1)*(w-.065)
-            # Tensioned hood/cross-section with two gently raised swage lines.
-            xn = x/(w-.065)
-            zc = z + .050*(1-xn*xn) + .021*math.exp(-((abs(xn)-.68)/.12)**2)
+            # Match the quarter-panel inner edge exactly. Independent hood
+            # and arch heights previously created a bent-looking open seam.
+            xn=x/(w-.065)
+            edge=max(z,arch_bottom(y)+.026)+.025
+            center=max(z+.030,arch_bottom(y)+.035)
+            zc=center+(edge-center)*abs(xn)**3
+            zc+=.007*math.exp(-((abs(xn)-.65)/.13)**2)*(1-abs(xn))
             verts.append((x,y,zc))
     for j in range(rows):
         for i in range(16):
@@ -196,25 +208,46 @@ def body_top(name, y0, y1, rows):
     return smooth(mesh(name, verts, faces, paint))
 
 body_top('sculpted hood', .82, 2.2, 24)
-body_top('rear deck', -2.2, -1.04, 20)
+body_top('rear deck', -2.2, -1.205, 20)
+# The rear deck terminates at the glazing sill instead of passing through the
+# lower pane. A narrow painted flange closes the gap without coplanar overlap.
+sill_vertices=[]
+for i in range(17):
+    nx=i/8-1;x=nx*.79;w,z=body_profile(-1.205)
+    xn=x/(w-.065);edge=max(z,arch_bottom(-1.205)+.026)+.025
+    center=max(z+.030,arch_bottom(-1.205)+.035)
+    deck_z=center+(edge-center)*abs(xn)**3+.007*math.exp(-((abs(xn)-.65)/.13)**2)*(1-abs(xn))
+    sill_vertices.extend([(x,-1.205,deck_z),(x,-1.17-.028*(1-nx*nx),-.105+.014*(1-nx*nx))])
+smooth(mesh('rear glass sill flange',sill_vertices,[(i*2,i*2+2,i*2+3,i*2+1) for i in range(16)],paint))
 ring_mesh('integrated rear lip', [((0,y,z),w,d) for y,z,w,d in [(-2.05,-.172,.80,.019),(-1.98,-.118,.87,.027),(-1.91,-.145,.87,.020)]],paint,'y',28)
 for side in [-1,1]:
+    # Continuous painted belt shoulder connects the fitted glass sill to
+    # the main door skin, eliminating an open dark slot under the side window.
+    belt_vertices=[]
+    for j in range(25):
+        t=j/24;y=-1.035+1.875*t
+        w,z=body_profile(y);edge=max(z,arch_bottom(y)+.026)+.025
+        belt_vertices.extend([(side*(.78+.02*t),y,-.065-.01*t),
+                              (side*(w-.065),y,edge)])
+    belt_faces=[(j*2,j*2+1,j*2+3,j*2+2) for j in range(24)]
+    smooth(mesh('continuous door belt',belt_vertices,
+        belt_faces if side>0 else [tuple(reversed(f)) for f in belt_faces],paint))
     # A real door shutline is dark and fine, not a protruding trim bar.
-    tube('door shutline',[(side*.88,-.91,-.14),(side*.909,-.87,-.32),
-         (side*.897,-.79,-.61),(side*.895,.59,-.61),(side*.916,.79,-.32),(side*.9,.81,-.17)], .004, dark, 6)
-    box('flush door handle',(side*.918,-.62,-.205),(.024,.18,.024),chrome,.01)
+    tube('door shutline',[(side*.885,-.91,-.13),(side*.893,-.87,-.32),
+         (side*.889,-.79,-.61),(side*.889,.59,-.61),(side*.894,.79,-.32),(side*.893,.81,-.15)], .0024, dark, 6)
+    box('flush door handle',(side*.900,-.62,-.205),(.024,.18,.024),chrome,.01)
     # Door card sits inside the painted outer panel.
     box('inner door card',(side*.79,-.02,-.40),(.08,1.65,.37),leather,.035)
     box('door armrest',(side*.735,-.16,-.33),(.12,.45,.07),dark,.027)
 
 # Front and rear fascias follow the outline of the continuous shell.
 for y, facing in [(2.15,1),(-2.15,-1)]:
-    top = -.37 if facing > 0 else -.24
+    top = -.245 if facing > 0 else -.24
     py=y-facing*.06
     panel=[(-.78,py,top),(.78,py,top),(.83,py,-.46),(.75,py,-.69),(-.75,py,-.69),(-.83,py,-.46)]
-    rounded_panel('continuous fascia',panel if facing<0 else list(reversed(panel)),paint,.055,.035)
+    rounded_panel('continuous fascia',panel if facing<0 else list(reversed(panel)),paint,.044,.025)
     ring_mesh('curved bumper',[((0,y+facing*t,z),w,d) for t,z,w,d in
-              [(-.065,-.56,.83,.13),(0,-.55,.82,.145),(.047,-.55,.73,.11)]],paint,'y',28)
+              [(-.052,-.56,.824,.104),(0,-.55,.814,.116),(.038,-.55,.746,.088)]],paint,'y',28)
     box('lower grille',(0,y+facing*.066,-.56),(.94,.018,.115),dark,.04)
     for i in (range(-6,7) if facing > 0 else [-5,0,5]):
         box('grille blades',(i*.064,y+facing*.08,-.56),(.016,.012,.09),brake,.004)
@@ -255,13 +288,13 @@ roof_skin=smooth(mesh('continuous roof skin',roof_vertices,roof_faces,paint))
 mod=roof_skin.modifiers.new('roof sheet thickness','SOLIDIFY');mod.thickness=.022
 bpy.context.view_layer.objects.active=roof_skin;bpy.ops.object.modifier_apply(modifier=mod.name)
 for side in [-1,1]:
-    tube('A pillar',[(side*.81,.91,-.13),(side*.76,.75,.08),(side*.66,.42,.39),(side*.58,.33,.47)],.032,paint,10)
-    tube('C pillar',[(side*.84,-1.19,-.12),(side*.78,-1.05,.15),(side*.64,-.75,.43),(side*.57,-.62,.48)],.049,paint,10)
+    tube('A pillar',[(side*.81,.91,-.13),(side*.76,.75,.08),(side*.66,.42,.39),(side*.58,.33,.47)],.024,paint,10)
+    tube('C pillar',[(side*.84,-1.19,-.12),(side*.78,-1.05,.15),(side*.64,-.75,.43),(side*.57,-.62,.48)],.03675,paint,10)
     window=[(side*.80,.84,-.075),(side*.65,.36,.424),(side*.64,-.62,.427),(side*.78,-1.035,-.065)]
     rounded_panel('clear side glazing',window if side > 0 else list(reversed(window)),glass,.003,0)
-    tube('rubber window seal',window,.014,dark,8,True)
+    tube('rubber window seal',window,.0105,dark,8,True)
     tube('polished belt trim',[(side*.83,.87,-.095),(side*.85,-1.09,-.09)],.009,chrome)
-    tube('rear quarter divider',[(side*.69,-.62,.413),(side*.79,-.63,-.07)],.018,paint)
+    tube('rear quarter divider',[(side*.69,-.62,.413),(side*.79,-.63,-.07)],.0135,paint)
     # Sculpted side mirror with reflective front face.
     ring_mesh('mirror shell',[((side*x,y,z),w,d) for x,y,z,w,d in
        [(.81,.57,.04,.045,.023),(.99,.55,.068,.13,.061),(1.045,.44,.07,.11,.055)]],paint,'y',16)
@@ -298,18 +331,18 @@ empty('cabin_ceiling',(0,0,.45));empty('cabin_floor',(0,0,-.85))
 ring_mesh('sculpted dash',[((0,y,z),w,d) for y,z,w,d in [(.40,-.13,.74,.09),(.59,-.085,.78,.11),(.78,-.12,.75,.045)]],leather,'y',24)
 box('dashboard center stack',(0,.405,-.23),(.28,.12,.26),dark,.025)
 box('radio',(0,.338,-.16),(.18,.012,.044),brake,.006)
-for x in [-.10,.10]:sphere('radio knob',(x,.329,-.20),(.018,.011,.018),chrome,10,6)
+for x in [-.10,.10]:sphere('radio knob',(x,.329,-.20),(.018,.011,.018),interior_metal,10,6)
 box('gauge binnacle',(-.42,.40,-.035),(.37,.25,.18),dark,.055)
 for x in [-.505,-.335]:
-    cyl('instrument ring',(x,.274,-.025),(x,.265,-.025),.063,chrome,18)
+    cyl('instrument ring',(x,.274,-.025),(x,.265,-.025),.063,interior_metal,18)
     cyl('instrument black',(x,.263,-.025),(x,.26,-.025),.056,dark,18)
     tube('gauge needle',[(x,.255,-.025),(x-.022,.255,.007)],.0025,white,4)
 bpy.ops.mesh.primitive_torus_add(major_segments=32,minor_segments=8,major_radius=.166,minor_radius=.018,location=(-.42,.20,-.045),rotation=(math.pi/2.2,0,0))
 steering=add(bpy.context.object,'leather steering wheel',leather);smooth(steering)
 for dx,dz in [(-.14,0),(.14,0),(0,-.14)]:
-    tube('steering spoke',[(-.42,.20,-.045),(-.42+dx,.20,-.045+dz)],.012,chrome,8)
+    tube('steering spoke',[(-.42,.20,-.045),(-.42+dx,.20,-.045+dz)],.012,interior_metal,8)
 sphere('steering center',(-.42,.185,-.045),(.056,.025,.055),leather,16,8)
-cyl('gear stick',(.0,-.05,-.48),(.0,-.05,-.33),.012,chrome,10)
+cyl('gear stick',(.0,-.05,-.48),(.0,-.05,-.33),.012,interior_metal,10)
 sphere('gear knob',(0,-.05,-.32),(.032,.035,.025),dark,12,8)
 
 # Each wheel is a single multi-material mesh with its local Y aligned with the
@@ -327,26 +360,43 @@ for sign in [-1,1]:
                 a=i*math.tau/segments;verts.append((x+ax,y+math.cos(a)*r,-.59+math.sin(a)*r))
         for j in range(len(profile)-1):
             for i in range(segments):faces.append((j*segments+i,j*segments+(i+1)%segments,(j+1)*segments+(i+1)%segments,(j+1)*segments+i))
-        wheel_part(smooth(mesh('tire carcass',verts,faces,dark)))
+        wheel_part(smooth(mesh('tire carcass',verts,faces,tire_rubber)))
         for off in [-.047,.047]:
             pts=[(x+off,y+math.cos(i*math.tau/64)*.408,-.59+math.sin(i*math.tau/64)*.408) for i in range(64)]
             wheel_part(tube('tread groove',pts,.0045,sole,5,True))
         exterior=x+sign*.148
         # Rim dish and machined lips.
-        for r,rr,mat in [(.284,.011,alloy),(.257,.008,chrome),(.102,.008,alloy)]:
+        for r,rr,mat in [(.284,.008,alloy),(.263,.006,alloy),(.090,.006,alloy)]:
             pts=[(exterior,y+math.cos(i*math.tau/48)*r,-.59+math.sin(i*math.tau/48)*r) for i in range(48)]
             wheel_part(tube('rim lip',pts,rr,mat,8,True))
         wheel_part(cyl('brake disk',(x+sign*.088,y,-.59),(x+sign*.098,y,-.59),.228,brake,48))
-        wheel_part(cyl('hub cap',(exterior-sign*.01,y,-.59),(exterior+sign*.017,y,-.59),.086,alloy,24))
+        wheel_part(cyl('hub cap',(exterior-sign*.01,y,-.59),(exterior+sign*.017,y,-.59),.066,alloy,24))
+        # A dark inset barrel and six sculpted, flat forged spokes read as
+        # automotive rims. Cylinder spokes previously resembled thin wire wheels.
+        for r in [.298,.347,.382]:
+            sidewall=[(exterior-sign*.007,y+math.cos(i*math.tau/64)*r,-.59+math.sin(i*math.tau/64)*r) for i in range(64)]
+            wheel_part(tube('molded tire sidewall',sidewall,.0025,tire_rubber,6,True))
+        barrel_vertices=[]
+        for ax,r in [(exterior-sign*.11,.263),(exterior-sign*.006,.263)]:
+            for i in range(48):
+                a=i*math.tau/48;barrel_vertices.append((ax,y+math.cos(a)*r,-.59+math.sin(a)*r))
+        wheel_part(smooth(mesh('recessed rim barrel',barrel_vertices,
+          [(i,(i+1)%48,(i+1)%48+48,i+48) for i in range(48)],brake)))
+        for i in range(6):
+            a=i*math.tau/6;radial=Vector((0,math.cos(a),math.sin(a)));tangent=Vector((0,-math.sin(a),math.cos(a)))
+            points=[]
+            for radius,width,depth in [(.059,.028,0),(.135,.029,.004),(.230,.021,-.018),(.263,.021,-.024)]:
+                spoke_center=Vector((exterior+sign*depth,y,-.59))+radial*radius
+                points.extend([spoke_center-tangent*width,spoke_center+tangent*width])
+            spoke_faces=[(j*2,j*2+1,j*2+3,j*2+2) for j in range(3)]
+            spoke=mesh('sculpted forged spoke',points,spoke_faces if sign<0 else [tuple(reversed(f)) for f in spoke_faces],alloy)
+            mod=spoke.modifiers.new('forged spoke depth','SOLIDIFY');mod.thickness=.015
+            bpy.context.view_layer.objects.active=spoke;bpy.ops.object.modifier_apply(modifier=mod.name)
+            mod=spoke.modifiers.new('machined rim edges','BEVEL');mod.width=.003;mod.segments=2
+            bpy.ops.object.modifier_apply(modifier=mod.name);wheel_part(spoke)
         for i in range(5):
             a=i*math.tau/5
-            for da in [-.10,.10]:
-                ca,sa=math.cos(a+da),math.sin(a+da)
-                # Swept, split five-spoke forged alloy design.
-                p0=(exterior,y+ca*.08,-.59+sa*.08)
-                p1=(exterior-sign*.022,y+math.cos(a+da+.055)*.255,-.59+math.sin(a+da+.055)*.255)
-                wheel_part(tube('forged spoke',[p0,p1],.018,alloy,8))
-            wheel_part(sphere('lug nut',(exterior+sign*.02,y+math.cos(a)*.059,-.59+math.sin(a)*.059),(.010,.009,.009),chrome,8,6))
+            wheel_part(sphere('lug nut',(exterior+sign*.013,y+math.cos(a)*.048,-.59+math.sin(a)*.048),(.008,.008,.008),interior_metal,8,6))
         for i in range(16):
             a=i*math.tau/16
             wheel_part(sphere('drilled brake mark',(x+sign*.100,y+math.cos(a)*.185,-.59+math.sin(a)*.185),(.001,.008,.008),dark,6,4))
@@ -389,7 +439,7 @@ def part(o,bone):
 torso=[]
 torso_profile=[(.805,.239,.160,.0),(.842,.244,.167,-.010),(.887,.238,.169,-.007),
  (.945,.221,.170,-.007),(1.02,.219,.166,-.006),(1.10,.211,.147,-.005),
- (1.18,.217,.152,-.007),(1.28,.234,.154,-.006),(1.37,.239,.145,-.004),
+ (1.18,.217,.152,-.007),(1.28,.223,.147,-.006),(1.37,.227,.138,-.004),
  (1.421,.218,.132,-.005),(1.46,.145,.092,-.006),(1.495,.078,.075,-.005)]
 # Dense continuous longitudinal sampling allows actual cloth folds rather than
 # striped color on smooth cylinders. Rear hem drops slightly below the front.
@@ -404,10 +454,14 @@ body=part(ring_mesh('tailored overshirt',torso,shirt,sides=56),'spine')
 for v in body.data.vertices:
     angle=math.atan2(v.co.y,v.co.x)
     if v.co.z<1.36:
-        waist=math.exp(-((v.co.z-.99)/.18)**2)
-        fold=(.006+.004*waist)*math.sin(v.co.z*51+math.sin(angle*3)*2.1)
-        fold+=.003*math.sin(v.co.z*97+angle*5)
-        fold*=.6+.4*abs(math.sin(angle))
+        waist=math.exp(-((v.co.z-.98)/.16)**2)
+        # Sparse, oblique drape and vertical gravity folds replace the evenly
+        # spaced horizontal padding rings that made the shirt look inflated.
+        fold=.0025*math.cos(angle*9+v.co.z*3)
+        fold+=.004*waist*math.sin(v.co.z*34+angle*3.7)
+        diagonal=1.235-.22*abs(v.co.x)
+        fold+=.004*math.exp(-((v.co.z-diagonal)/.018)**2)*max(0,-math.sin(angle))
+        fold*=.55+.45*abs(math.sin(angle))
         v.co.x*=1+fold/.22;v.co.y*=1+fold/.15
     if v.co.y<0:
         v.co.y-=.004*math.exp(-((v.co.z-1.335)/.012)**2)
@@ -423,7 +477,7 @@ for sign in [-1,1]:
 for z in [1.00,1.10,1.20,1.30]:
     part(sphere('shirt button',(-.081,.187,z),(.004,.002,.004),dark,8,4),'spine')
 # Neck is connected to jaw with a shaped trapezius transition.
-part(ring_mesh('neck',[((0,-.008,1.445),.087,.079),((0,-.014,1.49),.071,.072),((0,-.006,1.543),.073,.074)],skin,sides=24),'head')
+part(ring_mesh('neck',[((0,-.008,1.445),.087,.079),((0,-.014,1.49),.071,.072),((0,-.006,1.528),.072,.073)],skin,sides=24),'head')
 head=part(ring_mesh('sculpted face',[
     ((0,.031,1.582),.039,.046),((0,.020,1.608),.073,.073),
     ((0,.004,1.649),.099,.101),((0,-.002,1.702),.122,.116),
@@ -519,11 +573,12 @@ for sign,side in [(-1,'L'),(1,'R')]:
         for k in range(4):
             t=k/4;z,cy,w,d=[a[n]*(1-t)+b[n]*t for n in range(4)]
             cx=ax+sign*.085*max(0,min(1,(1.40-z)/.26))-sign*max(0,z-1.38)*.65
-            sleeve_rings.append(((cx,cy,z),w,d))
+            taper=1-.15*max(0,min(1,(z-1.06)/.20))
+            sleeve_rings.append(((cx,cy,z),w*taper,d*taper))
     arm=part(ring_mesh('relaxed long sleeve',sleeve_rings,shirt,sides=36),f'arm{side}')
     for v in arm.data.vertices:
         z=v.co.z;cx=ax+sign*.085*max(0,min(1,(1.40-z)/.26));a=math.atan2(v.co.y+.005,v.co.x-cx)
-        fold=.006*math.sin(z*110+a*1.4)*math.exp(-((z-1.085)/.12)**2)
+        fold=.0045*math.sin(z*87+a*2.6)*math.exp(-((z-1.085)/.12)**2)
         v.co.x+=(v.co.x-cx)*fold/.085;v.co.y+=math.sin(a)*fold
     ax+=sign*.085
     part(ring_mesh('rolled cotton cuff',[((ax,.076,.955),.055,.060),((ax,.069,.976),.067,.071),((ax,.061,.999),.068,.071)],shirt,sides=32),f'forearm{side}')
@@ -553,11 +608,11 @@ bpy.ops.object.select_all(action='DESELECT')
 for o in main_parts:o.select_set(True)
 bpy.context.view_layer.objects.active=main_parts[0];bpy.ops.object.join()
 garment=main_parts[0];garment.name='continuous overshirt'
-remesh=garment.modifiers.new('unified cloth shoulders','REMESH');remesh.mode='VOXEL';remesh.voxel_size=.006
+remesh=garment.modifiers.new('unified cloth shoulders','REMESH');remesh.mode='VOXEL';remesh.voxel_size=.0045
 bpy.ops.object.modifier_apply(modifier=remesh.name)
-soften=garment.modifiers.new('relaxed cotton surface','SMOOTH');soften.factor=.38;soften.iterations=3
+soften=garment.modifiers.new('relaxed cotton surface','SMOOTH');soften.factor=.30;soften.iterations=2
 bpy.ops.object.modifier_apply(modifier=soften.name)
-decimate=garment.modifiers.new('cloth topology budget','DECIMATE');decimate.ratio=.36
+decimate=garment.modifiers.new('cloth topology budget','DECIMATE');decimate.ratio=.40
 bpy.ops.object.modifier_apply(modifier=decimate.name)
 smooth(garment);parts.append((garment,'spine'))
 
@@ -567,8 +622,8 @@ for o,bone in parts:
     bpy.ops.object.transform_apply(location=True,rotation=True,scale=True)
     if bone=='head' and o.name!='neck':
         for v in o.data.vertices:
-            v.co.z-=.060
-            v.co.x*=.90
+            v.co.z-=.075
+            v.co.x*=.84
     g=o.vertex_groups.new(name=bone)
     g.add(list(range(len(o.data.vertices))),1,'REPLACE')
     if o.name.startswith('shaped denim leg') or o.name.startswith('denim outer seam'):

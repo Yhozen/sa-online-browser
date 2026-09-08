@@ -134,11 +134,13 @@ export function buildEnvironment(scene: THREE.Scene, manifest: SceneManifest) {
               y = a[1] + ((b[1] - a[1]) * t) / length;
             if (Math.hypot(x - c.center[0], y - c.center[1]) < c.radius)
               continue;
-            for(let segment=0;segment<20;segment++) {
-              if ((segment + Math.floor(t)) % 7 === 0) continue;
-              const along=(segment-9.5)*.185;
-              box([x+(vertical?offset:along),y+(vertical?along:offset),z+.075],
-                vertical?[.1,.18,.008]:[.18,.1,.008],yellow);
+            for(let segment=0;segment<74;segment++) {
+              const hash=Math.sin(segment*12.9898+t*78.233+x*1.3+y+offset*99)*43758.5453;
+              const wear=hash-Math.floor(hash);
+              if(wear<.11)continue;
+              const along=(segment-36.5)*.05, edge=offset+(wear-.5)*.025;
+              box([x+(vertical?edge:along),y+(vertical?along:edge),z+.075],
+                vertical?[.075+wear*.03,.05,.005]:[.05,.075+wear*.03,.005],yellow);
             }
           }
         // Sidewalk joints and low curb stones, with flush driveable road intersections.
@@ -163,6 +165,9 @@ export function buildEnvironment(scene: THREE.Scene, manifest: SceneManifest) {
               }),
             );
             if (intersection) continue;
+            if(Math.floor(t*7)%5!==0) box(
+              [x+(vertical?side*(road.width/2-.08):0),y+(vertical?0:side*(road.width/2-.08)),z+.062],
+              vertical?[.13,2.42,.005]:[2.42,.13,.005],mat("curb-grime",0x625e4e));
             box(
               [
                 x + (vertical ? side * (road.width / 2 + 0.1) : 0),
@@ -180,7 +185,7 @@ export function buildEnvironment(scene: THREE.Scene, manifest: SceneManifest) {
     for (const b of manifest.barriers.filter((b) =>
       b.id?.startsWith("boundary"),
     ))
-      box(b.position, b.size, mat("boundary", 0xc1b299));
+      box(b.position, b.size, mat("boundary", 0x7c7866));
     // Closed south access gate is visible scenery, backed by the shared boundary collider.
     for (let x = -5; x <= 5; x += 0.35)
       box([x, -88, 11], [0.08, 0.12, 4], mat("metal", 0x485751));

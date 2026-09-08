@@ -24,7 +24,7 @@ export function createCharacter(variant = 0) {
       const replaced = list.map((m) => {
         if (m.name !== "outfit") return m;
         const c = (m as THREE.MeshStandardMaterial).clone();
-        c.color.set(variant % 2 ? 0x8f4931 : 0x2d7774);
+        c.color.set(variant % 2 ? 0x8f4931 : 0x795139);
         outfit.push(c);
         return c;
       });

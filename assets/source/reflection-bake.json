@@ -1,6 +1,33 @@
 {
   "version": 1,
-  "files": {
+  "generatedAt": "2026-09-08T04:53:34.491Z",
+  "format": "PMR1: uint32-le magic,width,height; RGBA16F PMREM atlas; gzip",
+  "width": 1536,
+  "height": 2048,
+  "compressedBytes": 10676959,
+  "uncompressedBytes": 25165836,
+  "sha256": "d763f98c1a256ec53d2f6f60656db46f7edb9af3502a8e67a7a9459739110a30",
+  "uncompressedSha256": "bd0e593a8850967f9d3cd1023f891843c203df6f8ff252f508e3c27a3184968e",
+  "browser": "147.0.7727.15",
+  "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+  "scene": {
+    "id": "neighborhood",
+    "revision": "2720afac641172c4"
+  },
+  "sources": {
+    "apps/browser/src/lighting.ts": "257cee72bcda3fc80b25ec5a5a2da2a600333477a00021eaba395b41fafb3430",
+    "apps/browser/src/environment.ts": "de25c62af6a5ea13b29c312339870cc855b980d5d355f48178af687cb1889589",
+    "apps/browser/src/assets.ts": "ddafed54594ea899fac6f1e98dbdb92a8e8849384ab4da42dc4323880c29a6ca",
+    "apps/browser/src/main.ts": "77ca93551d88f6ea79be9ab5f2e6792a5a214d8411d16b088304e81018d2dfca",
+    "apps/browser/src/reflection-storage.ts": "8b7f07a99248d1885e509aa3e916b87982ad33019348ae87fd04e09635c13720",
+    "apps/browser/src/horizon.ts": "57ccd8456fe9c78c31bdebb52ec26dbb632f232e9ea79c601dfaa5dc3b46de99",
+    "apps/browser/src/road-detail.ts": "f0f3cd99ffbaa5862d89c9b85de8a0ce08fdd4a0cf7cf2ce400920530d574c61",
+    "apps/browser/src/verges.ts": "840e9a817872aad35c99ec4fc10f17826111fa08dbd788170c3f343502f960df",
+    "packages/shared/scenes/neighborhood.json": "cce8c3bfc9bb5c4ddc7a7b96a71f72e6349cab4c07fa85d87a324a003cd056c2",
+    "tools/bake-reflections.mjs": "1afebfc34927c2f17d0b062c78d9424e9a139a14dfcecaffa4bf5be6e32d7c0f",
+    "package-lock.json": "b99e5c05368deae7d0cd82a86505d33671cc2275c0852eed3f08afbd0b07bd74"
+  },
+  "inputs": {
     "arroyo-asphalt.png": {
       "bytes": 3594191,
       "sha256": "df6aa654341074cff7d9b324f115a00ab91a5eaa46afe4daaf723374ab87c87f"
@@ -12,10 +39,6 @@
     "arroyo-foliage.png": {
       "bytes": 1561388,
       "sha256": "603140ee50b79a8da0f06034276e3b9eddc3dd8c560d679e37ddc682d7be3073"
-    },
-    "arroyo-reflections.pmrem.gz": {
-      "bytes": 10676959,
-      "sha256": "d763f98c1a256ec53d2f6f60656db46f7edb9af3502a8e67a7a9459739110a30"
     },
     "arroyo-sky.png": {
       "bytes": 1281272,
@@ -85,5 +108,10 @@
       "bytes": 546244,
       "sha256": "89e0e8a8c7f994361f6a1f6571352c6a56f3d3bc3966e4cf7b960888261c0c68"
     }
+  },
+  "network": {
+    "playerJoins": 0,
+    "workers": 0,
+    "sessions": 0
   }
 }

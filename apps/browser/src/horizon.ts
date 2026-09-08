@@ -1,57 +1,125 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import * as THREE from "three";
 import { instantiateStatic, surfaceMaterials } from "./assets";
+import type { Placement } from "../../../packages/shared/scene";
 
-/** Continuous ridgelines beyond the closed fixture; no change to playable terrain. */
+const fract = (v: number) => v - Math.floor(v);
+const hash = (x: number, y: number) => fract(Math.sin(x * 127.1 + y * 311.7) * 43758.5453);
+function noise(x: number, y: number) {
+  const ix = Math.floor(x), iy = Math.floor(y), u = fract(x), v = fract(y);
+  const sx = u * u * (3 - 2 * u), sy = v * v * (3 - 2 * v);
+  return THREE.MathUtils.lerp(THREE.MathUtils.lerp(hash(ix, iy), hash(ix + 1, iy), sx),
+    THREE.MathUtils.lerp(hash(ix, iy + 1), hash(ix + 1, iy + 1), sx), sy);
+}
+
+/** Eroded ridge networks beyond the closed, level playable fixture. */
 export function buildHorizon(scene: THREE.Scene, groundZ: number) {
-  const noise=(x:number,y:number)=> {
-    const ix=Math.floor(x),iy=Math.floor(y),u=x-ix,v=y-iy;
-    const hash=(a:number,b:number)=>{const q=Math.sin(a*127.1+b*311.7)*43758.5453;return q-Math.floor(q);};
-    const sx=u*u*(3-2*u),sy=v*v*(3-2*v);
-    return THREE.MathUtils.lerp(THREE.MathUtils.lerp(hash(ix,iy),hash(ix+1,iy),sx),THREE.MathUtils.lerp(hash(ix,iy+1),hash(ix+1,iy+1),sx),sy);
-  };
+  const dry = new THREE.Color(0xb5a184), rock = new THREE.Color(0xc1ad91), scrub = new THREE.Color(0x768260);
   for (let layer = 0; layer < 3; layer++) {
-    const segments = 480, rings = 60, vertices: number[] = [], colors: number[] = [], uv: number[] = [], indices: number[] = [];
+    const segments = 480, rings = 60;
+    const vertices: number[] = [], colors: number[] = [], uv: number[] = [], mix: number[] = [], indices: number[] = [];
     for (let j = 0; j <= rings; j++) for (let i = 0; i <= segments; i++) {
       const a = i / segments * Math.PI * 2, r = 130 + layer * 125 + j * 4;
-      const ridge = 34 + layer * 13 + 22 * Math.sin(a * 3 + layer) + 15 * Math.sin(a * 7 + 1.2) + 8 * Math.sin(a * 13 + j * .026);
-      const envelope = Math.sin(j / rings * Math.PI);
-      const x = Math.cos(a) * r, y = Math.sin(a) * r;
-      const erosion=1-Math.abs(noise(x/22+noise(x/55,y/55)*3,y/22)*2-1);
-      const detail=erosion*10+(noise(x/7,y/7)-.5)*3+(noise(x/3,y/3)-.5)*1.3;
-      const z = Math.max(-3, (ridge * .45 + detail - 3) * envelope - 6);
+      const t = j / rings, x = Math.cos(a) * r, y = Math.sin(a) * r;
+      // Preserve the broad accepted skyline, then shape individual watersheds beneath it.
+      const broad = (34 + layer * 13 + 22 * Math.sin(a * 3 + layer) + 15 * Math.sin(a * 7 + 1.2)) * .45;
+      const crest = .47 + (noise(Math.cos(a) * 4 + layer, Math.sin(a) * 4) - .5) * .15;
+      const slope = Math.max(0, 1 - Math.abs((t - crest) / (t < crest ? crest : 1 - crest)));
+      const profile = Math.pow(Math.sin(slope * Math.PI / 2), 1.15);
+      // Meandering drainage cuts converge toward the lower apron; their shoulders form spurs.
+      const basin = a * 13 + noise(x / 62, y / 62) * .73 + t * .22;
+      const channel = Math.abs(fract(basin) - .5);
+      const gully = Math.exp(-channel * channel * (36 + 110 * t));
+      const tributary = Math.abs(fract(basin * 2.07 + noise(x / 28, y / 28) * .45) - .5);
+      const rill = Math.exp(-tributary * tributary * 140);
+      const shoulder = Math.pow(Math.min(1, channel * 2), .55);
+      const coarse = noise(x / 11, y / 11), fine = noise(x / 3.1, y / 3.1);
+      const ridgeBreak = (coarse - .5) * 3.4 + (fine - .5) * 1.0;
+      // Broad rounded ridge shoulders retain drainage detail on their flanks;
+      // suppress channel relief at the crest so it cannot form isolated conic peaks.
+      const erosionMask = Math.pow(profile, .7) * (1 - .8 * Math.pow(slope, 6));
+      const z = Math.max(-3, broad * profile + (shoulder * 2.8 - gully * 3 - rill * 1.4 + ridgeBreak * .55) * erosionMask - 6);
       vertices.push(x, y, groundZ + z);
       uv.push(x / 8, y / 8);
-      const shade = .87 + erosion * .22;
-      const c = new THREE.Color(layer === 0 ? 0xb6a383 : layer === 1 ? 0xb3b09b : 0xb6bdb1).multiplyScalar(shade);
-      const scrub=noise(x/9,y/9);
-      if(scrub>.55) c.lerp(new THREE.Color(0x858b66),Math.min(.52,(scrub-.55)*2));
-      colors.push(c.r,c.g,c.b);
-      if (j < rings && i < segments) { const k = j * (segments + 1) + i; indices.push(k,k+segments+1,k+1,k+1,k+segments+1,k+segments+2); }
+      const stony = THREE.MathUtils.clamp(shoulder * .68 + coarse * .60 - .30, 0, 1);
+      const vegetation = THREE.MathUtils.smoothstep(noise(x / 15.5 + 17, y / 15.5), .40, .69) * (1 - stony * .6);
+      mix.push(stony, vegetation);
+      const color = dry.clone().lerp(rock, stony * .6).lerp(scrub, vegetation * .60);
+      color.multiplyScalar(.95 + shoulder * .12 - gully * .09);
+      if (layer) color.lerp(new THREE.Color(layer === 1 ? 0xb7b2a0 : 0xc0c2b6), layer * .14);
+      colors.push(color.r, color.g, color.b);
+      if (j < rings && i < segments) {
+        const k = j * (segments + 1) + i;
+        indices.push(k, k + segments + 1, k + 1, k + 1, k + segments + 1, k + segments + 2);
+      }
     }
     const geometry = new THREE.BufferGeometry();
-    geometry.setAttribute('position',new THREE.Float32BufferAttribute(vertices,3));
-    geometry.setAttribute('color',new THREE.Float32BufferAttribute(colors,3));
-    geometry.setAttribute('uv',new THREE.Float32BufferAttribute(uv,2));
+    geometry.setAttribute("position", new THREE.Float32BufferAttribute(vertices, 3));
+    geometry.setAttribute("color", new THREE.Float32BufferAttribute(colors, 3));
+    geometry.setAttribute("uv", new THREE.Float32BufferAttribute(uv, 2));
+    geometry.setAttribute("terrainMix", new THREE.Float32BufferAttribute(mix, 2));
     geometry.setIndex(indices); geometry.computeVertexNormals();
-    const material = new THREE.MeshStandardMaterial({color:0xe9dfc0, vertexColors:true, roughness:1, map:surfaceMaterials.get('grass')?.map});
-    const mesh = new THREE.Mesh(geometry,material); scene.add(mesh);
+    const grass = surfaceMaterials.get("grass"), concrete = surfaceMaterials.get("concrete");
+    const material = new THREE.MeshStandardMaterial({ color: 0xf1e9d9, vertexColors: true, roughness: 1,
+      map: grass?.map, normalMap: grass?.normalMap, normalScale: new THREE.Vector2(.24, .24) });
+    if (grass?.map && concrete?.map) {
+      material.onBeforeCompile = shader => {
+        shader.uniforms.arroyoRock = { value: concrete.map };
+        shader.vertexShader = `attribute vec2 terrainMix; varying vec2 vTerrainMix;\n${shader.vertexShader}`
+          .replace("#include <begin_vertex>", "#include <begin_vertex>\nvTerrainMix = terrainMix;");
+        shader.fragmentShader = `uniform sampler2D arroyoRock; varying vec2 vTerrainMix;\n${shader.fragmentShader}`
+          .replace("#include <map_fragment>", `
+            #ifdef USE_MAP
+              vec3 dryCover = texture2D(map, vMapUv).rgb;
+              vec3 mineral = texture2D(arroyoRock, vMapUv * .41 + vec2(.17,.31)).rgb;
+              // Original concrete supplies exposed mineral grain; grass supplies dry scrub.
+              mineral = mix(vec3(dot(mineral, vec3(.3,.59,.11))), mineral, .22);
+              mineral *= vec3(.84,.80,.72);
+              vec3 terrain = mix(dryCover, mineral, vTerrainMix.x * .82);
+              terrain = mix(terrain, dryCover * vec3(.82,.90,.73), vTerrainMix.y * .32);
+              diffuseColor.rgb *= terrain;
+            #endif
+          `);
+      };
+      material.customProgramCacheKey = () => "arroyo-eroded-terrain-v1";
+    }
+    const mesh = new THREE.Mesh(geometry, material); mesh.name = `Arroyo eroded ridge ${layer}`;
+    mesh.receiveShadow = true; scene.add(mesh);
   }
-  // Vegetated edges conceal the boundary walls. These are outside the playable envelope.
-  const placements = [];
-  // Square perimeter: all roots remain outside the +/-90m playable footprint.
-  for(let i=0;i<64;i++) {
-    const side=Math.floor(i/16), t=(i%16)/15*202-101;
-    const edge=96+Math.sin(i*4.7)*2;
-    const x=side===0 ? -edge : side===1 ? edge : t;
-    const y=side===2 ? -edge : side===3 ? edge : t;
-    const height=1.2+(Math.sin(i*2.9)+1)*.55;
-    placements.push({asset:'tree',position:[x,y,groundZ],rotation:i*2.4,scale:[height,height,height]});
-    // Layered low scrub masks the wall face while keeping the boundary visibly closed.
-    placements.push({asset:'tree',position:[side===0 ? -92 : side===1 ? 92 : t,side===2 ? -92 : side===3 ? 92 : t,groundZ-4.2],rotation:i*1.7,scale:[2.7,2.7,1.3]});
+
+  const placements: Placement[] = [];
+  let seed = 6303;
+  const random = () => { seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0; return seed / 4294967296; };
+  function point(side: number, along: number, edge: number): [number, number] {
+    return side === 0 ? [-edge, along] : side === 1 ? [edge, along] : side === 2 ? [along, -edge] : [along, edge];
   }
-  // The lower scrub tier fills the trunk void beneath the upper hedge crowns.
-  for (const p of placements.filter((_,i)=>i%2===1))
-    placements.push({...p,position:[p.position[0],p.position[1],p.position[2]-1.7],rotation:p.rotation+1});
-  instantiateStatic(scene,placements);
+  for (let side = 0; side < 4; side++) {
+    // Tree foliage occupies local Z≈3.85–8.26m and ±4m horizontally. Derive
+    // buried-root heights from those actual bounds: upper leaves span 0.7–6.7m,
+    // lower leaves span −0.25–4.4m. Both tiers extend across the wall's inner ±89m
+    // face, while every root stays outside ±90m. This masks the full 4m wall,
+    // rather than placing small shrubs entirely behind its opaque face.
+    for (let along = -99; along < 105; along += 9.5 + random() * 3.5) {
+      const [x, y] = point(side, along, 91.2 + random() * .55);
+      const width = 2.15 + random() * .6, height = 1.15 + random() * .22;
+      const upperRootDepth = height * 3.85 - .7;
+      placements.push({ asset: "tree", position: [x, y, groundZ - upperRootDepth],
+        rotation: random() * Math.PI * 2, scale: [width, width * (.92 + random() * .13), height] });
+      const [bx, by] = point(side, along + 3.2 + random() * 1.5, 92.2 + random() * .8);
+      const lowerWidth = 2.1 + random() * .65, lowerHeight = .88 + random() * .18;
+      placements.push({ asset: "tree", position: [bx, by, groundZ - lowerHeight * 3.85 - .25],
+        rotation: random() * Math.PI * 2, scale: [lowerWidth, lowerWidth * (.95 + random() * .12), lowerHeight] });
+    }
+    // Taller trees are clustered well behind the scrub, rather than a fence-height row.
+    for (let group = 0; group < 7; group++) {
+      const along = -95 + group * 29 + (random() - .5) * 10;
+      for (let member = 0; member < (group % 3 === 0 ? 3 : 2); member++) {
+        const [x, y] = point(side, along + member * 6 + random() * 3, 102 + random() * 13);
+        const scale = 1.02 + random() * .72;
+        placements.push({ asset: "tree", position: [x, y, groundZ - .4], rotation: random() * Math.PI * 2,
+          scale: [scale * (.85 + random() * .2), scale, scale] });
+      }
+    }
+  }
+  instantiateStatic(scene, placements);
 }

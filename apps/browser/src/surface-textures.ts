@@ -6,7 +6,8 @@ export function surfaceTexture(bitmap: ImageBitmap, quadrant: number, size = 512
   const canvas = document.createElement("canvas");
   canvas.width = canvas.height = size;
   const context = canvas.getContext("2d", { willReadFrequently: true })!;
-  context.drawImage(bitmap, (quadrant % 2) * bitmap.width / 2, Math.floor(quadrant / 2) * bitmap.height / 2, bitmap.width / 2, bitmap.height / 2, 0, 0, size, size);
+  if (quadrant < 0) context.drawImage(bitmap, 0, 0, size, size);
+  else context.drawImage(bitmap, (quadrant % 2) * bitmap.width / 2, Math.floor(quadrant / 2) * bitmap.height / 2, bitmap.width / 2, bitmap.height / 2, 0, 0, size, size);
   const albedo = new THREE.CanvasTexture(canvas);
   albedo.colorSpace = THREE.SRGBColorSpace;
   const source = context.getImageData(0, 0, size, size).data;

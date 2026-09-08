@@ -42,6 +42,47 @@ def leafcard(name,center,width,length,angle,tilt,mat):
  return o
 
 
+def attached_leaf_spray(root,direction,length,roll,mat):
+ """Anchor the atlas's lower-left stem to the actual twig, not a random card center.
+ The image's main bough runs diagonally UV (0,0)→(1,1). Align that diagonal with
+ the growing branch so every leaf group has a visible botanical attachment.
+ """
+ root=Vector(root);direction=Vector(direction).normalized()
+ axis=Vector((0,0,1)) if abs(direction.z)<.94 else Vector((0,1,0))
+ side=direction.cross(axis).normalized();normal=side.cross(direction).normalized()
+ side=side*math.cos(roll)+normal*math.sin(roll)
+ normal=direction.cross(side).normalized()
+ u=(direction+side)*length*.5;v=(direction-side)*length*.5
+ verts=[]
+ for iy in range(3):
+  for ix in range(3):
+   x=ix*.5;y=iy*.5;bend=math.sin(math.pi*x)*math.sin(math.pi*y)*length*.075
+   verts.append(root+u*x+v*y+normal*bend)
+ o=mesh('leaf-card attached oak spray',verts,[(j*3+i,j*3+i+1,(j+1)*3+i+1,(j+1)*3+i) for j in range(2) for i in range(2)],mat)
+ uv=o.data.uv_layers.new(name='UVMap')
+ for p in o.data.polygons:
+  for loop in p.loop_indices:
+   vi=o.data.loops[loop].vertex_index;uv.data[loop].uv=((vi%3)*.5,(vi//3)*.5)
+ return o
+
+
+def woody_curve(name,points,radius):
+ """Continuous tapered bough with nonuniform bends, shared rings and smooth bark."""
+ points=[Vector(p) for p in points];verts=[];faces=[]
+ for j,p in enumerate(points):
+  tangent=(points[min(j+1,len(points)-1)]-points[max(0,j-1)]).normalized()
+  side=tangent.cross(Vector((0,0,1)))
+  if side.length<.1:side=tangent.cross(Vector((0,1,0)))
+  side.normalize();normal=tangent.cross(side).normalized();r=radius*(1-.81*j/(len(points)-1))
+  for k in range(8):
+   a=k*math.tau/8;verts.append(p+(side*math.cos(a)+normal*math.sin(a))*r)
+  if j:
+   for k in range(8):faces.append(((j-1)*8+k,(j-1)*8+(k+1)%8,j*8+(k+1)%8,j*8+k))
+ o=mesh(name,verts,faces,wood)
+ for f in o.data.polygons:f.use_smooth=True
+ return o
+
+
 def house_ao_sampler(meshes):
  """Bake real cosine-weighted hemisphere visibility into vertices, without lighting.
 
@@ -127,10 +168,17 @@ def env_finish(name):
 
 
 def shrub(x,y,size=1):
- cyl('shrub woody stem',(x,y,.08),(x,y,.65*size),.035,wood,5,.012)
- for i in range(24):
-  a=i*2.399;r=size*.45*math.sqrt((i+.5)/24);h=.30+size*(.38+.26*math.sin(i*1.7))
-  leafcard('leaf-card shrub',(x+math.cos(a)*r,y+math.sin(a)*r,h),size*.89,size*.88,a,.25+(i%4)*.43,leaf if i%3 else leaf2)
+ # Attached multi-stem foliage follows the same texture-aligned branch construction
+ # as the oak. Varied shoot heights keep planted beds from reading as hovering cards.
+ base=Vector((x,y,.06));cyl('shrub woody stem',base,base+Vector((0,0,.37*size)),.035,wood,5,.018)
+ for i in range(8):
+  a=i*2.399;rad=size*(.18+.055*(i%3));tip=base+Vector((math.cos(a)*rad,math.sin(a)*rad,size*(.42+.10*(i%3))))
+  mid=base.lerp(tip,.52)+Vector((0,0,.055))
+  woody_curve('shrub branched shoot',[base,mid,tip],.013)
+  for spray in range(3):
+   t=.42+spray*.28;anchor=base.lerp(mid,t*2) if t<.5 else mid.lerp(tip,(t-.5)*2)
+   direction=Vector((math.cos(a)*.44,math.sin(a)*.44,.74-.10*spray)).normalized()
+   attached_leaf_spray(anchor,direction,size*(.65+.06*(i%2)),(spray-1)*.87,leaf2 if i%5==0 else leaf)
 
 
 def agave(x,y,size=1):
@@ -141,15 +189,15 @@ def agave(x,y,size=1):
 
 
 def window(x,y,z,w,h,paint,side=False):
- # Deep frames sit 13cm forward of opaque inner rooms, with a reflective glazing inset.
+ # Recessed glazing sits 18cm behind projecting jamb fronts; original wall envelope unchanged.
  prior=set(bpy.context.scene.objects)
  box('window cavity',(x,y,z),(w+.15,.07,h+.15),interior)
  box('window reflective pane',(x,y-.055,z),(w-.10,.015,h-.10),windowglass)
- for xx in [x-w/2,x+w/2]:box('window jamb',(xx,y-.12,z),(.085,.21,h+.15),paint,.008)
- for zz in [z-h/2,z+h/2]:box('window header',(x,y-.12,zz),(w+.1,.21,.085),paint,.008)
- box('window mullion',(x,y-.145,z),(.042,.09,h),white)
- box('window sash',(x,y-.15,z-.1),(w,.07,.04),white)
- box('window sill',(x,y-.19,z-h/2-.045),(w+.27,.36,.085),paint,.012)
+ for xx in [x-w/2,x+w/2]:box('window jamb',(xx,y-.15,z),(.10,.34,h+.16),paint,.022)
+ for zz in [z-h/2,z+h/2]:box('window header',(x,y-.15,zz),(w+.12,.34,.10),paint,.022)
+ box('window mullion',(x,y-.075,z),(.042,.065,h),white)
+ box('window sash',(x,y-.08,z-.1),(w,.055,.04),white)
+ box('window sill',(x,y-.18,z-h/2-.055),(w+.31,.46,.11),paint,.024)
  # A subtle curtain stripe reads as occupied home without an interior render.
  for xx in [x-w*.37,x+w*.37]:box('window curtain',(xx,y-.067,z),(w*.10,.01,h-.20),wood)
  if side:
@@ -188,7 +236,7 @@ def roof_shell(v,paint):
    if v==3:
     for x in [-5,0,5]:box('decorative rafter',(x,y,3.58),(.10,.60,.19),paint)
  for x in [-8.55,8.55]:
-  box('fascia',(x,0,3.65),(.15,13.3,.22),white)
+  box('fascia',(x,0,3.65),(.15,13.3,.22),white,.025)
   cyl('gutter',(x, -6.55,3.61),(x,6.55,3.61),.07,paint,8)
   for y in [-5.8,5.8]:
    cyl('downspout',(x,y,3.57),(x,y,.25),.045,paint,6)
@@ -317,20 +365,34 @@ for i in range(12):
  a=i*math.tau/12;cyl('old frond base',base+Vector((math.cos(a)*.17,math.sin(a)*.17,-.30)),base+Vector((math.cos(a)*.43,math.sin(a)*.43,.16)),.055,wood,5,.025)
 env_finish('palm')
 
-# Broadleaf street tree: trunk forks, visible secondary limbs, irregular layered foliage.
-start();cyl('tree trunk',(0,0,0),(.1,.03,3.1),.32,wood,12,.19)
+# Asymmetric live oak: continuous crooked limbs, secondary twigs and attached sprays.
+# The single trunk collision remains centered at the origin; every broad branch is >2.4m high.
+start();woody_curve('oak trunk',[(0,0,0),(.035,-.04,.8),(.11,.015,1.65),(.15,.06,2.45),(.26,.07,3.10)],.32)
 for root_angle in range(0,360,60):
  a=math.radians(root_angle);cyl('root flare',(math.cos(a)*.30,math.sin(a)*.30,.035),(0,0,.65),.11,wood,6,.075)
-for branch in range(10):
- a=branch*2.399;reach=1.15+(branch%3)*.27;end=Vector((math.cos(a)*reach,math.sin(a)*reach,4.5+(branch%4)*.43))
- junction=Vector((.1,.03,2.3+(branch%3)*.25));mid=junction.lerp(end,.55)+Vector((0,0,.40))
- cyl('fork limb',junction,mid,.13,wood,8,.075);cyl('upper limb',mid,end,.076,wood,7,.025)
- for twig in range(4):
-  ta=a+(twig-1.5)*.7;tip=end+Vector((math.cos(ta)*(.75+twig*.09),math.sin(ta)*(.75+twig*.09),.40+(twig%2)*.36))
-  cyl('branchlet',end,tip,.027,wood,5,.009)
-  for card in range(10):
-   ca=card*2.399+branch*.7;rad=.20+.50*math.sqrt((card+.5)/10)
-   center=tip+Vector((math.cos(ca)*rad,math.sin(ca)*rad,.33*math.sin(card*1.7)))
-   leafcard('leaf-card canopy',center,1.03+(card%3)*.15,.99+(card%4)*.13,ca,.35+(card%4)*.47,leaf if (card+branch)%4 else leaf2)
+# Different heights, reaches and azimuths create interlocking lobes, not identical umbrellas.
+boughs=[(.15,2.3,4.75),(.97,1.45,6.05),(1.91,2.00,5.37),(2.73,2.5,4.92),(3.51,1.48,6.43),(4.60,2.30,5.45),(5.46,1.67,6.06)]
+for b,(angle,reach,height) in enumerate(boughs):
+ d=Vector((math.cos(angle),math.sin(angle),0));s=Vector((-d.y,d.x,0))
+ root=Vector((.15,.05,2.45+(b%3)*.20));end=d*reach+Vector((.08,-.03,height))
+ points=[root,root.lerp(end,.32)+s*.13+Vector((0,0,.3)),root.lerp(end,.64)-s*.17+Vector((0,0,.17)),end]
+ woody_curve('oak scaffold limb',points,.135 if b%3 else .17)
+ for fork in range(5):
+  t=.50+fork*.12;segment=min(2,int(t*3));forkroot=points[segment].lerp(points[segment+1],t*3-segment)
+  yaw=angle+(fork-2)*.55+.12*math.sin(b);fd=Vector((math.cos(yaw),math.sin(yaw),0))
+  tip=forkroot+fd*(.67+.11*(fork%3))+Vector((0,0,.28+.21*((fork+b)%3)))
+  forkmid=forkroot.lerp(tip,.5)+Vector((0,0,.14))
+  woody_curve('oak lateral branch',[forkroot,forkmid,tip],.045)
+  for twig in range(3):
+   t=.31+twig*.26;attach=forkroot.lerp(forkmid,t*2) if t<.5 else forkmid.lerp(tip,(t-.5)*2)
+   az=yaw+(twig-1)*.71;td=Vector((math.cos(az)*.83,math.sin(az)*.83,.32 if twig!=1 else .64)).normalized()
+   twig_end=attach+td*(.42+.09*((twig+b)%3))
+   twigmid=attach.lerp(twig_end,.5)+Vector((0,0,.07))
+   woody_curve('oak leafy twig',[attach,twigmid,twig_end],.019)
+   for spray in range(3):
+    t=.30+spray*.31;anchor=attach.lerp(twigmid,t*2) if t<.5 else twigmid.lerp(twig_end,(t-.5)*2)
+    direction=(td+Vector((math.sin(b+spray)*.24,math.cos(fork+spray)*.24,.04))).normalized()
+    # Overlapping planes share an actual stem, while moderate roll exposes lit upper leaf faces.
+    attached_leaf_spray(anchor,direction,1.25+.15*((fork+b+twig)%4),(spray-1)*.79+.13*math.sin(b+fork),leaf2 if (b+fork+twig+spray)%5==0 else leaf)
 env_finish('tree')
 print('Detailed original architecture and vegetation exported.')
