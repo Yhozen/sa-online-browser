@@ -5,13 +5,17 @@ The lot envelope, front door, driveway and trunk origins match the shared fixtur
 """
 
 # These swatches also provide semantically named hooks for runtime texture binding.
-palmgreen=material('palm-frond',(.24,.30,.105),.82)
-palmlight=material('palm-frond-light',(.39,.40,.17),.86)
+palmgreen=material('palm-frond',(.055,.115,.028),.90)
+palmlight=material('palm-frond-light',(.115,.175,.045),.92)
 interior=material('window-interior',(.028,.045,.045),.92)
-windowglass=material('window-glazing',(.12,.21,.24),.13,.32)
+windowglass=material('window-glazing',(.022,.035,.038),.20,.12)
 roofedge=material('roof-edge',(.17,.18,.16),.89)
 soil=material('garden-soil',(.18,.14,.075),1)
 brick=material('terracotta',(.40,.22,.13),.94)
+flower=material('bougainvillea',(.47,.12,.18),.88)
+from mathutils import noise
+import bmesh
+from mathutils.bvhtree import BVHTree
 
 
 def env_uv(o,scale=1.0):
@@ -38,18 +42,95 @@ def leafcard(name,center,width,length,angle,tilt,mat):
  return o
 
 
+def house_ao_sampler(meshes):
+ """Bake real cosine-weighted hemisphere visibility into vertices, without lighting.
+
+ Only solid geometry occludes: alpha foliage cards and window glazing are excluded.
+ Rays cover 2.4m so porch roofs and eaves create localized depth, not globally darker
+ elevations. Deterministic samples and cached face-normal/position pairs keep this
+ reproducible; the resulting runtime COLOR_0 adds no additional shader or RPC cost.
+ """
+ verts=[];polys=[]
+ for o in meshes:
+  if o.name.startswith('leaf-card') or o.data.materials[0] in [windowglass,glass]:continue
+  offset=len(verts);verts.extend(o.matrix_world @ v.co for v in o.data.vertices)
+  polys.extend(tuple(offset+i for i in p.vertices) for p in o.data.polygons)
+ # The known level ground plane also occludes lower wall/column hemisphere samples.
+ offset=len(verts);verts.extend([(-30,-30,0),(30,-30,0),(30,30,0),(-30,30,0)]);polys.append(tuple(offset+i for i in range(4)))
+ tree=BVHTree.FromPolygons(verts,polys,all_triangles=False,epsilon=.0001)
+ samples=[]
+ for i in range(48):
+  r=math.sqrt((i+.5)/48);a=i*2.399963229728653
+  samples.append(Vector((r*math.cos(a),r*math.sin(a),math.sqrt(1-r*r))))
+ cache={};ao_values=[]
+ def visibility(position,normal):
+  key=tuple(round(x,4) for x in (*position,*normal))
+  if key in cache:return cache[key]
+  n=normal.normalized();axis=Vector((0,0,1)) if abs(n.z)<.95 else Vector((0,1,0))
+  tangent=axis.cross(n).normalized();bitangent=n.cross(tangent)
+  origin=position+n*.012;blocked=0
+  for p in samples:
+   direction=tangent*p.x+bitangent*p.y+n*p.z
+   hit,_,_,distance=tree.ray_cast(origin,direction,2.4)
+   if hit is not None:
+    # Nearby eaves/corners are strong, distant roof edges fade out continuously.
+    blocked+=(1-(min(distance,2.4)/2.4)**2)
+  factor=1-.64*blocked/len(samples)
+  cache[key]=factor;ao_values.append(factor);return factor
+ return visibility,ao_values
+
+
 def env_finish(name):
  bpy.context.view_layer.update()
- for o in list(bpy.context.scene.objects):
-  if o.type=='MESH' and not o.name.startswith('leaf-card'):env_uv(o,2 if o.data.materials[0] in [stucco,white,concrete] else 1)
+ meshes=[o for o in bpy.context.scene.objects if o.type=='MESH'];used=set()
+ # Vertex AO needs surface samples away from existing box corners. Only surfaces
+ # that show spatially varying contact shade are tessellated; decorative parts stay light.
+ for o in meshes:
+  cuts=15 if o.name.startswith('stucco walls') else 7 if o.name.startswith(('porch soffit','porch slab','porch roof')) else 3 if o.name.startswith(('window cavity','window reflective pane','painted door','driveway slab')) else 0
+  if cuts:
+   bm=bmesh.new();bm.from_mesh(o.data);bmesh.ops.subdivide_edges(bm,edges=list(bm.edges),cuts=cuts,use_grid_fill=True);bm.to_mesh(o.data);bm.free()
+ ao,ao_values=house_ao_sampler(meshes) if name.startswith('house') else (None,[])
+ for o in meshes:
+  mat=o.data.materials[0];used.add(mat)
+  if not o.name.startswith('leaf-card'):env_uv(o,2 if mat in [stucco,white,concrete] else 1)
+  normal_matrix=o.matrix_world.to_3x3().inverted().transposed()
+  color=o.data.color_attributes.new(name='Color',type='FLOAT_COLOR',domain='CORNER')
+  o.data.color_attributes.active_color=color
+  for polygon in o.data.polygons:
+   for loop in polygon.loop_indices:
+    v=o.matrix_world @ o.data.vertices[o.data.loops[loop].vertex_index].co
+    n=noise.noise(Vector((v.x*.71,v.y*.71,v.z*.92)))
+    shade=.91+.075*n
+    if name.startswith('house'):
+     if mat in [stucco,white,concrete,trim,wood,brick]:
+      # Dust splash at the base, eave shade, and rain trails under the sills.
+      shade-=.26*math.exp(-max(0,v.z-.18)*2.8)
+      if o.name.startswith('stucco walls'):
+       if v.y < -5.95:
+        shade-=sum(.105*math.exp(-((v.x-x)/.70)**2)*math.exp(-abs(v.z-1.18)*2.2) for x in [-6,0,2.6])
+        shade-=.12*max(0,noise.noise(Vector((v.x*4.3,0,v.z*.13))))
+       if abs(v.x)>7.98:shade-=.045
+     elif mat in [roof,roofedge]:shade=.74+.19*(.5+.5*n)
+    elif o.name.startswith('leaf-card'):shade=.78+.16*(.5+.5*n)
+    elif mat in [palmgreen,palmlight]:shade=.78+.18*(.5+.5*n)
+    if ao and not o.name.startswith('leaf-card') and mat not in [roof,roofedge,palmgreen,palmlight,leaf,leaf2]:
+     shade*=ao(v,normal_matrix @ polygon.normal)
+    color.data[loop].color=(max(.20,shade),max(.20,shade*.987),max(.20,shade*.960),1)
+ if ao_values:print(f'{name}: baked {len(ao_values)} hemisphere AO samples, visibility {min(ao_values):.3f}–{max(ao_values):.3f}')
+ # The glTF exporter recognizes VertexColor × constant base color as COLOR_0.
+ for mat in used:
+  nodes=mat.node_tree.nodes;p=nodes.get('Principled BSDF')
+  attr=nodes.get('Arroyo baked weathering') or nodes.new('ShaderNodeVertexColor');attr.name='Arroyo baked weathering';attr.layer_name='Color'
+  mul=nodes.get('Arroyo weathering tint') or nodes.new('ShaderNodeMix');mul.name='Arroyo weathering tint';mul.data_type='RGBA';mul.blend_type='MULTIPLY';mul.inputs[0].default_value=1;mul.inputs[6].default_value=mat.diffuse_color
+  mat.node_tree.links.new(attr.outputs['Color'],mul.inputs[7]);mat.node_tree.links.new(mul.outputs[2],p.inputs['Base Color'])
  export(name)
 
 
 def shrub(x,y,size=1):
  cyl('shrub woody stem',(x,y,.08),(x,y,.65*size),.035,wood,5,.012)
- for i in range(20):
-  a=i*2.399;r=size*.43*math.sqrt((i+.5)/20);h=.35+size*(.30+.24*math.sin(i*1.7))
-  leafcard('leaf-card shrub',(x+math.cos(a)*r,y+math.sin(a)*r,h),size*.65,size*.63,a,.25+(i%4)*.43,leaf if i%3 else leaf2)
+ for i in range(24):
+  a=i*2.399;r=size*.45*math.sqrt((i+.5)/24);h=.30+size*(.38+.26*math.sin(i*1.7))
+  leafcard('leaf-card shrub',(x+math.cos(a)*r,y+math.sin(a)*r,h),size*.89,size*.88,a,.25+(i%4)*.43,leaf if i%3 else leaf2)
 
 
 def agave(x,y,size=1):
@@ -70,7 +151,7 @@ def window(x,y,z,w,h,paint,side=False):
  box('window sash',(x,y-.15,z-.1),(w,.07,.04),white)
  box('window sill',(x,y-.19,z-h/2-.045),(w+.27,.36,.085),paint,.012)
  # A subtle curtain stripe reads as occupied home without an interior render.
- for xx in [x-w*.37,x+w*.37]:box('window curtain',(xx,y-.067,z),(w*.14,.01,h-.20),concrete)
+ for xx in [x-w*.37,x+w*.37]:box('window curtain',(xx,y-.067,z),(w*.10,.01,h-.20),wood)
  if side:
   for o in set(bpy.context.scene.objects)-prior:
    o.location=Vector((o.location.y,-o.location.x,o.location.z));o.rotation_euler.z=-math.pi/2
@@ -135,7 +216,7 @@ def detailed_house(v):
  box('porch soffit',(-3,-7,3.23),(6.5,2.8,.17),white)
  box('porch roof',(-3,-7,3.37),(6.7,2.9,.15),roof if v!=2 else brick)
  for x in [-5.8,-4.8,-1.2,-.2]:box('porch ceiling rafter',(x,-7.0,3.12),(.08,2.5,.12),paint)
- for x0,x1 in [(-5.7,-4.6),(-1.4,-.3)]:
+ for x0,x1 in [(-5.7,-4.5),(-1.5,-.3)]:
   for z in [.72,1.23]:box('porch rail',((x0+x1)/2,-8.04,z),(x1-x0,.07,.08),paint)
   for i in range(6):box('porch baluster',(x0+(x1-x0)*i/5,-8.04,.98),(.045,.045,.48),paint)
  box('door frame',(-3,-6.07,1.41),(1.32,.15,2.53),white)
@@ -147,6 +228,21 @@ def detailed_house(v):
  # Separate glazing material prevents the vehicle's transparent glass settings affecting windows.
  for x in [-6,0,2.6]:window(x,-6.09,2.0,1.65 if x!=2.6 else 1.30,1.43,white)
  for x in [-3.5,2.6]:window(x,-8.035,2,1.65,1.43,white,True)
+ # Louvered shutters, corner boards and a small gable vent break broad clean facades.
+ if v in [0,1,3]:
+  for x in [-6,0,2.6]:
+   w=1.65 if x!=2.6 else 1.3
+   for side in [-1,1]:
+    xx=x+side*(w/2+.24)
+    box('shutter back',(xx,-6.13,2.0),(.31,.08,1.56),trim)
+    for z in [1.29,2.71]:box('shutter cross rail',(xx,-6.22,z),(.34,.07,.08),trim)
+    for i in range(12):
+     louver=box('shutter louver',(xx,-6.22,1.37+i*.112),(.27,.10,.045),trim);louver.rotation_euler.x=.34
+ if v in [0,3]:
+  box('gable vent dark',(0,-6.018,4.05),(.62,.07,.44),interior)
+  for i in range(5):box('gable vent slat',(0,-6.075,3.88+i*.086),(.67,.10,.045),white)
+ for x in [-7.96,7.96]:box('wall corner edging',(x,-6.035,1.93),(.10,.075,3.45),white)
+
  box('garage outer trim',(5.8,-6.10,1.5),(3.87,.18,2.90),white)
  box('garage dark jamb',(5.8,-6.20,1.48),(3.61,.05,2.72),interior)
  for row in range(5):
@@ -171,8 +267,18 @@ def detailed_house(v):
   box('front planting soil',(x,-6.72,.035),(w,1.18,.055),soil)
   for y in [-7.30,-6.12]:box('garden edging',(x,y,.11),(w,.11,.15),brick)
  for x in [-7.4,-6.7,.25,1.2,2.2,3.05]:
-  if (int(x*10)+v)%3==0:agave(x,-6.75,.76)
-  else:shrub(x,-6.75,.85)
+  if (int(x*10)+v)%3==0:agave(x,-6.85,1.0)
+  else:shrub(x,-6.72,1.16)
+ # Street-facing planting extends the original bed, never crossing porch access or garage.
+ for x in [-7.5,-6.8,.45,1.30,2.15,3.05]:
+  shrub(x,-7.18,.78)
+  if (int(x*10)+v)%2==0:
+   for f in range(8):
+    a=f*2.4;xx=x+math.cos(a)*.26;yy=-7.14+math.sin(a)*.26;zz=.73+.13*math.sin(f*1.4)
+    # Small folded five-petal blooms, intentionally accents within green bushes.
+    verts=[(xx,yy,zz+.027)]+[(xx+.058*math.cos(k*math.tau/5),yy+.058*math.sin(k*math.tau/5),zz) for k in range(5)]
+    mesh('garden bloom',verts,[(0,k+1,(k+1)%5+1) for k in range(5)],flower)
+
  env_finish(f'house-{v}')
 
 
@@ -195,16 +301,16 @@ for j in range(1,50):
  t=j/50;c=Vector((.20*t+.35*math.sin(t*math.pi),.12*math.sin(t*math.pi*.8),10*t));r=.242-.092*t
  bpy.ops.mesh.primitive_torus_add(major_radius=r,minor_radius=.018,major_segments=12,minor_segments=4,location=c);add(bpy.context.object,'palm growth ring',wood)
 base=centers[-1]
-for i in range(24):
- a=i*2.399;direction=Vector((math.cos(a),math.sin(a),0));side=Vector((-math.sin(a),math.cos(a),0));length=2.5+(i%5)*.25
+for i in range(28):
+ a=i*2.399;direction=Vector((math.cos(a),math.sin(a),0));side=Vector((-math.sin(a),math.cos(a),0));length=2.85+(i%5)*.25
  points=[]
  for j in range(13):
-  t=j/12;points.append(base+direction*(length*t)+Vector((0,0,.16+1.25*math.sin(t*math.pi*.78)-t*(1.4 if i<14 else .40))))
+  t=j/12;points.append(base+direction*(length*t)+Vector((0,0,.16+1.28*math.sin(t*math.pi*.90)-t*(2.65 if i<10 else 1.45 if i<20 else .22))))
  for j in range(12):cyl('palm frond rib',points[j],points[j+1],.028*(1-j/14),palmgreen,5,.018*(1-j/13))
  for j in range(1,25):
-  t=j/25;f=t*12;k=min(11,int(f));root=points[k].lerp(points[k+1],f-k);blade_length=(.17+.63*math.sin(t*math.pi))*(.85+(i%3)*.10)
+  t=j/25;f=t*12;k=min(11,int(f));root=points[k].lerp(points[k+1],f-k);blade_length=(.24+.84*math.sin(t*math.pi))*(.91+(i%3)*.08)
   for sign in [-1,1]:
-   tip=root+side*(sign*blade_length)+direction*(.15+.30*t)+Vector((0,0,-.12-.25*t));mid=root.lerp(tip,.48)+Vector((0,0,.045));width=direction*.026
+   tip=root+side*(sign*blade_length)+direction*(.15+.30*t)+Vector((0,0,-.12-.25*t));mid=root.lerp(tip,.48)+Vector((0,0,.045));width=direction*(.060+.042*math.sin(t*math.pi))
    mesh('feather leaflet',[root,mid-width,mid+Vector((0,0,.018)),mid+width,tip],[(0,1,2),(0,2,3),(1,4,2),(2,4,3)],palmgreen if i%3 else palmlight)
 # A small brown crownshaft makes the crown transition botanical, not a star glued to a pole.
 for i in range(12):
@@ -225,6 +331,6 @@ for branch in range(10):
   for card in range(10):
    ca=card*2.399+branch*.7;rad=.20+.50*math.sqrt((card+.5)/10)
    center=tip+Vector((math.cos(ca)*rad,math.sin(ca)*rad,.33*math.sin(card*1.7)))
-   leafcard('leaf-card canopy',center,.80+(card%3)*.13,.77+(card%4)*.1,ca,.35+(card%4)*.47,leaf if (card+branch)%4 else leaf2)
+   leafcard('leaf-card canopy',center,1.03+(card%3)*.15,.99+(card%4)*.13,ca,.35+(card%4)*.47,leaf if (card+branch)%4 else leaf2)
 env_finish('tree')
 print('Detailed original architecture and vegetation exported.')

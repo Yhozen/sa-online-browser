@@ -100,18 +100,19 @@ export('tree')
 start()
 for x in [-2,2]:cyl('post',(x,0,0),(x,0,1.1),.04,chrome,6)
 for z in [.1,1.05]:cyl('rail',(-2,0,z),(2,0,z),.025,chrome,6)
+fenceMetal=material('fence-metal',(.12,.145,.12),.95,.05)
 # Thin diamond-wire mesh, no alpha texture overdraw.
 for i in range(-15,16):
  x=i*.2
  for direction in [-1,1]:
   a=max(0,(-2-x)/direction) if direction>0 else max(0,(2-x)/direction)
   b=min(1, (2-x)/direction) if direction>0 else min(1,(-2-x)/direction)
-  if b>a:cyl('wire',(x+direction*a,0,.05+a),(x+direction*b,0,.05+b),.006,chrome,4)
+  if b>a:cyl('wire',(x+direction*a,0,.05+a),(x+direction*b,0,.05+b),.006,fenceMetal,4)
 export('fence')
 start()
-for x in [-2,2]:cyl('post',(x,0,0),(x,0,1.1),.04,chrome,4)
-for z in [.1,1.05]:cyl('rail',(-2,0,z),(2,0,z),.025,chrome,4)
-for x in [-1.5,-.5,.5,1.5]:cyl('wire',(x-.5,0,.1),(x+.5,0,1.05),.009,chrome,3);cyl('wire',(x+.5,0,.1),(x-.5,0,1.05),.009,chrome,3)
+for x in [-2,2]:cyl('post',(x,0,0),(x,0,1.1),.04,fenceMetal,4)
+for z in [.1,1.05]:cyl('rail',(-2,0,z),(2,0,z),.025,fenceMetal,4)
+for x in [-1.5,-.5,.5,1.5]:cyl('wire',(x-.5,0,.1),(x+.5,0,1.05),.009,fenceMetal,3);cyl('wire',(x+.5,0,.1),(x-.5,0,1.05),.009,fenceMetal,3)
 export('fence-low')
 start();box('post',(0,0,.5),(.09,.09,1),wood);box('box',(0,.08,1.03),(.35,.55,.3),trim,.08);box('flag',(.2,0,1.12),(.025,.04,.2),red);export('mailbox')
 start();box('bin',(0,0,.43),(.56,.62,.86),trim,.06);box('lid',(0,0,.9),(.63,.7,.08),dark,.02)
