@@ -7,6 +7,7 @@ import { createRenderer, applyQuality } from "./graphics";
 import yard from "../../../packages/shared/scenes/yard.json";
 import type { SceneManifest } from "../../../packages/shared/scene";
 import { loadAssets, assetStats, bakingReflections } from "./assets";
+import { gatewaySocketUrl, gatewayUrl } from "./gateway";
 import { warmupActors } from "./warmup";
 import { buildEnvironment } from "./environment";
 import {
@@ -474,9 +475,7 @@ el<HTMLFormElement>("join-form").addEventListener("submit", (event) => {
   epoch = null;
   self.name = el<HTMLInputElement>("nickname").value.trim();
   setStatus("Connecting…");
-  const current = new WebSocket(
-    `${location.protocol === "https:" ? "wss:" : "ws:"}//${location.host}/ws`,
-  );
+  const current = new WebSocket(gatewaySocketUrl());
   socket = current;
   current.addEventListener("open", () => {
     if (socket === current)
@@ -952,7 +951,7 @@ el<HTMLSelectElement>("quality").onchange = () =>
 setQuality(quality);
 async function initializeScene() {
   try {
-    const response = await fetch("/scene", {
+    const response = await fetch(gatewayUrl("/scene"), {
       cache: "no-store",
       signal: AbortSignal.timeout(15000),
     });

@@ -1,0 +1,85 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+name: sa-online-browser
+
+# Both services publish to 127.0.0.1 only, so the fixture stays off the local
+# network. Open http://127.0.0.1:3000 in your own browser: it renders and
+# simulates there, on your real GPU, while the container holds the toolchain,
+# the native worker and the unchanged open.mp server.
+#
+# Profiles keep a bare `docker compose up` from starting both on port 3000.
+
+services:
+  # Ready-to-run server: fixture, gateway and built browser baked into the
+  # image, with no setup step.
+  server:
+    profiles: ["server"]
+    build:
+      context: .
+      target: server
+    platform: linux/amd64
+    init: true
+    environment:
+      POC_HOST: "0.0.0.0"
+      POC_SCENE: "${POC_SCENE:-neighborhood}"
+      # Only needed when a separate origin (a CDN deployment) serves the client.
+      POC_ALLOWED_ORIGINS: "${POC_ALLOWED_ORIGINS:-}"
+    ports:
+      - "127.0.0.1:${POC_PORT:-3000}:3000"
+    # The 32-bit fixture aborts on the 64-bit directory offsets that overlayfs
+    # and ext4 report; only tmpfs keeps them inside a 32-bit long. The
+    # entrypoint fills this mount, and exec lets the server load its
+    # components. Files the server writes under it do not survive a restart.
+    tmpfs:
+      - /work/.runtime/Server:exec,size=320m
+
+  # Development toolchain. Source directories are mounted from the checkout, so
+  # host edits apply immediately. Everything generated — node_modules, the
+  # provisioned .runtime, the RakNet checkout, the native build and the browser
+  # bundle — stays inside the container, already built by the image, so no
+  # dependency is installed on the host.
+  #
+  # Docker Desktop for Mac cannot mount a volume inside a bind mount: such
+  # mounts are silently dropped and the writes land in the checkout instead.
+  # That is why the checkout is not mounted at /work as a whole, and why each
+  # entry below is a source path rather than a parent of a generated one.
+  dev:
+    profiles: ["dev"]
+    build:
+      context: .
+      target: dev
+    platform: linux/amd64
+    init: true
+    stdin_open: true
+    tty: true
+    working_dir: /work
+    environment:
+      POC_HOST: "0.0.0.0"
+      POC_SCENE: "${POC_SCENE:-neighborhood}"
+      # Only needed when a separate origin (a CDN deployment) serves the client.
+      POC_ALLOWED_ORIGINS: "${POC_ALLOWED_ORIGINS:-}"
+    ports:
+      - "127.0.0.1:${POC_PORT:-3000}:3000"
+    tmpfs:
+      - /work/.runtime/Server:exec,size=320m
+    volumes:
+      - ./apps/browser/src:/work/apps/browser/src
+      - ./apps/browser/public:/work/apps/browser/public
+      - ./apps/browser/index.html:/work/apps/browser/index.html
+      - ./apps/browser/vite.config.ts:/work/apps/browser/vite.config.ts
+      - ./packages:/work/packages
+      - ./services:/work/services
+      - ./tools:/work/tools
+      - ./tests:/work/tests
+      - ./test-server:/work/test-server
+      - ./assets:/work/assets
+      - ./native/fixtures:/work/native/fixtures
+      - ./native/CMakeLists.txt:/work/native/CMakeLists.txt
+      - ./native/worker.cpp:/work/native/worker.cpp
+      - ./native/tests.cpp:/work/native/tests.cpp
+      - ./native/process-tests.py:/work/native/process-tests.py
+      - ./package.json:/work/package.json
+      - ./package-lock.json:/work/package-lock.json
+      - ./tsconfig.json:/work/tsconfig.json
+      - ./playwright.config.mjs:/work/playwright.config.mjs
+      # Verification output is written here so it can be read on the host.
+      - ./artifacts:/work/artifacts

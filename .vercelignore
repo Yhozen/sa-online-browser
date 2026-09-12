@@ -1,0 +1,26 @@
+# Vercel builds only the browser client, so the protocol worker, the fixture,
+# the test suite and the editable art sources are not uploaded. Keep
+# apps/browser, packages/, package.json, package-lock.json, tsconfig.json and
+# vercel.json: the Vite build reads all of them.
+.git
+.context
+.agents
+.runtime
+node_modules
+native
+test-server
+tests
+docs
+assets
+artifacts
+test-results
+playwright-report
+Dockerfile
+docker-compose.yml
+.dockerignore
+fly.toml
+*.log
+*.blend1
+.dream-loop
+.env
+.env.*
