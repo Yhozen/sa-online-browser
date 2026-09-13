@@ -1,0 +1,32 @@
+{
+  "at": "2026-09-13T10:50:49.318Z",
+  "ownedMotionTargets": [
+    "45D7EF093E63D134AEB49860510DDCB2",
+    "AAD903C53A13A2FC5D5C580042B51E4D"
+  ],
+  "allOwnedTargetsClosed": true,
+  "reference": {
+    "targetId": "37D9DDC1B1728B3F58602FBC3B3FBD38",
+    "before": {
+      "windowId": 1965825502,
+      "bounds": {
+        "left": 22,
+        "top": 55,
+        "width": 1400,
+        "height": 900,
+        "windowState": "normal"
+      }
+    },
+    "after": {
+      "windowId": 1965825502,
+      "bounds": {
+        "left": 22,
+        "top": 55,
+        "width": 1400,
+        "height": 900,
+        "windowState": "minimized"
+      }
+    },
+    "reason": "Keep the owned disconnected comparison from automatically resuming when temporary test windows close."
+  }
+}

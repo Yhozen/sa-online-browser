@@ -1,0 +1,24 @@
+{
+  "kind": "actual native Chrome gameplay screenshot",
+  "capturedAt": "2026-09-13T10:42:09.440Z",
+  "sourceCommit": "b49e186",
+  "scene": {
+    "id": "neighborhood",
+    "revision": "6c1739ad64e66280",
+    "ready": true
+  },
+  "cssSize": [
+    1672,
+    941
+  ],
+  "nativeDrawingBuffer": [
+    3344,
+    1882
+  ],
+  "dpr": 2,
+  "sha256": "b3033da19966bdce37daaa4caac5f55d4933dba073cd75b55294b3a1e50a6ab8",
+  "browser": "Chrome/153.0.8010.37",
+  "errors": [],
+  "quality": "standard",
+  "note": "Browser captured at native DPR2; PNG comparison uses1672x941 matching the generated target. No post-processing."
+}

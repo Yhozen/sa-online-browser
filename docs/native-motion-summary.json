@@ -1,0 +1,873 @@
+{
+  "at": "2026-09-13T10:48:34.261Z",
+  "round": 12,
+  "complete": true,
+  "scope": "Native Low motion probe only; the round12 full acceptance suite has not rerun.",
+  "sourceCommit": "b49e186ba92077c49372e2d537d6c74acd073ff1",
+  "served": {
+    "sceneRevision": "6c1739ad64e66280",
+    "entryBundle": "/assets/index-CwDjqzK3.js",
+    "gameModules": [
+      {
+        "path": "/assets/main-B6cZGs4C.js",
+        "bytes": 1001087,
+        "sha256": "507908629ceba28a7194fa8c0eeb73695bcb44663b6bfe0e773a8886ad0ff2c5"
+      }
+    ],
+    "beforeAt": "2026-09-13T10:48:34.221Z",
+    "afterAt": "2026-09-13T10:50:28.318Z",
+    "sourceFilesUnchanged": true,
+    "sourceFileCount": 74,
+    "assetsUnchanged": true,
+    "assetCount": 28,
+    "resourcesUnchanged": true,
+    "resourceCount": 4
+  },
+  "chrome": "Chrome/153.0.8010.37",
+  "readiness": [
+    {
+      "targetId": "45D7EF093E63D134AEB49860510DDCB2",
+      "elapsedMs": 1497,
+      "visibility": "visible",
+      "focused": true,
+      "programs": 23,
+      "frames": 20
+    },
+    {
+      "targetId": "AAD903C53A13A2FC5D5C580042B51E4D",
+      "elapsedMs": 1721,
+      "visibility": "visible",
+      "focused": true,
+      "programs": 23,
+      "frames": 17
+    }
+  ],
+  "nativeViewport": {
+    "width": 1280,
+    "height": 720,
+    "dpr": 2
+  },
+  "renderSize": [
+    2560,
+    1440
+  ],
+  "remoteNativeViewport": {
+    "width": 1280,
+    "height": 720,
+    "dpr": 2
+  },
+  "preset": "low",
+  "jumpSeatExit": [
+    {
+      "mode": "driver",
+      "risingVelocity": 5.549999999999962,
+      "seatedDistance": 3.28694862987817,
+      "maximumUncommandedHeight": 0,
+      "maximumUpwardVelocity": 0,
+      "minimumBarrierGap": 11.147716146200802
+    },
+    {
+      "mode": "passenger",
+      "risingVelocity": 5.549999999999962,
+      "seatedDistance": 0,
+      "maximumUncommandedHeight": 0,
+      "maximumUpwardVelocity": 0,
+      "minimumBarrierGap": 14.790000000000001
+    }
+  ],
+  "walk": {
+    "frames": 324,
+    "medianFPS": 120.48192771085394,
+    "p95FrameMs": 9.700000000000728,
+    "zeroRenderFrames": 0,
+    "zeroSimulationFrames": 162,
+    "meanRenderSpeed": 5.000000000000015,
+    "speedVariationPercent": 1.4738820008766742e-12,
+    "maximumSimulationLag": 0.06166666663686193,
+    "totalDistance": 13.497500000000034
+  },
+  "driving": {
+    "frames": 202,
+    "medianFPS": 120.48192771085394,
+    "p95FrameMs": 9.799999999999272,
+    "zeroRenderFrames": 0,
+    "zeroSimulationFrames": 101,
+    "meanRenderSpeed": 7.967360123671859,
+    "speedVariationPercent": 38.70497185201619,
+    "maximumSimulationLag": 0.18180335290293215,
+    "totalDistance": 13.406586979539307
+  },
+  "steeringRadians": 1.1519767104979084,
+  "twoPlayer": {
+    "local": {
+      "frames": 322,
+      "medianFPS": 120.48192771085394,
+      "p95FrameMs": 10,
+      "zeroRenderFrames": 0,
+      "zeroSimulationFrames": 161,
+      "meanRenderSpeed": 5.000000000000016,
+      "speedVariationPercent": 1.4181151065113422e-12,
+      "maximumSimulationLag": 0.05950000002980292,
+      "totalDistance": 13.408500000000023
+    },
+    "remote": {
+      "frames": 322,
+      "medianFPS": 120.48192771084074,
+      "p95FrameMs": 10,
+      "zeroRenderFrames": 3,
+      "zeroSimulationFrames": 242,
+      "meanRenderSpeed": 4.995470183556545,
+      "speedVariationPercent": 15.35712358344128,
+      "maximumSimulationLag": 0.481337326257495,
+      "totalDistance": 13.419490857127043
+    }
+  },
+  "networkAgreement": 6.406594893353728e-07,
+  "remoteMotionLimitation": "3 repeated rendered positions across 322 sampled intervals and 15.35712358344128% speed variation; this is not evidence of zero remote stutter.",
+  "teleportFirstCorrected": {
+    "t": 13805.9,
+    "raw": [
+      -4,
+      -4,
+      10
+    ],
+    "render": [
+      -4,
+      -4,
+      10
+    ],
+    "quaternion": [
+      0,
+      0,
+      0,
+      1
+    ],
+    "mode": "onFoot",
+    "alpha": 0.37800000035760606,
+    "spawned": true,
+    "correction": 5,
+    "preset": "low",
+    "renderSize": [
+      2560,
+      1440
+    ],
+    "dpr": 2,
+    "viewport": [
+      1280,
+      720
+    ]
+  },
+  "occupants": {
+    "driver": {
+      "frames": 203,
+      "medianFPS": 120.48192771085394,
+      "p95FrameMs": 9.900000000001455,
+      "zeroRenderFrames": 0,
+      "zeroSimulationFrames": 102,
+      "meanRenderSpeed": 8.068056919585766,
+      "speedVariationPercent": 38.14777332114169,
+      "maximumSimulationLag": 0.14292901785935896,
+      "totalDistance": 13.639583417744348
+    },
+    "passenger": {
+      "frames": 203,
+      "medianFPS": 120.48192771085394,
+      "p95FrameMs": 9.800000000001091,
+      "zeroRenderFrames": 0,
+      "zeroSimulationFrames": 152,
+      "meanRenderSpeed": 7.301670514973032,
+      "speedVariationPercent": 46.378229390038555,
+      "maximumSimulationLag": 1.1636879830688898,
+      "totalDistance": 12.3291708111226
+    }
+  },
+  "resetSynchronization": [
+    {
+      "targetId": "45D7EF093E63D134AEB49860510DDCB2",
+      "observerId": null,
+      "elapsedMs": 255,
+      "corrected": {
+        "id": 0,
+        "position": [
+          -4,
+          0,
+          10
+        ],
+        "mode": "onFoot",
+        "controlRevision": 5,
+        "sentSequence": 41,
+        "serverSequence": 10,
+        "received": {
+          "session": 1,
+          "connecting": 1,
+          "init": 1,
+          "spawn": 1,
+          "selfPosition": 2,
+          "vehicle": 1,
+          "exitVehicle": 1,
+          "selfHeading": 1,
+          "vehicleState": 2
+        },
+        "peers": []
+      }
+    },
+    {
+      "targetId": "45D7EF093E63D134AEB49860510DDCB2",
+      "observerId": null,
+      "elapsedMs": 255,
+      "corrected": {
+        "id": 0,
+        "position": [
+          -4,
+          0,
+          10
+        ],
+        "mode": "onFoot",
+        "controlRevision": 10,
+        "sentSequence": 169,
+        "serverSequence": 17,
+        "received": {
+          "session": 1,
+          "connecting": 1,
+          "init": 1,
+          "spawn": 1,
+          "selfPosition": 3,
+          "vehicle": 1,
+          "exitVehicle": 3,
+          "selfHeading": 2,
+          "vehicleState": 4,
+          "seat": 1
+        },
+        "peers": []
+      }
+    },
+    {
+      "targetId": "45D7EF093E63D134AEB49860510DDCB2",
+      "observerId": null,
+      "elapsedMs": 257,
+      "corrected": {
+        "id": 0,
+        "position": [
+          -4,
+          0,
+          10
+        ],
+        "mode": "onFoot",
+        "controlRevision": 15,
+        "sentSequence": 279,
+        "serverSequence": 24,
+        "received": {
+          "session": 1,
+          "connecting": 1,
+          "init": 1,
+          "spawn": 1,
+          "selfPosition": 4,
+          "vehicle": 1,
+          "exitVehicle": 5,
+          "selfHeading": 3,
+          "vehicleState": 6,
+          "seat": 2
+        },
+        "peers": []
+      }
+    },
+    {
+      "targetId": "45D7EF093E63D134AEB49860510DDCB2",
+      "observerId": null,
+      "elapsedMs": 256,
+      "corrected": {
+        "id": 0,
+        "position": [
+          -4,
+          0,
+          10
+        ],
+        "mode": "onFoot",
+        "controlRevision": 19,
+        "sentSequence": 538,
+        "serverSequence": 30,
+        "received": {
+          "session": 1,
+          "connecting": 1,
+          "init": 1,
+          "spawn": 1,
+          "selfPosition": 6,
+          "vehicle": 1,
+          "exitVehicle": 6,
+          "selfHeading": 4,
+          "vehicleState": 8,
+          "seat": 2
+        },
+        "peers": []
+      }
+    },
+    {
+      "targetId": "45D7EF093E63D134AEB49860510DDCB2",
+      "observerId": null,
+      "elapsedMs": 256,
+      "corrected": {
+        "id": 0,
+        "position": [
+          -4,
+          0,
+          10
+        ],
+        "mode": "onFoot",
+        "controlRevision": 23,
+        "sentSequence": 642,
+        "serverSequence": 36,
+        "received": {
+          "session": 1,
+          "connecting": 1,
+          "init": 1,
+          "spawn": 1,
+          "selfPosition": 7,
+          "vehicle": 1,
+          "exitVehicle": 7,
+          "selfHeading": 5,
+          "vehicleState": 10,
+          "seat": 3
+        },
+        "peers": []
+      }
+    },
+    {
+      "targetId": "45D7EF093E63D134AEB49860510DDCB2",
+      "observerId": 1,
+      "elapsedMs": 510,
+      "corrected": {
+        "id": 0,
+        "position": [
+          -4,
+          0,
+          10
+        ],
+        "mode": "onFoot",
+        "controlRevision": 26,
+        "sentSequence": 856,
+        "serverSequence": 161,
+        "received": {
+          "session": 1,
+          "connecting": 1,
+          "init": 1,
+          "spawn": 1,
+          "selfPosition": 8,
+          "vehicle": 1,
+          "exitVehicle": 8,
+          "selfHeading": 6,
+          "vehicleState": 12,
+          "seat": 3,
+          "playerJoin": 1,
+          "playerState": 119
+        },
+        "peers": [
+          {
+            "id": 1,
+            "name": "MotionB36620",
+            "position": [
+              4,
+              0,
+              10
+            ],
+            "rotation": [
+              1,
+              0,
+              0,
+              0
+            ],
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "mode": "onFoot",
+            "vehicleId": 0,
+            "seat": -1,
+            "keys": 0,
+            "controlRevision": 26,
+            "seq": 161,
+            "type": "playerState",
+            "epoch": 1789296083642
+          }
+        ]
+      },
+      "witnessCorrected": {
+        "id": 1,
+        "position": [
+          4,
+          0,
+          10
+        ],
+        "mode": "onFoot",
+        "controlRevision": 5,
+        "sentSequence": 150,
+        "serverSequence": 156,
+        "received": {
+          "session": 1,
+          "connecting": 1,
+          "playerJoin": 1,
+          "init": 1,
+          "spawn": 1,
+          "selfPosition": 2,
+          "vehicle": 1,
+          "playerState": 145,
+          "exitVehicle": 1,
+          "selfHeading": 1,
+          "vehicleState": 2
+        },
+        "peers": [
+          {
+            "id": 0,
+            "name": "MotionA14261",
+            "position": [
+              -4,
+              0,
+              10
+            ],
+            "rotation": [
+              1,
+              0,
+              0,
+              0
+            ],
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "mode": "onFoot",
+            "vehicleId": 0,
+            "seat": -1,
+            "keys": 0,
+            "controlRevision": 5,
+            "seq": 156,
+            "type": "playerState",
+            "epoch": 1789296083643
+          }
+        ]
+      },
+      "agreement": [
+        {
+          "id": 0,
+          "position": [
+            -4,
+            0,
+            10
+          ],
+          "mode": "onFoot",
+          "controlRevision": 26,
+          "sentSequence": 864,
+          "serverSequence": 169,
+          "received": {
+            "session": 1,
+            "connecting": 1,
+            "init": 1,
+            "spawn": 1,
+            "selfPosition": 8,
+            "vehicle": 1,
+            "exitVehicle": 8,
+            "selfHeading": 6,
+            "vehicleState": 12,
+            "seat": 3,
+            "playerJoin": 1,
+            "playerState": 127
+          },
+          "peers": [
+            {
+              "id": 1,
+              "name": "MotionB36620",
+              "position": [
+                4,
+                0,
+                10
+              ],
+              "rotation": [
+                1,
+                0,
+                0,
+                0
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "mode": "onFoot",
+              "vehicleId": 0,
+              "seat": -1,
+              "keys": 0,
+              "controlRevision": 26,
+              "seq": 169,
+              "type": "playerState",
+              "epoch": 1789296083642
+            }
+          ]
+        },
+        {
+          "id": 1,
+          "position": [
+            4,
+            0,
+            10
+          ],
+          "mode": "onFoot",
+          "controlRevision": 5,
+          "sentSequence": 158,
+          "serverSequence": 165,
+          "received": {
+            "session": 1,
+            "connecting": 1,
+            "playerJoin": 1,
+            "init": 1,
+            "spawn": 1,
+            "selfPosition": 2,
+            "vehicle": 1,
+            "playerState": 154,
+            "exitVehicle": 1,
+            "selfHeading": 1,
+            "vehicleState": 2
+          },
+          "peers": [
+            {
+              "id": 0,
+              "name": "MotionA14261",
+              "position": [
+                -4,
+                0,
+                10
+              ],
+              "rotation": [
+                1,
+                0,
+                0,
+                0
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "mode": "onFoot",
+              "vehicleId": 0,
+              "seat": -1,
+              "keys": 0,
+              "controlRevision": 5,
+              "seq": 165,
+              "type": "playerState",
+              "epoch": 1789296083643
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "targetId": "45D7EF093E63D134AEB49860510DDCB2",
+      "observerId": 1,
+      "elapsedMs": 511,
+      "corrected": {
+        "id": 0,
+        "position": [
+          -4,
+          0,
+          10
+        ],
+        "mode": "onFoot",
+        "controlRevision": 31,
+        "sentSequence": 1050,
+        "serverSequence": 357,
+        "received": {
+          "session": 1,
+          "connecting": 1,
+          "init": 1,
+          "spawn": 1,
+          "selfPosition": 9,
+          "vehicle": 1,
+          "exitVehicle": 10,
+          "selfHeading": 7,
+          "vehicleState": 14,
+          "seat": 4,
+          "playerJoin": 1,
+          "playerState": 308
+        },
+        "peers": [
+          {
+            "id": 1,
+            "name": "MotionB36620",
+            "position": [
+              4,
+              0,
+              10
+            ],
+            "rotation": [
+              1,
+              0,
+              0,
+              0
+            ],
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "mode": "onFoot",
+            "vehicleId": 0,
+            "seat": -1,
+            "keys": 0,
+            "controlRevision": 31,
+            "seq": 357,
+            "type": "playerState",
+            "epoch": 1789296083642
+          }
+        ]
+      },
+      "witnessCorrected": {
+        "id": 1,
+        "position": [
+          4,
+          0,
+          10
+        ],
+        "mode": "onFoot",
+        "controlRevision": 10,
+        "sentSequence": 344,
+        "serverSequence": 506,
+        "received": {
+          "session": 1,
+          "connecting": 1,
+          "playerJoin": 1,
+          "init": 1,
+          "spawn": 1,
+          "selfPosition": 3,
+          "vehicle": 1,
+          "playerState": 333,
+          "exitVehicle": 3,
+          "selfHeading": 2,
+          "vehicleState": 159,
+          "seat": 1
+        },
+        "peers": [
+          {
+            "id": 0,
+            "name": "MotionA14261",
+            "position": [
+              -4,
+              0,
+              10
+            ],
+            "rotation": [
+              1,
+              0,
+              0,
+              0
+            ],
+            "velocity": [
+              0,
+              0,
+              0
+            ],
+            "mode": "onFoot",
+            "vehicleId": 0,
+            "seat": -1,
+            "keys": 0,
+            "controlRevision": 10,
+            "seq": 506,
+            "type": "playerState",
+            "epoch": 1789296083643
+          }
+        ]
+      },
+      "agreement": [
+        {
+          "id": 0,
+          "position": [
+            -4,
+            0,
+            10
+          ],
+          "mode": "onFoot",
+          "controlRevision": 31,
+          "sentSequence": 1058,
+          "serverSequence": 365,
+          "received": {
+            "session": 1,
+            "connecting": 1,
+            "init": 1,
+            "spawn": 1,
+            "selfPosition": 9,
+            "vehicle": 1,
+            "exitVehicle": 10,
+            "selfHeading": 7,
+            "vehicleState": 14,
+            "seat": 4,
+            "playerJoin": 1,
+            "playerState": 316
+          },
+          "peers": [
+            {
+              "id": 1,
+              "name": "MotionB36620",
+              "position": [
+                4,
+                0,
+                10
+              ],
+              "rotation": [
+                1,
+                0,
+                0,
+                0
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "mode": "onFoot",
+              "vehicleId": 0,
+              "seat": -1,
+              "keys": 0,
+              "controlRevision": 31,
+              "seq": 365,
+              "type": "playerState",
+              "epoch": 1789296083642
+            }
+          ]
+        },
+        {
+          "id": 1,
+          "position": [
+            4,
+            0,
+            10
+          ],
+          "mode": "onFoot",
+          "controlRevision": 10,
+          "sentSequence": 352,
+          "serverSequence": 514,
+          "received": {
+            "session": 1,
+            "connecting": 1,
+            "playerJoin": 1,
+            "init": 1,
+            "spawn": 1,
+            "selfPosition": 3,
+            "vehicle": 1,
+            "playerState": 341,
+            "exitVehicle": 3,
+            "selfHeading": 2,
+            "vehicleState": 159,
+            "seat": 1
+          },
+          "peers": [
+            {
+              "id": 0,
+              "name": "MotionA14261",
+              "position": [
+                -4,
+                0,
+                10
+              ],
+              "rotation": [
+                1,
+                0,
+                0,
+                0
+              ],
+              "velocity": [
+                0,
+                0,
+                0
+              ],
+              "mode": "onFoot",
+              "vehicleId": 0,
+              "seat": -1,
+              "keys": 0,
+              "controlRevision": 10,
+              "seq": 514,
+              "type": "playerState",
+              "epoch": 1789296083643
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "movingReset": {
+    "sceneRevision": "6c1739ad64e66280",
+    "drivenDistance": 7.170401609983041,
+    "steeredRadians": 0.9301266631228585,
+    "passengerPresentationLag": 0.7650629891878339,
+    "requestedAt": 1789296551947,
+    "replicationWaitMs": 1,
+    "results": [
+      {
+        "label": "driver",
+        "frames": 601,
+        "firstCorrectionAfterRequestMs": 176.800048828125,
+        "maximumSelfPresentationError": 0,
+        "maximumCarPresentationError": 0,
+        "maximumPeerPresentationError": 1.7763568394002505e-15,
+        "peerAgreementMs": 50.39990234375,
+        "observedSettledMs": 4673.699951171875
+      },
+      {
+        "label": "passenger",
+        "frames": 601,
+        "firstCorrectionAfterRequestMs": 185.199951171875,
+        "maximumSelfPresentationError": 0,
+        "maximumCarPresentationError": 0,
+        "maximumPeerPresentationError": 1.7763568394002505e-15,
+        "peerAgreementMs": 32.199951171875,
+        "observedSettledMs": 4665.60009765625
+      }
+    ]
+  },
+  "errors": [],
+  "cleanup": {
+    "record": "native-motion/round12/cleanup.json",
+    "at": "2026-09-13T10:50:49.318Z",
+    "ownedMotionTargets": [
+      "45D7EF093E63D134AEB49860510DDCB2",
+      "AAD903C53A13A2FC5D5C580042B51E4D"
+    ],
+    "allOwnedTargetsClosed": true,
+    "reference": {
+      "targetId": "37D9DDC1B1728B3F58602FBC3B3FBD38",
+      "before": {
+        "windowId": 1965825502,
+        "bounds": {
+          "left": 22,
+          "top": 55,
+          "width": 1400,
+          "height": 900,
+          "windowState": "normal"
+        }
+      },
+      "after": {
+        "windowId": 1965825502,
+        "bounds": {
+          "left": 22,
+          "top": 55,
+          "width": 1400,
+          "height": 900,
+          "windowState": "minimized"
+        }
+      },
+      "reason": "Keep the owned disconnected comparison from automatically resuming when temporary test windows close."
+    },
+    "health": {
+      "ok": true,
+      "sessions": 0,
+      "workers": 0
+    },
+    "healthSource": "native-motion/round12/served-after.json"
+  },
+  "verificationSha256": "fad5b440cb7dfe3cb637acc5092891dd311a07ab67f94510215b8ad0a2c9deaf",
+  "evidence": "native-motion/round12/provenance.json",
+  "historical": {
+    "round7Summary": "native-motion/round12/historical-round7-summary.json",
+    "round7Verification": "native-motion/verification.json",
+    "resetSetupFailure": "native-motion/reset-setup-failure.json",
+    "scope": "Earlier scene and diagnostic setup failure; not round12 measurements."
+  }
+}

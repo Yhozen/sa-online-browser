@@ -1,0 +1,440 @@
+{
+  "at": "2026-09-13T10:48:34.221Z",
+  "base": "http://127.0.0.1:3000",
+  "sceneRevision": "6c1739ad64e66280",
+  "resources": {
+    "/": {
+      "bytes": 449,
+      "sha256": "049ee04895ab56a9696d4c4abd40ac699b69014ac14cc328a6cb748bfdc936ea"
+    },
+    "/assets/index-CLSF4nJg.css": {
+      "bytes": 6991,
+      "sha256": "0655f264cfc9ca400288720b93a106c022f381daa4c7ce52c88deb326995367a"
+    },
+    "/assets/index-CwDjqzK3.js": {
+      "bytes": 577842,
+      "sha256": "63ad762b318c3018337edf9e3f670659ef4eb61e22b0adf25d35af3e4c7ce757"
+    },
+    "/assets/main-B6cZGs4C.js": {
+      "bytes": 1001087,
+      "sha256": "507908629ceba28a7194fa8c0eeb73695bcb44663b6bfe0e773a8886ad0ff2c5"
+    }
+  },
+  "sourceFiles": {
+    "apps/browser/index.html": {
+      "bytes": 354,
+      "sha256": "5c7e3e0d86ebc6d6e88fb1514c0e592903af7ab85d4dadd5b13a2f43e2387e24"
+    },
+    "apps/browser/src/antialias.ts": {
+      "bytes": 3929,
+      "sha256": "29aad63b1b86354605f740bd8ce7b76bc0784afa84bebaad7ddb7ce315924161"
+    },
+    "apps/browser/src/assets.ts": {
+      "bytes": 22094,
+      "sha256": "2f690c66ea6fba8fdeaa25e24181efedc1a78175ebe131a0b414a30334fb592c"
+    },
+    "apps/browser/src/bootstrap.ts": {
+      "bytes": 1347,
+      "sha256": "d512c6fc9eaf612fc44cc93013b113ed233eabb17fe08ef560fad6af0fb3b98f"
+    },
+    "apps/browser/src/camera.ts": {
+      "bytes": 3133,
+      "sha256": "ab610c86911ff9f33ae3a91a5cb7cf2f16f4528028bc8abe0eff055a635c9ed6"
+    },
+    "apps/browser/src/character-animation.ts": {
+      "bytes": 1170,
+      "sha256": "0782bb10ef3fedfe9744937687dd63566e32abafae70d75e1420c4a62922e8bb"
+    },
+    "apps/browser/src/characters.ts": {
+      "bytes": 3315,
+      "sha256": "92f0aea16b7e509bc9ed6f47ab298ae0f88b7ca2f74eafc447be560d1a99021b"
+    },
+    "apps/browser/src/collision.ts": {
+      "bytes": 3548,
+      "sha256": "bc98b1275031f6b3de5d753bc572f1ce2f77fa5d8d7b54e5b7bb5c65749cd110"
+    },
+    "apps/browser/src/environment.ts": {
+      "bytes": 11770,
+      "sha256": "cfb348a9da7007d29d432bde3ea4fc3a48a7e41dad83503d9d97e6f50dbd7798"
+    },
+    "apps/browser/src/foliage-mips.ts": {
+      "bytes": 3825,
+      "sha256": "bf7fe1414777bf98dc331fcf323a747dd6a1d20e1df857cde5e5ad47a98cb15c"
+    },
+    "apps/browser/src/garden.ts": {
+      "bytes": 5645,
+      "sha256": "7f830a04a2622d01d59367ca18c14bb876a8bc54d759a2c6d65293612d6b1d79"
+    },
+    "apps/browser/src/gateway.ts": {
+      "bytes": 1329,
+      "sha256": "c62dd850b002cfb8fe762d28deaa663d0f8e643c75b9fe9e16ef60c3c2db8a97"
+    },
+    "apps/browser/src/graphics.ts": {
+      "bytes": 3711,
+      "sha256": "7b61ef63871d3f3d1633c38dfd5341b5dfedc60b7346af366acf4b653867832c"
+    },
+    "apps/browser/src/ground-cover.ts": {
+      "bytes": 1428,
+      "sha256": "8e5a7a64144227c24a5aa6c54ad735e07c7ee68b414602d39f21e0e88c757b89"
+    },
+    "apps/browser/src/horizon.ts": {
+      "bytes": 9542,
+      "sha256": "42b93f9b283d936e31609094ee3a15c7a7480d2102405128720ee511597b0b7e"
+    },
+    "apps/browser/src/hud.ts": {
+      "bytes": 6229,
+      "sha256": "af1dee461a169484731193bf2f5d123aa70dd8473311323dc670ce1564409b9f"
+    },
+    "apps/browser/src/interpolated-pose.ts": {
+      "bytes": 2338,
+      "sha256": "5b647e17329d22245dbf9115e6df2037c4dfbf98734a16c3d49642d304d828c4"
+    },
+    "apps/browser/src/lighting.ts": {
+      "bytes": 6459,
+      "sha256": "a88d2532b54083df2b8177b6cdc8300164dedc93ad449e759157cf3437dee057"
+    },
+    "apps/browser/src/main.ts": {
+      "bytes": 34440,
+      "sha256": "a9263b57d32640e8dc73012982105ae05f4258f44fdb5adf97420bb96167a2f3"
+    },
+    "apps/browser/src/reflection-storage.ts": {
+      "bytes": 3292,
+      "sha256": "8b7f07a99248d1885e509aa3e916b87982ad33019348ae87fd04e09635c13720"
+    },
+    "apps/browser/src/road-detail.ts": {
+      "bytes": 2997,
+      "sha256": "668e02a7ea48e45a5317679960efaa624f574322b68d8a290792f85ff3094805"
+    },
+    "apps/browser/src/shadows.ts": {
+      "bytes": 877,
+      "sha256": "5201573101a62ae060534d77123c496f03b8b07617a1da5109341603b86c7be0"
+    },
+    "apps/browser/src/simulation-clock.ts": {
+      "bytes": 1312,
+      "sha256": "4db0b03b6155b649c2d95c814ce8d117516bb4030cce17c02e423580636e6c60"
+    },
+    "apps/browser/src/snapshot-pose.ts": {
+      "bytes": 5074,
+      "sha256": "bf2dbc7f268b8d097639723414315986e02d0e190cbabb332eec09b0d62c60c8"
+    },
+    "apps/browser/src/surface-lighting.ts": {
+      "bytes": 1293,
+      "sha256": "a01bfef9ccd0a7685a18f0ef355dae70ab2d537c5252c8075c811d34fc58992f"
+    },
+    "apps/browser/src/surface-pixels.ts": {
+      "bytes": 2021,
+      "sha256": "327e2cc8c0971fc872b5459c65694c92cfb38a2e25182395470db28f5afdbabe"
+    },
+    "apps/browser/src/surface-textures.ts": {
+      "bytes": 1500,
+      "sha256": "2309c51c318e786734dd90470cbfcb3bb83e67eef2691cf6e3dc5c7028edac56"
+    },
+    "apps/browser/src/surface-weathering.ts": {
+      "bytes": 2610,
+      "sha256": "fe7052a24c8987b77dfa97cf2e9c2654bbf0f4d604f9d27f695cf4d4168353ff"
+    },
+    "apps/browser/src/verges.ts": {
+      "bytes": 20023,
+      "sha256": "c631fd92661b9b863525a1bfef409701b739e27dcf3be79e1b33461229232817"
+    },
+    "apps/browser/src/warmup.ts": {
+      "bytes": 1791,
+      "sha256": "2db7cbf9d34a1a13b65fe8b52cd8509360903d7084741b216be60e9cadad3406"
+    },
+    "apps/browser/vite.config.ts": {
+      "bytes": 302,
+      "sha256": "ae1154c94371aa892f4b8d3087e2c64029fdd1358125a50ebfbc238769bac079"
+    },
+    "assets/horizon-relief.json": {
+      "bytes": 859283,
+      "sha256": "94e2c411dacb524e2ee90c4cf5bd312fbf0c7b3e4355b2ba8f11c6bacf1c9b56"
+    },
+    "assets/source/arroyo-sky-generation.json": {
+      "bytes": 12588,
+      "sha256": "8a0c1dc2ff1465680341d7d268d06fae17c24feb534f17c0febce4351496e20d"
+    },
+    "assets/source/asphalt-authoring.json": {
+      "bytes": 3620,
+      "sha256": "fdc6d8ad958f5d0c95115f6336b572949f91767178dde548fd4e224cc393e753"
+    },
+    "assets/source/asset-build.json": {
+      "bytes": 7409,
+      "sha256": "0b24fc6e216ecf87900342af9b2ebe529a93f05703523d33639105ba479fb0c0"
+    },
+    "assets/source/bin.blend": {
+      "bytes": 112394,
+      "sha256": "2b4a634fc5045555ffcef1ca1414dba83f01affc7d4b955c46e797b27358e6ec"
+    },
+    "assets/source/coupe.blend": {
+      "bytes": 1347088,
+      "sha256": "72cd3d22b717d0fa83990ee0634807885e8e135aa35fe86b27a2e1a87712b39c"
+    },
+    "assets/source/fence-low.blend": {
+      "bytes": 104161,
+      "sha256": "27854c3467c6cac185d87f56a6656ff8c1ce7f87924c301eea915eccb79d0f23"
+    },
+    "assets/source/fence.blend": {
+      "bytes": 112560,
+      "sha256": "a9c7649626947fd8f6fd45f6140fed1e8240f14e83533f72e544812c7ff28313"
+    },
+    "assets/source/garden-low.blend": {
+      "bytes": 208742,
+      "sha256": "c3e22d04a276aa0c987a4218d04f2bc6ba90a5f3f4d30ac3e12f701c1e151fc5"
+    },
+    "assets/source/garden-shrub.blend": {
+      "bytes": 170297,
+      "sha256": "56e76b1110a5bc5627fa43502225a932cc6391d33d2cd75034a124c09f7e1df6"
+    },
+    "assets/source/grass-clump-generation.json": {
+      "bytes": 2821,
+      "sha256": "8e9de3c70440e5a8ebfff06b45e0c9a51a136d8e7baddde45db86944988e8ed2"
+    },
+    "assets/source/horizon-build.json": {
+      "bytes": 6921,
+      "sha256": "f1d3ba91bb5e1f0dc3f33094e06e0d7a10df3bdedf4bd2cec947134113e77f82"
+    },
+    "assets/source/horizon-envelope-v3-build.json": {
+      "bytes": 1233,
+      "sha256": "be46cd9215f7fc49559c7eb39c6194b2e6d3eb7bc97b80c20c282979f58e8612"
+    },
+    "assets/source/horizon-envelope-v3.blend": {
+      "bytes": 3967327,
+      "sha256": "6d5f38fd94408bf478ebd5e867aece47f637a11097a431311b862dc8c941c03d"
+    },
+    "assets/source/horizon-envelope-v3.json": {
+      "bytes": 2284878,
+      "sha256": "42b9fd6aba7e4e7e9416d33722b6661f3deb09ce34baccdc410a3812c0bae557"
+    },
+    "assets/source/horizon-lighting.json": {
+      "bytes": 475,
+      "sha256": "1ef772e1425ae75861db0fb1b702ed3769944746ce39c27709a7782802e29ef5"
+    },
+    "assets/source/horizon.blend": {
+      "bytes": 6089441,
+      "sha256": "206b3e0416ce4da83de95c8bc75b31132ff689cdf85a961e077f7a0b39e56b59"
+    },
+    "assets/source/house-0.blend": {
+      "bytes": 1111631,
+      "sha256": "f11a96e1129e3640e57646e8defb41c5c215adcd7c6dec62db0b1d80ccc93318"
+    },
+    "assets/source/house-1.blend": {
+      "bytes": 1034000,
+      "sha256": "6c84ce0d2c1a56aae9b423f8194bd7039d1bcaee1eb50e2be78359017e6da93a"
+    },
+    "assets/source/house-2.blend": {
+      "bytes": 953931,
+      "sha256": "7175d54294b048da0b3fdeefa6ac1a946559c9e97845e287cf53991d03d35365"
+    },
+    "assets/source/house-3.blend": {
+      "bytes": 1148152,
+      "sha256": "7140939eb1dda2e0122b9025988ba5c42c6f5074a8916b385023bcda13cf9bcd"
+    },
+    "assets/source/lamp.blend": {
+      "bytes": 107171,
+      "sha256": "6397be0c71304abb7b2935568556adcc4cd8d605903543014d494a8fd1a0d8ca"
+    },
+    "assets/source/mailbox.blend": {
+      "bytes": 106372,
+      "sha256": "c68cf903eec89224775c71396eba894febdad601e8b5a16507fe010f4b0cbfa8"
+    },
+    "assets/source/neighbor-shoe-refinement.json": {
+      "bytes": 8826,
+      "sha256": "5f24a944609656614446de79fa505804baf76f3f2060012e140b3b107236a5b8"
+    },
+    "assets/source/neighbor.blend": {
+      "bytes": 3524623,
+      "sha256": "e38f708552d2880592a29df50148c1cba20a2b18d4d3696eee07afc9234123d0"
+    },
+    "assets/source/palm.blend": {
+      "bytes": 652973,
+      "sha256": "5533b4769540eaf6d3746752e5a2ef779d77c70463d19a2144f5b8f330e14f35"
+    },
+    "assets/source/pole.blend": {
+      "bytes": 105452,
+      "sha256": "777ec4ee990233b5ba17f2d8b86eb70551ee2cfcd1d2cdd7bcacfd4a7d300836"
+    },
+    "assets/source/reflection-bake.json": {
+      "bytes": 9808,
+      "sha256": "bd29a31d48573dc26503900b8ee5daf51665957c4bf1b5d59062c3d32d7b14b0"
+    },
+    "assets/source/roadside-oak.blend": {
+      "bytes": 431030,
+      "sha256": "8125d8bfb1e070578fdc76ab60c48d23ea0b900a47e112851850a5ac0bcda048"
+    },
+    "assets/source/texture-encodings.json": {
+      "bytes": 83826,
+      "sha256": "089effcb94c0d6949e1f2cf168bb194dbd69f70002f9431e44795f07c1f06008"
+    },
+    "assets/source/tree.blend": {
+      "bytes": 430669,
+      "sha256": "1707626df2a5c36fab64eaaf026be4159295e5ada88a9474231e707a24af5647"
+    },
+    "package-lock.json": {
+      "bytes": 32130,
+      "sha256": "b99e5c05368deae7d0cd82a86505d33671cc2275c0852eed3f08afbd0b07bd74"
+    },
+    "package.json": {
+      "bytes": 1047,
+      "sha256": "184b45dea4a55d0bbb5c32801804bcaf6fc199caeca30ce4b692a91a6b840f96"
+    },
+    "packages/shared/protocol.ts": {
+      "bytes": 1288,
+      "sha256": "63056480786a5caf48b42fcef1d59427a7525b3eff7c4136e49b86f88758ccde"
+    },
+    "packages/shared/scene.mjs": {
+      "bytes": 733,
+      "sha256": "bf854bf1c671d16b9ac3ec47a08b02bfbd78b32a545bdb2d39ce814d621c5cd4"
+    },
+    "packages/shared/scene.ts": {
+      "bytes": 833,
+      "sha256": "1a3a1fd90813248ba8ad85ce22254e5e7ae1b8c0d05e2b4c6876df4833064c5b"
+    },
+    "packages/shared/scenes/neighborhood.json": {
+      "bytes": 31236,
+      "sha256": "a396b576a26d665224ef38c643d9308866f886babab999baa767f9946db8422d"
+    },
+    "packages/shared/scenes/yard.json": {
+      "bytes": 1239,
+      "sha256": "eafd501e8fef4ffa7df59050ec41059c4d86b53e510aa83e7479e936497ed5ac"
+    },
+    "tools/assets/horizon-bake.mjs": {
+      "bytes": 25266,
+      "sha256": "eab572f404f65c8cecdff745cbdf7a02bd05b122f6daf96f8a85447cb88b503e"
+    },
+    "tools/assets/horizon-envelope-v3.py": {
+      "bytes": 15606,
+      "sha256": "9c738fa74fec6a155a838ecacde64ce37b6d52fae557164c66b85baf40e125cd"
+    },
+    "tools/assets/horizon-save.py": {
+      "bytes": 6958,
+      "sha256": "ae6bc76103272672d807b5c10fb7163d79f4565e8a1cb79f08a6a49c6c0acf68"
+    },
+    "tools/assets/horizon.py": {
+      "bytes": 1570,
+      "sha256": "6a4fb64c39bcd3579355e5a9c8f463b62e6733be7234cf044604c3ec44e86ef9"
+    },
+    "tools/build-assets.mjs": {
+      "bytes": 11229,
+      "sha256": "06f52507fbabf20831ccefb4698613a7d3f3b57dd6f1f504c6a8bf6917ee8449"
+    }
+  },
+  "assets": {
+    "arroyo-asphalt.webp": {
+      "bytes": 2644378,
+      "sha256": "12e88d94e7ce73ac8a94d351109650da262ca20f838a355cce415c4bf2a6a16a"
+    },
+    "arroyo-details.webp": {
+      "bytes": 2357446,
+      "sha256": "6e52afeee96d9f897e3cb8b253bcacdae66bed31e4c02e3a534700b246d71a95"
+    },
+    "arroyo-foliage.webp": {
+      "bytes": 1131330,
+      "sha256": "3b54fbaba32d6281b19346e41a60fb88f2858888cc73327edef4a1fcd30d539b"
+    },
+    "arroyo-grass-clumps.webp": {
+      "bytes": 1468482,
+      "sha256": "e8cbf331e24e0bfeb4904c9e767e92d166c1283f476f619d6f854236d4c3b70d"
+    },
+    "arroyo-grass.webp": {
+      "bytes": 2840886,
+      "sha256": "08d34e0817d828d21aa74ff32b43b4400ff325d58c96408dd31004b248d400a0"
+    },
+    "arroyo-reflections.pmrem.gz": {
+      "bytes": 11406639,
+      "sha256": "baaee4d62728808e5713ca4fc74fc674a69172c356e3cb0cbfa7bd9f9e6d3c9f"
+    },
+    "arroyo-sky.webp": {
+      "bytes": 1029670,
+      "sha256": "a4b66bd9f4ba837201bb517499df4b06fef2ae08ed7850ee35a57e9b6ddff0eb"
+    },
+    "arroyo-surfaces.webp": {
+      "bytes": 2304636,
+      "sha256": "3d841a80edf8e956769e039747d38ef9837f985a2f3a9683a2515ad4fac4b09d"
+    },
+    "bin.glb": {
+      "bytes": 26804,
+      "sha256": "086ed48597d16096bfc08c320a17be1f8f44a186d1bf849853c66c57284c7e19"
+    },
+    "coupe.glb": {
+      "bytes": 2746064,
+      "sha256": "e6d3a3585beeeef45387bb1253853c786885a445cb7b2623466eee92936c0735"
+    },
+    "fence-low.glb": {
+      "bytes": 9696,
+      "sha256": "79e4c3e03e5ace29a6b2e15eb70b7c90d2d026a80fa417cb936bc9b74f392ec5"
+    },
+    "fence.glb": {
+      "bytes": 47904,
+      "sha256": "b2c7c7b0bb8e44fe74c5744c96361ada3a18acee106306ed3a04beac94e070a4"
+    },
+    "garden-low.glb": {
+      "bytes": 216084,
+      "sha256": "bd515240ae8f8dcb05d539a3c354a114e9aeb4d0c10ee682a7233a280f605e56"
+    },
+    "garden-shrub.glb": {
+      "bytes": 102380,
+      "sha256": "08eef3cb1db02a4f55ba4b9721c88a2d3da9b9c2d98caf8c94f76de4bc95f9e4"
+    },
+    "house-0.glb": {
+      "bytes": 2214460,
+      "sha256": "42cbcb9a02bbf1a550f28903b2b301ea05ee2de937d73b45ab411ab6d89e5aa0"
+    },
+    "house-1.glb": {
+      "bytes": 2068448,
+      "sha256": "fef0a57b04cbf48fb0dd70ffd8844959a5e070a8ee840cb5f31d2e8ee46cf200"
+    },
+    "house-2.glb": {
+      "bytes": 1835200,
+      "sha256": "2fde094bc5882189e67d689eedbdd48e51be16008bc6c3ac4004bde3f9478a0b"
+    },
+    "house-3.glb": {
+      "bytes": 2314040,
+      "sha256": "f7722e73d6471e5431a10a9a47e65827093fe77be88af7e3abccc2d26ea2e6a2"
+    },
+    "lamp.glb": {
+      "bytes": 15624,
+      "sha256": "1beb6ea081641fa80292c01b697895c4c45f29936d84628fd29fd9c2eaaf9b18"
+    },
+    "mailbox.glb": {
+      "bytes": 12356,
+      "sha256": "34c2f0adc8180dc0df68dbec19d2e9af2162fcd0ffc2acdd0442bb93ea97abe3"
+    },
+    "neighbor.glb": {
+      "bytes": 6521848,
+      "sha256": "1cb95aa9ef86eb067d51e283eb03a11e9f85095aebe86a12fbfe097df5219d8f"
+    },
+    "neighborhood-atlas.png": {
+      "bytes": 3529016,
+      "sha256": "03157ab45abb63aaf697823c9e6a8d927ac1b062ca27fdf21fcf7a8bd0948269"
+    },
+    "palm.glb": {
+      "bytes": 881160,
+      "sha256": "83e001d52a835436bf62bc39c361e229b83dd025f1ba8aa8ef09a41d6461233d"
+    },
+    "pole.glb": {
+      "bytes": 10416,
+      "sha256": "4a0fea05e8451630f0030e999b284cd50bd3ba6e0d237fb416043c6b549227c0"
+    },
+    "roadside-oak.glb": {
+      "bytes": 651132,
+      "sha256": "e34fd145e45d23567816a5d44dfa2bd8d02ae7af57b25080dcc8fb7ea511199a"
+    },
+    "roadside-oak.glb.gz": {
+      "bytes": 383478,
+      "sha256": "76591ea210f6d9ee37078f5515b1d5fea4536c45cb5c48a3baca5774809e2e85"
+    },
+    "tree.glb": {
+      "bytes": 651080,
+      "sha256": "1587be859a79d45c3418fc442b9d0f47ded1d7b4efd8d1858c074139673f11b4"
+    },
+    "tree.glb.gz": {
+      "bytes": 382873,
+      "sha256": "0ce7b7bb8329eef22a8fc8cf1575421a9856682a92bda70382b72184addf1b2e"
+    }
+  },
+  "health": {
+    "ok": true,
+    "sessions": 0,
+    "workers": 0
+  }
+}

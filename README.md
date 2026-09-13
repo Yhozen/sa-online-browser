@@ -4,9 +4,9 @@ A cloud-local browser multiplayer prototype: two players walk, chat, and drive a
 
 The browser renders and simulates locally. A Node WebSocket gateway starts one native C++ protocol worker per browser. All peer gameplay travels through the real upstream UDP server; the gateway does not broadcast gameplay between browsers.
 
-![Arroyo running in cloud Chrome](docs/images/visual-street.png)
+![Arroyo running in native Chrome on Apple M5 Pro](docs/images/native-street-2026-09-13.png)
 
-The image above is an actual Standard-mode cloud desktop capture. The [visual upgrade record](docs/visual-upgrade-results.md) distinguishes tested behavior from the remaining art target; [earlier neighborhood results](docs/neighborhood-results.md) are historical. The original [concept reference](assets/reference/arroyo-concept.png) remains part of the editable asset record.
+The image above is an actual Standard-mode native Chrome capture from September 13. Movement presentation now interpolates the fixed 60 Hz simulation, and original assets can be rebuilt with native Blender on macOS. The [native results](docs/native-dream-results.md) distinguish measured gameplay and rendering from the unfinished visual target. The [current generated concept](docs/images/native-concept-2026-09-13.png) is a visual reference, not a game screenshot; [earlier neighborhood results](docs/neighborhood-results.md) remain historical.
 
 ## Run in Docker
 
@@ -35,7 +35,9 @@ npm run dev:poc
 
 The image arrives already provisioned, so there is no setup step:
 `npm run typecheck`, `npm run test:gateway`, `npm run build:browser`,
-`npm run verify:poc` and `npm run dev:poc` all work immediately. The source
+`npm run verify:poc` and `npm run dev:poc` are available immediately. On Apple
+Silicon, use the native browser test host below if emulated Chromium cannot
+start. The source
 directories are mounted from the checkout, so edits on the host apply to the
 next command; verification output appears in `artifacts/`. Stop the container
 with `docker compose --profile dev down`.
@@ -48,7 +50,10 @@ checkout is not mounted at `/work` as a whole; `docker-compose.yml` lists
 source paths individually. Adding a new source directory means adding it
 there too. Incremental state lives in the container's own filesystem, so keep
 the container between sessions rather than using `run --rm`, and rebuild the
-image after changing `package.json` or another file that is not mounted.
+image after dependency changes or edits to files that are not mounted. If an
+editor replaces a singly mounted file such as `package.json` atomically and the
+container still sees the old contents, stop the demo and run
+`docker compose restart dev` to refresh the mount before the next build.
 
 Both images are `linux/amd64`: the pinned open.mp release is an i386
 executable and the QEMU that runs it is an x86_64 binary. On an Apple Silicon
@@ -123,11 +128,36 @@ The suite runs type checks, gateway and native tests, then two independent heade
 
 Screenshots, videos, traces, JSON results, and server observations are written to ignored `artifacts/verification/`. Gateway worker transitions are in `.runtime/logs/gateway.jsonl`. Reproduce these artifacts when moving to a fresh workspace; large recordings are not committed.
 
+On Apple Silicon, Chromium's GPU process can fail under Docker's x86 emulation.
+With Node 24, this checkout's pinned npm dependencies, and Google Chrome installed
+on the Mac, run this in a host terminal:
+
+```sh
+caffeinate -dimsu -t 14400 node tools/acceptance-browser-server.mjs
+```
+
+Then run the same acceptance suite in the development container:
+
+```sh
+docker compose exec -T \
+  -e POC_BROWSER_WS_ENDPOINT=ws://host.docker.internal:9344/sa-online-acceptance \
+  dev npm run verify:poc
+```
+
+The native browser runs in isolated profiles; Playwright tunnels its loopback
+requests back to the unchanged Linux fixture. The suite records the actual
+Chrome version and WebGL renderer and preserves videos, full-resolution checks,
+real hidden-tab cleanup, and both ten-minute soaks. Its host adapter is pinned to
+Playwright 1.59.1. Keep the Mac awake throughout the run; system sleep invalidates
+timing and sustained-session evidence. Stop the host with Ctrl+C after testing.
+
+For native macOS Chrome with remote debugging on loopback port 9333, start `dev:poc` with no players and run `node tools/verify-native-rendering.mjs`. It opens four owned windows in sequence, checks full native DPR at two viewport sizes, measures idle/walking frame times and logical texture allocations, verifies served source/asset identities, and closes its windows. `node tools/verify-motion.mjs` separately exercises real UI/server movement and transitions in two owned native windows.
+
 For the actual cloud desktop, start `dev:poc` with no other players, then run `npm run verify:desktop`. It opens two Google Chrome windows on display `:1` (or `$DISPLAY`), checks walking/chat/driving and occupants through UI input, audits texture allocations, and saves screenshots, traces and server observations to `artifacts/desktop/`. This is separate from the Xvfb performance test. Close extra software-rendered game windows before performance verification.
 
 ## Scope and project record
 
-This demonstrates a narrow browser/open.mp protocol subset with an original neighborhood. Original GTA clients, original SA-MP servers, arbitrary public servers, GTA assets, combat, realistic physics, WAN hosting, and hardware GPU performance are not verified. Software WebGL rendering is functional evidence only.
+This demonstrates a narrow browser/open.mp protocol subset with an original neighborhood. Original GTA clients, original SA-MP servers, arbitrary public servers, GTA assets, combat, realistic physics, and WAN hosting are not verified. Native Chrome on Apple M5 Pro has been measured separately; software WebGL rendering remains functional evidence only.
 
 - [Accepted PoC specification](docs/poc-plan.md) and [scope decision](docs/decisions/0002-placeholder-poc.md)
 - [Current status and continuation](docs/status.md)
@@ -141,7 +171,7 @@ Original PoC code is **GPL-3.0-or-later**. Preserve [third-party licenses and no
 
 `npm run dev:poc` selects Arroyo by default. `POC_SCENE=yard npm run dev:poc` retains the original test yard. Scene selection is a server setting; browsers load the selected manifest before joining. A stale manifest or asset hash produces an explicit loading/join error. Restart the demo after changing manifests or exports.
 
-**Standard is the default for new installations**; explicitly saved preferences are preserved. **Low** remains an optional fallback. Both presets render at the full viewport resolution and native device pixel density, without a resolution cap or automatic downscaling. Low uses baked vertex shading and simplified fence wires; **Standard** uses physical materials, cached neighborhood reflections, contact shading, and soft shadow maps. The software-rendering target is 4 FPS for two cloud views; report slower results without reducing resolution. Measured hardware GPU performance remains unverified; cloud measurements are not estimates of it. The minimap shows north, players and the car; chat collapses through its heading, and the top-right diagnostics button reveals protocol details. Keep each player tab visible in its own window.
+**Standard is the default for new installations**; explicitly saved preferences are preserved. **Low** remains an optional fallback. Both presets render at the full viewport resolution and native device pixel density, without a resolution cap or automatic downscaling. Low uses baked vertex shading and simplified fence wires; **Standard** uses physical materials, cached neighborhood reflections, contact shading, and soft shadow maps. The software-rendering target is 4 FPS for two cloud views; report slower results without reducing resolution. The September 13 native Chrome audit passed the 60 FPS median target in both presets at 2560×1440 and 3344×1882 drawing buffers. The [native rendering record](docs/native-rendering-verification.json) identifies the exact measured scene and source hashes; cloud measurements are not estimates of hardware performance. The minimap shows north, players and the car; chat collapses through its heading, and the top-right diagnostics button reveals protocol details. Keep each player tab visible in its own window.
 
 ```sh
 npm run build:assets                 # native macOS or pinned Linux Blender + reflection bake
@@ -154,6 +184,6 @@ npm run build:browser
 
 Normal `setup:poc` consumes committed GLBs and image inputs; it does not install Blender or call an image service. Edit `tools/assets/build.py`, `environment-kit.py`, `garden-kit.py`, and `heroes.py` to regenerate the kit, or inspect the editable `assets/source/*.blend` files. The scripts are authoritative; rebuilding replaces those .blend exports. Builds use scratch space and publish only complete successful exports. `--models` replaces only the named models; dependencies may still be constructed. `assets/source/asset-build.json` records the actual Blender version, executable hash, recipe hashes, and output identities per rebuilt model, preserving provenance for mixed native/pinned asset sets. `--output-root` supports isolated checks and requires `--skip-reflections`.
 
-After final model or scene changes, run `node tools/bake-reflections.mjs` in the provisioned container and restart the gateway. The reflection bake uses installed pinned Chromium without player connections, saves a lossless RGBA16F atlas and provenance under `assets/source/reflection-bake.json`, and refreshes the asset inventory and browser build. Geometry is modeled in meters, Z-up and +Y forward, normalized once after glTF loading. Texture inputs, prompts, licenses and source pins are in [asset provenance](assets/PROVENANCE.md). The imagegen authoring skill is included under `.agents/skills/imagegen` with its own license.
+After final model or scene changes, run `node tools/bake-reflections.mjs` in the provisioned container and restart the gateway. With the fixture already running and native Chrome debugging available on loopback port 9333, `node tools/bake-reflections-native.mjs` instead captures the actual host GPU and checks source, served bundle and asset identities before publication. The reflection bake uses installed pinned Chromium without player connections, saves a lossless RGBA16F atlas and provenance under `assets/source/reflection-bake.json`, and refreshes the asset inventory and browser build. Geometry is modeled in meters, Z-up and +Y forward, normalized once after glTF loading. Texture inputs, prompts, licenses and source pins are in [asset provenance](assets/PROVENANCE.md). The imagegen authoring skill is included under `.agents/skills/imagegen` with its own license.
 
 The [accepted plan](docs/neighborhood-plan.md) defines the current scope. Next: a shared checkpoint driving challenge, then private remote invitations and latency testing, then an original GTA/SA-MP interoperability slice. Arroyo's custom map does not establish native GTA world compatibility.

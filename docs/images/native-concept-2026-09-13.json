@@ -1,0 +1,12 @@
+{
+  "date": "2026-09-13",
+  "kind": "Generated visual target, not a live game capture",
+  "generator": "OpenAI image_gen tool",
+  "input": ".dream-loop/baseline-street.png",
+  "sha256": "5e1d4f5f1a5d6bda5c9d0f0a524f3774cb8aa13b5205d06b1dd290801538f29a",
+  "originalGeneratedFiles": [
+    "/Users/gabrielperez/.codex/generated_images/01a098b7-30e2-7930-9b7c-dea9c0280641/exec-8c8264ea-3226-4c3b-8f28-7946a9c20c3a.png"
+  ],
+  "promptSummary": "Retain exact Arroyo camera, major geometry and HUD; modern real-time Southern California materials, warm upper-left sun, botanical connected oak volumes, feathered palms, varied low yard planting, coherent blue automotive reflections, human cloth; no grain, clutter or toy geometry.",
+  "promptRecord": "Summary retained in .dream-loop/PROGRESS.md; not represented as the exact full tool prompt."
+}

@@ -1,6 +1,46 @@
 # Project status and continuation
 
-## Active visual milestone — September 8
+## Current native milestone — September 13
+
+Round twelve is integrated in `b49e186`: native Blender foliage and clothing,
+layered planting, continuous road weathering, and the packed authored terrain.
+The original 60 Hz simulation, protocol routing, collision and seat contracts
+remain. Native asset/terrain/material tests pass.
+
+The current isolated rendering audit passes on scene `6c1739ad64e66280`, with
+Standard and Low both measuring **120.5 FPS median** at full native DPR 2 in
+2560×1440 and 3344×1882 buffers. Maximum logical texture storage is 315.72 MiB,
+downloads 46,575,188 B, geometry 4,985,512 triangles and 912 calls. All original budget
+ceilings remain. An opt-in guard (`9b340a7`) proves the separately owned reference
+page stays frozen during every measurement. The earlier competing-window result
+is preserved and not substituted for the isolated benchmark.
+
+The full current native motion regression also passes: no repeated local walking
+or driving presentation frames, no retained jump impulse on exit, and correct
+shared-driving resets. Remote movement still has measurable network variation.
+Both owned clients close and server sessions/workers return to zero. Exact source,
+asset and served-build identities are in the [native results](native-dream-results.md),
+[rendering summary](native-rendering-summary.json) and [motion evidence](native-motion/README.md).
+
+**The visual target remains open.** Last formal score: 5.0/10, Tier 1 on round eleven,
+not a review of round twelve. Compare the [current real capture](images/native-street-2026-09-13.png)
+with the [generated target](images/native-concept-2026-09-13.png).
+
+**The complete 15-scenario acceptance suite still needs a fresh pass.** The previous
+full run ended 14 passed / 1 failed on a yard-reset observation timeout, with correct
+positions in the saved browser and server samples. A stricter browser-local clock
+now starts at the actual reset keypress. The focused real yard soak passed 75
+rounds over 605.2 seconds, with all resets within 267.7 ms and zero reset-position
+error. All 150 movement agreement samples remained below 0.5 m. Full acceptance
+and both supervisor probes remain pending.
+
+## Historical record — September 8
+
+Everything below preserves the earlier cloud implementation, measurements and
+continuation notes. Its “final” results and pending items refer to that dated
+revision; the September 13 status above describes the current native milestone.
+
+### Visual milestone — September 8
 
 The Dream-loop visual implementation is integrated and pushed through `d8f0210`; see the [accepted plan](visual-upgrade-plan.md) and [current visual results](visual-upgrade-results.md). Original detailed Blender assets, physical image inputs, cached neighborhood reflections, native-resolution antialiasing/contact shading, an SA-inspired HUD and live entry screen are implemented. Standard is the new-install default; saved Low remains respected. Eight independent art reviews retain all three shape gates; latest driving/pedestrian/street scores are **5.0/5.0/5.0**, below the requested 8. Connected foliage/yard lighting and coherent car reflections remain explicit visual work.
 
@@ -8,7 +48,7 @@ The final full suite passed: **15 headed browser scenarios**, 3 gateway tests, 1
 
 The final unrecorded two-view cloud measurement is **0.9 / 0.8 FPS** at native 1280×720 Low, below the diagnostic 4 FPS target; resolution is unchanged. The user reports that the game runs fine on their machine; this is qualitative confirmation, not a hardware-GPU benchmark. Earlier timing/presentation failures and their exact corrections remain documented in the visual plan.
 
-### Historical native-resolution correction
+#### Historical native-resolution correction
 
 Updated 2026-09-08. **Both graphics presets now render at full native screen resolution, per the user's correction.** See [current rendering verification](resolution-results.md). At that stage, four headed graphics scenarios, type checking, build and actual desktop verification passed. The user revised the cloud target to 4 FPS; the existing full-resolution measurements of 5.0 / 4.6 FPS satisfy that target. The threshold was checked against those recorded measurements without rerunning the unchanged renderer. The original neighborhood acceptance and reduced-resolution performance figures below are historical; the complete multiplayer soak suite has not been rerun for this rendering-only correction. See [measured neighborhood results](neighborhood-results.md), [source-hashed verification](neighborhood-verification.json), and the [accepted plan](neighborhood-plan.md). SA-MP 0.3.7 through separate native workers remains the protocol architecture.
 
@@ -16,7 +56,7 @@ Historical neighborhood acceptance: **14 headed browser scenarios**, 3 gateway t
 
 Two 1280×720 Low views measured 20 FPS median / about 67 ms p95 using 384×216 internal 3D rendering. Complete scene load: 5.09 MB. Audited texture storage: 5.70 MiB cold Low / 13.70 MiB after Standard switching. Standard desktop views submitted at most 143,868 triangles / 125 calls. These are SwiftShader results; native GTA world compatibility, WAN behavior and hardware GPU performance remain unverified.
 
-## Current implementation
+### Implementation at that time
 
 The unchanged official open.mp release runs locally. Two ordinary, non-NPC protocol workers and two independent browser sessions have joined, spawned, exchanged server-routed walking/chat, and shared a car with driver/passenger synchronization. The browser now loads original Blender GLB houses, props, a rigged human and a sports coupe, with shared scene geometry and arcade collision/handling. Commands allocate seats through the Pawn fixture and standard placement RPCs.
 
@@ -24,7 +64,7 @@ The cloud desktop WebGL startup failure is fixed with `npm run open:poc`, which 
 
 The original WebGL recovery fix is preserved by the expanded graphics checks. The 14-scenario neighborhood suite below is historical; the visual milestone has 15 browser scenarios and its own result record.
 
-### Historical initial PoC milestones
+#### Historical initial PoC milestones
 
 | Milestone | Status | Evidence |
 | --- | --- | --- |
@@ -36,7 +76,7 @@ The original WebGL recovery fix is preserved by the expanded graphics checks. Th
 | Full headed acceptance and ten-minute soak | Passed | Five scenarios; 79 active rounds / 602.817 seconds; zero uncaught browser errors |
 | Native GTA / original SA-MP / public servers | Deferred, unverified | Separate compatibility work; not implied by this PoC |
 
-## Experiments and decisions
+### Experiments and decisions
 
 - **Runtime:** native execution of the official 32-bit binary reached denied socket syscalls (`EACCES`) under this cloud's syscall restrictions. An x86_64 source fallback was investigated but not completed. Running the unchanged release with a checksum-pinned `qemu-i386-static` and isolated Debian bookworm i386 libraries successfully translates the calls. Host libraries remain untouched.
 - **Client transport:** the pinned RakNet server fork needs client-direction transformation, cookie/auth handling, guarded server-only behavior, and bounded fragment acceptance. These adaptations affect only the worker dependency. The upstream binary is unchanged.
@@ -47,17 +87,17 @@ The original WebGL recovery fix is preserved by the expanded graphics checks. Th
 - **Automation corrections:** a fixed eleven-second wait after worker crash raced actual server slot expiry; the test now waits for the observed disconnect before rejoining. Playwright 1.59.1 forces focus/visibility on its internal CDP session. The hidden-tab regression disables that override through a pinned test-only adapter, then switches real Chromium tabs; it does not inject document visibility or gameplay state.
 - **Verification hardening:** native checks remain active with `-DNDEBUG`, with a deliberate failing-fixture negative control. Initialization bytes are independently packed from the pinned upstream schema, fragmented/reordered, and decoded. Lifecycle checks observe worker exit and server slot release, not only gateway session-map deletion.
 
-## Continuing work
+### Continuing work recorded at that time
 
 The approved local PoC and first neighborhood are complete; the newer visual milestone and its remaining art target are tracked in [visual results](visual-upgrade-results.md). See [historical neighborhood results](neighborhood-results.md) and their [historical machine summary](neighborhood-verification.json). The earlier [PoC result](poc-results.md) remains historical evidence. Run `npm run setup:poc`, then `npm run verify:poc` with ports 3000/7777 free to reproduce acceptance. Start the demo with `npm run dev:poc`. Keep generated runtime downloads and recordings ignored; committed summaries and source hashes identify the tested implementation.
 
 The next slices are a server-scored checkpoint challenge and private remote play, followed by a native-reference interoperability slice with user-provided assets and an original/native comparison fixture. Public-server admission, broader RPC coverage, cross-browser behavior, network impairment, realistic GTA collision/handling, asset streaming, and deployment remain separate gates in the long-horizon roadmap.
 
-## History
+### History
 
 Research compared MTA, SA-MP/open.mp, and browser/runtime feasibility with parallel agents. MTA's unavailable transport/anti-cheat internals made SA-MP the more inspectable initial target. The user then approved the narrower placeholder PoC and its local two-browser acceptance criteria. Parallel implementation covered the runtime fixture, native protocol, and browser; the primary agent integrated the gateway, verification, and durable project record.
 
-## Neighborhood implementation history
+### Neighborhood implementation history
 
 The neighborhood implementation is complete; these notes preserve the experiments and corrections. The existing yard remains the multiplayer regression fixture. Art direction and gates: [neighborhood plan](neighborhood-plan.md). Original concept and texture inputs generated with the imagegen skill; official Blender download returned a Cloudflare challenge, and the official mirror supplies the pinned release/checksum.
 

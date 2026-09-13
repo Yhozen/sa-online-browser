@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Soak_A",
+    "traceId": 1,
+    "errors": []
+  },
+  {
+    "name": "Soak_B",
+    "traceId": 2,
+    "errors": []
+  }
+]
