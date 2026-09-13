@@ -1,6 +1,103 @@
 {
   "version": 1,
-  "models": {
+  "milestone": "round15",
+  "recordedAt": "2026-09-13T13:56:16.260Z",
+  "sourceBaseCommit": "fe6f25ff4935c3aa043cb8ae2309a5c602dad748",
+  "sourceState": "Round 15 working-tree integration; exact tested source hashes below, not a claim that the base commit alone contains these changes.",
+  "scene": {
+    "id": "neighborhood",
+    "revision": "f7da0f68c9f8ca5a",
+    "ready": true
+  },
+  "servedMain": {
+    "bytes": 1006955,
+    "sha256": "3800c0733bec7cc47a1b6dd45b0ab82486be491097df292b7633922566232741",
+    "lastModified": null,
+    "etag": null,
+    "matchesLocalDist": null,
+    "localDistModifiedAt": null,
+    "localDistStatus": "Not present on host; build may reside in the fixture container"
+  },
+  "servedMainPath": "/assets/main-zC6pAPDJ.js",
+  "changes": [
+    "Raw alpha-aware same-specimen diffuse accessibility on original oak leaf geometry; direct sun and original maps retained.",
+    "Narrower low roadside-oak wood from a separately declared native base, with a fresh visibility bake.",
+    "Connected native terrain gully refinement with matching decoded geometry and one-time irradiance.",
+    "Sparse road cracks and correctly elevated circular-sidewalk deposits reuse original maps. Exactly36 frontage shrubs are redistributed; total141 remains."
+  ],
+  "nativeSource": [
+    {
+      "path": "assets/source/asset-build.json",
+      "bytes": 24890,
+      "sha256": "b80cb9cf608638a891e0ccfeef76ca3e61e68f1ec5809d9577dd40de574c728a"
+    },
+    {
+      "path": "assets/source/canopy-base/base.json",
+      "bytes": 6150,
+      "sha256": "47748da221dbe45aa2fd11893fe95ec0c2eddaa31f1f6d0b7f690c335c3f2b06"
+    },
+    {
+      "path": "assets/source/tree.blend",
+      "bytes": 474676,
+      "sha256": "201eb6324a35f578be3ac75f977f89bd375c8f52eb9614c379e88c72de9a4549"
+    },
+    {
+      "path": "assets/source/roadside-oak.blend",
+      "bytes": 476173,
+      "sha256": "0f53697d841607fb3b39a611e5482b4d2ae549678e27705823dc577ef1294413"
+    },
+    {
+      "path": "apps/browser/public/assets/tree.glb",
+      "bytes": 726496,
+      "sha256": "15ac566413627cf0221e0d2b765b69f7b4f901b2202b117c84b616bba7dcdb6f"
+    },
+    {
+      "path": "apps/browser/public/assets/roadside-oak.glb",
+      "bytes": 726552,
+      "sha256": "cf70689b2314e8d480a9fa50c5de8c9f46a53665f04286858db382206a102ef3"
+    },
+    {
+      "path": "assets/source/canopy/tree.json",
+      "bytes": 5958,
+      "sha256": "045376a4cf8c5089cbaafc6bb6f99ea3904042e5037a94439145237b864256cc"
+    },
+    {
+      "path": "assets/source/canopy/roadside-oak.json",
+      "bytes": 8221,
+      "sha256": "df305a77ed944552bcf2bfafb7e3660674918a189f37d02a17c6d43b5eb48b11"
+    },
+    {
+      "path": "assets/source/horizon.blend",
+      "bytes": 6091979,
+      "sha256": "1e41f355dd92f5de372cfc2e8a022fb1345caa1f921ee5767c7e8dd454c35982"
+    },
+    {
+      "path": "assets/horizon-relief.json",
+      "bytes": 859283,
+      "sha256": "a5d1351177c927700fcc381bf3a4c8b7698a025f21a7973798a79263e81ef922"
+    },
+    {
+      "path": "assets/source/horizon-build.json",
+      "bytes": 7269,
+      "sha256": "fa58fe0d6f779d31b08ca037fbeeba30910f2437bd146da759f0c52a2c6dc6a7"
+    },
+    {
+      "path": "apps/browser/public/assets/arroyo-reflections.pmrem.gz",
+      "bytes": 11647908,
+      "sha256": "b16d8d30fea892da2b3925afb2b627527f70b7a123a726a02d284d5739df0dfe"
+    },
+    {
+      "path": "assets/source/reflection-bake.json",
+      "bytes": 9919,
+      "sha256": "263d77cb9e8b64b516ecb44296577602b41fec0eab134f2f7b7dc5aa51e7fb90"
+    },
+    {
+      "path": "apps/browser/public/assets/inventory.json",
+      "bytes": 3884,
+      "sha256": "d90268bb7acbd02c091432abaac00b61a67ce5f4b155028ccc83998ba40127e1"
+    }
+  ],
+  "oakModels": {
     "tree": {
       "generatedAt": "2026-09-13T13:41:47.122Z",
       "blender": {
@@ -212,110 +309,6 @@
       "gzip": {
         "bytes": 448792,
         "sha256": "3fc8c0a6d034ceb65a77755670c1e6367e624d4d80719e721102586a28c0b770"
-      }
-    },
-    "palm": {
-      "generatedAt": "2026-09-13T10:36:17.661Z",
-      "blender": {
-        "version": "5.2.1",
-        "buildHash": "9e2066aef7ef",
-        "distribution": "native-macos",
-        "platform": "darwin",
-        "architecture": "arm64",
-        "executableSha256": "ea651e507c6b197df0e234bfa04e5ed43e7f4d498267a7df93fcb38f21928a5c"
-      },
-      "recipes": {
-        "tools/build-assets.mjs": "06f52507fbabf20831ccefb4698613a7d3f3b57dd6f1f504c6a8bf6917ee8449",
-        "tools/assets/build.py": "3eb0039ccbd34a3c3aec5e88aced09f34c8ac3677f9d777b97ece47daad9a53e",
-        "tools/assets/environment-kit.py": "1fb49df90bba8637ec000f37464766c18bc22b969d7013776bd1c45ed3983f7c",
-        "tools/assets/heroes.py": "d2593504f492fd69b42687b24c5bf85d41af18056e2d9385c7175cbf94e2c630",
-        "tools/assets/garden-kit.py": "974d3add6e6f4ad5b9f52d681eeecb69dde28cb8b2a6d471365dcca4ddbf1c8e"
-      },
-      "glb": {
-        "bytes": 881160,
-        "sha256": "83e001d52a835436bf62bc39c361e229b83dd025f1ba8aa8ef09a41d6461233d"
-      },
-      "blend": {
-        "bytes": 652973,
-        "sha256": "5533b4769540eaf6d3746752e5a2ef779d77c70463d19a2144f5b8f330e14f35"
-      }
-    },
-    "garden-low": {
-      "generatedAt": "2026-09-13T03:12:00.089Z",
-      "blender": {
-        "version": "5.2.1",
-        "buildHash": "9e2066aef7ef",
-        "distribution": "native-macos",
-        "platform": "darwin",
-        "architecture": "arm64",
-        "executableSha256": "ea651e507c6b197df0e234bfa04e5ed43e7f4d498267a7df93fcb38f21928a5c"
-      },
-      "recipes": {
-        "tools/build-assets.mjs": "6ca1821f636da94bd2147f6a8d07289fabd2bf614ffeba9d85a24432936ad7ac",
-        "tools/assets/build.py": "5113f422b62de8bbe3482c9f9ad290f8d3e6bef032cb09ac36dbefc321be720b",
-        "tools/assets/environment-kit.py": "8b3d6e6261f52d72e1ecc6e1f2b9a869c38977917a4c89a9e7dd560c860c3128",
-        "tools/assets/heroes.py": "176150afacfe9b03b952865dfcf1f6b392ae528b49b10ca7865ed758a9fb2519",
-        "tools/assets/garden-kit.py": "819ffb70f9c7185d6e40f1ca99cae42213ca00d14aee788891ac41a4afd216f1"
-      },
-      "glb": {
-        "bytes": 216084,
-        "sha256": "bd515240ae8f8dcb05d539a3c354a114e9aeb4d0c10ee682a7233a280f605e56"
-      },
-      "blend": {
-        "bytes": 208742,
-        "sha256": "c3e22d04a276aa0c987a4218d04f2bc6ba90a5f3f4d30ac3e12f701c1e151fc5"
-      }
-    },
-    "neighbor": {
-      "generatedAt": "2026-09-13T10:36:17.661Z",
-      "blender": {
-        "version": "5.2.1",
-        "buildHash": "9e2066aef7ef",
-        "distribution": "native-macos",
-        "platform": "darwin",
-        "architecture": "arm64",
-        "executableSha256": "ea651e507c6b197df0e234bfa04e5ed43e7f4d498267a7df93fcb38f21928a5c"
-      },
-      "recipes": {
-        "tools/build-assets.mjs": "06f52507fbabf20831ccefb4698613a7d3f3b57dd6f1f504c6a8bf6917ee8449",
-        "tools/assets/build.py": "3eb0039ccbd34a3c3aec5e88aced09f34c8ac3677f9d777b97ece47daad9a53e",
-        "tools/assets/environment-kit.py": "1fb49df90bba8637ec000f37464766c18bc22b969d7013776bd1c45ed3983f7c",
-        "tools/assets/heroes.py": "d2593504f492fd69b42687b24c5bf85d41af18056e2d9385c7175cbf94e2c630",
-        "tools/assets/garden-kit.py": "974d3add6e6f4ad5b9f52d681eeecb69dde28cb8b2a6d471365dcca4ddbf1c8e"
-      },
-      "glb": {
-        "bytes": 6521848,
-        "sha256": "1cb95aa9ef86eb067d51e283eb03a11e9f85095aebe86a12fbfe097df5219d8f"
-      },
-      "blend": {
-        "bytes": 3524623,
-        "sha256": "e38f708552d2880592a29df50148c1cba20a2b18d4d3696eee07afc9234123d0"
-      }
-    },
-    "garden-shrub": {
-      "generatedAt": "2026-09-13T04:51:19.173Z",
-      "blender": {
-        "version": "5.2.1",
-        "buildHash": "9e2066aef7ef",
-        "distribution": "native-macos",
-        "platform": "darwin",
-        "architecture": "arm64",
-        "executableSha256": "ea651e507c6b197df0e234bfa04e5ed43e7f4d498267a7df93fcb38f21928a5c"
-      },
-      "recipes": {
-        "tools/build-assets.mjs": "d2da2df42eb5eb605b3b302fb83c48a644178a00217fbae005d64e4981ddb003",
-        "tools/assets/build.py": "d304f7656b8d6603e45f7aaedc1a9a8dc67f9ab63f4d9c6175f312dac856ce1c",
-        "tools/assets/environment-kit.py": "8552c5cd6169b0ca407ba4a84674430bb14131c4146153139c0230cc64d18d32",
-        "tools/assets/heroes.py": "0d66a3055f417e42611bc3f266147d54e201740b18881e5f68a845634a539ded",
-        "tools/assets/garden-kit.py": "974d3add6e6f4ad5b9f52d681eeecb69dde28cb8b2a6d471365dcca4ddbf1c8e"
-      },
-      "glb": {
-        "bytes": 102380,
-        "sha256": "08eef3cb1db02a4f55ba4b9721c88a2d3da9b9c2d98caf8c94f76de4bc95f9e4"
-      },
-      "blend": {
-        "bytes": 170297,
-        "sha256": "56e76b1110a5bc5627fa43502225a932cc6391d33d2cd75034a124c09f7e1df6"
       }
     },
     "roadside-oak": {
@@ -576,32 +569,364 @@
         "bytes": 449731,
         "sha256": "3c99cbea1e4316b020733616fb5ef7f2d9e53322983e0adf4fc89431feefdb7e"
       }
-    },
-    "coupe": {
-      "generatedAt": "2026-09-13T13:05:09.860Z",
-      "blender": {
-        "version": "5.2.1",
-        "buildHash": "9e2066aef7ef",
-        "distribution": "explicit",
-        "platform": "darwin",
-        "architecture": "arm64",
-        "executableSha256": "ea651e507c6b197df0e234bfa04e5ed43e7f4d498267a7df93fcb38f21928a5c"
-      },
-      "recipes": {
-        "tools/build-assets.mjs": "06f52507fbabf20831ccefb4698613a7d3f3b57dd6f1f504c6a8bf6917ee8449",
-        "tools/assets/build.py": "3eb0039ccbd34a3c3aec5e88aced09f34c8ac3677f9d777b97ece47daad9a53e",
-        "tools/assets/environment-kit.py": "1fb49df90bba8637ec000f37464766c18bc22b969d7013776bd1c45ed3983f7c",
-        "tools/assets/heroes.py": "1da58c1c7592da2f3b19fe855d02b2e47af4d5b426129498b5419f883ea43559",
-        "tools/assets/garden-kit.py": "974d3add6e6f4ad5b9f52d681eeecb69dde28cb8b2a6d471365dcca4ddbf1c8e"
-      },
-      "glb": {
-        "bytes": 2761200,
-        "sha256": "b15774812b3664a5906100f3ee9c25629f209c19806d6fb8e4c632d5be2a4790"
-      },
-      "blend": {
-        "bytes": 1297069,
-        "sha256": "79830d5818050044b47a96d8289d649a92875c918ee16ace0e9788d9a2674d0c"
-      }
     }
-  }
+  },
+  "reflection": {
+    "generatedAt": "2026-09-13T13:43:45.344Z",
+    "sha256": "b16d8d30fea892da2b3925afb2b627527f70b7a123a726a02d284d5739df0dfe",
+    "compressedBytes": 11647908,
+    "width": 1536,
+    "height": 2048,
+    "peakRadiance": 7.4765625,
+    "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)"
+  },
+  "build": {
+    "nativeAssets": {
+      "completed": true,
+      "log": {
+        "path": ".dream-loop/round15-native-assets.log",
+        "bytes": 4871,
+        "sha256": "1270e1ef569f7211ffa35f910bd056c4c92c4529aed66650581d0a77878cb306"
+      }
+    },
+    "nativeReflections": {
+      "completed": true,
+      "log": {
+        "path": ".dream-loop/round15-native-reflections.log",
+        "bytes": 267,
+        "sha256": "1353869a954f8ef57a7fbfee03ab50471c231b729f5d92b523589eb19dfe7c80"
+      }
+    },
+    "servedBuildIdentifiedBy": "native-rendering-round15-summary.json"
+  },
+  "tests": {
+    "firstFocusedBatch": {
+      "tests": 37,
+      "passed": 35,
+      "failed": 2,
+      "status": "failed",
+      "log": {
+        "path": ".dream-loop/round15-assets-terrain-tests.log",
+        "bytes": 9052,
+        "sha256": "dc53ac180ff812e0adee21b85540ad8499fad10752f740efacdfc4ad78e7245f"
+      },
+      "failures": [
+        "Retained-v3 regeneration test still expected the earlier terrain runtime hash.",
+        "Isolated failure fixture omitted the newly imported canopy-visibility helper."
+      ]
+    },
+    "correctedTerrain": {
+      "tests": 9,
+      "passed": 9,
+      "failed": 0,
+      "status": "passed after fixture corrections",
+      "log": {
+        "path": ".dream-loop/round15-terrain-tests-corrected.log",
+        "bytes": 1214,
+        "sha256": "61e3884bb2a3c1918ba86169960b31943db3939b8ee392b526ac903dc0adcb29"
+      }
+    },
+    "reflection": {
+      "tests": 2,
+      "passed": 2,
+      "failed": 0,
+      "log": {
+        "path": ".dream-loop/round15-reflection-tests.log",
+        "bytes": 505,
+        "sha256": "22fd34d4e296d323dcc32139a10b6beaec44798174a9948c67d2f24593933168"
+      }
+    },
+    "roadPlanting": {
+      "recordedAt": "2026-09-13T13:33:36.005Z",
+      "scope": "CPU-only source/actual-GLB geometry verification; no browser or visual claim",
+      "sourceSha256": {
+        "apps/browser/src/road-detail.ts": "cee37ba83270b3f77d1b050a697c458775f3adb9f5f47fa014ae196d642d2e0c",
+        "apps/browser/src/garden.ts": "dad060ffb85efecc4bf833281c13982137245452102253540e90fc98d9bec44f",
+        "tests/surface-pixels.test.mjs": "0b98b243b75e561a3e4440722777e8d0795dcf72b74305de08fd3c4a9bb360f1",
+        "tests/garden.test.mjs": "2dc16af37f775ea83cd0bf025ef13a08d6409258a6502a5f2906d22f11bb043d"
+      },
+      "checks": [
+        {
+          "command": "node --test tests/surface-pixels.test.mjs tests/garden.test.mjs",
+          "toolOutputChunk": "ea71cb",
+          "exitCode": 0,
+          "tests": 16,
+          "passed": 16,
+          "failed": 0
+        },
+        {
+          "command": "npm run typecheck",
+          "toolOutputChunk": "25f6e3",
+          "exitCode": 0
+        },
+        {
+          "command": "git diff --check -- apps/browser/src/road-detail.ts apps/browser/src/garden.ts tests/surface-pixels.test.mjs tests/garden.test.mjs",
+          "toolOutputChunk": "ce8a4e",
+          "exitCode": 0
+        }
+      ],
+      "road": {
+        "newTriangles": 4224,
+        "newBufferBytes": 295680,
+        "newMaterialBatches": 2,
+        "newTextures": 0,
+        "circleCrackTriangles": 530,
+        "circleDepositTriangles": 1026,
+        "originalStraightJointTriangles": 2960,
+        "originalStraightJointAttributeHashesPreserved": true,
+        "wholeTriangleFootprintAndBelowPaintChecks": true,
+        "sharedMapsAndQualityRoundtrip": true
+      },
+      "planting": {
+        "frontageTotal": 141,
+        "moved": 36,
+        "perCuldesacHouse": 12,
+        "gardenBatchCells": 4,
+        "actualVergeAndFrontagePlants": 168,
+        "actualExportedTrianglesInspected": 285132,
+        "maximumHeightMetres": 0.604,
+        "minimumSidewalkVertexGapMetres": 0.299,
+        "footprintExclusionsChecked": true
+      },
+      "limitations": [
+        "Native screenshot strength and performance remain to be measured by root.",
+        "No broad asphalt texture scale, authored assets, scene fixture or collision footprint changed.",
+        "This is a compact retained record of completed tool output, not a new test run or a fabricated raw console log."
+      ]
+    },
+    "finalSourceFullTests": "pending"
+  },
+  "quality": {
+    "record": "native-quality-cycle-round15.json",
+    "cycles": 3,
+    "staticComparisons": 35,
+    "changedPixels": 0
+  },
+  "rendering": {
+    "record": "native-rendering-round15-summary.json",
+    "cases": 4,
+    "allTargets60FPS": true,
+    "maxSampledDownloadBytes": 46969633,
+    "maxSampledTriangles": 5304703,
+    "maxSampledDrawCalls": 951,
+    "maxSampledTextureStorageBytes": 331056724
+  },
+  "visual": {
+    "latestFormalRound": 13,
+    "latestFormalScore": 5,
+    "latestFormalTier": 1,
+    "formalReview": "art-review-round13-2026-09-13.md",
+    "round15Readiness": "NOT READY",
+    "round15FormalScore": null,
+    "readinessEvidence": {
+      "path": ".dream-loop/art-readiness-round15.md",
+      "bytes": 1734,
+      "sha256": "fd39da0cb8d2fb15149bfab7b9d20ccde473185c51a20c3b8ea61c6bcf8f1f98"
+    },
+    "remaining": "Broad golden crown faces, lawn variation and readable cool mountain gullies remain unresolved."
+  },
+  "walkthrough": {
+    "status": "passed bounded visual walkthrough; not full motion or interaction acceptance",
+    "elapsedMs": 36791,
+    "targetId": "7B0C9F6BBA76533DD4F59327719A91AA",
+    "errors": [],
+    "cleanup": {
+      "targetId": "7B0C9F6BBA76533DD4F59327719A91AA",
+      "protectedId": "37D9DDC1B1728B3F58602FBC3B3FBD38",
+      "closed": true,
+      "keysReleased": true,
+      "keyReleaseErrors": [],
+      "cleanupPolls": 2,
+      "health": {
+        "ok": true,
+        "sessions": 0,
+        "workers": 0
+      },
+      "ownedTargetAbsent": true
+    },
+    "inputComparison": {
+      "checkedAt": "2026-09-13T13:55:41.596Z",
+      "exactKeys": [
+        "sourceFiles",
+        "assets",
+        "resources",
+        "sceneRevision"
+      ],
+      "sourceCount": 106,
+      "assetCount": 28,
+      "resourceCount": 4,
+      "inputFiles": [
+        {
+          "path": ".dream-loop/round15-walkthrough-02-inputs-before.json",
+          "sha256": "e52b0657d45d889e724251f23ccfccd95a956a302d9548845fc7d122da107c31"
+        },
+        {
+          "path": ".dream-loop/round15-walkthrough-02-inputs-after.json",
+          "sha256": "b53f752514831099ea57cc0189b50de391a720eda497d8e791da3a09d5bca916"
+        }
+      ],
+      "processExitCode": 0,
+      "exact": true
+    },
+    "shots": [
+      {
+        "name": "0-initial-street",
+        "at": "2026-09-13T13:54:28.911Z",
+        "position": [
+          -4,
+          0,
+          10
+        ],
+        "images": [
+          {
+            "file": "0-initial-street.png",
+            "dimensions": [
+              3344,
+              1882
+            ],
+            "sha256": "ece33889888b6352cfb70c48baf5983d95d61391043cc764d06e244a9cece791",
+            "path": ".dream-loop/round15-walkthrough-02/0-initial-street.png"
+          },
+          {
+            "file": "0-initial-street-comparison.png",
+            "dimensions": [
+              1672,
+              941
+            ],
+            "sha256": "7b6600e74d045f22d20d50880948c081ead56888ea30f2af7c0e691972dae5aa",
+            "path": ".dream-loop/round15-walkthrough-02/0-initial-street-comparison.png"
+          }
+        ]
+      },
+      {
+        "name": "1-roadside-oak-approach",
+        "at": "2026-09-13T13:54:34.535Z",
+        "position": [
+          -10.666666666666671,
+          11.750000000000014,
+          10
+        ],
+        "images": [
+          {
+            "file": "1-roadside-oak-approach.png",
+            "dimensions": [
+              3344,
+              1882
+            ],
+            "sha256": "a822521439d5680b2cfcda38aba863b09a6c09fd8045f8d258c0e706d26832bc",
+            "path": ".dream-loop/round15-walkthrough-02/1-roadside-oak-approach.png"
+          },
+          {
+            "file": "1-roadside-oak-approach-comparison.png",
+            "dimensions": [
+              1672,
+              941
+            ],
+            "sha256": "af47aa96fe7fdecb8e191db1ae79abecb6f292264904d74766624ed1acc6e394",
+            "path": ".dream-loop/round15-walkthrough-02/1-roadside-oak-approach-comparison.png"
+          }
+        ]
+      },
+      {
+        "name": "2-house-front-beds",
+        "at": "2026-09-13T13:54:47.557Z",
+        "position": [
+          -3.0833333333333326,
+          57.000000000000526,
+          10
+        ],
+        "images": [
+          {
+            "file": "2-house-front-beds.png",
+            "dimensions": [
+              3344,
+              1882
+            ],
+            "sha256": "004cafb5e4e0641c863660337ddfc4b331206cc0013f3f92553d8c6bd6222a86",
+            "path": ".dream-loop/round15-walkthrough-02/2-house-front-beds.png"
+          },
+          {
+            "file": "2-house-front-beds-comparison.png",
+            "dimensions": [
+              1672,
+              941
+            ],
+            "sha256": "1316133610411014fc27c4d2c1dddb15f583fb5e1e3adf496907b1c12d102bf8",
+            "path": ".dream-loop/round15-walkthrough-02/2-house-front-beds-comparison.png"
+          }
+        ]
+      },
+      {
+        "name": "3-car-rear-close",
+        "at": "2026-09-13T13:55:01.350Z",
+        "position": [
+          -2.268485450578995,
+          1.2398899713700313,
+          10
+        ],
+        "images": [
+          {
+            "file": "3-car-rear-close.png",
+            "dimensions": [
+              3344,
+              1882
+            ],
+            "sha256": "d74cbd046b876b2081b532e1d70b94bc4281439c4b2a277f0960a49d97896bc6",
+            "path": ".dream-loop/round15-walkthrough-02/3-car-rear-close.png"
+          },
+          {
+            "file": "3-car-rear-close-comparison.png",
+            "dimensions": [
+              1672,
+              941
+            ],
+            "sha256": "5bd8457c90423020a04cb53ac0f8acf4c428229184e1f55ac797f575490c5545",
+            "path": ".dream-loop/round15-walkthrough-02/3-car-rear-close-comparison.png"
+          }
+        ]
+      }
+    ],
+    "rawEvidence": {
+      "path": ".dream-loop/round15-walkthrough-02/verification.json",
+      "bytes": 10282,
+      "sha256": "87fcf2e5fe7a5e311ca81734a962154008ecde87943f5253e28d1e291392a6a5"
+    },
+    "inputComparisonEvidence": {
+      "path": ".dream-loop/round15-walkthrough-02/input-comparison.json",
+      "bytes": 598,
+      "sha256": "2a54e6dd56c416accb90d7f5b8c4fd62866171ea86bd9c0cc4dee4f7c920351b"
+    },
+    "firstAttempt": {
+      "status": "failed before join; native select key input did not select Standard",
+      "preserved": true,
+      "rawEvidence": {
+        "path": ".dream-loop/round15-walkthrough/verification.json",
+        "bytes": 1512,
+        "sha256": "0bc4f6411d5b363eb62083b96298c107f45232cad0fc6b810d1c56a2f4b99164"
+      },
+      "preparation": {
+        "path": ".dream-loop/round15-walkthrough-v2-preparation.json",
+        "bytes": 1273,
+        "sha256": "8c55b3778183de07d438ca784517a86cb8358fc296be43ac43afb999e6fcb250"
+      }
+    },
+    "visualInspection": "Root inspected oak approach, front beds and car close view: narrower trunk coherent; beds and exhaust/trim depths visible; no obvious clipping. No formal score."
+  },
+  "finalMotion": {
+    "status": "pending"
+  },
+  "fullAcceptance": {
+    "status": "pending fresh unfiltered final-source15-scenario run plus both supervisors",
+    "historicalRun": "native-acceptance-round12-failed.json",
+    "historicalResult": {
+      "passed": 14,
+      "failed": 1
+    },
+    "targetedTransportEvidence": "native-transport-heartbeat.json",
+    "targetedPassDoesNotCertifyFullSuite": true
+  },
+  "limitations": [
+    "Round15 is a measured integration milestone, not final acceptance or completion of the visual target.",
+    "No new formal visual score is assigned. The earlier failed focused batch remains failed."
+  ]
 }

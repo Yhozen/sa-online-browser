@@ -209,7 +209,7 @@ test('removing asphalt overlay preserves the original neighborhood sidewalk dirt
   const maps = new Map(['asphalt', 'concrete'].map(name => [name, new THREE.MeshStandardMaterial()]));
   const detail = new Function('THREE', 'surfaceMaterials', source + ';return roadDetail;')(THREE, maps);
   const scene = new THREE.Scene(); detail(scene, manifest);
-  assert.equal(scene.children.length, 1); assert.equal(scene.getObjectByName('asphalt-wear'), undefined);
+  assert.equal(scene.children.length, 3); assert.equal(scene.getObjectByName('asphalt-wear'), undefined);
   const mesh = scene.getObjectByName('sidewalk-joint-weathering');
   assert.ok(mesh); assert.equal(mesh.geometry.index.count / 3, 2960);
   // Hashes of the actual original neighborhood joint arrays, before splitting
@@ -225,4 +225,72 @@ test('removing asphalt overlay preserves the original neighborhood sidewalk dirt
     const values = (name === 'index' ? mesh.geometry.index : mesh.geometry.attributes[name]).array;
     assert.equal(createHash('sha256').update(Buffer.from(values.buffer, values.byteOffset, values.byteLength)).digest('hex'), digest);
   }
+});
+
+test('actual cracks and curb deposits stay on their surfaces, below paint, with shared maps and bounded geometry', t => {
+  const manifest = JSON.parse(readFileSync('packages/shared/scenes/neighborhood.json', 'utf8'));
+  const original = structuredClone(manifest);
+  const source = stripTypeScriptTypes(readFileSync('apps/browser/src/road-detail.ts', 'utf8'))
+    .replace(/^import .*;$/gm, '').replace('export function roadDetail', 'function roadDetail');
+  const maps = new Map(['asphalt', 'concrete'].map(name => [name, new THREE.MeshStandardMaterial({
+    map: new THREE.Texture(), normalMap: new THREE.Texture(), roughnessMap: new THREE.Texture(),
+  })]));
+  const detail = new Function('THREE', 'surfaceMaterials', source + ';return roadDetail;')(THREE, maps);
+  const scene = new THREE.Scene(); detail(scene, manifest); assert.deepEqual(manifest, original);
+  const rectangles = manifest.roads.flatMap(road => road.points.slice(1).map((b, i) => {
+    const a = road.points[i], vertical = a[0] === b[0];
+    return { vertical, x0: Math.min(a[0], b[0]) - road.width / 2, x1: Math.max(a[0], b[0]) + road.width / 2,
+      y0: Math.min(a[1], b[1]) - road.width / 2, y1: Math.max(a[1], b[1]) + road.width / 2 };
+  }));
+  const inside = (p, r) => p.x >= r.x0 - 1e-5 && p.x <= r.x1 + 1e-5 && p.y >= r.y0 - 1e-5 && p.y <= r.y1 + 1e-5;
+  const circle = manifest.culdesac, center = new THREE.Vector3(...circle.center, 0);
+  const radius = p => Math.hypot(p.x - center.x, p.y - center.y);
+  function overlapsRectangle(points, rect) {
+    const corners = [[rect.x0, rect.y0], [rect.x1, rect.y0], [rect.x1, rect.y1], [rect.x0, rect.y1]];
+    const axes = [[1, 0], [0, 1], ...points.map((p, i) => [points[(i + 1) % 3].y - p.y, p.x - points[(i + 1) % 3].x])];
+    return axes.every(([x, y]) => {
+      const a = points.map(p => p.x * x + p.y * y), b = corners.map(p => p[0] * x + p[1] * y);
+      return Math.max(...a) > Math.min(...b) + 1e-7 && Math.max(...b) > Math.min(...a) + 1e-7;
+    });
+  }
+  let triangles = 0, bytes = 0, circleCracks = 0, circleDeposits = 0;
+  for (const [name, kind] of [['asphalt-connected-fissures', 'asphalt'], ['curb-and-circle-weathering', 'concrete']]) {
+    const mesh = scene.getObjectByName(name); assert.ok(mesh);
+    const geometry = mesh.geometry, positions = geometry.attributes.position, indices = geometry.index.array;
+    const material = mesh.material, colors = geometry.attributes.color.array.slice();
+    assert.notEqual(material, maps.get(kind)); assert.equal(material.userData.surfaceAlbedoKind, kind);
+    for (const field of ['map', 'normalMap', 'roughnessMap']) assert.equal(material[field], maps.get(kind)[field]);
+    assert.equal(material.depthWrite, false); assert.equal(material.transparent, true);
+    assert.equal(mesh.castShadow, false); assert.equal(mesh.receiveShadow, true);
+    bytes += Object.values(geometry.attributes).reduce((sum, a) => sum + a.array.byteLength, 0) + indices.byteLength;
+    for (let i = 0; i < indices.length; i += 3) {
+      const points = Array.from(indices.slice(i, i + 3), j => new THREE.Vector3().fromBufferAttribute(positions, j));
+      assert.ok(points.every(p => Number.isFinite(p.x + p.y + p.z) && p.z > manifest.groundZ && p.z < manifest.groundZ + .075));
+      const area = new THREE.Vector3().subVectors(points[1], points[0]).cross(new THREE.Vector3().subVectors(points[2], points[0])).z;
+      assert.ok(area > 1e-9, 'nondegenerate upward surface triangles');
+      if (kind === 'asphalt') {
+        const road = rectangles.some(r => points.every(p => inside(p, r)));
+        assert.ok(road || points.every(p => radius(p) <= circle.radius), 'whole triangle belongs to a convex asphalt footprint');
+        if (!road) { circleCracks++; assert.ok(Math.abs(points[0].z - manifest.groundZ - .054) < 1e-5); }
+      } else {
+        assert.ok(rectangles.every(r => !overlapsRectangle(points, r)), 'deposit must not cross road intersections');
+        const circular = Math.abs(points[0].z - manifest.groundZ - .029) < 1e-5;
+        if (circular) {
+          circleDeposits++; assert.ok(points.every(p => radius(p) <= circle.radius + 2.5));
+          const flat = points.map(p => new THREE.Vector3(p.x, p.y, 0));
+          const distance = new THREE.Triangle(...flat).closestPointToPoint(center, new THREE.Vector3()).distanceTo(center);
+          assert.ok(distance >= circle.radius, 'entire deposit triangle stays outside circular asphalt');
+        } else assert.ok(rectangles.some(r => points.every(p => inside(p, {
+          ...r, x0: r.x0 - (r.vertical ? 2.5 : 0), x1: r.x1 + (r.vertical ? 2.5 : 0),
+          y0: r.y0 - (r.vertical ? 0 : 2.5), y1: r.y1 + (r.vertical ? 0 : 2.5),
+        }))), 'straight deposit remains on its actual sidewalk rectangle');
+      }
+      triangles++;
+    }
+    applyQuality(mesh, true); assert.equal(mesh.material.map, material.map);
+    applyQuality(mesh, false); assert.equal(mesh.material, material); assert.deepEqual(geometry.attributes.color.array, colors);
+  }
+  assert.ok(circleCracks > 100 && circleDeposits > 100, 'the turning circle must receive real, correctly elevated detail');
+  assert.ok(triangles < 4500 && bytes < 320 * 1024, 'detail must fit existing graphics-memory headroom');
+  t.diagnostic(`${triangles} new triangles; ${bytes} buffer bytes; ${circleCracks} circle crack / ${circleDeposits} circle deposit triangles; zero new textures`);
 });

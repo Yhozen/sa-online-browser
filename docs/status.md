@@ -2,46 +2,50 @@
 
 ## Current native milestone — September 13
 
-Round fourteen adds fixed sun-shadow coverage for distant crowns and genuine
-coupe rear recesses, including open exhaust bores. The current scene is
-`7115db0e4f80afb9`; native source/model equivalence and exact runtime fingerprints
-are in the [integration record](native-integration-round14.json).
+Round fifteen integrates native oak diffuse accessibility, a narrower roadside
+trunk, connected terrain gullies, sparse road/curb wear and redistributed frontage
+planting. The measured scene is `f7da0f68c9f8ca5a`, served by
+`main-zC6pAPDJ.js`. Exact native sources, outputs and test history are in the
+[integration record](native-integration-round15.json).
 
-Standard and Low both measured **120.5 FPS median** at full native DPR 2 in
-2560×1440 and 3344×1882 buffers. Maximum logical texture storage is 315.72 MiB,
-downloads 46,826,381 B, geometry 5,246,623 triangles and 945 calls. Original
-budget ceilings remain. Three real quality-switch cycles restore static pixels
-exactly, with zero browser errors. The separately owned reference window remained
-frozen throughout each interval of the [current audit](native-rendering-round14-summary.json).
+Standard and Low both measured **120.48 FPS median** at native DPR 2 in
+2560×1440 and 3344×1882 buffers. All four cases passed the unchanged budgets:
+maximum sampled logical texture storage was 315.72 MiB, downloads 46,969,633 B,
+geometry 5,304,703 triangles and 951 calls. Frame-time p95 was at most 9.1 ms,
+with no stalls over 50 ms or browser errors. The explicitly selected reference
+window stayed frozen through the [isolated audit](native-rendering-round15-summary.json).
 
-The prior round-twelve motion regression passes, including local walk/drive
-interpolation, jump/seat exits and shared-driving resets. A fresh final-source
-motion run remains pending. Remote movement retains measurable network variation.
+Three real Standard → Low → Standard cycles restored all 35 measured static
+region comparisons exactly. All 106 source, 28 asset and 4 served-resource
+fingerprints remained unchanged; the owned window closed and health returned to
+zero sessions/workers. See the [quality record](native-quality-cycle-round15.json).
+The initial focused test batch was **35 passed / 2 failed**, due to a stale terrain
+expectation and an incomplete test fixture. After correction, the terrain tests
+passed **9/9**; reflection checks passed **2/2**. This is not a clean 37-test run.
+
+A 36.791-second native walkthrough reached the oak, house-front beds and car rear
+through ordinary walking and orbit controls. All four captures were error-free,
+input hashes stayed exact, keys were released, and the owned target disappeared
+with health at zero. This visual inspection does not replace final motion or
+multiplayer testing. A fresh final-source motion run remains pending.
 
 **The visual target remains open.** The latest formal
-[review](art-review-round13-2026-09-13.md), from round thirteen, scores 5.0/10,
-Tier 1. Round fourteen gives modest crown depth and car detail improvements;
-no new formal score is claimed. Broader crown lighting and mountain relief remain
-open. Compare the [current capture](images/native-street-round14-2026-09-13.png)
-with the [generated target](images/native-concept-2026-09-13.png).
+[review](art-review-round13-2026-09-13.md), from round thirteen, scores **5.0/10,
+Tier 1**. Round fifteen's readiness review is **NOT READY** for another formal
+judge; no new score is assigned. Broad golden crown faces, lawn variation and
+readable cool mountain gullies remain unresolved. Compare the
+[current capture](images/native-street-round15-2026-09-13.png) with the
+[generated target](images/native-concept-2026-09-13.png).
 
-**The complete 15-scenario acceptance suite still needs a fresh pass.** The previous
-full run ended 14 passed / 1 failed on a yard-reset observation timeout, with correct
-positions in the saved browser and server samples. A stricter browser-local clock
-now starts at the actual reset keypress. The focused real yard soak passed 75
-rounds over 605.2 seconds, with all resets within 267.7 ms and zero reset-position
-error. All 150 movement agreement samples remained below 0.5 m. The fresh full run
-started September 13 at 11:30 UTC finished **14 passed / 1 failed**. Both ten-minute
-soaks passed: 81 neighborhood rounds and 75 yard rounds. All 78 reset witnesses
-passed, with at most 265.5 ms correction and zero reset-position error. The
-worker-crash/restart case failed when the browser connection closed before
-rejoining; cleanup obscured the original click error. The
-[failed-run record](native-acceptance-round12-failed.json) retains that result.
-An unchanged targeted rerun reproduced the failure: the transport disconnected
-first, followed by clean browser cleanup. Empty-page controls isolated idle
-transport failure; the host's [WebSocket keepalive](native-transport-heartbeat.json)
-then passed a 60-second quiet control and the unchanged recovery case. Full
-acceptance and both supervisor probes remain pending.
+**The complete 15-scenario acceptance suite still needs a fresh final-source
+pass and both supervisor checks.** The prior full native run finished **14
+passed / 1 failed**, despite both ten-minute soaks passing. The worker-crash case
+lost its browser transport before rejoining. The failed run remains preserved in
+[its record](native-acceptance-round12-failed.json). Empty-page controls isolated
+idle transport closure, and the host's [WebSocket keepalive](native-transport-heartbeat.json)
+then passed a 60-second quiet control and the unchanged recovery case. Those
+focused passes do not certify the full suite. The earlier strict browser-clock
+reset controls and focused 75-round yard soak also remain historical evidence.
 
 ## Historical record — September 8
 

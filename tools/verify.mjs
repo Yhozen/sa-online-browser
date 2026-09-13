@@ -19,6 +19,7 @@ run(process.execPath, [
   "tests/acceptance-browser-heartbeat.test.mjs",
   "tests/reflection.test.mjs",
   "tests/foliage-mips.test.mjs",
+  "tests/canopy-lighting.test.mjs",
   "tests/surface-pixels.test.mjs",
   "tests/character-animation.test.mjs",
   "tests/terrain.test.mjs",

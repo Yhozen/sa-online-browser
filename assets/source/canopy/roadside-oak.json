@@ -1,0 +1,231 @@
+{
+  "version": 1,
+  "method": "Raw256-ray alpha-aware same-specimen isotropic diffuse accessibility; forward/back authored-normal hemispheres; no gain or clamp",
+  "base": {
+    "blend": {
+      "path": "assets/source/canopy-base/roadside-oak.blend",
+      "bytes": 408758,
+      "sha256": "d9ad319d747e3c859a33e6a2e60d7ab08969a7d09e8b7cc5de21baf7d17c6511"
+    },
+    "glb": {
+      "path": "assets/source/canopy-base/roadside-oak.glb",
+      "bytes": 651132,
+      "sha256": "c263048dc87e8f2580719d5631928255aa5768621bbe58b7a0f33541b31fd4d5"
+    },
+    "originalBuild": {
+      "generatedAt": "2026-09-13T10:36:17.661Z",
+      "blender": {
+        "version": "5.2.1",
+        "buildHash": "9e2066aef7ef",
+        "distribution": "native-macos",
+        "platform": "darwin",
+        "architecture": "arm64",
+        "executableSha256": "ea651e507c6b197df0e234bfa04e5ed43e7f4d498267a7df93fcb38f21928a5c"
+      },
+      "recipes": {
+        "tools/build-assets.mjs": "06f52507fbabf20831ccefb4698613a7d3f3b57dd6f1f504c6a8bf6917ee8449",
+        "tools/assets/build.py": "3eb0039ccbd34a3c3aec5e88aced09f34c8ac3677f9d777b97ece47daad9a53e",
+        "tools/assets/environment-kit.py": "1fb49df90bba8637ec000f37464766c18bc22b969d7013776bd1c45ed3983f7c",
+        "tools/assets/heroes.py": "d2593504f492fd69b42687b24c5bf85d41af18056e2d9385c7175cbf94e2c630",
+        "tools/assets/garden-kit.py": "974d3add6e6f4ad5b9f52d681eeecb69dde28cb8b2a6d471365dcca4ddbf1c8e"
+      },
+      "glb": {
+        "bytes": 651132,
+        "sha256": "e34fd145e45d23567816a5d44dfa2bd8d02ae7af57b25080dcc8fb7ea511199a"
+      },
+      "blend": {
+        "bytes": 431030,
+        "sha256": "8125d8bfb1e070578fdc76ab60c48d23ea0b900a47e112851850a5ac0bcda048"
+      },
+      "gzip": {
+        "bytes": 383478,
+        "sha256": "76591ea210f6d9ee37078f5515b1d5fea4536c45cb5c48a3baca5774809e2e85"
+      }
+    },
+    "derivation": {
+      "method": "Original native Blender5.2.1 low-wood taper at55%, smooth return below scaffold; native POSITION/NORMAL only transported to original packing. All crown/leaf/index/UV/color bytes retained.",
+      "parent": {
+        "blend": {
+          "path": "assets/source/canopy-base/parents/roadside-oak-before-trunk-taper.blend",
+          "bytes": 431030,
+          "sha256": "8125d8bfb1e070578fdc76ab60c48d23ea0b900a47e112851850a5ac0bcda048"
+        },
+        "glb": {
+          "path": "assets/source/canopy-base/parents/roadside-oak-before-trunk-taper.glb",
+          "bytes": 651132,
+          "sha256": "e34fd145e45d23567816a5d44dfa2bd8d02ae7af57b25080dcc8fb7ea511199a"
+        },
+        "record": {
+          "path": "assets/source/canopy-base/parents/roadside-oak-before-trunk-taper.json",
+          "bytes": 1676,
+          "sha256": "7e29b3dca296ac88cd116de3797afda11107546b9b6f28979ed0529afa41cc21"
+        }
+      },
+      "authorRecipe": {
+        "path": "assets/source/canopy-base/provenance/roadside-trunk-taper/author-taper.py",
+        "bytes": 7174,
+        "sha256": "a4f62583d3530447e8cbe4d7ae59d875a31cf8c298f19579ad863e833456b764"
+      },
+      "packingRecipe": {
+        "path": "assets/source/canopy-base/provenance/roadside-trunk-taper/packing-transport.mjs",
+        "bytes": 8224,
+        "sha256": "18f75be884221e4a155a7b15cbbfa3ebd8ed6e483b5b7a4c250eea5b05161623"
+      },
+      "nativeAuthoring": {
+        "path": "assets/source/canopy-base/provenance/roadside-trunk-taper/native-authoring.json",
+        "bytes": 4404,
+        "sha256": "9562128f867f3d10861ee24e91273b8a68534f02a7546b37da8b4c46d770ab49"
+      },
+      "rawNativeExport": {
+        "path": "assets/source/canopy-base/provenance/roadside-trunk-taper/raw-native-export.glb",
+        "bytes": 651132,
+        "sha256": "123fcabc8809524e4615d658e9c3fb83d71b23d9171d34a2b0fb8927efb10e47"
+      },
+      "verification": {
+        "path": "assets/source/canopy-base/provenance/roadside-trunk-taper/packing-verification.json",
+        "bytes": 1572,
+        "sha256": "e34736ee045ce51792f57a8b4a07ae1d8d0ad6f5b83dd2c4564a1f6a85b6d1aa"
+      },
+      "requiresFreshVisibilityBake": true
+    }
+  },
+  "inputs": {
+    "tools/assets/canopy-visibility.mjs": {
+      "bytes": 10195,
+      "sha256": "f133547bc664fbf46a4b9aedaa83d9199695a1702247c59e0acb8c2cc9b4d352"
+    },
+    "assets/source/canopy-base/base.json": {
+      "bytes": 6150,
+      "sha256": "47748da221dbe45aa2fd11893fe95ec0c2eddaa31f1f6d0b7f690c335c3f2b06"
+    },
+    "assets/source/canopy-base/tree.blend": {
+      "bytes": 430669,
+      "sha256": "1707626df2a5c36fab64eaaf026be4159295e5ada88a9474231e707a24af5647"
+    },
+    "assets/source/canopy-base/tree.glb": {
+      "bytes": 651080,
+      "sha256": "1587be859a79d45c3418fc442b9d0f47ded1d7b4efd8d1858c074139673f11b4"
+    },
+    "assets/source/canopy-base/roadside-oak.blend": {
+      "bytes": 408758,
+      "sha256": "d9ad319d747e3c859a33e6a2e60d7ab08969a7d09e8b7cc5de21baf7d17c6511"
+    },
+    "assets/source/canopy-base/roadside-oak.glb": {
+      "bytes": 651132,
+      "sha256": "c263048dc87e8f2580719d5631928255aa5768621bbe58b7a0f33541b31fd4d5"
+    },
+    "assets/textures/arroyo-foliage.webp": {
+      "bytes": 1131330,
+      "sha256": "3b54fbaba32d6281b19346e41a60fb88f2858888cc73327edef4a1fcd30d539b"
+    },
+    "tools/assets/canopy-visibility.py": {
+      "bytes": 8192,
+      "sha256": "925962dae8e588d6ea16ed200035ede81961faaefa015d49f26713e8aca73b1c"
+    }
+  },
+  "native": {
+    "model": "roadside-oak",
+    "samples": 256,
+    "sourceSha256": "0f53697d841607fb3b39a611e5482b4d2ae549678e27705823dc577ef1294413",
+    "glbSha256": "609726126c30d14f78d2677df02a661803a65a793a801b05789cc84d6bb53aca",
+    "sprays": 630,
+    "equivalenceClasses": 9388,
+    "opaqueOrigins": 5670,
+    "rays": 1451520,
+    "transparentSteps": 2154658,
+    "atlasSize": [
+      1254,
+      1254
+    ],
+    "nearestOpaqueUv": {
+      "(0, 0)": [
+        0.01555023923444976,
+        0.008373205741626795
+      ],
+      "(0, 0.5)": [
+        0.09529505582137161,
+        0.483652312599681
+      ],
+      "(0, 1)": [
+        0.15829346092503987,
+        0.7085326953748007
+      ],
+      "(0.5, 0)": [
+        0.5849282296650717,
+        0.11363636363636363
+      ],
+      "(0.5, 0.5)": [
+        0.5027910685805422,
+        0.5059808612440191
+      ],
+      "(0.5, 1)": [
+        0.6686602870813397,
+        0.9070972886762361
+      ],
+      "(1, 0)": [
+        0.9270334928229665,
+        0.08492822966507177
+      ],
+      "(1, 0.5)": [
+        0.9549441786283892,
+        0.6279904306220095
+      ],
+      "(1, 1)": [
+        0.8672248803827751,
+        0.976475279106858
+      ]
+    },
+    "originDisplacementMetres": {
+      "maximum": 0.35064457360518486,
+      "p90": 0.2478593561134711,
+      "mean": 0.11117892394600466
+    },
+    "rawAccessibility": {
+      "minimum": 0,
+      "maximum": 1,
+      "mean": 0.24585688070820388
+    },
+    "elapsedSeconds": 7.488306999206543,
+    "blender": {
+      "version": "5.2.1",
+      "buildHash": "9e2066aef7ef",
+      "distribution": "explicit",
+      "platform": "darwin",
+      "architecture": "arm64",
+      "executableSha256": "ea651e507c6b197df0e234bfa04e5ed43e7f4d498267a7df93fcb38f21928a5c"
+    },
+    "rawExport": {
+      "path": "assets/source/canopy/roadside-oak.glb",
+      "bytes": 801952,
+      "sha256": "609726126c30d14f78d2677df02a661803a65a793a801b05789cc84d6bb53aca"
+    },
+    "source": {
+      "path": "assets/source/roadside-oak.blend",
+      "bytes": 476173,
+      "sha256": "0f53697d841607fb3b39a611e5482b4d2ae549678e27705823dc577ef1294413"
+    }
+  },
+  "originalGeometryPreserved": true,
+  "originalVertexOrderPreserved": true,
+  "originalSceneAndMaterialsPreserved": true,
+  "nativeUvEchoOmitted": true,
+  "fields": [
+    {
+      "material": "foliage",
+      "vertices": 7850,
+      "bytes": 62800,
+      "sha256": "34f6d08dec1e33d5253a59eff340d38e390d4a6882238849c8abb08b313d8367"
+    },
+    {
+      "material": "foliage-light",
+      "vertices": 1538,
+      "bytes": 12304,
+      "sha256": "5858e7b0e18cd2b70e18bdcfc8c4aecec8b64bd87bd117978fcc2742aa0f6ee8"
+    }
+  ],
+  "output": {
+    "path": "apps/browser/public/assets/roadside-oak.glb",
+    "bytes": 726552,
+    "sha256": "cf70689b2314e8d480a9fa50c5de8c9f46a53665f04286858db382206a102ef3"
+  }
+}

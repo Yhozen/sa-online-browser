@@ -223,3 +223,20 @@ the native browser rebaked static reflections with the corrected coverage.
 See [round-fourteen integration](../docs/native-integration-round14.json) for
 exact hashes, original source lineage, native measurements and limitations.
 No external game models or textures were imported.
+
+### September 13, round fifteen
+
+The oak pipeline now starts from declared original native bases in
+`source/canopy-base/`. Blender 5.2.1 bakes alpha-aware forward/back diffuse
+accessibility for the original leaves. Verified field transport preserves the
+base geometry and maps; only indirect diffuse lighting consumes the new field.
+The roadside base also contains the accepted lower-trunk taper, with its parent
+and authoring recipe retained. Blender 4.5 compatibility for these oak sources
+has not been verified. Runtime exports are never their own build inputs.
+
+The terrain generator adds connected gullies while preserving its skyline and
+existing texture inputs. Existing original plants are redistributed into clear
+frontage beds; road wear reuses the original asphalt/concrete maps. Native source,
+export and reflection identities are recorded in
+[round-fifteen integration](../docs/native-integration-round15.json). No external
+models or texture inputs were introduced by this round.

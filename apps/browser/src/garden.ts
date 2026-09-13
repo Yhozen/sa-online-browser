@@ -42,7 +42,9 @@ export function vergeGardenPlacements(manifest: SceneManifest): Placement[] {
 /** Connected low shrubs soften the fence edge while keeping doors and drives open. */
 export function frontageGardenPlacements(manifest: SceneManifest): Placement[] {
   const result: Placement[] = [];
+  const rows: Placement[][] = [];
   for (const [index, house] of manifest.houses.entries()) {
+    const rowPlacements: Placement[] = []; rows.push(rowPlacements);
     const c = Math.cos(house.rotation), s = Math.sin(house.rotation);
     const sx = house.scale?.[0] ?? 1, sy = house.scale?.[1] ?? 1;
     // Two loose drifts sit on the street side of the fence. The previous row
@@ -63,12 +65,50 @@ export function frontageGardenPlacements(manifest: SceneManifest): Placement[] {
       const scale = .89 + ((index * 3 + specimen) % 4) * .05;
       const spread = scale * 1.19;
       if (!yardPlantFits(manifest, x, y, .65 * spread)) continue;
-      result.push({ asset: "garden-shrub", position: [x, y, manifest.groundZ + .01],
+      const placement: Placement = { asset: "garden-shrub", position: [x, y, manifest.groundZ + .01],
         rotation: house.rotation + specimen * 2.399,
-        scale: [spread, spread, scale * (.93 + (specimen % 3) * .035)] });
+        scale: [spread, spread, scale * (.93 + (specimen % 3) * .035)] };
+      result.push(placement); rowPlacements.push(placement);
     }
   }
-  return result;
+  if (!manifest.culdesac) return result;
+  // The curved street reaches the generic outer rows of its three facing lots.
+  // Place their shrubs in the remaining real garden strips inside the fence,
+  // wrapping the front corner where the turning circle leaves no front strip.
+  // Transfer specimens from the fullest other rows; total geometry stays fixed.
+  const additions: Placement[] = [], recipients = new Set<number>();
+  for (const [index, house] of manifest.houses.entries()) {
+    if (rows[index].length || Math.hypot(house.position[0] - manifest.culdesac.center[0],
+      house.position[1] - manifest.culdesac.center[1]) > manifest.culdesac.radius + 16) continue;
+    recipients.add(index);
+    const c = Math.cos(house.rotation), s = Math.sin(house.rotation);
+    const sx = house.scale?.[0] ?? 1, sy = house.scale?.[1] ?? 1;
+    const candidates: [number, number][] = [];
+    for (const ly of [-9.9, -8.95, -8.0]) for (let lx = -10.1; lx <= 10.2; lx += .88) candidates.push([lx, ly]);
+    for (const lx of [-9.55, 9.55]) for (let ly = -7.05; ly <= -.5; ly += .95) candidates.push([lx, ly]);
+    let accepted = 0;
+    for (const [specimen, [lx, ly]] of candidates.entries()) {
+      if (accepted >= 12 || additions.length >= 36) break;
+      const x = house.position[0] + lx * sx * c - ly * sy * s;
+      const y = house.position[1] + lx * sx * s + ly * sy * c;
+      const spread = .96 + (specimen % 3) * .035;
+      if (!yardPlantFits(manifest, x, y, .65 * spread)) continue;
+      if ([...result, ...additions].some(p => Math.hypot(x - p.position[0], y - p.position[1]) < .82)) continue;
+      additions.push({ asset: "garden-shrub", position: [x, y, manifest.groundZ + .01],
+        rotation: house.rotation + specimen * 2.399,
+        scale: [spread, spread, .91 + (specimen % 4) * .08] });
+      accepted++;
+    }
+  }
+  const removed = new Set<Placement>();
+  for (const _ of additions) {
+    const donors = rows.filter((row, i) => !recipients.has(i) && row.length > 3);
+    donors.sort((a, b) => b.length - a.length);
+    const donor = donors[0]?.pop();
+    if (!donor) break;
+    removed.add(donor);
+  }
+  return [...result.filter(p => !removed.has(p)), ...additions.slice(0, removed.size)];
 }
 
 /** Keep the entire decorative plant footprint outside paths and solid fixtures. */

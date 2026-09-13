@@ -7,6 +7,7 @@ import { clone } from "three/addons/utils/SkeletonUtils.js";
 import { surfaceTexture } from "./surface-textures";
 import { decodeReflection } from "./reflection-storage";
 import { installStreetBounce } from "./surface-lighting";
+import { prepareCanopyGeometry, installCanopyAccessibility } from "./canopy-lighting";
 import { groundCoverGLSL } from "./ground-cover.ts";
 export let environmentTexture: THREE.Texture | undefined;
 export let reflectionTexture: THREE.Texture | undefined;
@@ -103,6 +104,8 @@ export async function loadAssets(
         o.castShadow = true;
         o.receiveShadow = true;
         const list = Array.isArray(o.material) ? o.material : [o.material];
+        if (list.some(material => material.name.startsWith("foliage")))
+          prepareCanopyGeometry(o.geometry, name === "tree" || name === "roadside-oak");
         o.material = list.map((m) => {
           // Car glazing and machined trim have their own response; sharing the
           // original GLB names would also recolor household and street hardware.
@@ -335,6 +338,7 @@ export function bindAssetEnvironment(texture: THREE.Texture, localProbe?: THREE.
       if (!(material instanceof THREE.MeshStandardMaterial) || seen.has(material)) continue;
       seen.add(material);
       if (streetBounce) installStreetBounce(material);
+      installCanopyAccessibility(material);
       const leaf = material.name.startsWith("foliage") || material.name.startsWith("palm-frond");
       const carSurface = coupeSurface(material.name);
       if (!leaf && !carSurface && !["paint", "glass", "denim"].includes(material.name)) continue;

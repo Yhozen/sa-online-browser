@@ -1,0 +1,32 @@
+{
+  "kind": "actual native Chrome gameplay screenshot",
+  "capturedAt": "2026-09-13T13:45:36.867Z",
+  "sourceBaseCommit": "fe6f25ff4935c3aa043cb8ae2309a5c602dad748",
+  "sourceEvidence": "../native-quality-cycle-round15.json",
+  "scene": {
+    "id": "neighborhood",
+    "revision": "f7da0f68c9f8ca5a",
+    "ready": true
+  },
+  "cssSize": [
+    1672,
+    941
+  ],
+  "nativeDrawingBuffer": [
+    3344,
+    1882
+  ],
+  "dpr": 2,
+  "path": "docs/images/native-street-round15-2026-09-13.png",
+  "bytes": 2643349,
+  "sha256": "3c42f041117cc4f2c607f37590bf4fb719079f1870dd37f864bc1243a271f72e",
+  "copiedFrom": {
+    "path": ".dream-loop/quality-round15/0-standard.png",
+    "bytes": 2643349,
+    "sha256": "3c42f041117cc4f2c607f37590bf4fb719079f1870dd37f864bc1243a271f72e"
+  },
+  "browser": "Chrome/153.0.8010.37",
+  "errors": [],
+  "quality": "standard",
+  "note": "Copied byte-for-byte from the actual native quality cycle. Direct 1672×941 CDP comparison capture of 3344×1882 native rendering; no resizing or image editing. Exact before/after brackets for 106 sources, 28 assets and 4 served resources are retained."
+}

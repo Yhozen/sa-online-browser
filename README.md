@@ -74,7 +74,9 @@ reachable from the local network. Set `POC_PORT` to publish elsewhere and
 
 `npm run open:poc` is for the cloud desktop and does not apply here; the
 container has no display, and your host browser is the point. Asset authoring
-can run on the host with native Blender 4.5.13 or 5.2.1. On macOS the builder
+can run on the host with native Blender 5.2.1. Selective non-oak models and
+terrain also support 4.5.13; the oak accessibility bake is verified with 5.2.1.
+On macOS the builder
 detects `/Applications/Blender.app`; run `npm run build:assets -- --skip-reflections`
 on the host to avoid the Linux runtime and its browser dependencies.
 
@@ -174,15 +176,17 @@ Original PoC code is **GPL-3.0-or-later**. Preserve [third-party licenses and no
 **Standard is the default for new installations**; explicitly saved preferences are preserved. **Low** remains an optional fallback. Both presets render at the full viewport resolution and native device pixel density, without a resolution cap or automatic downscaling. Low uses baked vertex shading and simplified fence wires; **Standard** uses physical materials, cached neighborhood reflections, contact shading, and soft shadow maps. The software-rendering target is 4 FPS for two cloud views; report slower results without reducing resolution. The September 13 native Chrome audit passed the 60 FPS median target in both presets at 2560×1440 and 3344×1882 drawing buffers. The [native rendering record](docs/native-rendering-verification.json) identifies the exact measured scene and source hashes; cloud measurements are not estimates of hardware performance. The minimap shows north, players and the car; chat collapses through its heading, and the top-right diagnostics button reveals protocol details. Keep each player tab visible in its own window.
 
 ```sh
-npm run build:assets                 # native macOS or pinned Linux Blender + reflection bake
+npm run build:assets                 # Blender 5.2.1 + reflection bake; macOS app detected automatically
 npm run build:assets -- --models tree,palm,garden-low --skip-reflections
-BLENDER_BIN=/path/to/blender npm run build:assets -- --skip-reflections
+BLENDER_BIN=/path/to/blender-5.2.1 npm run build:assets -- --skip-reflections
 node tools/build-assets.mjs --models coupe --output-root .dream-loop/coupe-check --skip-reflections
 node tools/create-scenes.mjs          # regenerate the committed layout manifests
 npm run build:browser
 ```
 
-Normal `setup:poc` consumes committed GLBs and image inputs; it does not install Blender or call an image service. Edit `tools/assets/build.py`, `environment-kit.py`, `garden-kit.py`, and `heroes.py` to regenerate the kit, or inspect the editable `assets/source/*.blend` files. The scripts are authoritative; rebuilding replaces those .blend exports. Builds use scratch space and publish only complete successful exports. `--models` replaces only the named models; dependencies may still be constructed. `assets/source/asset-build.json` records the actual Blender version, executable hash, recipe hashes, and output identities per rebuilt model, preserving provenance for mixed native/pinned asset sets. `--output-root` supports isolated checks and requires `--skip-reflections`.
+Normal `setup:poc` consumes committed GLBs and image inputs; it does not install Blender or call an image service. Edit `tools/assets/build.py`, `environment-kit.py`, `garden-kit.py`, and `heroes.py` to regenerate the ordinary kit, or inspect the editable `assets/source/*.blend` files. Oaks use the declared native inputs in [canopy-base](assets/source/canopy-base/README.md) and `tools/assets/canopy-visibility.py`; a structural oak edit requires a new declared base and fresh visibility bake. Runtime exports are never their own build inputs. Builds use scratch space and publish only complete successful exports. `--models` replaces only the named models; dependencies may still be constructed. `assets/source/asset-build.json` records the actual Blender version, executable hash, recipe hashes, and output identities per rebuilt model. `--output-root` supports isolated checks and requires `--skip-reflections`.
+
+On Linux, full builds and oak builds require an explicitly installed Blender 5.2.1 executable through `--blender` or `BLENDER_BIN`. The automatically downloaded 4.5.13 build remains available for selective non-oak models and terrain; oak compatibility with that version has not been verified.
 
 After final model or scene changes, run `node tools/bake-reflections.mjs` in the provisioned container and restart the gateway. With the fixture already running and native Chrome debugging available on loopback port 9333, `node tools/bake-reflections-native.mjs` instead captures the actual host GPU and checks source, served bundle and asset identities before publication. The reflection bake uses installed pinned Chromium without player connections, saves a lossless RGBA16F atlas and provenance under `assets/source/reflection-bake.json`, and refreshes the asset inventory and browser build. Geometry is modeled in meters, Z-up and +Y forward, normalized once after glTF loading. Texture inputs, prompts, licenses and source pins are in [asset provenance](assets/PROVENANCE.md). The imagegen authoring skill is included under `.agents/skills/imagegen` with its own license.
 

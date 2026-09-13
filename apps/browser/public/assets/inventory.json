@@ -22,8 +22,8 @@
       "sha256": "08d34e0817d828d21aa74ff32b43b4400ff325d58c96408dd31004b248d400a0"
     },
     "arroyo-reflections.pmrem.gz": {
-      "bytes": 11642720,
-      "sha256": "19121ceb84ec0672f887ba4889a7e67b3df368b13ef9ab7b756d45a52048b026"
+      "bytes": 11647908,
+      "sha256": "b16d8d30fea892da2b3925afb2b627527f70b7a123a726a02d284d5739df0dfe"
     },
     "arroyo-sky.webp": {
       "bytes": 1029670,
@@ -98,20 +98,20 @@
       "sha256": "4a0fea05e8451630f0030e999b284cd50bd3ba6e0d237fb416043c6b549227c0"
     },
     "roadside-oak.glb": {
-      "bytes": 651132,
-      "sha256": "e34fd145e45d23567816a5d44dfa2bd8d02ae7af57b25080dcc8fb7ea511199a"
+      "bytes": 726552,
+      "sha256": "cf70689b2314e8d480a9fa50c5de8c9f46a53665f04286858db382206a102ef3"
     },
     "roadside-oak.glb.gz": {
-      "bytes": 383478,
-      "sha256": "76591ea210f6d9ee37078f5515b1d5fea4536c45cb5c48a3baca5774809e2e85"
+      "bytes": 449731,
+      "sha256": "3c99cbea1e4316b020733616fb5ef7f2d9e53322983e0adf4fc89431feefdb7e"
     },
     "tree.glb": {
-      "bytes": 651080,
-      "sha256": "1587be859a79d45c3418fc442b9d0f47ded1d7b4efd8d1858c074139673f11b4"
+      "bytes": 726496,
+      "sha256": "15ac566413627cf0221e0d2b765b69f7b4f901b2202b117c84b616bba7dcdb6f"
     },
     "tree.glb.gz": {
-      "bytes": 382873,
-      "sha256": "0ce7b7bb8329eef22a8fc8cf1575421a9856682a92bda70382b72184addf1b2e"
+      "bytes": 448792,
+      "sha256": "3fc8c0a6d034ceb65a77755670c1e6367e624d4d80719e721102586a28c0b770"
     }
   }
 }

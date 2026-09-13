@@ -25,6 +25,24 @@ const placementMatrix = placement => new THREE.Matrix4().compose(new THREE.Vecto
   new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 0, 1), placement.rotation),
   new THREE.Vector3(...(placement.scale ?? [1, 1, 1])));
 
+test('cul-de-sac gardens redistribute existing shrubs into all three clear house frontages', () => {
+  const manifest = JSON.parse(readFileSync('packages/shared/scenes/neighborhood.json', 'utf8'));
+  const placements = frontageGardenPlacements(manifest);
+  assert.equal(placements.length, 141, 'replant existing specimens rather than increasing foliage cost');
+  assert.equal(new Set(placements.map(p => p.position.join(','))).size, placements.length);
+  for (const id of ['house-3', 'house-4', 'house-5']) {
+    const house = manifest.houses.find(h => h.id === id), inverse = placementMatrix(house).invert();
+    const local = placements.map(p => new THREE.Vector3(...p.position).applyMatrix4(inverse))
+      .filter(p => Math.abs(p.x) < 11 && p.y < 0 && p.y > -11);
+    assert.equal(local.length, 12, `${id} must receive a substantial real garden strip`);
+    // The actual exported-triangle test below independently checks each new
+    // specimen against foundations, porches, drives, doors and the circle.
+    assert.ok(local.some(p => p.y < -8), `${id} planting must reach its front corner`);
+  }
+  const cells = new Set(placements.map(p => `${Math.floor(p.position[0] / 128)},${Math.floor(p.position[1] / 128)}`));
+  assert.equal(cells.size, 4, 'reuse the existing four garden-shrub material-batch cells');
+});
+
 test('exported garden specimens fit existing beds without entering porch, drive or walls', async () => {
   const manifest = JSON.parse(readFileSync('packages/shared/scenes/neighborhood.json', 'utf8'));
   const authoredPoints = (await gardenModel).vertices;

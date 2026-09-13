@@ -57,7 +57,7 @@ test('published v4 terrain retains complete hashed native provenance',{
 test('retained v3 input regenerates the exact staged v4 candidate',()=>{
   const bytes=readFileSync(path.join(scratch,'assets/horizon-relief.json'));
   assert.deepEqual(bytes,readFileSync(path.join(root,'assets/horizon-relief.json')));
-  assert.equal(sha(bytes),'77162b3135c66940b85e65b86ea7b4b595d9021628dd4be86f976fcd5e630cea');
+  assert.equal(sha(bytes),'a5d1351177c927700fcc381bf3a4c8b7698a025f21a7973798a79263e81ef922');
   assert.equal(bytes.length,859283);
   assert.ok(prepared.metrics.layers.every(layer=>!layer.lighting.clipped));
 });
@@ -178,7 +178,8 @@ test('normal pipeline rejects model and terrain native failures before publishin
   const write=(file,bytes,options)=>{mkdirSync(path.dirname(path.join(fixture,file)),{recursive:true});writeFileSync(path.join(fixture,file),bytes,options)};
   write('tools/build-assets.mjs',readFileSync(path.join(root,'tools/build-assets.mjs')));
   write('tools/assets/horizon-bake.mjs',readFileSync(path.join(root,'tools/assets/horizon-bake.mjs')));
-  for(const file of ['build.py','environment-kit.py','heroes.py','garden-kit.py'])write('tools/assets/'+file,'# failure fixture\n');
+  write('tools/assets/canopy-visibility.mjs',readFileSync(path.join(root,'tools/assets/canopy-visibility.mjs')));
+  for(const file of ['build.py','environment-kit.py','heroes.py','garden-kit.py','canopy-visibility.py'])write('tools/assets/'+file,'# failure fixture\n');
   const priorFiles=['apps/browser/public/assets/tree.glb','assets/source/tree.blend','assets/source/asset-build.json','assets/horizon-relief.json','assets/source/horizon.blend','assets/source/horizon-build.json'];
   for(const file of priorFiles)write(file,'unchanged '+file);
   const fake=path.join(fixture,'fake-blender');

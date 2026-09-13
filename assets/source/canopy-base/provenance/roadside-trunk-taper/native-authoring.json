@@ -1,0 +1,144 @@
+{
+  "method": "55% horizontal radial scale about the retained bent shaft through1.65m, smoothstep return to100%at3.55m, exactabove; no crown/leaf edit or added topology",
+  "oldSource": {
+    "blend": {
+      "path": "assets/source/canopy-base/roadside-oak.blend",
+      "bytes": 431030,
+      "sha256": "8125d8bfb1e070578fdc76ab60c48d23ea0b900a47e112851850a5ac0bcda048"
+    },
+    "glb": {
+      "path": "assets/source/canopy-base/roadside-oak.glb",
+      "bytes": 651132,
+      "sha256": "e34fd145e45d23567816a5d44dfa2bd8d02ae7af57b25080dcc8fb7ea511199a"
+    },
+    "originalBuild": {
+      "generatedAt": "2026-09-13T10:36:17.661Z",
+      "blender": {
+        "version": "5.2.1",
+        "buildHash": "9e2066aef7ef",
+        "distribution": "native-macos",
+        "platform": "darwin",
+        "architecture": "arm64",
+        "executableSha256": "ea651e507c6b197df0e234bfa04e5ed43e7f4d498267a7df93fcb38f21928a5c"
+      },
+      "recipes": {
+        "tools/build-assets.mjs": "06f52507fbabf20831ccefb4698613a7d3f3b57dd6f1f504c6a8bf6917ee8449",
+        "tools/assets/build.py": "3eb0039ccbd34a3c3aec5e88aced09f34c8ac3677f9d777b97ece47daad9a53e",
+        "tools/assets/environment-kit.py": "1fb49df90bba8637ec000f37464766c18bc22b969d7013776bd1c45ed3983f7c",
+        "tools/assets/heroes.py": "d2593504f492fd69b42687b24c5bf85d41af18056e2d9385c7175cbf94e2c630",
+        "tools/assets/garden-kit.py": "974d3add6e6f4ad5b9f52d681eeecb69dde28cb8b2a6d471365dcca4ddbf1c8e"
+      },
+      "glb": {
+        "bytes": 651132,
+        "sha256": "e34fd145e45d23567816a5d44dfa2bd8d02ae7af57b25080dcc8fb7ea511199a"
+      },
+      "blend": {
+        "bytes": 431030,
+        "sha256": "8125d8bfb1e070578fdc76ab60c48d23ea0b900a47e112851850a5ac0bcda048"
+      },
+      "gzip": {
+        "bytes": 383478,
+        "sha256": "76591ea210f6d9ee37078f5515b1d5fea4536c45cb5c48a3baca5774809e2e85"
+      }
+    }
+  },
+  "authorRecipeSha256": "a4f62583d3530447e8cbe4d7ae59d875a31cf8c298f19579ad863e833456b764",
+  "blender": "5.2.1 LTS",
+  "changedWoodVertices": 96,
+  "woodVertices": 2560,
+  "lowWoodBefore": {
+    "min": [
+      -0.3988645672798157,
+      -0.3502486050128937,
+      -0.021168066188693047
+    ],
+    "max": [
+      0.3988645672798157,
+      0.35024863481521606,
+      1.667466163635254
+    ]
+  },
+  "lowWoodAfter": {
+    "min": [
+      -0.21773698925971985,
+      -0.19396677613258362,
+      -0.021168066188693047
+    ],
+    "max": [
+      0.22101403772830963,
+      0.1913066953420639,
+      1.667466163635254
+    ]
+  },
+  "maximumLowRadius": 0.2218169812185444,
+  "nonwoodFieldsExact": true,
+  "woodTopologyUVColorBindingsExact": true,
+  "upperWoodPositionsExactAbove": 3.55,
+  "allHeightsExact": true,
+  "contacts": [
+    {
+      "component": 1,
+      "minimumHeight": -0.013226568698883057,
+      "originalIntersections": 14,
+      "candidateIntersections": 14
+    },
+    {
+      "component": 2,
+      "minimumHeight": -0.013226568698883057,
+      "originalIntersections": 14,
+      "candidateIntersections": 14
+    },
+    {
+      "component": 3,
+      "minimumHeight": -0.013226568698883057,
+      "originalIntersections": 14,
+      "candidateIntersections": 14
+    },
+    {
+      "component": 4,
+      "minimumHeight": -0.013226568698883057,
+      "originalIntersections": 14,
+      "candidateIntersections": 14
+    },
+    {
+      "component": 5,
+      "minimumHeight": -0.013226568698883057,
+      "originalIntersections": 14,
+      "candidateIntersections": 14
+    },
+    {
+      "component": 6,
+      "minimumHeight": -0.013226568698883057,
+      "originalIntersections": 14,
+      "candidateIntersections": 14
+    },
+    {
+      "component": 7,
+      "minimumHeight": 3.6821553707122803,
+      "originalIntersections": 24,
+      "candidateIntersections": 24
+    },
+    {
+      "component": 40,
+      "minimumHeight": 3.7709872722625732,
+      "originalIntersections": 24,
+      "candidateIntersections": 24
+    },
+    {
+      "component": 73,
+      "minimumHeight": 3.819655179977417,
+      "originalIntersections": 16,
+      "candidateIntersections": 16
+    }
+  ],
+  "minimumTriangleArea": 0.0003240840650219329,
+  "minimumFaceOrientationDot": 0.9597004875540733,
+  "source": {
+    "bytes": 408758,
+    "sha256": "d9ad319d747e3c859a33e6a2e60d7ab08969a7d09e8b7cc5de21baf7d17c6511"
+  },
+  "glb": {
+    "bytes": 651132,
+    "sha256": "123fcabc8809524e4615d658e9c3fb83d71b23d9171d34a2b0fb8927efb10e47"
+  }
+}

@@ -1,0 +1,185 @@
+{
+  "version": 1,
+  "method": "Raw256-ray alpha-aware same-specimen isotropic diffuse accessibility; forward/back authored-normal hemispheres; no gain or clamp",
+  "base": {
+    "blend": {
+      "path": "assets/source/canopy-base/tree.blend",
+      "bytes": 430669,
+      "sha256": "1707626df2a5c36fab64eaaf026be4159295e5ada88a9474231e707a24af5647"
+    },
+    "glb": {
+      "path": "assets/source/canopy-base/tree.glb",
+      "bytes": 651080,
+      "sha256": "1587be859a79d45c3418fc442b9d0f47ded1d7b4efd8d1858c074139673f11b4"
+    },
+    "originalBuild": {
+      "generatedAt": "2026-09-13T10:36:17.661Z",
+      "blender": {
+        "version": "5.2.1",
+        "buildHash": "9e2066aef7ef",
+        "distribution": "native-macos",
+        "platform": "darwin",
+        "architecture": "arm64",
+        "executableSha256": "ea651e507c6b197df0e234bfa04e5ed43e7f4d498267a7df93fcb38f21928a5c"
+      },
+      "recipes": {
+        "tools/build-assets.mjs": "06f52507fbabf20831ccefb4698613a7d3f3b57dd6f1f504c6a8bf6917ee8449",
+        "tools/assets/build.py": "3eb0039ccbd34a3c3aec5e88aced09f34c8ac3677f9d777b97ece47daad9a53e",
+        "tools/assets/environment-kit.py": "1fb49df90bba8637ec000f37464766c18bc22b969d7013776bd1c45ed3983f7c",
+        "tools/assets/heroes.py": "d2593504f492fd69b42687b24c5bf85d41af18056e2d9385c7175cbf94e2c630",
+        "tools/assets/garden-kit.py": "974d3add6e6f4ad5b9f52d681eeecb69dde28cb8b2a6d471365dcca4ddbf1c8e"
+      },
+      "glb": {
+        "bytes": 651080,
+        "sha256": "1587be859a79d45c3418fc442b9d0f47ded1d7b4efd8d1858c074139673f11b4"
+      },
+      "blend": {
+        "bytes": 430669,
+        "sha256": "1707626df2a5c36fab64eaaf026be4159295e5ada88a9474231e707a24af5647"
+      },
+      "gzip": {
+        "bytes": 382873,
+        "sha256": "0ce7b7bb8329eef22a8fc8cf1575421a9856682a92bda70382b72184addf1b2e"
+      }
+    }
+  },
+  "inputs": {
+    "tools/assets/canopy-visibility.mjs": {
+      "bytes": 10195,
+      "sha256": "f133547bc664fbf46a4b9aedaa83d9199695a1702247c59e0acb8c2cc9b4d352"
+    },
+    "assets/source/canopy-base/base.json": {
+      "bytes": 6150,
+      "sha256": "47748da221dbe45aa2fd11893fe95ec0c2eddaa31f1f6d0b7f690c335c3f2b06"
+    },
+    "assets/source/canopy-base/tree.blend": {
+      "bytes": 430669,
+      "sha256": "1707626df2a5c36fab64eaaf026be4159295e5ada88a9474231e707a24af5647"
+    },
+    "assets/source/canopy-base/tree.glb": {
+      "bytes": 651080,
+      "sha256": "1587be859a79d45c3418fc442b9d0f47ded1d7b4efd8d1858c074139673f11b4"
+    },
+    "assets/source/canopy-base/roadside-oak.blend": {
+      "bytes": 408758,
+      "sha256": "d9ad319d747e3c859a33e6a2e60d7ab08969a7d09e8b7cc5de21baf7d17c6511"
+    },
+    "assets/source/canopy-base/roadside-oak.glb": {
+      "bytes": 651132,
+      "sha256": "c263048dc87e8f2580719d5631928255aa5768621bbe58b7a0f33541b31fd4d5"
+    },
+    "assets/textures/arroyo-foliage.webp": {
+      "bytes": 1131330,
+      "sha256": "3b54fbaba32d6281b19346e41a60fb88f2858888cc73327edef4a1fcd30d539b"
+    },
+    "tools/assets/canopy-visibility.py": {
+      "bytes": 8192,
+      "sha256": "925962dae8e588d6ea16ed200035ede81961faaefa015d49f26713e8aca73b1c"
+    }
+  },
+  "native": {
+    "model": "tree",
+    "samples": 256,
+    "sourceSha256": "201eb6324a35f578be3ac75f977f89bd375c8f52eb9614c379e88c72de9a4549",
+    "glbSha256": "86ffd6186c31fc120e14f7e4e8caeb7a64cf95323b15c1f37f8dd58aaa2e636d",
+    "sprays": 630,
+    "equivalenceClasses": 9388,
+    "opaqueOrigins": 5670,
+    "rays": 1451520,
+    "transparentSteps": 2154115,
+    "atlasSize": [
+      1254,
+      1254
+    ],
+    "nearestOpaqueUv": {
+      "(0, 0)": [
+        0.01555023923444976,
+        0.008373205741626795
+      ],
+      "(0, 0.5)": [
+        0.09529505582137161,
+        0.483652312599681
+      ],
+      "(0, 1)": [
+        0.15829346092503987,
+        0.7085326953748007
+      ],
+      "(0.5, 0)": [
+        0.5849282296650717,
+        0.11363636363636363
+      ],
+      "(0.5, 0.5)": [
+        0.5027910685805422,
+        0.5059808612440191
+      ],
+      "(0.5, 1)": [
+        0.6686602870813397,
+        0.9070972886762361
+      ],
+      "(1, 0)": [
+        0.9270334928229665,
+        0.08492822966507177
+      ],
+      "(1, 0.5)": [
+        0.9549441786283892,
+        0.6279904306220095
+      ],
+      "(1, 1)": [
+        0.8672248803827751,
+        0.976475279106858
+      ]
+    },
+    "originDisplacementMetres": {
+      "maximum": 0.3506407595250837,
+      "p90": 0.2471681918662905,
+      "mean": 0.11099084954269746
+    },
+    "rawAccessibility": {
+      "minimum": 0,
+      "maximum": 1,
+      "mean": 0.24619809607230733
+    },
+    "elapsedSeconds": 7.447890996932983,
+    "blender": {
+      "version": "5.2.1",
+      "buildHash": "9e2066aef7ef",
+      "distribution": "explicit",
+      "platform": "darwin",
+      "architecture": "arm64",
+      "executableSha256": "ea651e507c6b197df0e234bfa04e5ed43e7f4d498267a7df93fcb38f21928a5c"
+    },
+    "rawExport": {
+      "path": "assets/source/canopy/tree.glb",
+      "bytes": 801900,
+      "sha256": "86ffd6186c31fc120e14f7e4e8caeb7a64cf95323b15c1f37f8dd58aaa2e636d"
+    },
+    "source": {
+      "path": "assets/source/tree.blend",
+      "bytes": 474676,
+      "sha256": "201eb6324a35f578be3ac75f977f89bd375c8f52eb9614c379e88c72de9a4549"
+    }
+  },
+  "originalGeometryPreserved": true,
+  "originalVertexOrderPreserved": true,
+  "originalSceneAndMaterialsPreserved": true,
+  "nativeUvEchoOmitted": true,
+  "fields": [
+    {
+      "material": "foliage",
+      "vertices": 7850,
+      "bytes": 62800,
+      "sha256": "888ce9dcec808d8b3478ec47caa46a50edeed5fd1fa6112d059db7623c54baf0"
+    },
+    {
+      "material": "foliage-light",
+      "vertices": 1538,
+      "bytes": 12304,
+      "sha256": "31027610cbc374eae581772e74281aabb0dd9b1400018e3d28012282371b24f8"
+    }
+  ],
+  "output": {
+    "path": "apps/browser/public/assets/tree.glb",
+    "bytes": 726496,
+    "sha256": "15ac566413627cf0221e0d2b765b69f7b4f901b2202b117c84b616bba7dcdb6f"
+  }
+}

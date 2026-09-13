@@ -32,9 +32,72 @@ function oldAt(layer,angular,radial,field='elevation') {
   return u+v<=1?arr[k]+(arr[k+1]-arr[k])*u+(arr[k+original.segments+1]-arr[k])*v:
     arr[k+original.segments+2]+(arr[k+original.segments+1]-arr[k+original.segments+2])*(1-u)+(arr[k+1]-arr[k+original.segments+2])*(1-v);
 }
+// Four unequal connected upper-face drainage networks per actually exposed band.
+// Stations are authored world-space directions/widths: angle degrees, downslope
+// bend degrees, maximum cut metres, left/right wall widths metres, branch spread.
+// The retained broad crest itself is never replaced by a new row of summits.
+const exposedGullies=[
+ {range:[51.5,62],channels:[
+  [53.35,.48,4.6,.85,2.3,1.9], [55.45,-.40,5.2,1.45,.9,2.3],
+  [57.60,.55,4.7,.75,2.55,1.7], [59.65,-.22,4.2,1.35,.85,2.1]]},
+ {range:[95.5,112],channels:[
+  [97.6,.46,5.3,1.8,4.2,3.2], [101.2,-.36,5.8,3.4,1.6,3.8],
+  [105.6,.62,5.0,1.5,4.5,3.0], [109.4,-.28,4.7,3.2,1.8,3.7]]},
+ {range:[95.5,112],channels:[
+  [98.8,-.28,5.1,2.1,4.6,4.1], [102.4,.42,5.7,4.1,2.0,4.5],
+  [106.1,-.48,5.0,1.9,4.8,3.8], [109.8,.30,4.5,3.6,2.2,4.2]]}
+];
+function visibleGullyCut(layer,angle,radius,distance,inside) {
+ if(!inside||distance<=.10||distance>=16)return 0;
+ const {range,channels}=exposedGullies[layer],degrees=angle*180/Math.PI;
+ if(degrees<=range[0]||degrees>=range[1])return 0;
+ const edge=smooth(range[0],range[0]+.6,degrees)*(1-smooth(range[1]-.6,range[1],degrees));
+ const depthGate=smooth(.10,2.8,distance)*(1-smooth(8,16,distance));
+ let cut=0;
+ for(const[axis,bend,depth,left,right,spread]of channels) {
+  const center=axis+bend*smooth(0,9,distance);
+  const x=(degrees-center)*Math.PI/180*radius;
+  // Linear asymmetric walls expose planar side faces; short tributaries merge
+  // into the same lower channel, rather than forming independent cone summits.
+  const vee=(at,l,r)=>Math.max(0,1-Math.abs(at)/(at<0?l:r));
+  const main=vee(x,left,right);
+  const separate=spread*(1-smooth(.35,5,distance));
+  const tributary=Math.max(vee(x-separate,left*.50,right*.42),vee(x+separate,left*.40,right*.54));
+  cut=Math.max(cut,depth*depthGate*Math.max(main,tributary*.72));
+ }
+ return cut*edge;
+}
+// Breach only closed outlets introduced by the authored upper cuts. A minimax
+// spill path through actual triangle edges joins each new depression to an
+// existing lower outlet with a 1% fall. Existing unrelated basins are retained.
+function connectAuthoredOutlets(positions,baselineHeight,cuts) {
+ const count=baselineHeight.length;
+ const flood=height=>{
+  const level=new Float64Array(count).fill(Infinity),parent=new Int32Array(count).fill(-1),heap=[];
+  const push=(id,h)=>{let k=heap.length;heap.push([id,h]);while(k){const up=(k-1)>>1;if(heap[up][1]<=h)break;heap[k]=heap[up];k=up;}heap[k]=[id,h]};
+  const pop=()=>{const first=heap[0],last=heap.pop();if(heap.length){let k=0;while(k*2+1<heap.length){let c=k*2+1;if(c+1<heap.length&&heap[c+1][1]<heap[c][1])c++;if(heap[c][1]>=last[1])break;heap[k]=heap[c];k=c;}heap[k]=last;}return first};
+  for(const row of[0,R])for(let i=0;i<STRIDE;i++){const k=row*STRIDE+i;level[k]=height[k];push(k,level[k]);}
+  while(heap.length){const[k,h]=pop();if(h!==level[k])continue;const row=Math.floor(k/STRIDE),column=k%STRIDE;
+   for(const[dr,dc]of[[0,-1],[0,1],[-1,0],[1,0],[-1,1],[1,-1]]){const r=row+dr;if(r<0||r>R)continue;const c=(column+dc+S)%S,q=r*STRIDE+c,next=Math.max(h,height[q]);if(next<level[q]){level[q]=next;parent[q]=k;push(q,next)}}
+   if(column===0){const q=row*STRIDE+S;if(h<level[q]){level[q]=h;parent[q]=k;push(q,h);}}
+  }return{level,parent};
+ };
+ const height=Float64Array.from({length:count},(_,k)=>positions[k*3+2]),before=flood(baselineHeight),after=flood(height);
+ const seeds=Array.from({length:count},(_,k)=>k).filter(k=>after.level[k]-height[k]>(before.level[k]-baselineHeight[k])+.05).sort((a,b)=>height[a]-height[b]);
+ const touched=new Set();let maximumOutletCut=0;
+ for(const seed of seeds){let k=seed,target=positions[k*3+2];for(let steps=0;steps<count;steps++){
+   const q=after.parent[k];if(q<0)break;
+   target-=.01*Math.hypot(positions[q*3]-positions[k*3],positions[q*3+1]-positions[k*3+1]);
+   if(after.level[q]<=target)break;
+   const old=positions[q*3+2];if(old>target){positions[q*3+2]=target;cuts[q]+=old-positions[q*3+2];touched.add(q);maximumOutletCut=Math.max(maximumOutletCut,old-target);}
+   target=Math.min(target,positions[q*3+2]);k=q;
+  }}
+ return{newDepressionSeeds:seeds.length,outletVertices:touched.size,maximumOutletCut};
+}
 for(let layer=0;layer<3;layer++) {
   const width=90+layer*50,inner=250+layer*125-width*.47,outer=inner+width;
   const p=new Float32Array(STRIDE*(R+1)*3),geo=new Uint8Array(STRIDE*(R+1)*2),radii=new Float64Array(STRIDE*(R+1));
+  const retainedZ=new Float32Array(STRIDE*(R+1));
   const crowns=new Float64Array(STRIDE),heights=new Float64Array(STRIDE),cuts=new Float32Array(STRIDE*(R+1));
   const indices=[];let maxCut=0,min=Infinity,max=-Infinity;
   for(let i=0;i<=S;i++) {
@@ -67,8 +130,10 @@ for(let layer=0;layer<3;layer++) {
       const fork=Math.max(0,1-Math.min(Math.abs(cross-forkSeparation),Math.abs(cross+forkSeparation))/.10);
       const amplitude=Math.min(4.2,distance*.80)*(1-smooth(22,65,distance));
       const secondary=amplitude*(trunk*.90+fork*.34*(1-smooth(8,18,distance)));
-      const floor=-2.52,z=Math.max(floor,accepted-secondary),cut=accepted-z,k=j*STRIDE+i;
+      const authoredGully=visibleGullyCut(layer,a,radius,distance,j<14);
+      const floor=-2.52,z=Math.max(floor,accepted-Math.max(secondary,authoredGully)),cut=accepted-z,k=j*STRIDE+i;
       // The maximum crest line is unchanged; cuts begin directly beside it.
+      retainedZ[k]=9+Math.max(floor,accepted-secondary);
       p[k*3]=Math.cos(a)*radius;p[k*3+1]=Math.sin(a)*radius;p[k*3+2]=9+z;radii[k]=radius;cuts[k]=cut;
       geo[k*2]=Math.round(clamp(oldAt(layer,aOld,radial,'mineral')+24*trunk,0,255));
       geo[k*2+1]=Math.round(clamp(oldAt(layer,aOld,radial,'vegetation')*.55+35*trunk*smooth(2,13,distance),0,255));
@@ -76,6 +141,8 @@ for(let layer=0;layer<3;layer++) {
       if(j<R&&i<S){indices.push(k,k+STRIDE,k+1,k+1,k+STRIDE,k+STRIDE+1);}
     }
   }
+  const drainage=connectAuthoredOutlets(p,retainedZ,cuts);
+  min=Infinity;max=-Infinity;maxCut=0;for(let k=0;k<retainedZ.length;k++){min=Math.min(min,p[k*3+2]-9);max=Math.max(max,p[k*3+2]-9);maxCut=Math.max(maxCut,cuts[k]);}
   // Exact duplicate endpoints make the authored wrap watertight.
   for(let j=0;j<=R;j++){
     const first=j*STRIDE,last=first+S;
@@ -90,7 +157,7 @@ for(let layer=0;layer<3;layer++) {
     n.setXYZ(a,...nn.toArray());n.setXYZ(b,...nn.toArray());
   }
   fields.push({p,n,geo,radii,crowns,heights,cuts,inner,outer,width,geometry});
-  stats.push({layer,triangles:indices.length/3,vertices:p.length/3,min,max,maxCut});
+  stats.push({layer,triangles:indices.length/3,vertices:p.length/3,min,max,maxCut,drainage});
 }
 // Piecewise-linear ray/height intersections over the new nonuniform radial grid.
 function heightAt(x,y){

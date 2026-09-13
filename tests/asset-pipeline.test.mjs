@@ -20,12 +20,19 @@ function fixture(t, mode = "ok") {
     "#!/usr/bin/env node",
     'const fs = require("node:fs"); const path = require("node:path");',
     'if (process.argv.includes("--version")) {',
-    '  console.log("Blender ' + (mode === "unsupported" ? "3.6.0" : "5.2.1") + '\\n  build hash: native-test"); process.exit(0);',
+    '  console.log("Blender ' + (mode === "unsupported" ? "3.6.0" : mode === "legacy" ? "4.5.13" : "5.2.1") + '\\n  build hash: native-test"); process.exit(0);',
     "}",
     'const args = process.argv.slice(process.argv.indexOf("--") + 1);',
     'const stage = args[args.indexOf("--output-root") + 1];',
     'fs.writeFileSync(path.join(__dirname, "stage.txt"), stage);',
     'const models = args[args.indexOf("--models") + 1].split(",");',
+    'if (process.argv.some(arg => arg.endsWith("canopy-visibility.py"))) {',
+    '  const crypto=require("node:crypto"),hash=b=>crypto.createHash("sha256").update(b).digest("hex");',
+    '  const raw=process.env.CANOPY_TEST_SOURCE || "assets/source/canopy",out=path.join(stage,"assets/source/canopy");fs.mkdirSync(out,{recursive:true});',
+    '  const rows=models.map(model=>{const glb=fs.readFileSync(path.join(raw,model+".glb")),blend=fs.readFileSync(path.join(process.env.CANOPY_TEST_SOURCE || "assets/source",model+".blend"));fs.writeFileSync(path.join(out,model+".glb"),glb);fs.writeFileSync(path.join(out,model+".blend"),blend);return{model,samples:256,glbSha256:hash(glb),sourceSha256:hash(blend)};});',
+    '  const files=["assets/source/canopy-base/base.json","tools/assets/canopy-visibility.py","assets/textures/arroyo-foliage.webp",...models.flatMap(name=>["assets/source/canopy-base/"+name+".blend","assets/source/canopy-base/"+name+".glb"])];',
+    '  fs.writeFileSync(path.join(out,"native.json"),JSON.stringify({blender:"5.2.1",rows,inputs:Object.fromEntries(files.map(file=>[file,hash(fs.readFileSync(file))]))}));process.exit(0);',
+    '}',
     'for (const name of models) for (const [folder, suffix] of [["apps/browser/public/assets", ".glb"], ["assets/source", ".blend"]]) {',
     '  fs.mkdirSync(path.join(stage, folder), {recursive:true});',
     '  fs.writeFileSync(path.join(stage, folder, name + suffix), "generated " + name + suffix);',
@@ -81,6 +88,9 @@ test("oak delivery compression preserves exact authored models and both inventor
     assert.equal(inventory.files[`${name}.glb.gz`].sha256, digest(delivery));
     assert.deepEqual(record.models[name].gzip, inventory.files[`${name}.glb.gz`]);
     assert.deepEqual(record.models[name].glb, inventory.files[`${name}.glb`]);
+    assert.equal(record.models[name].canopy.originalGeometryPreserved, true);
+    assert.equal(record.models[name].canopy.nativeUvEchoOmitted, true);
+    assert.match(record.models[name].canopy.base.glb.path, /^assets\/source\/canopy-base\//);
   }
 });
 
@@ -104,4 +114,13 @@ test("unsupported Blender and misspelled model names fail before publishing", t 
   const selection = f.run("--models", "mailbxo");
   assert.notEqual(selection.status, 0);
   assert.match(selection.stderr, /Unknown model selection/);
+});
+
+test("verified oak version requirement fails before export while selective legacy models still build", t => {
+  const f=fixture(t,"legacy");
+  const oak=f.run("--models","tree");
+  assert.notEqual(oak.status,0);assert.match(oak.stderr,/compatibility with 4.5.13 is unverified/);
+  assert.match(oak.stderr,/--blender \/path\/to\/blender-5.2.1/);
+  assert.equal(existsSync(path.join(f.scratch,"stage.txt")),false);
+  const ordinary=f.run("--models","mailbox");assert.equal(ordinary.status,0,ordinary.stderr);
 });

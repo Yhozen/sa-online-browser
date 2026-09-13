@@ -139,7 +139,7 @@ try {
     "apps/browser/src/antialias.ts", "apps/browser/src/assets.ts",
     "apps/browser/src/lighting.ts", "apps/browser/src/environment.ts",
     "apps/browser/src/surface-textures.ts", "apps/browser/src/surface-pixels.ts",
-    "apps/browser/src/surface-lighting.ts",
+    "apps/browser/src/surface-lighting.ts", "apps/browser/src/canopy-lighting.ts",
     "apps/browser/src/foliage-mips.ts", "apps/browser/src/reflection-storage.ts",
     "apps/browser/src/garden.ts", "apps/browser/src/horizon.ts",
     "assets/horizon-relief.json",
