@@ -1,29 +1,33 @@
 {
   "version": 1,
   "files": {
-    "arroyo-asphalt.png": {
-      "bytes": 3594191,
-      "sha256": "df6aa654341074cff7d9b324f115a00ab91a5eaa46afe4daaf723374ab87c87f"
+    "arroyo-asphalt.webp": {
+      "bytes": 2441298,
+      "sha256": "e9c682d9633836d3a940cba0f9a682e01219b683a20d3a904430c8936be041f9"
     },
-    "arroyo-details.png": {
-      "bytes": 3574318,
-      "sha256": "5dc6dd4744e68f408c4ede5e263ad435f42aa9abf2f4b07da915c9130a688a52"
+    "arroyo-details.webp": {
+      "bytes": 2357446,
+      "sha256": "6e52afeee96d9f897e3cb8b253bcacdae66bed31e4c02e3a534700b246d71a95"
     },
-    "arroyo-foliage.png": {
-      "bytes": 1561388,
-      "sha256": "603140ee50b79a8da0f06034276e3b9eddc3dd8c560d679e37ddc682d7be3073"
+    "arroyo-foliage.webp": {
+      "bytes": 1131330,
+      "sha256": "3b54fbaba32d6281b19346e41a60fb88f2858888cc73327edef4a1fcd30d539b"
+    },
+    "arroyo-grass.webp": {
+      "bytes": 2840886,
+      "sha256": "08d34e0817d828d21aa74ff32b43b4400ff325d58c96408dd31004b248d400a0"
     },
     "arroyo-reflections.pmrem.gz": {
-      "bytes": 10885842,
-      "sha256": "58d8267844cd9ad3971e9678be5cd44799ab84ab0af11bc0878d0d5d3aa047b1"
+      "bytes": 11293459,
+      "sha256": "6e07a654e7349b8a565996858f0ae131fc7c530fdd9d42a8db972c9ba2c7d0f7"
     },
-    "arroyo-sky.png": {
-      "bytes": 1281272,
-      "sha256": "c045ac5131befcdb1e43fe6b2036ad0b487bfd0878453ca6ae1bc92c6d1cec9c"
+    "arroyo-sky.webp": {
+      "bytes": 966462,
+      "sha256": "399fb9ab300be70fe658095aa51f6dee6fe674929e8d43bd6846c3169a84c4e3"
     },
-    "arroyo-surfaces.png": {
-      "bytes": 3444449,
-      "sha256": "53f7d61fbc5e8741fbbc3bf373c60d241a226010ca2c3d88d0ca6fa4bcf12578"
+    "arroyo-surfaces.webp": {
+      "bytes": 2304636,
+      "sha256": "3d841a80edf8e956769e039747d38ef9837f985a2f3a9683a2515ad4fac4b09d"
     },
     "bin.glb": {
       "bytes": 26804,
@@ -40,6 +44,10 @@
     "fence.glb": {
       "bytes": 47904,
       "sha256": "b2c7c7b0bb8e44fe74c5744c96361ada3a18acee106306ed3a04beac94e070a4"
+    },
+    "garden-low.glb": {
+      "bytes": 216084,
+      "sha256": "bd515240ae8f8dcb05d539a3c354a114e9aeb4d0c10ee682a7233a280f605e56"
     },
     "house-0.glb": {
       "bytes": 2214460,
@@ -66,24 +74,24 @@
       "sha256": "34c2f0adc8180dc0df68dbec19d2e9af2162fcd0ffc2acdd0442bb93ea97abe3"
     },
     "neighbor.glb": {
-      "bytes": 7109104,
-      "sha256": "06fe2ad041ad7ed4d2877c097433bb1bf360fc465df254a5f1e032be7eaa8eac"
+      "bytes": 6891620,
+      "sha256": "951eb4a4f5ce608533f09cd4cf23b384c6568f9c7d148226901fb3723db7c4c9"
     },
     "neighborhood-atlas.png": {
       "bytes": 3529016,
       "sha256": "03157ab45abb63aaf697823c9e6a8d927ac1b062ca27fdf21fcf7a8bd0948269"
     },
     "palm.glb": {
-      "bytes": 1777472,
-      "sha256": "c818602e9276dacf113e43d4222fc0c8366c7c40ff5495673146321cb6bb83a6"
+      "bytes": 1028776,
+      "sha256": "a223240b44469e2d730be38e561a5997609555158e4f94b3526171ca8474f130"
     },
     "pole.glb": {
       "bytes": 10416,
       "sha256": "4a0fea05e8451630f0030e999b284cd50bd3ba6e0d237fb416043c6b549227c0"
     },
     "tree.glb": {
-      "bytes": 768360,
-      "sha256": "36091bbf80302d24fbeb5ac77f78e170ac547c674f2a4e9977d0fbba89c7eab2"
+      "bytes": 672908,
+      "sha256": "4e4dc0b9a2ee0535126f0e7ad1631a809facacbab83d09ae5bf1131f6e89c41e"
     }
   }
 }

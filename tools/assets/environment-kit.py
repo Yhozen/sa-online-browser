@@ -42,7 +42,7 @@ def leafcard(name,center,width,length,angle,tilt,mat):
  return o
 
 
-def attached_leaf_spray(root,direction,length,roll,mat):
+def attached_leaf_spray(root,direction,length,roll,mat,canopy=None,spread=1.0,minimum_z=None):
  """Anchor the atlas's lower-left stem to the actual twig, not a random card center.
  The image's main bough runs diagonally UV (0,0)→(1,1). Align that diagonal with
  the growing branch so every leaf group has a visible botanical attachment.
@@ -52,17 +52,35 @@ def attached_leaf_spray(root,direction,length,roll,mat):
  side=direction.cross(axis).normalized();normal=side.cross(direction).normalized()
  side=side*math.cos(roll)+normal*math.sin(roll)
  normal=direction.cross(side).normalized()
- u=(direction+side)*length*.5;v=(direction-side)*length*.5
+ # Mature oak shoots carry broad lateral branchlets. Widen their horizontal
+ # spread while retaining the authored vertical growth and branch attachment;
+ # other plants keep the original spray and complete atlas UV coordinates.
+ broadside=Vector((side.x*spread,side.y*spread,side.z))
+ u=(direction+broadside)*length*.5;v=(direction-broadside)*length*.5
  verts=[]
  for iy in range(3):
   for ix in range(3):
-   x=ix*.5;y=iy*.5;bend=math.sin(math.pi*x)*math.sin(math.pi*y)*length*.075
+   x=ix*.5;y=iy*.5
+   # The live twig arches in depth and the two leaf-bearing sides cup around it.
+   # This is a folded botanical spray, not a planar square floating in the crown.
+   along=(x+y)*.5;across=x-y
+   bend=(math.sin(math.pi*along)*.13-across*across*.055)*length
    verts.append(root+u*x+v*y+normal*bend)
+ if minimum_z is not None:
+  lowest=min(v.z for v in verts)
+  if lowest<minimum_z:
+   # Shorten the whole young shoot about its attached stem, preserving its fold
+   # and botanical connection instead of clipping a flat underside into leaves.
+   scale=(root.z-minimum_z)/(root.z-lowest)
+   assert 0<scale<=1, 'oak spray stem must remain above pedestrian clearance'
+   verts=[root+(v-root)*scale for v in verts]
  o=mesh('leaf-card attached oak spray',verts,[(j*3+i,j*3+i+1,(j+1)*3+i+1,(j+1)*3+i) for j in range(2) for i in range(2)],mat)
  uv=o.data.uv_layers.new(name='UVMap')
  for p in o.data.polygons:
   for loop in p.loop_indices:
    vi=o.data.loops[loop].vertex_index;uv.data[loop].uv=((vi%3)*.5,(vi//3)*.5)
+ if canopy:
+  o['canopy_center']=canopy[0];o['canopy_radius']=canopy[1]
  return o
 
 
@@ -86,10 +104,9 @@ def woody_curve(name,points,radius):
 def sculpt_canopy_normals():
  """Canopy lighting normals, independent of each alpha card's arbitrary plane.
 
- The original tree's leaf normals all point up and flip down when viewed below in
- a conventional DOUBLE_SIDED shader. Use a shared ellipsoid field to give attached
- sprays coherent sun-facing shoulders and shaded opposite sides. Preserve 25% of
- the folded leaf normal, the exact positions/UVs, and opaque branch geometry.
+ The shared ellipsoid gives the entire tree a lit shoulder and a shaded underside;
+ a restrained branch-volume field adds connected local shoulders within the crown.
+ Preserve the folded leaf normal, exact positions/UVs and opaque branch geometry.
  Runtime foliage shading must retain this outward field on backfaces as well.
  """
  bpy.context.view_layer.update()
@@ -99,6 +116,7 @@ def sculpt_canopy_normals():
   if o.type!='MESH' or not o.name.startswith('leaf-card'):continue
   normal_matrix=o.matrix_world.to_3x3().inverted().transposed()
   world_to_local_normal=normal_matrix.inverted()
+  lobe_center=Vector(o.get('canopy_center',center));lobe_radius=Vector(o.get('canopy_radius',radius))
   # Cache the actual folded normals before enabling smooth custom interpolation.
   normals=[]
   for polygon in o.data.polygons:
@@ -108,7 +126,11 @@ def sculpt_canopy_normals():
     delta=position-center
     radial=Vector((delta.x/(radius.x*radius.x),delta.y/(radius.y*radius.y),delta.z/(radius.z*radius.z)))
     if radial.length_squared<1e-8:radial=Vector((0,0,1))
-    radial.normalize();blended=(radial*.75+real*.25).normalized()
+    radial.normalize()
+    local_delta=position-lobe_center
+    local=Vector((local_delta.x/lobe_radius.x**2,local_delta.y/lobe_radius.y**2,local_delta.z/lobe_radius.z**2))
+    local=local.normalized() if local.length_squared>1e-8 else radial
+    blended=(radial*.78+local*.15+real*.07).normalized()
     normals.append((world_to_local_normal @ blended).normalized())
    polygon.use_smooth=True
   o.data.normals_split_custom_set(normals);o.data.update();count+=len(normals)
@@ -154,6 +176,7 @@ def house_ao_sampler(meshes):
 
 
 def env_finish(name):
+ if name not in SELECTED:return
  bpy.context.view_layer.update()
  meshes=[o for o in bpy.context.scene.objects if o.type=='MESH'];used=set()
  # Vertex AO needs surface samples away from existing box corners. Only surfaces
@@ -226,7 +249,9 @@ def agave(x,y,size=1):
 def carve_recess(center,size,side=False):
  """Real shallow masonry opening; the server's solid shell collision is unchanged."""
  if 'house_shell' not in globals() or house_shell.name not in bpy.context.scene.objects:return
- cutter=box('temporary window masonry cutter',center,size,interior)
+ # Newer Blender Boolean exports retain the cutter's face material. The recess
+ # is masonry, so make that invariant explicit instead of relying on slot order.
+ cutter=box('temporary window masonry cutter',center,size,house_shell.data.materials[0])
  if side:
   cutter.location=Vector((cutter.location.y,-cutter.location.x,cutter.location.z));cutter.rotation_euler.z=-math.pi/2
   if side<0:cutter.location.x*=-1;cutter.location.y*=-1;cutter.rotation_euler.z+=math.pi
@@ -293,6 +318,7 @@ def roof_shell(v,paint):
 
 
 def detailed_house(v):
+ if f'house-{v}' not in SELECTED:return
  global house_shell
  start();paint=[trim,white,white,wood][v];wall=white if v==2 else stucco
  box('foundation',(0,0,.18),(16.4,12.4,.36),concrete)
@@ -399,87 +425,123 @@ def detailed_house(v):
 
 for variant in range(4):detailed_house(variant)
 
-# Ringed, softly curved palm with articulated feather fronds; no billboard star crown.
-start();centers=[]
-for j in range(31):
- t=j/30;centers.append(Vector((.20*t+.35*math.sin(t*math.pi),.12*math.sin(t*math.pi*.8),10*t)))
-verts=[];faces=[]
-for j,c in enumerate(centers):
- r=.235-.092*j/30
- for i in range(12):
-  a=math.tau*i/12;verts.append(c+Vector((math.cos(a)*r,math.sin(a)*r,0)))
- if j:
-  for i in range(12):faces.append(((j-1)*12+i,(j-1)*12+(i+1)%12,j*12+(i+1)%12,j*12+i))
-trunk=mesh('curved palm trunk',verts,faces,wood)
-for p in trunk.data.polygons:p.use_smooth=True
-for j in range(1,50):
- t=j/50;c=Vector((.20*t+.35*math.sin(t*math.pi),.12*math.sin(t*math.pi*.8),10*t));r=.242-.092*t
- bpy.ops.mesh.primitive_torus_add(major_radius=r,minor_radius=.018,major_segments=12,minor_segments=4,location=c);add(bpy.context.object,'palm growth ring',wood)
-base=centers[-1]
-# Three botanical age cohorts: hanging mature outer fronds, spreading middle
-# feathers and upright new growth. Leaflets are staggered, curved and overlapping.
-for i in range(32):
- a=i*2.399+.11*math.sin(i*1.3);direction=Vector((math.cos(a),math.sin(a),0));side=Vector((-math.sin(a),math.cos(a),0))
- age=0 if i<10 else 1 if i<24 else 2
- length=(3.1+.55*math.sin(i*1.77)) if age!=2 else (2.25+.35*math.sin(i))
- points=[]
- for j in range(15):
-  t=j/14;z=.18+(1.1 if age<2 else 1.7)*math.sin(t*math.pi*.75)-t*(3.8 if age==0 else 1.75 if age==1 else .16)
-  points.append(base+direction*(length*t)+side*(.13*math.sin(t*math.pi)*math.sin(i))+Vector((0,0,z)))
- for j in range(14):cyl('palm frond rib',points[j],points[j+1],.027*(1-j/16),palmgreen,5,.020*(1-j/15))
- for j in range(1,21):
-  for sign in [-1,1]:
-   t=(j+.22*math.sin(i*3.1+j*1.7)+sign*.22)/22;f=t*14;k=min(13,int(f));root=points[k].lerp(points[k+1],f-k)
-   leaflet_length=(.14+.93*math.sin(t*math.pi)**.70)*(.85+.17*math.sin(i*1.7+j*.71))
-   tip=root+side*(sign*leaflet_length)+direction*(.18+.33*t)+Vector((0,0,-.24-.24*t))
-   verts=[]
-   for row in range(5):
-    q=row/4;center=root.lerp(tip,q)+Vector((0,0,.095*math.sin(q*math.pi)))
-    width=(.023+.068*math.sin(t*math.pi))*math.sin(math.pi*q)**.65
-    verts.extend([center-direction*width,center+direction*width])
-   blade=mesh('curved overlapping palm leaflet',verts,[(r*2,r*2+1,r*2+3,r*2+2) for r in range(4)],palmgreen if (i+j)%5 else palmlight)
-   for face in blade.data.polygons:face.use_smooth=True
-# A small brown crownshaft makes the crown transition botanical, not a star glued to a pole.
-for i in range(12):
- a=i*math.tau/12;cyl('old frond base',base+Vector((math.cos(a)*.17,math.sin(a)*.17,-.30)),base+Vector((math.cos(a)*.43,math.sin(a)*.43,.16)),.055,wood,5,.025)
-env_finish('palm')
+def detailed_palm():
+ if 'palm' not in SELECTED:return
+ start()
+ # Growth rings are sculpted into the trunk skin. Separate torus collars looked
+ # like stacked washers and cost more triangles than the entire feather crown.
+ centers=[];verts=[];faces=[]
+ for j in range(91):
+  t=j/90;c=Vector((.20*t+.35*math.sin(t*math.pi),.12*math.sin(t*math.pi*.8),10*t));centers.append(c)
+  radius=.235-.092*t+(.013 if j%2==0 else -.005)
+  for k in range(12):
+   a=k*math.tau/12;scar=1+.027*math.sin(k*4.1+j*.7)
+   verts.append(c+Vector((math.cos(a)*radius*scar,math.sin(a)*radius*scar,0)))
+  if j:
+   for k in range(12):faces.append(((j-1)*12+k,(j-1)*12+(k+1)%12,j*12+(k+1)%12,j*12+k))
+ trunk=mesh('sculpted fibrous palm trunk',verts,faces,wood)
+ for face in trunk.data.polygons:face.use_smooth=True
+ base=centers[-1]
+ # Persistent, overlapping leaf bases give the head an actual botanical junction.
+ # Each narrow folded sheath leans into the new leaves, with irregular torn tips.
+ for i in range(27):
+  a=i*2.399;radial=Vector((math.cos(a),math.sin(a),0));side=Vector((-math.sin(a),math.cos(a),0))
+  bottom=base+radial*.12+Vector((0,0,-.60+(i%5)*.08))
+  shoulder=base+radial*(.30+.045*(i%3))+Vector((0,0,-.12+(i%4)*.08))
+  tip=base+radial*(.49+.05*math.sin(i))+Vector((0,0,.23+.09*math.sin(i*2)))
+  mesh('palm torn overlapping leaf base',[bottom-side*.045,bottom+side*.045,shoulder-side*.063,shoulder+side*.063,shoulder+radial*.035,tip],[(0,1,4),(0,4,2),(1,3,4),(2,4,5),(4,3,5)],wood)
+ # Three age cohorts form an asymmetric crown: hanging old leaves, spreading
+ # photosynthetic feathers and upright young growth. The outer leaves are long
+ # continuous arches rather than separate radial blades glued to a pole.
+ for i in range(34):
+  a=i*2.399+.13*math.sin(i*1.3);direction=Vector((math.cos(a),math.sin(a),0));side=Vector((-math.sin(a),math.cos(a),0))
+  age=0 if i<14 else 1 if i<28 else 2
+  length=(3.25+.44*math.sin(i*1.77)) if age!=2 else (2.24+.30*math.sin(i))
+  points=[]
+  for j in range(13):
+   t=j/12
+   z=.16+(1.28 if age<2 else 1.77)*math.sin(t*math.pi*.81)-t*(3.18 if age==0 else 1.60 if age==1 else .12)
+   # The oldest rachises turn down after the shoulder: they form a full hanging
+   # skirt around the trunk instead of ending as straight horizontal spokes.
+   reach=t*(1-.24*t*t) if age==0 else t
+   points.append(base+direction*(length*reach)+side*(.19*math.sin(t*math.pi)*math.sin(i))+Vector((0,0,z)))
+  # One connected tapered rachis mesh, with four sides because its silhouette is
+  # already thinner than a pixel at street scale. This saves a third of rib cost.
+  ribs=[];ribfaces=[]
+  for j,p in enumerate(points):
+   tangent=(points[min(j+1,12)]-points[max(j-1,0)]).normalized();up=tangent.cross(side).normalized();r=.028*(1-.89*j/12)
+   for k in range(4):
+    angle=k*math.tau/4;ribs.append(p+side*math.cos(angle)*r+up*math.sin(angle)*r)
+   if j:
+    for k in range(4):ribfaces.append(((j-1)*4+k,(j-1)*4+(k+1)%4,j*4+(k+1)%4,j*4+k))
+  rib=mesh('connected tapered palm rachis',ribs,ribfaces,palmgreen)
+  for face in rib.data.polygons:face.use_smooth=True
+  for j in range(1,24):
+   for sign in [-1,1]:
+    # Alternating pairs and small phase changes prevent a comb-like silhouette.
+    t=(j+.20*math.sin(i*3.1+j*1.7)+sign*.26)/25;f=t*12;k=min(11,int(f));root=points[k].lerp(points[k+1],f-k)
+    leaf_length=1.12*(.12+1.00*math.sin(t*math.pi)**.76)*(.88+.13*math.sin(i*1.7+j*.71))
+    tip=root+side*(sign*leaf_length)+direction*(.18+.35*t)+Vector((0,0,-.20-.27*t))
+    # A longitudinal fold catches a narrow highlight; tapered ends and downward
+    # curling tips leave clean feathers at distance without alpha edge artefacts.
+    bladeverts=[root]
+    for q in [.32,.72]:
+     center=root.lerp(tip,q)+Vector((0,0,.15*math.sin(q*math.pi)))
+     width=(.021+.104*math.sin(t*math.pi))*math.sin(math.pi*q)**.70
+     bladeverts.extend([center-direction*width,center+Vector((0,0,.031*math.sin(q*math.pi))),center+direction*width])
+    bladeverts.append(tip)
+    blade=mesh('folded tapered palm leaflet',bladeverts,[(0,1,2),(0,2,3),(1,4,5,2),(2,5,6,3),(4,7,5),(5,7,6)],palmgreen if (i+j)%7 else palmlight)
+    for face in blade.data.polygons:face.use_smooth=True
+ env_finish('palm')
 
-# Full, asymmetric live oak built as interlocking three-dimensional branch volumes.
-# Root footprint is identical; every broad scaffold starts above 2.4m clearance.
-start();woody_curve('oak trunk',[(0,0,0),(.035,-.04,.8),(.11,.015,1.65),(.15,.06,2.45),(.26,.07,3.10)],.32)
-for root_angle in range(0,360,60):
- a=math.radians(root_angle);cyl('root flare',(math.cos(a)*.30,math.sin(a)*.30,.035),(0,0,.65),.11,wood,6,.075)
-# The crown has unequal overlapping lobes with central rising leaders. Lower
-# spreading boughs merge into upper clusters instead of ending as flat sprays.
-lobes=[(-1.85,-.35,5.4,1.30,.90,1.0),(.95,-1.55,5.2,1.05,1.15,.85),(1.9,.45,5.7,1.05,.85,1.15),(-.4,1.8,5.9,1.2,.95,.95),(-.25,-.15,6.6,1.1,1.0,1.0),(-1.25,1.0,6.4,.9,.85,.9),(.8,.8,6.7,.8,.85,.8)]
-for b,(cx,cy,cz,rx,ry,rz) in enumerate(lobes):
- center=Vector((cx,cy,cz));root=Vector((.15,.05,2.45+(b%3)*.18));delta=center-root
- points=[root,root+delta*.34+Vector((.12*math.sin(b),.14*math.cos(b),.30)),root+delta*.69+Vector((-.10*math.sin(b),.05,.18)),center]
- woody_curve('oak curved scaffold',points,.13 if b%3 else .17)
- for leader in range(6):
-  a=leader*2.399+b*.81
-  vertical=-.30+.26*((leader+b)%5)
-  axis=Vector((math.cos(a)*rx,math.sin(a)*ry,vertical*rz)).normalized()
-  forkroot=points[2].lerp(center,.35+(leader%3)*.20)
-  tip=center+Vector((axis.x*rx*.66,axis.y*ry*.66,axis.z*rz*.66))
-  mid=forkroot.lerp(tip,.53)+Vector((0,0,.11))
-  woody_curve('oak volume leader',[forkroot,mid,tip],.045)
-  for twig in range(3):
-   t=.20+twig*.36;anchor=forkroot.lerp(mid,t*2) if t<.5 else mid.lerp(tip,(t-.5)*2)
-   angle=a+(twig-1)*.73
-   elevation=-.35+.26*((twig+leader+b)%5)
-   growing=Vector((math.cos(angle)*math.sqrt(1-min(.9,elevation**2)),math.sin(angle)*math.sqrt(1-min(.9,elevation**2)),elevation)).normalized()
-   branch_end=anchor+growing*(.35+.06*(twig%2))
-   cyl('oak fine connected twig',anchor,branch_end,.012,wood,5,.0035)
-   for spray in range(5):
-    # Fans occupy five distinct planes/depths around each living twig. Alternating
-    # upward/side/down shoots give full crown volume and natural interior gaps.
-    basepoint=anchor.lerp(branch_end,.16+spray*.19)
-    orbit=angle+(spray-2)*.43
-    pitch=elevation+(spray-2)*.24
-    direction=Vector((math.cos(orbit)*math.cos(pitch),math.sin(orbit)*math.cos(pitch),math.sin(pitch)))
-    length=1.12+.13*((spray+leader+twig)%4)
-    attached_leaf_spray(basepoint,direction,length,(spray-2)*.58+.21*math.sin(b+leader),leaf2 if (b+leader+twig+spray)%4==0 else leaf)
-sculpt_canopy_normals()
-env_finish('tree')
-print('Volumetric original oak and palm exported.')
+
+def detailed_oak():
+ if 'tree' not in SELECTED:return
+ start()
+ # Root envelope and the first branching height retain the gameplay clearance.
+ woody_curve('oak trunk',[(0,0,0),(.035,-.04,.8),(.11,.015,1.65),(.15,.06,2.45),(.26,.07,3.10)],.32)
+ for root_angle in range(0,360,60):
+  a=math.radians(root_angle);cyl('root flare',(math.cos(a)*.30,math.sin(a)*.30,.035),(0,0,.65),.11,wood,6,.075)
+ # Unequal, overlapping crown volumes with real vertical depth. The lower lobes
+ # merge into the rising central leaders instead of forming isolated pancakes.
+ lobes=[(-1.72,-.45,5.35,1.12,.96,1.05),(1.20,-1.38,5.30,1.03,1.05,1.01),
+        (1.75,.45,5.65,1.08,.99,1.10),(-.42,1.67,5.65,1.08,1.05,1.05),
+        (-.30,-.20,6.50,1.10,1.07,1.12),(-1.13,.91,6.37,.95,.93,1.02),
+        (.78,.67,6.45,.96,.98,1.05),(-.49,-1.44,5.95,1.01,.97,1.00),
+        (.11,.37,5.10,1.10,1.01,1.04)]
+ for b,(cx,cy,cz,rx,ry,rz) in enumerate(lobes):
+  cz+=.32
+  center=Vector((cx,cy,cz));root=Vector((.15,.05,2.45+(b%3)*.18));delta=center-root
+  points=[root,root+delta*.34+Vector((.12*math.sin(b),.14*math.cos(b),.30)),root+delta*.69+Vector((-.10*math.sin(b),.05,.18)),center]
+  woody_curve('oak continuous scaffold',points,.115 if b%3 else .16)
+  for leader in range(10):
+   # Spherical phyllotaxis samples the upper and lower hemispheres evenly. Every
+   # bough has shoots growing out in depth, including the previously empty core.
+   a=leader*2.399+b*.81;elevation=-.83+1.73*(leader+.5)/10
+   planar=math.sqrt(1-elevation*elevation);axis=Vector((math.cos(a)*planar,math.sin(a)*planar,elevation))
+   forkroot=points[2].lerp(center,.46+(leader%3)*.14)
+   tip=center+Vector((axis.x*rx*.69,axis.y*ry*.69,axis.z*rz*.67))
+   mid=forkroot.lerp(tip,.53)+Vector((0,0,.065))
+   woody_curve('oak leaf-bearing bough',[forkroot,mid,tip],.031+.004*(leader%3))
+   for spray in range(8):
+    # Start foliage farther inside each connected lobe. Overlapping inner and
+    # outer shoots hide the scaffold core without adding opaque filler shells.
+    t=.16+.115*spray
+    anchor=forkroot.lerp(mid,t*2) if t<.5 else mid.lerp(tip,(t-.5)*2)
+    # Opposed side shoots avoid coincident cards while the final shoot follows
+    # the botanical branch end. Deep roll differences retain canopy density from
+    # walking, driving and free-orbit camera angles, not only the hero screenshot.
+    orbit=a+(.55 if spray%2 else -.55)*(1-.07*spray)
+    pitch=math.asin(elevation)+.27*math.sin(spray*2.12+b)
+    growing=Vector((math.cos(orbit)*math.cos(pitch),math.sin(orbit)*math.cos(pitch),math.sin(pitch)))
+    length=.96+.105*((spray+leader+b)%4)
+    attached_leaf_spray(anchor,growing,length,(spray%3-1)*1.04+.27*math.sin(b+leader),leaf2 if (b+leader+spray)%6==0 else leaf,(tuple(center),(rx*1.60,ry*1.60,rz*1.60)),spread=1.40,minimum_z=4.11+.035*(b%3))
+ # Canonical crown bounds stay around 4.1–8.4m; local-volume shading is blended
+ # into the common outward field so all copies retain a coherent lit shoulder.
+ sculpt_canopy_normals()
+ env_finish('tree')
+
+
+detailed_palm()
+detailed_oak()
+print('Original connected botanical oak and feather palm exported.')

@@ -14,11 +14,13 @@ run(process.execPath, [
   "--test",
   "tests/scene.test.mjs",
   "tests/simulation-clock.test.mjs",
+  "tests/snapshot-pose.test.mjs",
   "tests/reflection.test.mjs",
   "tests/foliage-mips.test.mjs",
+  "tests/surface-pixels.test.mjs",
   "tests/character-animation.test.mjs",
 ]);
-run(process.execPath, ["--experimental-transform-types", "--test", "tests/assets.test.mjs", "tests/verges.test.mjs"]);
+run(process.execPath, ["--experimental-transform-types", "--test", "tests/assets.test.mjs", "tests/verges.test.mjs", "tests/garden.test.mjs", "tests/asset-pipeline.test.mjs"]);
 run("ctest", ["--test-dir", "native/build", "--output-on-failure"]);
 run("npm", ["run", "build:browser"]);
 if (process.env.POC_HEADLESS === "1")

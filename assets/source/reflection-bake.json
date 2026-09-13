@@ -1,55 +1,105 @@
 {
   "version": 1,
-  "generatedAt": "2026-09-08T07:08:22.622Z",
+  "generatedAt": "2026-09-13T03:52:26.580Z",
   "format": "PMR1: uint32-le magic,width,height; RGBA16F PMREM atlas; gzip",
   "width": 1536,
   "height": 2048,
-  "compressedBytes": 10885842,
+  "compressedBytes": 11293459,
   "uncompressedBytes": 25165836,
-  "sha256": "58d8267844cd9ad3971e9678be5cd44799ab84ab0af11bc0878d0d5d3aa047b1",
-  "uncompressedSha256": "699cf02e3b214e4e9991b52769d4f6c249dae90502e99387ac9efba214197485",
-  "browser": "147.0.7727.15",
-  "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+  "sha256": "6e07a654e7349b8a565996858f0ae131fc7c530fdd9d42a8db972c9ba2c7d0f7",
+  "uncompressedSha256": "163d5500dfadf9dc8df5c0c3795badb4cbf3a5ccbd15038778a0463719b62383",
+  "browser": "Chrome/153.0.8010.37",
+  "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+  "peakRadiance": 1.2177734375,
   "scene": {
     "id": "neighborhood",
-    "revision": "77746494c168f09f"
+    "revision": "191c642c4ed53deb"
+  },
+  "inputSnapshot": {
+    "capturedAt": "2026-09-13T03:52:23.438Z",
+    "sceneSha256": "090619452b7b4e5b9f8afaf61f0c1e6ded9afd0d2df640b596e4946cf792412c",
+    "inventorySha256": "4090b75babf4834c4279c7d057a24fc61fbccf503f826b83176afe28477a3d20"
   },
   "sources": {
-    "apps/browser/src/lighting.ts": "ef572ae9c541bf21b113ae777bd28fa33bd1dfacd0d8b4df6f55f629e7fb0ff1",
-    "apps/browser/src/environment.ts": "39e39f95717469ef8ccd52856c7c09d5180421fd4dc6a5529c90a2346172c856",
-    "apps/browser/src/assets.ts": "80900514260d504f66716480195459f070d0e52bd14566f42809c1eea35ae65e",
-    "apps/browser/src/main.ts": "b50824ff79428c1f915d0e7d6522edf2d9ba56745118be52abc0f16a5a355571",
-    "apps/browser/src/reflection-storage.ts": "8b7f07a99248d1885e509aa3e916b87982ad33019348ae87fd04e09635c13720",
-    "apps/browser/src/warmup.ts": "183def3b17b329c0f6878a6efb81e231c5b2feb2a80c4070ae50c050eddb89ff",
+    "apps/browser/index.html": "5c7e3e0d86ebc6d6e88fb1514c0e592903af7ab85d4dadd5b13a2f43e2387e24",
+    "apps/browser/vite.config.ts": "ae1154c94371aa892f4b8d3087e2c64029fdd1358125a50ebfbc238769bac079",
+    "apps/browser/src/bootstrap.ts": "d512c6fc9eaf612fc44cc93013b113ed233eabb17fe08ef560fad6af0fb3b98f",
+    "apps/browser/src/style.css": "33e340bf401787473e31dfd3b18a2ab63edca9016dd462217cdd29530a56e0aa",
+    "apps/browser/src/main.ts": "a9263b57d32640e8dc73012982105ae05f4258f44fdb5adf97420bb96167a2f3",
+    "apps/browser/src/graphics.ts": "22b713f3ab445dd4a8effb2160c631515b1e65a14d7ad97731e4db8ca615b297",
+    "apps/browser/src/antialias.ts": "4b431578258f5e4c822f07b3003b58f9f802767a99f86a300cdf8f8a5392f602",
+    "apps/browser/src/assets.ts": "7523b7403a15944fdac7b4e25fd695d86b22ce7c12cc331ff2bd2356c8ca2b3f",
+    "apps/browser/src/lighting.ts": "650d0ff0dae9282f6f2c7bc9d040b15dfce6c6267b346299062b86d16e3d4015",
+    "apps/browser/src/environment.ts": "26fcae1c3985888cd6f936d50f08873163d9d7ded837ba936eeae054182ea823",
+    "apps/browser/src/surface-textures.ts": "2309c51c318e786734dd90470cbfcb3bb83e67eef2691cf6e3dc5c7028edac56",
+    "apps/browser/src/surface-pixels.ts": "562df4dededa3093e9cd4b64b1006becf5707b8fbd3f2bcba3c6cd397242a24e",
     "apps/browser/src/foliage-mips.ts": "bf7fe1414777bf98dc331fcf323a747dd6a1d20e1df857cde5e5ad47a98cb15c",
-    "apps/browser/src/character-animation.ts": "0782bb10ef3fedfe9744937687dd63566e32abafae70d75e1420c4a62922e8bb",
-    "apps/browser/src/horizon.ts": "a89de1ab6fd43bd7a43e06cfc95c10f43de872b5342629cf085869802f9ed481",
+    "apps/browser/src/reflection-storage.ts": "8b7f07a99248d1885e509aa3e916b87982ad33019348ae87fd04e09635c13720",
+    "apps/browser/src/garden.ts": "d378e0a70835d4f6698284050f120ab452ba9d4e293acf3baecc06eecf66bceb",
+    "apps/browser/src/horizon.ts": "660f2dd0fd99d9094f4311747afe1ece4ed94144cff6c424abe174bf6a4787d5",
+    "assets/horizon-relief.json": "dd9cded94acdb2974d531e9b2d425e95cb2bfd52d6c9bbd4e7f3b2b47df6d7df",
     "apps/browser/src/road-detail.ts": "c86c9dc38d2b45274475a9eb7509a27be259d72da48da9ded30157e3ff491592",
-    "apps/browser/src/verges.ts": "fd047ac898359f13d59d53e70d3246ca3a092517dfe745bdb2f11dc06836f337",
+    "apps/browser/src/verges.ts": "f24a6832328d0dbec5b60ed36e21551df4a47f6b94b3690042b7c1eeb13e556d",
+    "apps/browser/src/warmup.ts": "2db7cbf9d34a1a13b65fe8b52cd8509360903d7084741b216be60e9cadad3406",
+    "apps/browser/src/characters.ts": "0362d915cd15692bb7259140836d6a90fff610f73735357e0121e497e4432c96",
+    "apps/browser/src/character-animation.ts": "0782bb10ef3fedfe9744937687dd63566e32abafae70d75e1420c4a62922e8bb",
+    "apps/browser/src/shadows.ts": "5201573101a62ae060534d77123c496f03b8b07617a1da5109341603b86c7be0",
+    "apps/browser/src/camera.ts": "ab610c86911ff9f33ae3a91a5cb7cf2f16f4528028bc8abe0eff055a635c9ed6",
+    "apps/browser/src/collision.ts": "bc98b1275031f6b3de5d753bc572f1ce2f77fa5d8d7b54e5b7bb5c65749cd110",
+    "apps/browser/src/gateway.ts": "c62dd850b002cfb8fe762d28deaa663d0f8e643c75b9fe9e16ef60c3c2db8a97",
+    "apps/browser/src/hud.ts": "af1dee461a169484731193bf2f5d123aa70dd8473311323dc670ce1564409b9f",
+    "apps/browser/src/simulation-clock.ts": "4db0b03b6155b649c2d95c814ce8d117516bb4030cce17c02e423580636e6c60",
+    "apps/browser/src/interpolated-pose.ts": "5b647e17329d22245dbf9115e6df2037c4dfbf98734a16c3d49642d304d828c4",
+    "apps/browser/src/snapshot-pose.ts": "bf2dbc7f268b8d097639723414315986e02d0e190cbabb332eec09b0d62c60c8",
+    "packages/shared/protocol.ts": "63056480786a5caf48b42fcef1d59427a7525b3eff7c4136e49b86f88758ccde",
+    "packages/shared/scene.ts": "1a3a1fd90813248ba8ad85ce22254e5e7ae1b8c0d05e2b4c6876df4833064c5b",
+    "packages/shared/scene.mjs": "bf854bf1c671d16b9ac3ec47a08b02bfbd78b32a545bdb2d39ce814d621c5cd4",
     "packages/shared/scenes/neighborhood.json": "cce8c3bfc9bb5c4ddc7a7b96a71f72e6349cab4c07fa85d87a324a003cd056c2",
-    "tools/bake-reflections.mjs": "0a60f1f00ec13e520ecf7912f5961ee6f677f291d2ed4c032d251cfb82f87955",
+    "packages/shared/scenes/yard.json": "eafd501e8fef4ffa7df59050ec41059c4d86b53e510aa83e7479e936497ed5ac",
+    "services/gateway/server.mjs": "c2e08a361dd313443790050bda4fb308c33bc38ade6e3a0aba5e9f7ff8e0f326",
+    "tools/asset-inventory.mjs": "b0e3c59ae80648d9fe8f528a1e5a4548a6cfad7148f7958b43f3014d3e9bc577",
+    "tools/bake-reflections-native.mjs": "ea7f0c39e44c80c8ba9b4e739279f79b7e5af707df74796470bec5f7d7263ce3",
+    "package.json": "1f2d46278fb3f0ae6ee93d9b70b8b337486515cc36ce2de8b3663616686d7f90",
     "package-lock.json": "b99e5c05368deae7d0cd82a86505d33671cc2275c0852eed3f08afbd0b07bd74"
   },
+  "servedBuild": {
+    "/": {
+      "bytes": 449,
+      "sha256": "71a89ebd6097f7ae763f1e0a96c9a160f89525ee84b3eb7407caaf4030be6eb2"
+    },
+    "/assets/index-CLSF4nJg.css": {
+      "bytes": 6991,
+      "sha256": "0655f264cfc9ca400288720b93a106c022f381daa4c7ce52c88deb326995367a"
+    },
+    "/assets/index-D98NSiR-.js": {
+      "bytes": 578444,
+      "sha256": "0ceb71f0f01d1d3c03732ff818d5a94a47e6114930a885376f79890547b50520"
+    }
+  },
   "inputs": {
-    "arroyo-asphalt.png": {
-      "bytes": 3594191,
-      "sha256": "df6aa654341074cff7d9b324f115a00ab91a5eaa46afe4daaf723374ab87c87f"
+    "arroyo-asphalt.webp": {
+      "bytes": 2441298,
+      "sha256": "e9c682d9633836d3a940cba0f9a682e01219b683a20d3a904430c8936be041f9"
     },
-    "arroyo-details.png": {
-      "bytes": 3574318,
-      "sha256": "5dc6dd4744e68f408c4ede5e263ad435f42aa9abf2f4b07da915c9130a688a52"
+    "arroyo-details.webp": {
+      "bytes": 2357446,
+      "sha256": "6e52afeee96d9f897e3cb8b253bcacdae66bed31e4c02e3a534700b246d71a95"
     },
-    "arroyo-foliage.png": {
-      "bytes": 1561388,
-      "sha256": "603140ee50b79a8da0f06034276e3b9eddc3dd8c560d679e37ddc682d7be3073"
+    "arroyo-foliage.webp": {
+      "bytes": 1131330,
+      "sha256": "3b54fbaba32d6281b19346e41a60fb88f2858888cc73327edef4a1fcd30d539b"
     },
-    "arroyo-sky.png": {
-      "bytes": 1281272,
-      "sha256": "c045ac5131befcdb1e43fe6b2036ad0b487bfd0878453ca6ae1bc92c6d1cec9c"
+    "arroyo-grass.webp": {
+      "bytes": 2840886,
+      "sha256": "08d34e0817d828d21aa74ff32b43b4400ff325d58c96408dd31004b248d400a0"
     },
-    "arroyo-surfaces.png": {
-      "bytes": 3444449,
-      "sha256": "53f7d61fbc5e8741fbbc3bf373c60d241a226010ca2c3d88d0ca6fa4bcf12578"
+    "arroyo-sky.webp": {
+      "bytes": 966462,
+      "sha256": "399fb9ab300be70fe658095aa51f6dee6fe674929e8d43bd6846c3169a84c4e3"
+    },
+    "arroyo-surfaces.webp": {
+      "bytes": 2304636,
+      "sha256": "3d841a80edf8e956769e039747d38ef9837f985a2f3a9683a2515ad4fac4b09d"
     },
     "bin.glb": {
       "bytes": 26804,
@@ -66,6 +116,10 @@
     "fence.glb": {
       "bytes": 47904,
       "sha256": "b2c7c7b0bb8e44fe74c5744c96361ada3a18acee106306ed3a04beac94e070a4"
+    },
+    "garden-low.glb": {
+      "bytes": 216084,
+      "sha256": "bd515240ae8f8dcb05d539a3c354a114e9aeb4d0c10ee682a7233a280f605e56"
     },
     "house-0.glb": {
       "bytes": 2214460,
@@ -92,24 +146,24 @@
       "sha256": "34c2f0adc8180dc0df68dbec19d2e9af2162fcd0ffc2acdd0442bb93ea97abe3"
     },
     "neighbor.glb": {
-      "bytes": 7109104,
-      "sha256": "06fe2ad041ad7ed4d2877c097433bb1bf360fc465df254a5f1e032be7eaa8eac"
+      "bytes": 6891620,
+      "sha256": "951eb4a4f5ce608533f09cd4cf23b384c6568f9c7d148226901fb3723db7c4c9"
     },
     "neighborhood-atlas.png": {
       "bytes": 3529016,
       "sha256": "03157ab45abb63aaf697823c9e6a8d927ac1b062ca27fdf21fcf7a8bd0948269"
     },
     "palm.glb": {
-      "bytes": 1777472,
-      "sha256": "c818602e9276dacf113e43d4222fc0c8366c7c40ff5495673146321cb6bb83a6"
+      "bytes": 1028776,
+      "sha256": "a223240b44469e2d730be38e561a5997609555158e4f94b3526171ca8474f130"
     },
     "pole.glb": {
       "bytes": 10416,
       "sha256": "4a0fea05e8451630f0030e999b284cd50bd3ba6e0d237fb416043c6b549227c0"
     },
     "tree.glb": {
-      "bytes": 768360,
-      "sha256": "36091bbf80302d24fbeb5ac77f78e170ac547c674f2a4e9977d0fbba89c7eab2"
+      "bytes": 672908,
+      "sha256": "4e4dc0b9a2ee0535126f0e7ad1631a809facacbab83d09ae5bf1131f6e89c41e"
     }
   },
   "network": {

@@ -79,7 +79,7 @@ test('actual yard grass and soil geometry stays low and clear of travel surfaces
       }
     }
   }
-  assert.ok(vertices>10000&&clumps>=2000&&clumps<=3400&&soilTriangles>100,'substantial actual geometry must be inspected');
+  assert.ok(vertices>10000&&clumps>=5000&&clumps<=8000&&soilTriangles>100,'substantial actual geometry must be inspected');
   assert.ok(maxHeight>.15&&minRoadClearance>.05,'preserve physically visible clumps with a measured sidewalk gap');
 });
 test('yard planting can build without global browser assets or an optional grass texture',()=>{

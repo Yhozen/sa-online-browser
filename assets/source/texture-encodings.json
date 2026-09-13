@@ -1,0 +1,2346 @@
+{
+  "version": 1,
+  "verifiedAt": "2026-09-13T03:37:54.338Z",
+  "encoder": {
+    "name": "cwebp",
+    "versionObserved": "1.6.0\nlibsharpyuv: 0.4.2",
+    "executableSha256": "beed71767112f3374e2178b75384fac6e0d448932ea11b5cafda2793ecfb2eaf",
+    "settingsReportedByBuild": {
+      "lossless": true,
+      "compressionLevel": 9,
+      "preserveTransparentRgbExactlyFor": [
+        "arroyo-foliage"
+      ]
+    },
+    "encoderWasNotRerunByVerifier": true
+  },
+  "verification": {
+    "nativeBrowser": {
+      "protocolVersion": "1.3",
+      "product": "Chrome/153.0.8010.37",
+      "revision": "@b75a5a95ea1a1b55bdbfd6d9f42d47be7507fb8b",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+      "jsVersion": "15.3.76.10"
+    },
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+    "platform": "MacIntel",
+    "webCodecs": {
+      "constructorOptions": {
+        "colorSpaceConversion": "none",
+        "preferAnimation": false
+      },
+      "copyToOptions": {
+        "format": "RGBA"
+      },
+      "limitations": "This native Chrome BGRA decode path premultiplies alpha internally. The known fixture clears RGB at zero alpha and rounds low-alpha RGB, so matching WebCodecs/Canvas output alone does not establish invisible RGB preservation."
+    },
+    "canvas": {
+      "bitmapOptions": {
+        "colorSpaceConversion": "none",
+        "premultiplyAlpha": "none"
+      },
+      "contextOptions": {
+        "colorSpace": "srgb",
+        "willReadFrequently": true
+      }
+    },
+    "alphaFixture": {
+      "expected": [
+        203,
+        17,
+        81,
+        0,
+        200,
+        10,
+        100,
+        1,
+        91,
+        211,
+        9,
+        127,
+        74,
+        18,
+        224,
+        255
+      ],
+      "webCodecs": {
+        "decoded": [
+          0,
+          0,
+          0,
+          0,
+          255,
+          0,
+          0,
+          1,
+          90,
+          211,
+          8,
+          127,
+          74,
+          18,
+          224,
+          255
+        ],
+        "comparison": {
+          "equal": false,
+          "differentPixels": 3,
+          "differentChannels": 8,
+          "maximumChannelDifference": 203,
+          "totalAbsoluteChannelDifference": 468,
+          "examples": [
+            {
+              "pixel": 0,
+              "a": [
+                203,
+                17,
+                81,
+                0
+              ],
+              "b": [
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            {
+              "pixel": 1,
+              "a": [
+                200,
+                10,
+                100,
+                1
+              ],
+              "b": [
+                255,
+                0,
+                0,
+                1
+              ]
+            },
+            {
+              "pixel": 2,
+              "a": [
+                91,
+                211,
+                9,
+                127
+              ],
+              "b": [
+                90,
+                211,
+                8,
+                127
+              ]
+            }
+          ]
+        },
+        "format": "BGRA",
+        "colorSpace": {
+          "fullRange": null,
+          "matrix": null,
+          "primaries": null,
+          "transfer": null
+        },
+        "layout": [
+          {
+            "offset": 0,
+            "stride": 16
+          }
+        ]
+      },
+      "canvas": {
+        "decoded": [
+          0,
+          0,
+          0,
+          0,
+          255,
+          0,
+          0,
+          1,
+          90,
+          211,
+          8,
+          127,
+          74,
+          18,
+          224,
+          255
+        ],
+        "comparison": {
+          "equal": false,
+          "differentPixels": 3,
+          "differentChannels": 8,
+          "maximumChannelDifference": 203,
+          "totalAbsoluteChannelDifference": 468,
+          "examples": [
+            {
+              "pixel": 0,
+              "a": [
+                203,
+                17,
+                81,
+                0
+              ],
+              "b": [
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            {
+              "pixel": 1,
+              "a": [
+                200,
+                10,
+                100,
+                1
+              ],
+              "b": [
+                255,
+                0,
+                0,
+                1
+              ]
+            },
+            {
+              "pixel": 2,
+              "a": [
+                91,
+                211,
+                9,
+                127
+              ],
+              "b": [
+                90,
+                211,
+                8,
+                127
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "rawRgba": {
+      "pngDecoder": "Node.js zlib + PNG noninterlaced 8-bit RGB/RGBA scanline unfilter (filters 0\u20134), preserves straight-alpha channel bytes",
+      "pngDecoderScriptSha256": "16c71586e6d36ee0d6ba043deba78971db356b27384207e2e7fff84c3fc65db6",
+      "pngFixtureComparison": {
+        "equal": true,
+        "differentPixels": 0,
+        "differentChannels": 0,
+        "maximumChannelDifference": 0,
+        "totalAbsoluteChannelDifference": 0,
+        "differentChannelsUnderZeroAlpha": 0
+      },
+      "webpDecoder": "dwebp -pam (raw RGBA)",
+      "webpDecoderVersion": "1.6.0",
+      "webpDecoderExecutableSha256": "07016dafb3147d0bd418db833c41e2c52bc72f5892d33a26d572ee0e56bf7dd5"
+    }
+  },
+  "textures": [
+    {
+      "name": "arroyo-surfaces",
+      "width": 1254,
+      "height": 1254,
+      "png": {
+        "path": "assets/textures/arroyo-surfaces.png",
+        "bytes": 3444449,
+        "sha256": "53f7d61fbc5e8741fbbc3bf373c60d241a226010ca2c3d88d0ca6fa4bcf12578",
+        "bitDepth": 8,
+        "colorType": 2,
+        "chunks": [
+          {
+            "type": "IHDR",
+            "bytes": 13
+          },
+          {
+            "type": "caBX",
+            "bytes": 23617
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 12267
+          },
+          {
+            "type": "IEND",
+            "bytes": 0
+          }
+        ],
+        "scanlineFilters": {
+          "1": 101,
+          "2": 9,
+          "4": 1144
+        }
+      },
+      "webp": {
+        "path": "assets/textures/arroyo-surfaces.webp",
+        "bytes": 2304636,
+        "sha256": "3d841a80edf8e956769e039747d38ef9837f985a2f3a9683a2515ad4fac4b09d",
+        "riffChunks": [
+          {
+            "type": "VP8L",
+            "bytes": 2304615
+          }
+        ],
+        "encodingArgumentsReported": [
+          "-lossless",
+          "-z",
+          "9"
+        ]
+      },
+      "byteSavings": 1139813,
+      "rawRgba": {
+        "bytes": 6290064,
+        "pngSha256": "6644fd8ab5fdaf930ebbca0f9929b7db8b99928b71c21222e701a9a4564c4679",
+        "webpSha256": "6644fd8ab5fdaf930ebbca0f9929b7db8b99928b71c21222e701a9a4564c4679",
+        "alpha": {
+          "transparentPixels": 0,
+          "translucentPixels": 0,
+          "opaquePixels": 1572516,
+          "transparentPixelsWithNonzeroRgb": 0
+        },
+        "comparison": {
+          "equal": true,
+          "differentPixels": 0,
+          "differentChannels": 0,
+          "maximumChannelDifference": 0,
+          "totalAbsoluteChannelDifference": 0,
+          "differentChannelsUnderZeroAlpha": 0
+        }
+      },
+      "nativeChrome": {
+        "png": {
+          "bytes": 3444449,
+          "sha256": "53f7d61fbc5e8741fbbc3bf373c60d241a226010ca2c3d88d0ca6fa4bcf12578",
+          "webCodecs": {
+            "width": 1254,
+            "height": 1254,
+            "codedWidth": 1254,
+            "codedHeight": 1254,
+            "formatBeforeCopy": "BGRX",
+            "colorSpace": {
+              "fullRange": null,
+              "matrix": null,
+              "primaries": null,
+              "transfer": null
+            },
+            "layout": [
+              {
+                "offset": 0,
+                "stride": 5016
+              }
+            ],
+            "rgbaSha256": "6644fd8ab5fdaf930ebbca0f9929b7db8b99928b71c21222e701a9a4564c4679",
+            "rgbaBytes": 6290064,
+            "alpha": {
+              "transparentPixels": 0,
+              "translucentPixels": 0,
+              "opaquePixels": 1572516,
+              "transparentPixelsWithNonzeroRgb": 0
+            }
+          },
+          "canvas": {
+            "width": 1254,
+            "height": 1254,
+            "rgbaSha256": "6644fd8ab5fdaf930ebbca0f9929b7db8b99928b71c21222e701a9a4564c4679",
+            "alpha": {
+              "transparentPixels": 0,
+              "translucentPixels": 0,
+              "opaquePixels": 1572516,
+              "transparentPixelsWithNonzeroRgb": 0
+            }
+          }
+        },
+        "webp": {
+          "bytes": 2304636,
+          "sha256": "3d841a80edf8e956769e039747d38ef9837f985a2f3a9683a2515ad4fac4b09d",
+          "webCodecs": {
+            "width": 1254,
+            "height": 1254,
+            "codedWidth": 1254,
+            "codedHeight": 1254,
+            "formatBeforeCopy": "BGRX",
+            "colorSpace": {
+              "fullRange": null,
+              "matrix": null,
+              "primaries": null,
+              "transfer": null
+            },
+            "layout": [
+              {
+                "offset": 0,
+                "stride": 5016
+              }
+            ],
+            "rgbaSha256": "6644fd8ab5fdaf930ebbca0f9929b7db8b99928b71c21222e701a9a4564c4679",
+            "rgbaBytes": 6290064,
+            "alpha": {
+              "transparentPixels": 0,
+              "translucentPixels": 0,
+              "opaquePixels": 1572516,
+              "transparentPixelsWithNonzeroRgb": 0
+            }
+          },
+          "canvas": {
+            "width": 1254,
+            "height": 1254,
+            "rgbaSha256": "6644fd8ab5fdaf930ebbca0f9929b7db8b99928b71c21222e701a9a4564c4679",
+            "alpha": {
+              "transparentPixels": 0,
+              "translucentPixels": 0,
+              "opaquePixels": 1572516,
+              "transparentPixelsWithNonzeroRgb": 0
+            }
+          }
+        },
+        "webCodecsComparison": {
+          "equal": true,
+          "differentPixels": 0,
+          "differentChannels": 0,
+          "maximumChannelDifference": 0,
+          "totalAbsoluteChannelDifference": 0,
+          "examples": []
+        },
+        "canvasComparison": {
+          "equal": true,
+          "differentPixels": 0,
+          "differentChannels": 0,
+          "maximumChannelDifference": 0,
+          "totalAbsoluteChannelDifference": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "name": "arroyo-details",
+      "width": 1254,
+      "height": 1254,
+      "png": {
+        "path": "assets/textures/arroyo-details.png",
+        "bytes": 3574318,
+        "sha256": "5dc6dd4744e68f408c4ede5e263ad435f42aa9abf2f4b07da915c9130a688a52",
+        "bitDepth": 8,
+        "colorType": 2,
+        "chunks": [
+          {
+            "type": "IHDR",
+            "bytes": 13
+          },
+          {
+            "type": "caBX",
+            "bytes": 23617
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 11040
+          },
+          {
+            "type": "IEND",
+            "bytes": 0
+          }
+        ],
+        "scanlineFilters": {
+          "1": 14,
+          "2": 112,
+          "4": 1128
+        }
+      },
+      "webp": {
+        "path": "assets/textures/arroyo-details.webp",
+        "bytes": 2357446,
+        "sha256": "6e52afeee96d9f897e3cb8b253bcacdae66bed31e4c02e3a534700b246d71a95",
+        "riffChunks": [
+          {
+            "type": "VP8L",
+            "bytes": 2357426
+          }
+        ],
+        "encodingArgumentsReported": [
+          "-lossless",
+          "-z",
+          "9"
+        ]
+      },
+      "byteSavings": 1216872,
+      "rawRgba": {
+        "bytes": 6290064,
+        "pngSha256": "ce0ed0ce25e493ef09775f87984c9e8b01cd9e3bd2479bd0525a120e84bbb9d3",
+        "webpSha256": "ce0ed0ce25e493ef09775f87984c9e8b01cd9e3bd2479bd0525a120e84bbb9d3",
+        "alpha": {
+          "transparentPixels": 0,
+          "translucentPixels": 0,
+          "opaquePixels": 1572516,
+          "transparentPixelsWithNonzeroRgb": 0
+        },
+        "comparison": {
+          "equal": true,
+          "differentPixels": 0,
+          "differentChannels": 0,
+          "maximumChannelDifference": 0,
+          "totalAbsoluteChannelDifference": 0,
+          "differentChannelsUnderZeroAlpha": 0
+        }
+      },
+      "nativeChrome": {
+        "png": {
+          "bytes": 3574318,
+          "sha256": "5dc6dd4744e68f408c4ede5e263ad435f42aa9abf2f4b07da915c9130a688a52",
+          "webCodecs": {
+            "width": 1254,
+            "height": 1254,
+            "codedWidth": 1254,
+            "codedHeight": 1254,
+            "formatBeforeCopy": "BGRX",
+            "colorSpace": {
+              "fullRange": null,
+              "matrix": null,
+              "primaries": null,
+              "transfer": null
+            },
+            "layout": [
+              {
+                "offset": 0,
+                "stride": 5016
+              }
+            ],
+            "rgbaSha256": "ce0ed0ce25e493ef09775f87984c9e8b01cd9e3bd2479bd0525a120e84bbb9d3",
+            "rgbaBytes": 6290064,
+            "alpha": {
+              "transparentPixels": 0,
+              "translucentPixels": 0,
+              "opaquePixels": 1572516,
+              "transparentPixelsWithNonzeroRgb": 0
+            }
+          },
+          "canvas": {
+            "width": 1254,
+            "height": 1254,
+            "rgbaSha256": "ce0ed0ce25e493ef09775f87984c9e8b01cd9e3bd2479bd0525a120e84bbb9d3",
+            "alpha": {
+              "transparentPixels": 0,
+              "translucentPixels": 0,
+              "opaquePixels": 1572516,
+              "transparentPixelsWithNonzeroRgb": 0
+            }
+          }
+        },
+        "webp": {
+          "bytes": 2357446,
+          "sha256": "6e52afeee96d9f897e3cb8b253bcacdae66bed31e4c02e3a534700b246d71a95",
+          "webCodecs": {
+            "width": 1254,
+            "height": 1254,
+            "codedWidth": 1254,
+            "codedHeight": 1254,
+            "formatBeforeCopy": "BGRX",
+            "colorSpace": {
+              "fullRange": null,
+              "matrix": null,
+              "primaries": null,
+              "transfer": null
+            },
+            "layout": [
+              {
+                "offset": 0,
+                "stride": 5016
+              }
+            ],
+            "rgbaSha256": "ce0ed0ce25e493ef09775f87984c9e8b01cd9e3bd2479bd0525a120e84bbb9d3",
+            "rgbaBytes": 6290064,
+            "alpha": {
+              "transparentPixels": 0,
+              "translucentPixels": 0,
+              "opaquePixels": 1572516,
+              "transparentPixelsWithNonzeroRgb": 0
+            }
+          },
+          "canvas": {
+            "width": 1254,
+            "height": 1254,
+            "rgbaSha256": "ce0ed0ce25e493ef09775f87984c9e8b01cd9e3bd2479bd0525a120e84bbb9d3",
+            "alpha": {
+              "transparentPixels": 0,
+              "translucentPixels": 0,
+              "opaquePixels": 1572516,
+              "transparentPixelsWithNonzeroRgb": 0
+            }
+          }
+        },
+        "webCodecsComparison": {
+          "equal": true,
+          "differentPixels": 0,
+          "differentChannels": 0,
+          "maximumChannelDifference": 0,
+          "totalAbsoluteChannelDifference": 0,
+          "examples": []
+        },
+        "canvasComparison": {
+          "equal": true,
+          "differentPixels": 0,
+          "differentChannels": 0,
+          "maximumChannelDifference": 0,
+          "totalAbsoluteChannelDifference": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "name": "arroyo-foliage",
+      "width": 1254,
+      "height": 1254,
+      "png": {
+        "path": "assets/textures/arroyo-foliage.png",
+        "bytes": 1561388,
+        "sha256": "603140ee50b79a8da0f06034276e3b9eddc3dd8c560d679e37ddc682d7be3073",
+        "bitDepth": 8,
+        "colorType": 6,
+        "chunks": [
+          {
+            "type": "IHDR",
+            "bytes": 13
+          },
+          {
+            "type": "caBX",
+            "bytes": 23617
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 30098
+          },
+          {
+            "type": "IEND",
+            "bytes": 0
+          }
+        ],
+        "scanlineFilters": {
+          "1": 74,
+          "2": 288,
+          "4": 892
+        }
+      },
+      "webp": {
+        "path": "assets/textures/arroyo-foliage.webp",
+        "bytes": 1131330,
+        "sha256": "3b54fbaba32d6281b19346e41a60fb88f2858888cc73327edef4a1fcd30d539b",
+        "riffChunks": [
+          {
+            "type": "VP8L",
+            "bytes": 1131310
+          }
+        ],
+        "encodingArgumentsReported": [
+          "-lossless",
+          "-z",
+          "9",
+          "-exact"
+        ]
+      },
+      "byteSavings": 430058,
+      "rawRgba": {
+        "bytes": 6290064,
+        "pngSha256": "f15cdee9ed07cbbf604c1c02670e114e2b734c737d94b44a9a016fa65dd3f66f",
+        "webpSha256": "f15cdee9ed07cbbf604c1c02670e114e2b734c737d94b44a9a016fa65dd3f66f",
+        "alpha": {
+          "transparentPixels": 959248,
+          "translucentPixels": 611657,
+          "opaquePixels": 1611,
+          "transparentPixelsWithNonzeroRgb": 0
+        },
+        "comparison": {
+          "equal": true,
+          "differentPixels": 0,
+          "differentChannels": 0,
+          "maximumChannelDifference": 0,
+          "totalAbsoluteChannelDifference": 0,
+          "differentChannelsUnderZeroAlpha": 0
+        }
+      },
+      "nativeChrome": {
+        "png": {
+          "bytes": 1561388,
+          "sha256": "603140ee50b79a8da0f06034276e3b9eddc3dd8c560d679e37ddc682d7be3073",
+          "webCodecs": {
+            "width": 1254,
+            "height": 1254,
+            "codedWidth": 1254,
+            "codedHeight": 1254,
+            "formatBeforeCopy": "BGRA",
+            "colorSpace": {
+              "fullRange": null,
+              "matrix": null,
+              "primaries": null,
+              "transfer": null
+            },
+            "layout": [
+              {
+                "offset": 0,
+                "stride": 5016
+              }
+            ],
+            "rgbaSha256": "ec018a7f54d3db0cd25371dd70bd660cfc61715d1a6438349199e0618261e04d",
+            "rgbaBytes": 6290064,
+            "alpha": {
+              "transparentPixels": 959248,
+              "translucentPixels": 611657,
+              "opaquePixels": 1611,
+              "transparentPixelsWithNonzeroRgb": 0
+            }
+          },
+          "canvas": {
+            "width": 1254,
+            "height": 1254,
+            "rgbaSha256": "ec018a7f54d3db0cd25371dd70bd660cfc61715d1a6438349199e0618261e04d",
+            "alpha": {
+              "transparentPixels": 959248,
+              "translucentPixels": 611657,
+              "opaquePixels": 1611,
+              "transparentPixelsWithNonzeroRgb": 0
+            }
+          }
+        },
+        "webp": {
+          "bytes": 1131330,
+          "sha256": "3b54fbaba32d6281b19346e41a60fb88f2858888cc73327edef4a1fcd30d539b",
+          "webCodecs": {
+            "width": 1254,
+            "height": 1254,
+            "codedWidth": 1254,
+            "codedHeight": 1254,
+            "formatBeforeCopy": "BGRA",
+            "colorSpace": {
+              "fullRange": null,
+              "matrix": null,
+              "primaries": null,
+              "transfer": null
+            },
+            "layout": [
+              {
+                "offset": 0,
+                "stride": 5016
+              }
+            ],
+            "rgbaSha256": "ec018a7f54d3db0cd25371dd70bd660cfc61715d1a6438349199e0618261e04d",
+            "rgbaBytes": 6290064,
+            "alpha": {
+              "transparentPixels": 959248,
+              "translucentPixels": 611657,
+              "opaquePixels": 1611,
+              "transparentPixelsWithNonzeroRgb": 0
+            }
+          },
+          "canvas": {
+            "width": 1254,
+            "height": 1254,
+            "rgbaSha256": "ec018a7f54d3db0cd25371dd70bd660cfc61715d1a6438349199e0618261e04d",
+            "alpha": {
+              "transparentPixels": 959248,
+              "translucentPixels": 611657,
+              "opaquePixels": 1611,
+              "transparentPixelsWithNonzeroRgb": 0
+            }
+          }
+        },
+        "webCodecsComparison": {
+          "equal": true,
+          "differentPixels": 0,
+          "differentChannels": 0,
+          "maximumChannelDifference": 0,
+          "totalAbsoluteChannelDifference": 0,
+          "examples": []
+        },
+        "canvasComparison": {
+          "equal": true,
+          "differentPixels": 0,
+          "differentChannels": 0,
+          "maximumChannelDifference": 0,
+          "totalAbsoluteChannelDifference": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "name": "arroyo-sky",
+      "width": 1774,
+      "height": 887,
+      "png": {
+        "path": "assets/textures/arroyo-sky.png",
+        "bytes": 1281272,
+        "sha256": "c045ac5131befcdb1e43fe6b2036ad0b487bfd0878453ca6ae1bc92c6d1cec9c",
+        "bitDepth": 8,
+        "colorType": 2,
+        "chunks": [
+          {
+            "type": "IHDR",
+            "bytes": 13
+          },
+          {
+            "type": "caBX",
+            "bytes": 21844
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 13947
+          },
+          {
+            "type": "IEND",
+            "bytes": 0
+          }
+        ],
+        "scanlineFilters": {
+          "1": 207,
+          "2": 16,
+          "4": 664
+        }
+      },
+      "webp": {
+        "path": "assets/textures/arroyo-sky.webp",
+        "bytes": 966462,
+        "sha256": "399fb9ab300be70fe658095aa51f6dee6fe674929e8d43bd6846c3169a84c4e3",
+        "riffChunks": [
+          {
+            "type": "VP8L",
+            "bytes": 966442
+          }
+        ],
+        "encodingArgumentsReported": [
+          "-lossless",
+          "-z",
+          "9"
+        ]
+      },
+      "byteSavings": 314810,
+      "rawRgba": {
+        "bytes": 6294152,
+        "pngSha256": "4ecd0de96594714a67f97787196d915eff55cb4792ecbfa08142c0d1a658789c",
+        "webpSha256": "4ecd0de96594714a67f97787196d915eff55cb4792ecbfa08142c0d1a658789c",
+        "alpha": {
+          "transparentPixels": 0,
+          "translucentPixels": 0,
+          "opaquePixels": 1573538,
+          "transparentPixelsWithNonzeroRgb": 0
+        },
+        "comparison": {
+          "equal": true,
+          "differentPixels": 0,
+          "differentChannels": 0,
+          "maximumChannelDifference": 0,
+          "totalAbsoluteChannelDifference": 0,
+          "differentChannelsUnderZeroAlpha": 0
+        }
+      },
+      "nativeChrome": {
+        "png": {
+          "bytes": 1281272,
+          "sha256": "c045ac5131befcdb1e43fe6b2036ad0b487bfd0878453ca6ae1bc92c6d1cec9c",
+          "webCodecs": {
+            "width": 1774,
+            "height": 887,
+            "codedWidth": 1774,
+            "codedHeight": 887,
+            "formatBeforeCopy": "BGRX",
+            "colorSpace": {
+              "fullRange": null,
+              "matrix": null,
+              "primaries": null,
+              "transfer": null
+            },
+            "layout": [
+              {
+                "offset": 0,
+                "stride": 7096
+              }
+            ],
+            "rgbaSha256": "4ecd0de96594714a67f97787196d915eff55cb4792ecbfa08142c0d1a658789c",
+            "rgbaBytes": 6294152,
+            "alpha": {
+              "transparentPixels": 0,
+              "translucentPixels": 0,
+              "opaquePixels": 1573538,
+              "transparentPixelsWithNonzeroRgb": 0
+            }
+          },
+          "canvas": {
+            "width": 1774,
+            "height": 887,
+            "rgbaSha256": "4ecd0de96594714a67f97787196d915eff55cb4792ecbfa08142c0d1a658789c",
+            "alpha": {
+              "transparentPixels": 0,
+              "translucentPixels": 0,
+              "opaquePixels": 1573538,
+              "transparentPixelsWithNonzeroRgb": 0
+            }
+          }
+        },
+        "webp": {
+          "bytes": 966462,
+          "sha256": "399fb9ab300be70fe658095aa51f6dee6fe674929e8d43bd6846c3169a84c4e3",
+          "webCodecs": {
+            "width": 1774,
+            "height": 887,
+            "codedWidth": 1774,
+            "codedHeight": 887,
+            "formatBeforeCopy": "BGRX",
+            "colorSpace": {
+              "fullRange": null,
+              "matrix": null,
+              "primaries": null,
+              "transfer": null
+            },
+            "layout": [
+              {
+                "offset": 0,
+                "stride": 7096
+              }
+            ],
+            "rgbaSha256": "4ecd0de96594714a67f97787196d915eff55cb4792ecbfa08142c0d1a658789c",
+            "rgbaBytes": 6294152,
+            "alpha": {
+              "transparentPixels": 0,
+              "translucentPixels": 0,
+              "opaquePixels": 1573538,
+              "transparentPixelsWithNonzeroRgb": 0
+            }
+          },
+          "canvas": {
+            "width": 1774,
+            "height": 887,
+            "rgbaSha256": "4ecd0de96594714a67f97787196d915eff55cb4792ecbfa08142c0d1a658789c",
+            "alpha": {
+              "transparentPixels": 0,
+              "translucentPixels": 0,
+              "opaquePixels": 1573538,
+              "transparentPixelsWithNonzeroRgb": 0
+            }
+          }
+        },
+        "webCodecsComparison": {
+          "equal": true,
+          "differentPixels": 0,
+          "differentChannels": 0,
+          "maximumChannelDifference": 0,
+          "totalAbsoluteChannelDifference": 0,
+          "examples": []
+        },
+        "canvasComparison": {
+          "equal": true,
+          "differentPixels": 0,
+          "differentChannels": 0,
+          "maximumChannelDifference": 0,
+          "totalAbsoluteChannelDifference": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "name": "arroyo-asphalt",
+      "width": 1254,
+      "height": 1254,
+      "png": {
+        "path": "assets/textures/arroyo-asphalt.png",
+        "bytes": 3594191,
+        "sha256": "df6aa654341074cff7d9b324f115a00ab91a5eaa46afe4daaf723374ab87c87f",
+        "bitDepth": 8,
+        "colorType": 2,
+        "chunks": [
+          {
+            "type": "IHDR",
+            "bytes": 13
+          },
+          {
+            "type": "caBX",
+            "bytes": 21844
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 32686
+          },
+          {
+            "type": "IEND",
+            "bytes": 0
+          }
+        ],
+        "scanlineFilters": {
+          "1": 2,
+          "2": 26,
+          "4": 1226
+        }
+      },
+      "webp": {
+        "path": "assets/textures/arroyo-asphalt.webp",
+        "bytes": 2441298,
+        "sha256": "e9c682d9633836d3a940cba0f9a682e01219b683a20d3a904430c8936be041f9",
+        "riffChunks": [
+          {
+            "type": "VP8L",
+            "bytes": 2441277
+          }
+        ],
+        "encodingArgumentsReported": [
+          "-lossless",
+          "-z",
+          "9"
+        ]
+      },
+      "byteSavings": 1152893,
+      "rawRgba": {
+        "bytes": 6290064,
+        "pngSha256": "b642375adc801a8818bdd3f6b8efa23546ef4add917e9c467d9938e882e88f64",
+        "webpSha256": "b642375adc801a8818bdd3f6b8efa23546ef4add917e9c467d9938e882e88f64",
+        "alpha": {
+          "transparentPixels": 0,
+          "translucentPixels": 0,
+          "opaquePixels": 1572516,
+          "transparentPixelsWithNonzeroRgb": 0
+        },
+        "comparison": {
+          "equal": true,
+          "differentPixels": 0,
+          "differentChannels": 0,
+          "maximumChannelDifference": 0,
+          "totalAbsoluteChannelDifference": 0,
+          "differentChannelsUnderZeroAlpha": 0
+        }
+      },
+      "nativeChrome": {
+        "png": {
+          "bytes": 3594191,
+          "sha256": "df6aa654341074cff7d9b324f115a00ab91a5eaa46afe4daaf723374ab87c87f",
+          "webCodecs": {
+            "width": 1254,
+            "height": 1254,
+            "codedWidth": 1254,
+            "codedHeight": 1254,
+            "formatBeforeCopy": "BGRX",
+            "colorSpace": {
+              "fullRange": null,
+              "matrix": null,
+              "primaries": null,
+              "transfer": null
+            },
+            "layout": [
+              {
+                "offset": 0,
+                "stride": 5016
+              }
+            ],
+            "rgbaSha256": "b642375adc801a8818bdd3f6b8efa23546ef4add917e9c467d9938e882e88f64",
+            "rgbaBytes": 6290064,
+            "alpha": {
+              "transparentPixels": 0,
+              "translucentPixels": 0,
+              "opaquePixels": 1572516,
+              "transparentPixelsWithNonzeroRgb": 0
+            }
+          },
+          "canvas": {
+            "width": 1254,
+            "height": 1254,
+            "rgbaSha256": "b642375adc801a8818bdd3f6b8efa23546ef4add917e9c467d9938e882e88f64",
+            "alpha": {
+              "transparentPixels": 0,
+              "translucentPixels": 0,
+              "opaquePixels": 1572516,
+              "transparentPixelsWithNonzeroRgb": 0
+            }
+          }
+        },
+        "webp": {
+          "bytes": 2441298,
+          "sha256": "e9c682d9633836d3a940cba0f9a682e01219b683a20d3a904430c8936be041f9",
+          "webCodecs": {
+            "width": 1254,
+            "height": 1254,
+            "codedWidth": 1254,
+            "codedHeight": 1254,
+            "formatBeforeCopy": "BGRX",
+            "colorSpace": {
+              "fullRange": null,
+              "matrix": null,
+              "primaries": null,
+              "transfer": null
+            },
+            "layout": [
+              {
+                "offset": 0,
+                "stride": 5016
+              }
+            ],
+            "rgbaSha256": "b642375adc801a8818bdd3f6b8efa23546ef4add917e9c467d9938e882e88f64",
+            "rgbaBytes": 6290064,
+            "alpha": {
+              "transparentPixels": 0,
+              "translucentPixels": 0,
+              "opaquePixels": 1572516,
+              "transparentPixelsWithNonzeroRgb": 0
+            }
+          },
+          "canvas": {
+            "width": 1254,
+            "height": 1254,
+            "rgbaSha256": "b642375adc801a8818bdd3f6b8efa23546ef4add917e9c467d9938e882e88f64",
+            "alpha": {
+              "transparentPixels": 0,
+              "translucentPixels": 0,
+              "opaquePixels": 1572516,
+              "transparentPixelsWithNonzeroRgb": 0
+            }
+          }
+        },
+        "webCodecsComparison": {
+          "equal": true,
+          "differentPixels": 0,
+          "differentChannels": 0,
+          "maximumChannelDifference": 0,
+          "totalAbsoluteChannelDifference": 0,
+          "examples": []
+        },
+        "canvasComparison": {
+          "equal": true,
+          "differentPixels": 0,
+          "differentChannels": 0,
+          "maximumChannelDifference": 0,
+          "totalAbsoluteChannelDifference": 0,
+          "examples": []
+        }
+      }
+    },
+    {
+      "name": "arroyo-grass",
+      "width": 1254,
+      "height": 1254,
+      "png": {
+        "path": "assets/textures/arroyo-grass.png",
+        "bytes": 3945500,
+        "sha256": "f5b5feb7f9d653be39816768ae5ba97a878151b605b46c31dc4d7590e5596c92",
+        "bitDepth": 8,
+        "colorType": 2,
+        "chunks": [
+          {
+            "type": "IHDR",
+            "bytes": 13
+          },
+          {
+            "type": "caBX",
+            "bytes": 21844
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 65536
+          },
+          {
+            "type": "IDAT",
+            "bytes": 56255
+          },
+          {
+            "type": "IEND",
+            "bytes": 0
+          }
+        ],
+        "scanlineFilters": {
+          "1": 2,
+          "2": 1,
+          "4": 1251
+        },
+        "origin": {
+          "kind": "built-in-image-generation",
+          "originalOutputPath": "/Users/gabrielperez/.codex/generated_images/01a098b7-30e2-7930-9b7c-dea9c0280641/exec-74d1d105-828f-4e06-859d-45d49f931007.png",
+          "originalOutputSha256": "f5b5feb7f9d653be39816768ae5ba97a878151b605b46c31dc4d7590e5596c92",
+          "copiedByteForByte": true,
+          "promptParaphrase": "Overhead orthographic seamless two-meter Southern California lawn albedo, mixed fine olive and straw grass blades with about 10% exposed dry soil, evenly neutral lighting, no shadows, specular highlights, gloss, text or objects.",
+          "exactPromptWasNotPersisted": true
+        }
+      },
+      "webp": {
+        "path": "assets/textures/arroyo-grass.webp",
+        "bytes": 2840886,
+        "sha256": "08d34e0817d828d21aa74ff32b43b4400ff325d58c96408dd31004b248d400a0",
+        "riffChunks": [
+          {
+            "type": "VP8L",
+            "bytes": 2840866
+          }
+        ],
+        "encodingArgumentsReported": [
+          "-lossless",
+          "-z",
+          "9"
+        ]
+      },
+      "byteSavings": 1104614,
+      "rawRgba": {
+        "bytes": 6290064,
+        "pngSha256": "d89ee891c0e180259710ea8cbfce065f3c37d4cf845bd83529b6105106cd21f0",
+        "webpSha256": "d89ee891c0e180259710ea8cbfce065f3c37d4cf845bd83529b6105106cd21f0",
+        "alpha": {
+          "transparentPixels": 0,
+          "translucentPixels": 0,
+          "opaquePixels": 1572516,
+          "transparentPixelsWithNonzeroRgb": 0
+        },
+        "comparison": {
+          "equal": true,
+          "differentPixels": 0,
+          "differentChannels": 0,
+          "maximumChannelDifference": 0,
+          "totalAbsoluteChannelDifference": 0,
+          "differentChannelsUnderZeroAlpha": 0
+        }
+      },
+      "nativeChrome": {
+        "png": {
+          "bytes": 3945500,
+          "sha256": "f5b5feb7f9d653be39816768ae5ba97a878151b605b46c31dc4d7590e5596c92",
+          "webCodecs": {
+            "width": 1254,
+            "height": 1254,
+            "codedWidth": 1254,
+            "codedHeight": 1254,
+            "formatBeforeCopy": "BGRX",
+            "colorSpace": {
+              "fullRange": null,
+              "matrix": null,
+              "primaries": null,
+              "transfer": null
+            },
+            "layout": [
+              {
+                "offset": 0,
+                "stride": 5016
+              }
+            ],
+            "rgbaSha256": "d89ee891c0e180259710ea8cbfce065f3c37d4cf845bd83529b6105106cd21f0",
+            "rgbaBytes": 6290064,
+            "alpha": {
+              "transparentPixels": 0,
+              "translucentPixels": 0,
+              "opaquePixels": 1572516,
+              "transparentPixelsWithNonzeroRgb": 0
+            }
+          },
+          "canvas": {
+            "width": 1254,
+            "height": 1254,
+            "rgbaSha256": "d89ee891c0e180259710ea8cbfce065f3c37d4cf845bd83529b6105106cd21f0",
+            "alpha": {
+              "transparentPixels": 0,
+              "translucentPixels": 0,
+              "opaquePixels": 1572516,
+              "transparentPixelsWithNonzeroRgb": 0
+            }
+          }
+        },
+        "webp": {
+          "bytes": 2840886,
+          "sha256": "08d34e0817d828d21aa74ff32b43b4400ff325d58c96408dd31004b248d400a0",
+          "webCodecs": {
+            "width": 1254,
+            "height": 1254,
+            "codedWidth": 1254,
+            "codedHeight": 1254,
+            "formatBeforeCopy": "BGRX",
+            "colorSpace": {
+              "fullRange": null,
+              "matrix": null,
+              "primaries": null,
+              "transfer": null
+            },
+            "layout": [
+              {
+                "offset": 0,
+                "stride": 5016
+              }
+            ],
+            "rgbaSha256": "d89ee891c0e180259710ea8cbfce065f3c37d4cf845bd83529b6105106cd21f0",
+            "rgbaBytes": 6290064,
+            "alpha": {
+              "transparentPixels": 0,
+              "translucentPixels": 0,
+              "opaquePixels": 1572516,
+              "transparentPixelsWithNonzeroRgb": 0
+            }
+          },
+          "canvas": {
+            "width": 1254,
+            "height": 1254,
+            "rgbaSha256": "d89ee891c0e180259710ea8cbfce065f3c37d4cf845bd83529b6105106cd21f0",
+            "alpha": {
+              "transparentPixels": 0,
+              "translucentPixels": 0,
+              "opaquePixels": 1572516,
+              "transparentPixelsWithNonzeroRgb": 0
+            }
+          }
+        },
+        "webCodecsComparison": {
+          "equal": true,
+          "differentPixels": 0,
+          "differentChannels": 0,
+          "maximumChannelDifference": 0,
+          "totalAbsoluteChannelDifference": 0,
+          "examples": []
+        },
+        "canvasComparison": {
+          "equal": true,
+          "differentPixels": 0,
+          "differentChannels": 0,
+          "maximumChannelDifference": 0,
+          "totalAbsoluteChannelDifference": 0,
+          "examples": []
+        }
+      }
+    }
+  ],
+  "totals": {
+    "pngBytes": 17401118,
+    "webpBytes": 12042058,
+    "rgbaPixels": 9436118,
+    "bytesSaved": 5359060,
+    "percentSaved": 30.797216592635024,
+    "allSixRawRgbaPairsIdentical": true,
+    "allSixNativeChromePairsIdentical": true
+  }
+}

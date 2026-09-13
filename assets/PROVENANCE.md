@@ -3,11 +3,33 @@
 Created September 7, 2026 for this repository. Original modeling, rigging, animation, layout and scripts use GPL-3.0-or-later. Generated images are original built-in imagegen outputs; distributed under the repository's licensing approach to the extent copyright applies. No GTA, SA-MP, vehicle-brand or third-party model/texture data is included.
 
 - `reference/arroyo-concept.png`: built-in imagegen, original concept reference, not in-engine evidence.
-- `textures/neighborhood-atlas.png`: built-in imagegen, four surface inputs (stucco, asphalt, concrete, dry grass). Runtime extracts four 512² textures; no image service is needed at setup or runtime.
-- `source/*.blend`: editable Blender 4.5.13 sources, including weighted character mesh, armature and actions; script creates deterministic geometry with explicit weights.
+- `textures/neighborhood-atlas.png`: retained original built-in imagegen surface study. The current runtime uses the later Arroyo inputs below; no image service is needed at setup or runtime.
+- `source/*.blend`: editable Blender sources, including weighted character mesh, armature and actions; script creates deterministic geometry with explicit weights. The original kit used Blender 4.5.13. Later native rebuilds are identified individually in `source/asset-build.json`; untouched models retain their original pinned provenance.
 - `../tools/assets/build.py`: authoritative editable modeling/export recipe.
 - `../apps/browser/public/assets/*.glb`: committed meter-scale exports, Blender Z-up/+Y forward converted by standard glTF exporter to Y-up/-Z forward; browser normalizes once.
 - Blender 4.5.13 archive SHA256 `da4e69b06b75b9e642d106496c50e7e240218b411d2f6e18271c1d1d819cef91`; extracted executable SHA256 `e3ce4e960a2fd3beb1f9d2299e38b3804475ccd395193013aec239a4b75bfbfe`. The official mirror URL and both checks are recorded in `tools/build-assets.mjs`. Blender itself remains ignored in .runtime, under its upstream GPL license.
+
+## Native asset authoring (2026-09-12)
+
+The installed macOS arm64 Blender 5.2.1 LTS (build `9e2066aef7ef`, executable SHA256 `ea651e507c6b197df0e234bfa04e5ed43e7f4d498267a7df93fcb38f21928a5c`) generated the updated oak, palm, neighbor and new `garden-low` planting kit. The houses, coupe and other unchanged props retain their accepted Blender 4.5.13 exports. Native output is not claimed byte-identical to the Linux build.
+
+`source/asset-build.json` records generation time, actual Blender version/build hash/executable SHA256, host platform, modeling recipe hashes, and both GLB and editable blend identities for each newly generated model. Selective runs preserve other records and exports. Model construction and export first happen in ignored scratch space; an exporter failure or a recipe edit during generation prevents publication. The checksum-pinned Linux path remains available on Linux x64, while `--blender` / `BLENDER_BIN` explicitly selects another installed supported runtime.
+
+All new vegetation geometry remains original repository-authored work. `tools/assets/garden-kit.py` creates a compact thick-leaf agave and flowering shrub arrangement with a 0.70 m radial envelope and 0.65 m height bound. The oak/palm recipes retain their collision origins and reuse the original generated foliage atlas. Only real browser captures count as visual/gameplay evidence; native Blender exports and isolated previews are authoring checks.
+
+## Native dream-loop continuation (2026-09-13 UTC)
+
+`reference/arroyo-dream-2026-09-13.png` is the built-in image-generation edit of the starting live street capture, used as the new visual target. The prompt retained the exact camera, neighborhood layout, car, character and HUD while targeting realistic warm afternoon lighting, connected oak crowns, feathered palms, planted lawns, automotive reflections and cloth. This generated image is never labeled as gameplay evidence.
+
+`textures/arroyo-grass.png` is a new original built-in image-generation output, `exec-74d1d105-828f-4e06-859d-45d49f931007.png`. The prompt requested an evenly lit, orthographic two-meter lawn albedo with fine olive and straw blades and about ten percent exposed dry soil, without objects or directional shadows. The 1254² original is retained unchanged; the runtime derives 1024² aligned albedo, normal and roughness maps.
+
+The six `arroyo-*.webp` inputs are **lossless** encodings of their retained PNG originals. `source/texture-encodings.json` records exact source/output hashes, dimensions, encoder settings and independent native Chrome plus raw RGBA comparisons, including invisible RGB under transparency. They save 5,359,060 bytes (30.80%) without changing any decoded channel. Builds copy the committed encodings and do not require an image encoder.
+
+`tools/assets/horizon.py` authors the original distant terrain relief in native Blender, retaining the accepted crest band and playable boundary. `source/horizon.blend` is editable, `horizon-relief.json` supplies the compact sculpted relief and mineral/vegetation fields, and `source/horizon-build.json` records their identities. Runtime retains three terrain batches and 172,800 triangles.
+
+The neighbor refinement preserves all eleven bones, four animation clips, exact standing height and seat anchors. Connected shoulders, skin joins, directional cloth folds and improved lower-shirt weighting fix the seated waist intersection. The exported character decreases from 121,548 to 119,194 triangles.
+
+`tools/bake-reflections-native.mjs` provides an additional native Chrome/GPU bake path for the local empty fixture. It validates source, model, inventory, served scene and browser bundle identities before publication, and records the actual renderer. The pinned provisioned bake path remains available.
 
 ## Built-in imagegen prompts
 

@@ -19,6 +19,7 @@ const names = [
   "house-3",
   "palm",
   "tree",
+  "garden-low",
   "fence",
   "fence-low",
   "mailbox",
@@ -120,21 +121,20 @@ export async function loadAssets(
     const bytes = await response.arrayBuffer();
     await verify(name, bytes);
     assetStats.bytes += bytes.byteLength; assetStats.files++;
-    return createImageBitmap(new Blob([bytes]), name === "arroyo-sky.png" ? { imageOrientation: "flipY" } : {});
+    return createImageBitmap(new Blob([bytes]), name === "arroyo-sky.webp" ? { imageOrientation: "flipY" } : {});
   }
   for (const [file, slots] of [
-    ["arroyo-surfaces.png", ["asphalt", "concrete", "stucco", "grass"]],
-    ["arroyo-details.png", ["shingle", "wood", "sage", "denim"]],
+    ["arroyo-surfaces.webp", ["asphalt", "concrete", "stucco", "grass"]],
+    ["arroyo-details.webp", ["shingle", "wood", "sage", "denim"]],
   ] as const) {
     const bitmap = await textureInput(file);
     for (const [i, name] of slots.entries()) {
       // The dedicated road input below replaces this atlas quadrant. Avoid
       // allocating a second, unused set of asphalt maps and counting it as live.
-      if (name === "asphalt") continue;
+      if (name === "asphalt" || name === "grass") continue;
       const size = 512;
       const maps = surfaceTexture(bitmap, i, size);
       const material = new THREE.MeshStandardMaterial({ ...maps, roughness: .95, normalScale: new THREE.Vector2(.45, .45) });
-      if (name === "grass") material.color.set(0xabb787);
       if (name === "concrete") material.color.set(0xded8c8);
       surfaceMaterials.set(name, material);
       const existing = canonical.get(name);
@@ -153,16 +153,27 @@ export async function loadAssets(
   }
   // The original 12m road study is displayed over 9.6m to bring aggregate and
   // fissures toward street scale while retaining its connected repair structure.
-  const asphaltInput = await textureInput("arroyo-asphalt.png");
+  const asphaltInput = await textureInput("arroyo-asphalt.webp");
   const asphaltMaps = surfaceTexture(asphaltInput, -1, 1254);
   for (const texture of Object.values(asphaltMaps)) texture.repeat.setScalar(1 / 2.4);
   surfaceMaterials.set("asphalt", new THREE.MeshStandardMaterial({
     name:"asphalt", ...asphaltMaps, color:0xb1b1aa, roughness:.88,
-    normalScale:new THREE.Vector2(.4, .4),
+    normalScale:new THREE.Vector2(.22, .22),
   }));
   assetStats.textureBytes += 1254 * 1254 * 4 * 4 / 3 * 3;
   asphaltInput.close();
-  const leaves = await textureInput("arroyo-foliage.png");
+  const grassInput = await textureInput("arroyo-grass.webp");
+  const grassMaps = surfaceTexture(grassInput, -1, 1024);
+  // A two-metre turf study, sampled at metre scale rather than stretched over
+  // whole lots. Geometry and diffuse texture share the same dry/live palette.
+  for (const texture of Object.values(grassMaps)) texture.repeat.setScalar(2);
+  surfaceMaterials.set("grass", new THREE.MeshStandardMaterial({
+    name: "grass", ...grassMaps, color: 0xe6e1bf, roughness: 1,
+    normalScale: new THREE.Vector2(.55, .55),
+  }));
+  assetStats.textureBytes += 1024 * 1024 * 4 * 4 / 3 * 3;
+  grassInput.close();
+  const leaves = await textureInput("arroyo-foliage.webp");
   const leafCanvas = document.createElement("canvas");
   leafCanvas.width = leaves.width; leafCanvas.height = leaves.height;
   const leafContext = leafCanvas.getContext("2d", {willReadFrequently:true});
@@ -179,7 +190,9 @@ export async function loadAssets(
   for (const name of ["foliage", "foliage-light"]) {
     const m = canonical.get(name);
     if (m instanceof THREE.MeshStandardMaterial) {
-      m.map = leafTexture; m.color.set(name === "foliage" ? 0xaec697 : 0xd8d29b);
+      // The original diffuse image already carries the leaf's olive pigment.
+      // Multiplying it by another dark green tint suppressed the sunlit crown.
+      m.map = leafTexture; m.color.set(name === "foliage" ? 0xc8d4a7 : 0xe0daa4);
       m.side = THREE.DoubleSide; m.alphaTest = .45; m.transparent = false;
       m.roughness = .85; m.needsUpdate = true;
     }
@@ -189,8 +202,10 @@ export async function loadAssets(
   for (const [name, material] of canonical) {
     if (!(material instanceof THREE.MeshStandardMaterial)) continue;
     if (name.startsWith("foliage") || name.startsWith("palm-frond")) {
-      material.envMapIntensity = 1.75;
-      material.emissive.copy(material.color); material.emissiveIntensity = .10;
+      if (name.startsWith("palm-frond"))
+        material.color.set(name.endsWith("light") ? 0x7d903f : 0x526f2f);
+      material.envMapIntensity = .7;
+      material.emissive.copy(material.color); material.emissiveIntensity = .025;
       material.emissiveMap = material.map;
       material.onBeforeCompile = shader => {
         if (name.startsWith("foliage")) {
@@ -202,14 +217,14 @@ export async function loadAssets(
         shader.fragmentShader = shader.fragmentShader.replace("#include <lights_physical_pars_fragment>",
           THREE.ShaderChunk.lights_physical_pars_fragment.replace(
             "reflectedLight.directDiffuse += irradiance * BRDF_Lambert( material.diffuseContribution );",
-            `reflectedLight.directDiffuse += saturate(dot(${name.startsWith("foliage") ? "normalize(vNormal)" : "geometryNormal"}, directLight.direction) * 0.65 + 0.35) * directLight.color * BRDF_Lambert(material.diffuseContribution);`));
+            `reflectedLight.directDiffuse += saturate(dot(${name.startsWith("foliage") ? "normalize(vNormal)" : "geometryNormal"}, directLight.direction) * 0.75 + 0.25) * directLight.color * BRDF_Lambert(material.diffuseContribution);`));
       };
-      material.customProgramCacheKey = () => `arroyo-thin-leaf-diffuse-v3-${name.startsWith("foliage") ? "canopy" : "palm"}`;
+      material.customProgramCacheKey = () => `arroyo-thin-leaf-diffuse-v4-${name.startsWith("foliage") ? "canopy" : "palm"}`;
       material.needsUpdate = true;
     }
     if (name === "glass") { material.envMapIntensity = 1.4; material.roughness = .24; if(material instanceof THREE.MeshPhysicalMaterial)material.specularIntensity=.12; }
   }
-  const sky = await textureInput("arroyo-sky.png");
+  const sky = await textureInput("arroyo-sky.webp");
   environmentTexture = new THREE.Texture(sky);
   environmentTexture.colorSpace = THREE.SRGBColorSpace;
   environmentTexture.needsUpdate = true; environmentTexture.flipY = false;
@@ -253,8 +268,8 @@ export function bindAssetEnvironment(texture: THREE.Texture, localProbe?: THREE.
       const local = localProbe && ["paint", "glass"].includes(material.name);
       material.envMap = local ? localProbe : texture;
       material.envMapRotation.x = local ? 0 : Math.PI / 2;
-      material.envMapIntensity = leaf ? 1.55 : material.name === "denim" ? .8 : .85;
-      if (leaf) material.emissiveIntensity = .085;
+      material.envMapIntensity = leaf ? .7 : material.name === "denim" ? .8 : material.name === "paint" ? 1.35 : .95;
+      if (leaf) material.emissiveIntensity = .025;
       material.needsUpdate = true;
     }
   });
@@ -317,8 +332,9 @@ export function instantiateStatic(
           batch.geometries.push(geometry);
           return;
         }
+        const cellSize = p.asset === "garden-low" ? 64 : 32;
         const key =
-          o.geometry.uuid + ":" + Math.floor(p.position[0] / 32) + ":" + Math.floor(p.position[1] / 32) +
+          o.geometry.uuid + ":" + Math.floor(p.position[0] / cellSize) + ":" + Math.floor(p.position[1] / cellSize) +
           JSON.stringify(
             (Array.isArray(o.material) ? o.material : [o.material]).map(
               (m) => m.uuid,

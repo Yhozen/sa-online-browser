@@ -9,16 +9,17 @@ export function plantVerges(scene: THREE.Scene, manifest: SceneManifest, ground?
   const material = new THREE.MeshStandardMaterial({ vertexColors: true, side: THREE.DoubleSide, roughness: 1 });
   const geometries = Array.from({ length: 3 }, (_, variant) => {
     const positions: number[] = [], colors: number[] = [], indices: number[] = [];
-    const count = 8 + variant * 2;
+    const count = 14 + variant * 3;
     for (let blade = 0; blade < count; blade++) {
       const angle = random() * Math.PI * 2, h = .055 + random() * (.105 + variant * .024);
       const width = .005 + random() * .0035, bend = .026 + random() * .07;
-      const dx = Math.cos(angle), dy = Math.sin(angle), root = random() * .05;
+      const dx = Math.cos(angle), dy = Math.sin(angle), root = random() * .085;
       const start = positions.length / 3;
-      const baseColor = new THREE.Color(blade % 4 === 0 ? 0x80774e : blade % 3 === 0 ? 0x565f3d : 0x647348);
-      // Five ribbon segments give each blade an arch and taper; no giant triangular fans.
-      for (let segment = 0; segment <= 5; segment++) {
-        const t = segment / 5, lean = bend * t * t;
+      const baseColor = new THREE.Color(blade % 4 === 0 ? 0xb7aa70 : blade % 3 === 0 ? 0x91a359 : 0x9caf67);
+      // Three curved segments retain the fine arch at walking distance. Spend
+      // geometry on continuous turf coverage rather than subpixel blade edges.
+      for (let segment = 0; segment <= 3; segment++) {
+        const t = segment / 3, lean = bend * t * t;
         const z = h * (1.18 * t - .18 * t * t), halfWidth = width * Math.pow(1 - t, .7);
         for (const side of [-1, 1]) {
           positions.push(dx * (root + lean) - dy * halfWidth * side,
@@ -26,7 +27,7 @@ export function plantVerges(scene: THREE.Scene, manifest: SceneManifest, ground?
           const c = baseColor.clone().multiplyScalar(.65 + .35 * t);
           colors.push(c.r, c.g, c.b);
         }
-        if (segment < 5) {
+        if (segment < 3) {
           const k = start + segment * 2;
           indices.push(k, k + 1, k + 2, k + 1, k + 3, k + 2);
         }
@@ -91,17 +92,17 @@ export function plantVerges(scene: THREE.Scene, manifest: SceneManifest, ground?
   // Additional yard planting is generated only after the original verge matrices:
   // its RNG use cannot alter the existing sidewalk clump positions or source frame.
   const yardCells = new Map<string, { matrices: THREE.Matrix4[][]; tones: THREE.Color[][] }>();
-  const maxYardTufts = 3400; // At most 408k triangles globally, spatially culled in 24m cells.
-  const quota = Math.floor(2800 / Math.max(1, manifest.houses.length));
+  const maxYardTufts = 8000; // At most 960k triangles globally, spatially culled in 24m cells.
+  const quota = Math.floor(7200 / Math.max(1, manifest.houses.length));
   let yardCount = 0;
   function clearYard(x: number, y: number) {
     if (!clearGround(x, y)) return false;
     // Include the full blade footprint in every fixture barrier/house/fence exclusion.
-    if (manifest.barriers.some(b => Math.abs(x - b.position[0]) <= b.size[0] / 2 + .30 &&
-      Math.abs(y - b.position[1]) <= b.size[1] / 2 + .30)) return false;
-    if (manifest.culdesac && Math.hypot(x - manifest.culdesac.center[0], y - manifest.culdesac.center[1]) < manifest.culdesac.radius + 2.80) return false;
+    if (manifest.barriers.some(b => Math.abs(x - b.position[0]) <= b.size[0] / 2 + .40 &&
+      Math.abs(y - b.position[1]) <= b.size[1] / 2 + .40)) return false;
+    if (manifest.culdesac && Math.hypot(x - manifest.culdesac.center[0], y - manifest.culdesac.center[1]) < manifest.culdesac.radius + 2.90) return false;
     if (manifest.roads.some(road => road.points.slice(1).some((end, i) => {
-      const start = road.points[i], margin = road.width / 2 + 2.80;
+      const start = road.points[i], margin = road.width / 2 + 2.90;
       return x >= Math.min(start[0], end[0]) - margin && x <= Math.max(start[0], end[0]) + margin &&
         y >= Math.min(start[1], end[1]) - margin && y <= Math.max(start[1], end[1]) + margin;
     }))) return false;
@@ -111,9 +112,9 @@ export function plantVerges(scene: THREE.Scene, manifest: SceneManifest, ground?
       const lx = (dx * c + dy * s) / (house.scale?.[0] || 1), ly = (-dx * s + dy * c) / (house.scale?.[1] || 1);
       // Authored meter-scale footprints: shell, covered porch, driveway and their access paths.
       return (Math.abs(lx) < 8.6 && Math.abs(ly) < 6.6) ||
-        (lx > -6.5 && lx < .5 && ly > -9.2 && ly < -5.5) ||
+        (lx > -6.85 && lx < .85 && ly > -9.5 && ly < -5.2) ||
         (lx > 3.5 && lx < 8.5 && ly > -21 && ly < -5.5) ||
-        (lx > -4.7 && lx < -1.3 && ly > -21 && ly < -5.5);
+        (lx > -4.9 && lx < -1.1 && ly > -21 && ly < -5.5);
     });
   }
   // Soil triangles can bridge a thin fence even when all three vertices are
@@ -177,7 +178,7 @@ export function plantVerges(scene: THREE.Scene, manifest: SceneManifest, ground?
         cell.matrices[variant].push(dummy.matrix.clone());
         // Muted brown shoots and exposed ground between islands create dry soil breaks,
         // while living clumps use olive greens rather than the former yellow edge row.
-        cell.tones[variant].push(new THREE.Color(dryShoot ? 0xb0a08a : random() < .5 ? 0xb1bb96 : 0x9ead8a));
+        cell.tones[variant].push(new THREE.Color(dryShoot ? 0xd0c3a4 : random() < .5 ? 0xdce0c5 : 0xc9d6ac));
         planted++; yardCount++;
       }
     }
@@ -197,7 +198,7 @@ export function plantVerges(scene: THREE.Scene, manifest: SceneManifest, ground?
         const key=`${Math.floor(x/24)},${Math.floor(y/24)}`;
         if(!yardCells.has(key))yardCells.set(key,{matrices:[[],[],[]],tones:[[],[],[]]});
         const cell=yardCells.get(key)!,variant=Math.floor(random()*3);
-        cell.matrices[variant].push(dummy.matrix.clone());cell.tones[variant].push(new THREE.Color(0xb8bb94));yardCount++;
+        cell.matrices[variant].push(dummy.matrix.clone());cell.tones[variant].push(new THREE.Color(0xdce0bc));yardCount++;
       }
     }
   }

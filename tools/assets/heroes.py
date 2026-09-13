@@ -533,6 +533,7 @@ sole=material('shoe-sole',(.135,.14,.13),.92)
 stitch=material('clothing-stitch',(.095,.11,.093),.96)
 lip=material('lip',(.26,.12,.082),.82)
 eyebrown=material('iris',(.085,.052,.028),.6)
+fingernail=material('fingernail',(.43,.265,.18),.64)
 parts=[]
 
 def part(o,bone):
@@ -574,8 +575,9 @@ def cloth_uv(o,kind='torso',center_x=0):
 torso=[]
 torso_profile=[(.805,.239,.160,.0),(.842,.244,.167,-.010),(.887,.238,.169,-.007),
  (.945,.221,.170,-.007),(1.02,.219,.166,-.006),(1.10,.211,.147,-.005),
- (1.18,.217,.152,-.007),(1.28,.223,.147,-.006),(1.37,.227,.138,-.004),
- (1.421,.218,.132,-.005),(1.46,.145,.092,-.006),(1.495,.078,.075,-.005)]
+ (1.18,.217,.152,-.007),(1.28,.225,.146,-.006),(1.37,.237,.136,-.004),
+ (1.411,.243,.127,-.005),(1.438,.224,.112,-.006),
+ (1.467,.150,.087,-.006),(1.495,.078,.075,-.005)]
 # Dense continuous longitudinal sampling allows actual cloth folds rather than
 # striped color on smooth cylinders. Rear hem drops slightly below the front.
 for j in range(len(torso_profile)-1):
@@ -592,14 +594,23 @@ for v in body.data.vertices:
         back=max(0,-math.sin(angle))**2;fold=0
         # Individual tension folds terminate naturally; no periodic whole-body
         # sine rings or regular longitudinal columns remain in the surface.
-        for px,pz,slope,amplitude,length,radius in [(-.095,1.265,.45,.008,.10,.012),(.11,1.222,-.38,.007,.095,.014),(-.13,1.005,.30,.009,.080,.013),(.060,.947,-.20,.008,.115,.016),(.155,.895,.35,.007,.065,.012)]:
+        for px,pz,slope,amplitude,length,radius in [(-.115,1.294,.58,.007,.090,.012),
+          (.122,1.272,-.58,.006,.085,.013),(-.067,1.195,.45,.008,.115,.017),
+          (.102,1.135,-.42,.006,.078,.014),(-.13,1.005,.30,.009,.080,.013),
+          (.060,.947,-.20,.008,.115,.016),(.155,.895,.35,.007,.065,.012)]:
             line=pz+slope*(v.co.x-px);along=math.exp(-((v.co.x-px)/length)**2)
             ridge=math.exp(-((v.co.z-line)/radius)**2)-.45*math.exp(-((v.co.z-line-.020)/(radius*1.5))**2)
             fold+=back*amplitude*along*ridge
         fold+=abs(math.cos(angle))*.004*math.exp(-((v.co.z-.98)/.08)**2)
         v.co.x*=1+fold/.22;v.co.y*=1+fold/.15
     if v.co.y<0:
-        v.co.y-=.004*math.exp(-((v.co.z-1.335)/.012)**2)
+        # A curved double-stitched yoke sits over the shoulder blades. Its
+        # folded edge is part of the cloth, avoiding floating piping or beads.
+        yoke=1.346-.09*v.co.x*v.co.x
+        v.co.y-=.0035*math.exp(-((v.co.z-yoke)/.008)**2)
+        v.co.y+=.0018*math.exp(-((v.co.z-yoke+.010)/.0045)**2)
+        for sign in [-1,1]:
+            v.co.y-=.005*math.exp(-((v.co.x-sign*.106)/.072)**2-((v.co.z-1.363)/.065)**2)
     if v.co.z<.88:
         v.co.z-=.022*max(0,-math.sin(angle))
 part(rounded_panel('cotton undershirt',[(-.074,.170,.96),(.074,.170,.96),(.094,.173,1.40),(.061,.137,1.463),(-.061,.137,1.463),(-.094,.173,1.40)],white,.006,.009),'spine')
@@ -611,16 +622,20 @@ for sign in [-1,1]:
     part(tube('pocket top seam',[(sign*.110,.159,1.297),(sign*.184,.138,1.299)],.0018,stitch,5),'spine')
 for z in [1.00,1.10,1.20,1.30]:
     part(sphere('shirt button',(-.081,.187,z),(.004,.002,.004),dark,8,4),'spine')
-# Neck is connected to jaw with a shaped trapezius transition.
-part(ring_mesh('neck',[((0,-.008,1.445),.087,.079),((0,-.014,1.49),.071,.072),((0,-.006,1.528),.072,.073)],skin,sides=24),'head')
+# The nape widens into the skull instead of ending in an upward-facing cone.
+# That former cone caught a bright horizontal highlight like a separate collar.
+part(ring_mesh('neck',[((0,-.014,1.445),.073,.066),((0,-.004,1.478),.062,.062),
+  ((0,-.002,1.513),.063,.074),((0,-.004,1.557),.071,.084)],skin,sides=32),'head')
 # Dense continuous anatomy carries the nose, orbital sockets, cheeks and
 # muzzle in one surface. Independent flat facial props caused the toy look.
 head_profile=[(1.582,.039,.046,.031),(1.608,.073,.073,.020),(1.649,.095,.101,.004),
- (1.702,.121,.116,-.002),(1.752,.126,.116,-.010),(1.790,.125,.113,-.017)]
+ (1.702,.119,.115,-.002),(1.752,.125,.117,-.010),(1.790,.124,.114,-.016)]
 def skull_section(z):
     if z>=1.790:
-        t=max(0,min(.99999,(z-1.790)/.117));r=math.sqrt(1-t*t)
-        return (.125*r,.113*r,-.017)
+        # The crown has a broad parietal plane and a less spherical occiput.
+        # Flattening the upper skull slightly preserves the exact actor height.
+        t=max(0,min(.99999,(z-1.790)/.117));r=math.sqrt(1-t**2.55)
+        return (.124*r,.114*r,-.016-.006*math.sin(t*math.pi))
     return smooth_section(head_profile,z)
 def face_relief(x,z):
     value=.013*math.exp(-(x/.016)**2-((z-1.736)/.050)**2)
@@ -643,16 +658,24 @@ head=part(ring_mesh('continuous sculpted head',head_rings,skin,sides=96),'head')
 for v in head.data.vertices:
     w,d,cy=skull_section(v.co.z);front=max(0,(v.co.y-cy)/d)
     v.co.y+=face_relief(v.co.x,v.co.z)*front*front
-hair_vertices=[];hair_faces=[];hair_segments=96;hair_rows=40
+hair_vertices=[];hair_faces=[];hair_segments=96;hair_rows=44
 for row in range(hair_rows+1):
     t=row/hair_rows
     for i in range(hair_segments):
         angle=i*math.tau/hair_segments
-        hairline=1.794-.062*max(0,-math.sin(angle))-.014*abs(math.cos(angle))+.0008*math.sin(angle*17)+.0005*math.sin(angle*29+.7)
+        back=max(0,-math.sin(angle));side=abs(math.cos(angle))
+        # A low tapered nape with shallow corners and a receding temple reads
+        # as clipped hair instead of a solid hemispherical helmet.
+        hairline=1.794-.073*back**.7-.013*side+.013*side**6
+        hairline+=.0012*math.sin(angle*17)+.0007*math.sin(angle*29+.7)
         z=hairline+(1.907-hairline)*t
         w,d,cy=skull_section(z)
-        relief=.00035*math.sin(angle*31+z*417)*math.cos(angle*19-z*311)
-        clearance=.0015+.001*min(1,t*10)+relief*.55*min(1,t*12)
+        # Closely sculpted, swept clumps give highlights a direction. Millimeter
+        # relief is kept inside the existing silhouette/seat clearance envelope.
+        growth=math.sin(min(1,t*3)*math.pi/2)
+        sweep=angle*37+4*math.sin(angle)-t*9
+        relief=(.0007*math.sin(sweep)+.00028*math.sin(angle*71-t*15))*growth
+        clearance=.0007+.0020*min(1,t*12)+relief
         hair_vertices.append((math.cos(angle)*(w+clearance),cy+math.sin(angle)*(d+clearance),z))
 for row in range(hair_rows):
     for i in range(hair_segments):
@@ -668,9 +691,11 @@ hair_fade.node_tree.links.new(attr.outputs['Color'],hair_fade.node_tree.nodes.ge
 for poly in scalp.data.polygons:
     for loop in poly.loop_indices:
         vertex=scalp.data.loops[loop].vertex_index;row=vertex//hair_segments
-        fade=max(0,1-row/4.5)
-        noise=.88+.12*math.sin(vertex*2.399)
-        c=Vector((.032,.024,.017))*(1-fade)+Vector((.25,.14,.084))*fade
+        # Continuous clipper fade over 22–28mm at the nape, fine enough that it
+        # cannot turn into the previous hard skin-colored horizontal band.
+        fade=max(0,1-row/7.2)**1.55
+        noise=.94+.045*math.sin(vertex*2.399)+.015*math.sin(vertex*.27)
+        c=Vector((.028,.020,.014))*(1-fade)+Vector((.24,.135,.079))*fade
         color.data[loop].color=(*[v*noise for v in c],1)
 
 for sign in [-1,1]:
@@ -755,11 +780,11 @@ for sign,side in [(-1,'L'),(1,'R')]:
         part(tube('shoe side seam',[(x+sx*.079,-.06,.11),(x+sx*.094,.04,.115),(x+sx*.085,.14,.101)],.002,stitch,5),f'shin{side}')
     # Relaxed full shirt sleeve, rolled back just above the wrist. Curved
     # centers and a distributed elbow blend preserve drape while walking/sitting.
-    sleeve_profile=[(.965,.075,.055,.060),(.990,.067,.068,.071),
-      (1.025,.050,.073,.077),(1.060,.030,.071,.079),(1.095,.012,.078,.088),
-      (1.125,-.005,.081,.093),(1.17,-.012,.086,.092),(1.235,-.010,.088,.098),
-      (1.31,-.008,.090,.099),(1.375,-.004,.087,.097),
-      (1.420,0,.076,.084),(1.449,0,.046,.057),(1.457,0,.015,.025)]
+    sleeve_profile=[(.965,.075,.055,.060),(.990,.067,.066,.069),
+      (1.025,.050,.070,.074),(1.060,.030,.069,.076),(1.095,.012,.073,.083),
+      (1.125,-.005,.075,.088),(1.17,-.012,.080,.088),(1.235,-.010,.082,.092),
+      (1.31,-.008,.083,.092),(1.375,-.004,.082,.091),
+      (1.416,0,.071,.078),(1.442,0,.046,.057),(1.455,0,.015,.025)]
     sleeve_rings=[]
     for j in range(len(sleeve_profile)-1):
         a,b=sleeve_profile[j:j+2]
@@ -771,20 +796,46 @@ for sign,side in [(-1,'L'),(1,'R')]:
     arm=part(ring_mesh('relaxed long sleeve',sleeve_rings,shirt,sides=36),f'arm{side}')
     for v in arm.data.vertices:
         z=v.co.z;cx=ax+sign*.085*max(0,min(1,(1.40-z)/.26));a=math.atan2(v.co.y+.005,v.co.x-cx)
-        fold=.0045*math.sin(z*87+a*2.6)*math.exp(-((z-1.085)/.12)**2)
+        fold=.0038*math.sin(z*87+a*2.6)*math.exp(-((z-1.075)/.085)**2)
+        # Two oblique folds compress the elbow; long upper-arm drape has no
+        # repeated rings, which previously made the sleeve resemble a capsule.
+        fold+=.004*math.sin(z*58-a*1.9)*math.exp(-((z-1.135)/.055)**2)
+        fold-=.0035*math.exp(-((a+1.7)/.38)**2)*math.exp(-((z-1.31)/.11)**2)
         v.co.x+=(v.co.x-cx)*fold/.085;v.co.y+=math.sin(a)*fold
     ax+=sign*.085
     part(ring_mesh('rolled cotton cuff',[((ax,.076,.955),.055,.060),((ax,.069,.976),.067,.071),((ax,.061,.999),.068,.071)],shirt,sides=32),f'forearm{side}')
     part(tube('cuff folded edge',[(ax+math.cos(i*math.tau/32)*.067,.070+math.sin(i*math.tau/32)*.071,.974) for i in range(32)],.004,shirt,7,True),f'forearm{side}')
-    part(ring_mesh('anatomical forearm',[((ax,.083,.837),.035,.032),((ax,.081,.883),.041,.038),((ax,.075,.93),.048,.043),((ax,.068,.986),.053,.052)],skin,sides=24),f'forearm{side}')
-    part(ring_mesh('palm',[((ax,.102,.756),.036,.027),((ax,.093,.782),.042,.030),((ax,.084,.822),.040,.032),((ax,.083,.856),.034,.031)],skin,sides=20),f'forearm{side}')
+    hand_profile=[(.756,.102,.034,.024),(.779,.096,.040,.028),(.812,.087,.037,.030),
+      (.840,.083,.030,.028),(.856,.083,.031,.029),(.883,.081,.040,.037),
+      (.930,.075,.048,.043),(.986,.068,.053,.052)]
+    hand_rings=[]
+    for j in range(len(hand_profile)-1):
+        for k in range(5):
+            z=hand_profile[j][0]+(hand_profile[j+1][0]-hand_profile[j][0])*k/5
+            cy,w,d=smooth_section(hand_profile,z);hand_rings.append(((ax,cy,z),w,d))
+    z,cy,w,d=hand_profile[-1];hand_rings.append(((ax,cy,z),w,d))
+    palm=part(ring_mesh('continuous wrist and palm',hand_rings,skin,sides=28),f'forearm{side}')
+    for v in palm.data.vertices:
+        # Flatten the back of the hand and retain a soft thenar pad.
+        if v.co.z<.837 and v.co.y<.085:v.co.y=.085+(v.co.y-.085)*.74
     for finger in range(4):
-        fx=ax+(finger-1.5)*.023
-        length=[.070,.088,.083,.064][finger]
+        digit=finger if sign<0 else 3-finger
+        fx=ax+(finger-1.5)*.019
+        length=[.065,.078,.073,.055][digit]
+        curl=[.001,.004,.008,.010][digit]
         # Knuckle, middle joint and curled distal pad are one continuous digit.
-        finger_rings=[((fx,.146,.775-length),.0055,.007),((fx,.149,.792-length),.007,.009),
-          ((fx,.131,.782-length*.60),.008,.0095),((fx,.114,.766-length*.24),.008,.010),((fx,.102,.765),.008,.011)]
-        part(ring_mesh('articulated finger',finger_rings,skin,sides=12),f'forearm{side}')
+        finger_rings=[((fx,.139+curl,.773-length),.0045,.0055),
+          ((fx,.144+curl,.782-length),.0073,.0080),
+          ((fx,.137+curl,.790-length),.0080,.0090),
+          ((fx,.125+curl*.6,.780-length*.57),.0088,.0102),
+          ((fx,.112+curl*.3,.769-length*.24),.0082,.0096),
+          ((fx,.102,.769),.0087,.0105)]
+        part(ring_mesh('relaxed anatomical finger',finger_rings,skin,sides=16),f'forearm{side}')
+        # Fitted dorsal nail plates are restrained skin tones, not bright dots.
+        nail_points=[(fx+math.sin(i*math.tau/16)*.0047,
+          .1345+curl+math.cos(i*math.tau/16)*.0005,
+          .7835-length+math.cos(i*math.tau/16)*.0045) for i in range(16)]
+        part(smooth(mesh('fitted fingernail',nail_points,[tuple(range(16))],fingernail)),f'forearm{side}')
     part(ring_mesh('thumb saddle',[((ax-sign*.063,.141,.769),.008,.011),((ax-sign*.065,.12,.784),.011,.014),
       ((ax-sign*.052,.101,.804),.015,.019),((ax-sign*.029,.091,.822),.020,.024)],skin,sides=16),f'forearm{side}')
 
@@ -806,13 +857,15 @@ bpy.context.view_layer.objects.active=main_parts[0];bpy.ops.object.join()
 garment=main_parts[0];garment.name='continuous overshirt'
 remesh=garment.modifiers.new('unified cloth shoulders','REMESH');remesh.mode='VOXEL';remesh.voxel_size=.0045
 bpy.ops.object.modifier_apply(modifier=remesh.name)
-soften=garment.modifiers.new('relaxed cotton surface','SMOOTH');soften.factor=.30;soften.iterations=2
+soften=garment.modifiers.new('relaxed cotton surface','SMOOTH');soften.factor=.36;soften.iterations=3
 bpy.ops.object.modifier_apply(modifier=soften.name)
 decimate=garment.modifiers.new('cloth topology budget','DECIMATE');decimate.ratio=.40
 bpy.ops.object.modifier_apply(modifier=decimate.name)
 smooth(garment);cloth_uv(garment);parts.append((garment,'spine'))
 
-# Bind lofted limbs with soft knee/hip transitions, preserving authored actions.
+# Bring every surface into the common bind space before sculpting skin joins.
+# The neck/head and palm/wrist used to remain disconnected nested shells, which
+# exposed a pale hard ring in every pose and read as separate toy joints.
 for o,bone in parts:
     bpy.ops.object.select_all(action='DESELECT');o.select_set(True);bpy.context.view_layer.objects.active=o
     bpy.ops.object.transform_apply(location=True,rotation=True,scale=True)
@@ -820,6 +873,27 @@ for o,bone in parts:
         for v in o.data.vertices:
             v.co.z-=.0815
             v.co.x*=.84
+
+def unified_skin(name,bone,prefixes,voxel,ratio):
+    global parts
+    selected=[o for o,b in parts if b==bone and any(o.name.startswith(p) for p in prefixes)]
+    parts=[(o,b) for o,b in parts if o not in selected]
+    bpy.ops.object.select_all(action='DESELECT')
+    for o in selected:o.select_set(True)
+    bpy.context.view_layer.objects.active=selected[0];bpy.ops.object.join()
+    surface=selected[0];surface.name=name
+    remesh=surface.modifiers.new('continuous anatomical skin','REMESH');remesh.mode='VOXEL';remesh.voxel_size=voxel
+    bpy.ops.object.modifier_apply(modifier=remesh.name)
+    soften=surface.modifiers.new('soft skin junctions','SMOOTH');soften.factor=.32;soften.iterations=2
+    bpy.ops.object.modifier_apply(modifier=soften.name)
+    decimate=surface.modifiers.new('anatomy topology budget','DECIMATE');decimate.ratio=ratio
+    bpy.ops.object.modifier_apply(modifier=decimate.name)
+    smooth(surface);parts.append((surface,bone))
+
+unified_skin('continuous head and neck','head',('neck','continuous sculpted head'),.0024,.08)
+
+# Bind lofted limbs with soft knee/hip transitions, preserving authored actions.
+for o,bone in parts:
     if not o.data.color_attributes.get('HairColor'):
         neutral=o.data.color_attributes.new(name='HairColor',type='FLOAT_COLOR',domain='CORNER')
         for item in neutral.data:item.color=(1,1,1,1)
@@ -831,13 +905,18 @@ for o,bone in parts:
             t=max(0,min(1,(v.co.z-.41)/.15))
             g.add([v.index],t,'REPLACE');shin.add([v.index],1-t,'REPLACE')
     if o.name=='continuous overshirt':
-        for name in ['armL','armR','forearmL','forearmR']:o.vertex_groups.new(name=name)
+        for name in ['hips','armL','armR','forearmL','forearmR']:o.vertex_groups.new(name=name)
         for v in o.data.vertices:
             side='L' if v.co.x<0 else 'R'
             shoulder=max(0,min(1,(abs(v.co.x)-.16)/.08))
             if v.co.z<1.25:shoulder=max(0,min(1,(abs(v.co.x)-.235)/.055))
             elbow=max(0,min(1,(1.19-v.co.z)/.14))
-            g.add([v.index],1-shoulder,'REPLACE')
+            # The shirt tail follows the pelvis while its upper half follows
+            # the spine. A rigid spine-bound hem let jeans pass through it
+            # when the existing seated clip bends the torso forward.
+            hip=max(0,min(1,(1.12-v.co.z)/.19))
+            g.add([v.index],(1-shoulder)*(1-hip),'REPLACE')
+            o.vertex_groups['hips'].add([v.index],(1-shoulder)*hip,'REPLACE')
             o.vertex_groups['arm'+side].add([v.index],shoulder*(1-elbow),'REPLACE')
             o.vertex_groups['forearm'+side].add([v.index],shoulder*elbow,'REPLACE')
     modifier=o.modifiers.new('skin','ARMATURE');modifier.object=rig;o.parent=rig

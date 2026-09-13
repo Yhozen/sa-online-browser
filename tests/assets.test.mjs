@@ -5,7 +5,7 @@ import { readFileSync } from 'node:fs';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 async function load(name) {
-  const bytes=readFileSync(`apps/browser/public/assets/${name}.glb`);
+  const bytes=readFileSync(`${process.env.ASSET_TEST_DIR || "apps/browser/public/assets"}/${name}.glb`);
   const gltf=await new GLTFLoader().parseAsync(bytes.buffer.slice(bytes.byteOffset,bytes.byteOffset+bytes.byteLength),'');
   const root=new THREE.Group();gltf.scene.rotation.x=Math.PI/2;root.add(gltf.scene);root.updateMatrixWorld(true);
   return {root,gltf};

@@ -3,6 +3,7 @@ import * as THREE from "three";
 import { plantVerges } from "./verges";
 import { roadDetail } from "./road-detail";
 import { buildHorizon } from "./horizon";
+import { gardenPlacements, vergeGardenPlacements } from "./garden";
 import type { SceneManifest } from "../../../packages/shared/scene";
 import { instantiateStatic, surfaceMaterials, assetStats } from "./assets";
 export function buildEnvironment(scene: THREE.Scene, manifest: SceneManifest) {
@@ -182,6 +183,7 @@ export function buildEnvironment(scene: THREE.Scene, manifest: SceneManifest) {
     roadDetail(scene, manifest);
     plantVerges(scene, manifest, surfaceMaterials.get("grass"));
     instantiateStatic(scene, [...manifest.houses, ...manifest.props]);
+    instantiateStatic(scene, [...gardenPlacements(manifest), ...vergeGardenPlacements(manifest)]);
     for (const b of manifest.barriers.filter((b) =>
       b.id?.startsWith("boundary"),
     ))

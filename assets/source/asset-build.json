@@ -1,0 +1,109 @@
+{
+  "version": 1,
+  "models": {
+    "tree": {
+      "generatedAt": "2026-09-13T03:46:25.689Z",
+      "blender": {
+        "version": "5.2.1",
+        "buildHash": "9e2066aef7ef",
+        "distribution": "native-macos",
+        "platform": "darwin",
+        "architecture": "arm64",
+        "executableSha256": "ea651e507c6b197df0e234bfa04e5ed43e7f4d498267a7df93fcb38f21928a5c"
+      },
+      "recipes": {
+        "tools/build-assets.mjs": "a7803adf33e1ce694e3b8646336b7bcf5ee558a2cb9b207bd8fe8974facf05b2",
+        "tools/assets/build.py": "5113f422b62de8bbe3482c9f9ad290f8d3e6bef032cb09ac36dbefc321be720b",
+        "tools/assets/environment-kit.py": "0abf148e1f20c488534af5c0aa22dc0dec301ad84dd58ec7f7fdfea297c0de15",
+        "tools/assets/heroes.py": "53f73f2441f1ee646db930cd21ace2ef132ab6df3aaa37c6f7f5d159d58edfca",
+        "tools/assets/garden-kit.py": "819ffb70f9c7185d6e40f1ca99cae42213ca00d14aee788891ac41a4afd216f1"
+      },
+      "glb": {
+        "bytes": 672908,
+        "sha256": "4e4dc0b9a2ee0535126f0e7ad1631a809facacbab83d09ae5bf1131f6e89c41e"
+      },
+      "blend": {
+        "bytes": 458795,
+        "sha256": "dd1e3dc1f770474c6fb1b35adf05def98853eacaeb17060c1649dfccaf44dd4d"
+      }
+    },
+    "palm": {
+      "generatedAt": "2026-09-13T03:46:25.689Z",
+      "blender": {
+        "version": "5.2.1",
+        "buildHash": "9e2066aef7ef",
+        "distribution": "native-macos",
+        "platform": "darwin",
+        "architecture": "arm64",
+        "executableSha256": "ea651e507c6b197df0e234bfa04e5ed43e7f4d498267a7df93fcb38f21928a5c"
+      },
+      "recipes": {
+        "tools/build-assets.mjs": "a7803adf33e1ce694e3b8646336b7bcf5ee558a2cb9b207bd8fe8974facf05b2",
+        "tools/assets/build.py": "5113f422b62de8bbe3482c9f9ad290f8d3e6bef032cb09ac36dbefc321be720b",
+        "tools/assets/environment-kit.py": "0abf148e1f20c488534af5c0aa22dc0dec301ad84dd58ec7f7fdfea297c0de15",
+        "tools/assets/heroes.py": "53f73f2441f1ee646db930cd21ace2ef132ab6df3aaa37c6f7f5d159d58edfca",
+        "tools/assets/garden-kit.py": "819ffb70f9c7185d6e40f1ca99cae42213ca00d14aee788891ac41a4afd216f1"
+      },
+      "glb": {
+        "bytes": 1028776,
+        "sha256": "a223240b44469e2d730be38e561a5997609555158e4f94b3526171ca8474f130"
+      },
+      "blend": {
+        "bytes": 808324,
+        "sha256": "34cb0c0abcef1bc9312eeb547e4170308fe0b0b0d51ad22a7e4b80ad8d44316f"
+      }
+    },
+    "garden-low": {
+      "generatedAt": "2026-09-13T03:12:00.089Z",
+      "blender": {
+        "version": "5.2.1",
+        "buildHash": "9e2066aef7ef",
+        "distribution": "native-macos",
+        "platform": "darwin",
+        "architecture": "arm64",
+        "executableSha256": "ea651e507c6b197df0e234bfa04e5ed43e7f4d498267a7df93fcb38f21928a5c"
+      },
+      "recipes": {
+        "tools/build-assets.mjs": "6ca1821f636da94bd2147f6a8d07289fabd2bf614ffeba9d85a24432936ad7ac",
+        "tools/assets/build.py": "5113f422b62de8bbe3482c9f9ad290f8d3e6bef032cb09ac36dbefc321be720b",
+        "tools/assets/environment-kit.py": "8b3d6e6261f52d72e1ecc6e1f2b9a869c38977917a4c89a9e7dd560c860c3128",
+        "tools/assets/heroes.py": "176150afacfe9b03b952865dfcf1f6b392ae528b49b10ca7865ed758a9fb2519",
+        "tools/assets/garden-kit.py": "819ffb70f9c7185d6e40f1ca99cae42213ca00d14aee788891ac41a4afd216f1"
+      },
+      "glb": {
+        "bytes": 216084,
+        "sha256": "bd515240ae8f8dcb05d539a3c354a114e9aeb4d0c10ee682a7233a280f605e56"
+      },
+      "blend": {
+        "bytes": 208742,
+        "sha256": "c3e22d04a276aa0c987a4218d04f2bc6ba90a5f3f4d30ac3e12f701c1e151fc5"
+      }
+    },
+    "neighbor": {
+      "generatedAt": "2026-09-13T03:30:27.079Z",
+      "blender": {
+        "version": "5.2.1",
+        "buildHash": "9e2066aef7ef",
+        "distribution": "native-macos",
+        "platform": "darwin",
+        "architecture": "arm64",
+        "executableSha256": "ea651e507c6b197df0e234bfa04e5ed43e7f4d498267a7df93fcb38f21928a5c"
+      },
+      "recipes": {
+        "tools/build-assets.mjs": "3f1dce54ba955f242f04a06519e82baa9207dec9cdc54109a8214e1d564ed3f9",
+        "tools/assets/build.py": "5113f422b62de8bbe3482c9f9ad290f8d3e6bef032cb09ac36dbefc321be720b",
+        "tools/assets/environment-kit.py": "b3f622b244ea80cb476d9fbfb36afa232828760cf455bc91eb8ab428d7978fde",
+        "tools/assets/heroes.py": "53f73f2441f1ee646db930cd21ace2ef132ab6df3aaa37c6f7f5d159d58edfca",
+        "tools/assets/garden-kit.py": "819ffb70f9c7185d6e40f1ca99cae42213ca00d14aee788891ac41a4afd216f1"
+      },
+      "glb": {
+        "bytes": 6891620,
+        "sha256": "951eb4a4f5ce608533f09cd4cf23b384c6568f9c7d148226901fb3723db7c4c9"
+      },
+      "blend": {
+        "bytes": 3528577,
+        "sha256": "1942489c5a06d9d550dcf7e70dcbc311ffa1df9174bb5e8f57d66c7e5c0116db"
+      }
+    }
+  }
+}
