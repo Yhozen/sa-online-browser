@@ -8,7 +8,74 @@ The browser renders and simulates locally. A Node WebSocket gateway starts one n
 
 The image above is an actual Standard-mode cloud desktop capture. The [visual upgrade record](docs/visual-upgrade-results.md) distinguishes tested behavior from the remaining art target; [earlier neighborhood results](docs/neighborhood-results.md) are historical. The original [concept reference](assets/reference/arroyo-concept.png) remains part of the editable asset record.
 
-## Run
+## Run in Docker
+
+Docker keeps the compiler, CMake, Python, the pinned open.mp fixture and the
+native worker inside an image, so none of them are installed on your own
+machine. Your browser stays on the host, where it renders the scene on your
+real GPU instead of the software rasterizer the cloud desktop needs.
+
+Start the server:
+
+```sh
+docker compose --profile server up --build
+```
+
+Then open <http://127.0.0.1:3000> in your own browser, and a second window for
+the second player. Choose distinct nicknames and join. `Ctrl+C` stops it.
+
+For development, start the toolchain container and work inside it:
+
+```sh
+docker compose --profile dev up -d --build dev
+docker compose --profile dev exec dev bash
+# inside the container:
+npm run dev:poc
+```
+
+The image arrives already provisioned, so there is no setup step:
+`npm run typecheck`, `npm run test:gateway`, `npm run build:browser`,
+`npm run verify:poc` and `npm run dev:poc` all work immediately. The source
+directories are mounted from the checkout, so edits on the host apply to the
+next command; verification output appears in `artifacts/`. Stop the container
+with `docker compose --profile dev down`.
+
+Everything generated stays inside the container: `node_modules`, the
+provisioned `.runtime`, the RakNet checkout, the native build and the browser
+bundle. That split is deliberate. Docker Desktop for Mac silently drops a
+volume mounted inside a bind mount and writes to the checkout instead, so the
+checkout is not mounted at `/work` as a whole; `docker-compose.yml` lists
+source paths individually. Adding a new source directory means adding it
+there too. Incremental state lives in the container's own filesystem, so keep
+the container between sessions rather than using `run --rm`, and rebuild the
+image after changing `package.json` or another file that is not mounted.
+
+Both images are `linux/amd64`: the pinned open.mp release is an i386
+executable and the QEMU that runs it is an x86_64 binary. On an Apple Silicon
+Mac, Docker Desktop emulates that platform, so builds and the fixture run
+noticeably slower than on native hardware. Browser rendering is unaffected —
+it happens on the host.
+
+The fixture's own directory is a `tmpfs` mount in both services. Its 32-bit
+executable cannot represent the 64-bit directory offsets that overlayfs and
+ext4 report and aborts while scanning its components; `tmpfs` keeps those
+offsets inside a 32-bit `long`. Files the server writes there, including its
+`log.txt`, do not survive a restart, but the supervisor's copy of its output
+in `.runtime/logs/server.log` does.
+
+Both services publish port 3000 to `127.0.0.1` only, so the fixture is not
+reachable from the local network. Set `POC_PORT` to publish elsewhere and
+`POC_SCENE` to select `yard` instead of `neighborhood`.
+
+`npm run open:poc` is for the cloud desktop and does not apply here; the
+container has no display, and your host browser is the point. Blender is not
+installed either, so `npm run build:assets` needs the cloud workspace.
+
+To put this on the internet instead of localhost, see
+[deployment instructions](DEPLOYMENT.md): the browser client goes to Vercel and
+this same `server` image runs the gateway and fixture on a container host.
+
+## Run on the cloud workspace
 
 On the supplied Amazon Linux cloud workspace with Node 24 and passwordless sudo:
 

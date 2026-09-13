@@ -1,0 +1,25 @@
+# Build context excludes VCS data, generated trees and host-installed
+# dependencies. The development image receives the checkout as a bind mount,
+# so excluding editable art sources here only slims the baked server image.
+.git
+.gitignore
+.context
+.agents
+.runtime
+node_modules
+native/build*
+native/vendor
+apps/browser/dist
+artifacts
+test-results
+playwright-report
+docs
+assets
+*.log
+*.blend1
+.dream-loop
+.env
+.env.*
+Dockerfile
+.dockerignore
+docker-compose.yml

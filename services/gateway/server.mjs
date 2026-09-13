@@ -25,14 +25,28 @@ export function validateMessage(m) {
     && ['onFoot', 'driver', 'passenger'].includes(m.mode) && Number.isInteger(m.keys) && m.keys >= 0 && m.keys <= 65535
     && Number.isInteger(m.vehicleId) && m.vehicleId >= 0 && m.vehicleId <= 1999 && Number.isInteger(m.seat) && m.seat >= -1 && m.seat <= 7;
 }
-export function createGateway({ port = 3000, host = '127.0.0.1', gameHost = '127.0.0.1', gamePort = 7777, sceneId = process.env.POC_SCENE || 'neighborhood', workerPath = path.join(ROOT, 'native/build/poc-worker') } = {}) {
+export function createGateway({ port = 3000, host = '127.0.0.1', gameHost = '127.0.0.1', gamePort = 7777, sceneId = process.env.POC_SCENE || 'neighborhood', workerPath = path.join(ROOT, 'native/build/poc-worker'), allowedOrigins = process.env.POC_ALLOWED_ORIGINS || '' } = {}) {
   const scene = loadScene(sceneId);
+  // When a CDN serves the client, the page origin is not the gateway's own, so
+  // that origin has to be named explicitly. Unset keeps the same-origin-only
+  // rule, which is what the local and Docker deployments rely on.
+  const permitted = new Set(allowedOrigins.split(',').map(entry => entry.trim().replace(/\/+$/, '')).filter(Boolean));
+  function originAllowed(origin, hostHeader) {
+    if (!origin) return true;
+    let parsed;
+    try { parsed = new URL(origin); } catch { return false; }
+    return parsed.host === hostHeader || permitted.has(parsed.origin);
+  }
   mkdirSync(path.dirname(LOG), { recursive: true });
   let epochCounter = Date.now();
   const sessions = new Map(), workers = new Set();
   function log(type, details = {}) { const line = JSON.stringify({ time: new Date().toISOString(), type, ...details }); appendFileSync(LOG, line + '\n'); console.log(line); }
   const server = http.createServer(async (req, res) => {
-    if (req.url === '/scene') { res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }); res.end(JSON.stringify(scene)); return; }
+    if (req.url === '/scene') {
+      const headers = { 'Content-Type': 'application/json', 'Cache-Control': 'no-store', 'Vary': 'Origin' };
+      if (req.headers.origin && originAllowed(req.headers.origin, req.headers.host)) headers['Access-Control-Allow-Origin'] = req.headers.origin;
+      res.writeHead(200, headers); res.end(JSON.stringify(scene)); return;
+    }
     if (req.url === '/health') { res.writeHead(200, { 'Content-Type': 'application/json' }); res.end(JSON.stringify({ ok: true, sessions: sessions.size, workers: workers.size })); return; }
     if (req.method !== 'GET' && req.method !== 'HEAD') { res.writeHead(405); res.end(); return; }
     try {
@@ -47,8 +61,7 @@ export function createGateway({ port = 3000, host = '127.0.0.1', gameHost = '127
   });
   const wss = new WebSocketServer({ noServer: true, maxPayload: 16384, perMessageDeflate: false });
   server.on('upgrade', (req, socket, head) => {
-    let allowed = req.url === '/ws';
-    if (req.headers.origin) { try { const origin = new URL(req.headers.origin); allowed &&= origin.host === req.headers.host; } catch { allowed = false; } }
+    const allowed = req.url === '/ws' && originAllowed(req.headers.origin, req.headers.host);
     if (!allowed || sessions.size >= 8) { socket.destroy(); return; }
     wss.handleUpgrade(req, socket, head, ws => wss.emit('connection', ws));
   });
@@ -127,7 +140,7 @@ export function createGateway({ port = 3000, host = '127.0.0.1', gameHost = '127
   });
   return {
     server,
-    start: () => new Promise((resolve, reject) => { server.once('error', reject); server.listen(port, host, () => { log('gatewayReady', { host, port: server.address().port }); resolve(server.address()); }); }),
+    start: () => new Promise((resolve, reject) => { server.once('error', reject); server.listen(port, host, () => { log('gatewayReady', { host, port: server.address().port, allowedOrigins: [...permitted] }); resolve(server.address()); }); }),
     close: async () => {
       for (const session of sessions.values()) session.finish('Gateway stopped.');
       const exited = [...workers].map(child => new Promise(resolve => child.once('close', resolve)));
@@ -136,7 +149,7 @@ export function createGateway({ port = 3000, host = '127.0.0.1', gameHost = '127
   };
 }
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
-  const gateway = createGateway({ port: Number(process.env.POC_PORT || 3000), gamePort: Number(process.env.POC_GAME_PORT || 7777) });
+  const gateway = createGateway({ port: Number(process.env.POC_PORT || 3000), host: process.env.POC_HOST || '127.0.0.1', gamePort: Number(process.env.POC_GAME_PORT || 7777) });
   await gateway.start();
   let closing = false;
   const shutdown = async () => { if (closing) return; closing = true; await gateway.close(); };
