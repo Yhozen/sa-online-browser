@@ -20,8 +20,10 @@ export async function warmupActors(renderer: THREE.WebGLRenderer, scene: THREE.S
   const target = new THREE.WebGLRenderTarget(size.x, size.y, {type: THREE.HalfFloatType});
   const previous = renderer.getRenderTarget();
   try {
-    await renderer.compileAsync(scene, camera);
     renderer.setRenderTarget(target);
+    // Compile the same linear render-target variants used by the compositor.
+    // Canvas sRGB/tone-mapped variants would force another synchronous compile.
+    await renderer.compileAsync(scene, camera);
     renderer.render(scene, camera);
     // Once per admission screen: complete uploads while input/join are disabled.
     renderer.getContext().finish();

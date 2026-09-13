@@ -6,6 +6,12 @@ export class SimulationClock {
   constructor(now: number, private readonly step: (seconds: number) => void) {
     this.previous = now;
   }
+  /** Presentation stays one fixed step behind, filling the time between ticks. */
+  get alpha(): number { return Math.max(0, Math.min(1, this.remainder * 60)); }
+  /** A timer can advance beyond a queued rAF timestamp, into the next interval. */
+  alphaAt(now: number): number {
+    return Math.min(1, (this.remainder + Math.min(0, now - this.previous) / 1000) * 60);
+  }
   reset(now: number) { this.previous = now; this.remainder = 0; }
   advance(now: number): boolean {
     // rAF timestamps can precede an input/timer callback that already advanced us.

@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import * as THREE from "three";
 import { SimulationClock } from "./simulation-clock";
+import { InterpolatedPose } from "./interpolated-pose";
+import { SnapshotPose } from "./snapshot-pose";
 import { nativeAntialias } from "./antialias";
 import { installAtmosphere, updateSun } from "./lighting";
 import { createRenderer, applyQuality } from "./graphics";
@@ -47,7 +49,7 @@ const renderer = createRenderer();
 renderer.setPixelRatio(devicePixelRatio);
 renderer.setSize(innerWidth, innerHeight);
 renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.shadowMap.type = THREE.PCFShadowMap;
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.domElement.tabIndex = 0;
 renderer.domElement.setAttribute(
@@ -66,6 +68,7 @@ interface Peer {
   streamed: boolean;
   mesh: THREE.Group;
   label: HTMLDivElement;
+  pose: SnapshotPose;
 }
 interface Vehicle {
   id: number;
@@ -74,6 +77,7 @@ interface Vehicle {
   rotation: Rotation;
   velocity: Vec3;
   mesh: THREE.Group;
+  pose: SnapshotPose;
 }
 const self: PlayerState & {
   id: number | null;
@@ -96,6 +100,7 @@ const self: PlayerState & {
 const peers = new Map<number, Peer>(),
   vehicles = new Map<number, Vehicle>(),
   names = new Map<number, string>();
+const localPose = new InterpolatedPose(self);
 const received: Record<string, number> = {},
   chats: {
     id?: number;
@@ -232,7 +237,7 @@ function clearWorld() {
   sequence = 0;
   controlRevision = 0;
   lastServerSequence = -1;
-  simulationClock.reset(performance.now());
+  resetLocalPresentation();
 }
 function disconnect(reason: string) {
   console.info("Arroyo session ended:", reason);
@@ -263,6 +268,7 @@ function ensurePeer(id: number) {
       streamed: false,
       mesh: capsule(id % 2),
       label,
+      pose: new SnapshotPose(),
     };
     p.mesh.visible = false;
     peers.set(id, p);
@@ -310,6 +316,7 @@ function handle(m: ServerMessage) {
       self.vehicleId = 0;
       self.seat = 0;
       self.velocity = [0, 0, 0];
+      resetLocalPresentation();
       selfMesh.visible = true;
       renderer.domElement.focus();
       break;
@@ -323,6 +330,7 @@ function handle(m: ServerMessage) {
     case "playerRemove": {
       const p = peers.get(m.id!);
       if (p) {
+        if (p.state.mode === "driver") stopRemoteVehicle(p.state.vehicleId);
         removeMesh(p.mesh);
         p.label.remove();
         peers.delete(p.id);
@@ -333,11 +341,18 @@ function handle(m: ServerMessage) {
     case "playerState":
       if (m.id !== undefined && m.id !== self.id && m.position) {
         const p = ensurePeer(m.id);
+        const previous = p.state;
         p.state = {
           ...p.state,
           ...m,
           position: [...m.position],
         } as PlayerState;
+        const now = performance.now();
+        if (previous.mode === "driver" && (p.state.mode !== "driver" || previous.vehicleId !== p.state.vehicleId))
+          stopRemoteVehicle(previous.vehicleId);
+        if (!p.streamed || previous.mode !== p.state.mode || previous.vehicleId !== p.state.vehicleId)
+          p.pose.reset(p.state, now);
+        else p.pose.push(p.state, now);
         p.streamed = true;
         p.mesh.visible = true;
         if (p.mesh.position.lengthSq() === 0)
@@ -355,6 +370,7 @@ function handle(m: ServerMessage) {
             rotation: rotationFromHeading(((m.heading ?? 0) * Math.PI) / 180),
             velocity: [0, 0, 0],
             mesh: makeCar(),
+            pose: new SnapshotPose(),
           };
           vehicles.set(m.id, v);
         } else {
@@ -363,6 +379,7 @@ function handle(m: ServerMessage) {
         }
         v.mesh.position.set(...v.position);
         setRotation(v.mesh, v.rotation);
+        v.pose.reset(v, performance.now());
       }
       break;
     case "vehicleRemove": {
@@ -380,6 +397,8 @@ function handle(m: ServerMessage) {
         if (m.rotation) v.rotation = [...m.rotation];
         if (m.velocity) v.velocity = [...m.velocity];
         else if (m.position) v.velocity = [0, 0, 0]; // Server position corrections stop old motion.
+        if (m.velocity) v.pose.push(v, performance.now());
+        else v.pose.reset(v, performance.now());
         if (self.mode !== "onFoot" && self.vehicleId === v.id) {
           self.position = [...v.position];
           self.rotation = [...v.rotation];
@@ -388,8 +407,10 @@ function handle(m: ServerMessage) {
           // Received velocity describes the vehicle; deriving it from an
           // occluded tab's render delta creates a spurious speed spike.
           self.velocity = [...v.velocity];
-          if (self.mode === "driver") speed = 0;
-          else {
+          if (self.mode === "driver") {
+            speed = 0;
+            resetLocalPresentation();
+          } else {
             // Passenger replication must continue even when Chrome
             // throttles rendering in a visible but occluded window.
             // Publishing here resets the shared frame-send deadline.
@@ -408,7 +429,6 @@ function handle(m: ServerMessage) {
       toast(m.text ?? "");
       break;
     case "selfPosition":
-      simulationClock.reset(performance.now());
       if (m.position) {
         self.position = [...m.position];
         self.velocity = [0, 0, 0];
@@ -419,14 +439,19 @@ function handle(m: ServerMessage) {
           if (v) v.position = [...self.position];
         }
       }
+      resetLocalPresentation();
       break;
     case "selfHeading":
-      simulationClock.reset(performance.now());
       heading = ((m.heading ?? 0) * Math.PI) / 180;
+      self.heading = heading;
       self.rotation = rotationFromHeading(heading);
+      if (self.mode === "driver") {
+        const v = vehicles.get(self.vehicleId);
+        if (v) v.rotation = [...self.rotation];
+      }
+      resetLocalPresentation();
       break;
     case "seat": {
-      simulationClock.reset(performance.now());
       self.vehicleId = m.vehicleId ?? 0;
       self.seat = m.seat ?? 0;
       self.mode = self.seat === 0 ? "driver" : "passenger";
@@ -437,13 +462,18 @@ function handle(m: ServerMessage) {
         self.rotation = [...v.rotation];
         heading = headingFromRotation(v.rotation);
       }
+      self.heading = heading;
+      resetLocalPresentation();
       keys.clear();
       break;
     }
     case "exitVehicle": {
-      simulationClock.reset(performance.now());
       const v = vehicles.get(self.vehicleId);
       // Explicit server placements win; otherwise choose a nearby clear doorway.
+      if (v && self.mode === "driver") {
+        v.velocity = [0, 0, 0];
+        v.pose.reset(v, performance.now());
+      }
       if (m.position) self.position = [...m.position];
       else if (v) self.position = freeExitPosition(v, self.seat);
       self.mode = "onFoot";
@@ -451,6 +481,7 @@ function handle(m: ServerMessage) {
       self.seat = 0;
       self.velocity = [0, 0, 0];
       speed = 0;
+      resetLocalPresentation();
       keys.clear();
       break;
     }
@@ -465,6 +496,12 @@ function handle(m: ServerMessage) {
       socket?.close();
       break;
   }
+}
+function stopRemoteVehicle(id: number) {
+  const vehicle = vehicles.get(id);
+  if (!vehicle || (self.mode === "driver" && self.vehicleId === id)) return;
+  vehicle.velocity = [0, 0, 0];
+  vehicle.pose.reset(vehicle, performance.now());
 }
 el<HTMLFormElement>("join-form").addEventListener("submit", (event) => {
   event.preventDefault();
@@ -676,6 +713,7 @@ const cameraTarget = new THREE.Vector3(0, 2, 10),
 camera.position.set(0, -13, 23);
 camera.lookAt(0, 6, 10);
 const simulationClock = new SimulationClock(performance.now(), dt => {
+  localPose.capture(self);
   step(dt);
   if (!self.spawned) return;
   // Clip time follows the fixed simulation, so slow rendering cannot skip the
@@ -685,10 +723,16 @@ const simulationClock = new SimulationClock(performance.now(), dt => {
     if (peer.streamed) advanceCharacter(peer.mesh, peer.state, dt, arena.groundZ);
   for (const vehicle of vehicles.values()) animateCar(vehicle.mesh, vehicle.velocity, dt);
 });
+function resetLocalPresentation() {
+  simulationClock.reset(performance.now());
+  localPose.reset(self);
+}
 function advanceSimulation(now: number) {
-  if (!simulationClock.advance(now) &&
-      (keys.size > 0 || Math.abs(speed) > .05 || Math.abs(jumpSpeed) > .05))
-    disconnectSuspendedPage("page suspended");
+  if (!simulationClock.advance(now)) {
+    localPose.reset(self);
+    if (keys.size > 0 || Math.abs(speed) > .05 || Math.abs(jumpSpeed) > .05)
+      disconnectSuspendedPage("page suspended");
+  }
   // A long shader compilation while stationary has no movement debt to replay.
   // Visibility/freeze events still explicitly release every suspended session.
 }
@@ -698,31 +742,27 @@ function simulateAndPublish(now: number) {
   if (self.spawned && now - lastSend >= (self.mode === "onFoot" ? onFootRate : inCarRate)) publishState(now);
 }
 setInterval(() => simulateAndPublish(performance.now()), 16);
-let previous = performance.now(), lastHud = 0;
+let previous = performance.now(), lastHud = 0, renderAlpha = 0;
 function frame(now: number) {
   requestAnimationFrame(frame);
   const elapsed = now - previous;
   const delta = Math.max(0, Math.min(elapsed / 1000, 0.1));
   previous = now;
   simulateAndPublish(now);
+  renderAlpha = simulationClock.alphaAt(now);
+  localPose.sample(self, renderAlpha);
   selfMesh.visible = self.spawned;
-  selfMesh.position.set(...self.position);
-  setRotation(selfMesh, self.rotation);
+  selfMesh.position.copy(localPose.position);
+  selfMesh.quaternion.copy(localPose.quaternion);
   for (const v of vehicles.values()) {
-    if (self.mode === "driver" && self.vehicleId === v.id)
-      v.mesh.position.set(...v.position);
-    else
-      v.mesh.position.lerp(
-        new THREE.Vector3(...v.position),
-        1 - Math.exp(-delta * 14),
-      );
-    const target = new THREE.Quaternion(
-      -v.rotation[1],
-      -v.rotation[2],
-      -v.rotation[3],
-      v.rotation[0],
-    );
-    v.mesh.quaternion.slerp(target, 1 - Math.exp(-delta * 14));
+    if (self.mode === "driver" && self.vehicleId === v.id) {
+      v.mesh.position.copy(localPose.position);
+      v.mesh.quaternion.copy(localPose.quaternion);
+      continue;
+    }
+    v.pose.sample(now);
+    v.mesh.position.copy(v.pose.position);
+    v.mesh.quaternion.copy(v.pose.quaternion);
   }
   placeCharacter(
     selfMesh,
@@ -732,19 +772,9 @@ function frame(now: number) {
   );
   for (const p of peers.values()) {
     p.mesh.visible = p.streamed;
-    p.mesh.position.lerp(
-      new THREE.Vector3(...p.state.position),
-      1 - Math.exp(-delta * 14),
-    );
-    p.mesh.quaternion.slerp(
-      new THREE.Quaternion(
-        -p.state.rotation[1],
-        -p.state.rotation[2],
-        -p.state.rotation[3],
-        p.state.rotation[0],
-      ),
-      1 - Math.exp(-delta * 14),
-    );
+    p.pose.sample(now);
+    p.mesh.position.copy(p.pose.position);
+    p.mesh.quaternion.copy(p.pose.quaternion);
     const vehicle = vehicles.get(p.state.vehicleId);
     placeCharacter(p.mesh, p.state, arena.groundZ, vehicle?.mesh);
     const labelPos =
@@ -767,8 +797,11 @@ function frame(now: number) {
           ? " · riding"
           : "");
   }
+  const cameraPose = self.mode === "passenger"
+    ? vehicles.get(self.vehicleId)?.mesh ?? localPose
+    : localPose;
   const target = self.spawned
-    ? new THREE.Vector3(...self.position)
+    ? cameraPose.position.clone()
     : new THREE.Vector3(0, 4, 10);
   if (arena.id === "yard") {
     cameraTarget.lerp(target, 1 - Math.exp(-delta * 7));
@@ -779,7 +812,12 @@ function frame(now: number) {
   if (arena.id === "neighborhood")
     followCamera.update(
       target.toArray(),
-      heading,
+      headingFromRotation([
+        cameraPose.quaternion.w,
+        -cameraPose.quaternion.x,
+        -cameraPose.quaternion.y,
+        -cameraPose.quaternion.z,
+      ]),
       self.mode !== "onFoot",
       delta,
       collisionIndex,
@@ -883,11 +921,19 @@ function snapshot() {
         },
       },
       presentation: {
+        simulationAlpha: renderAlpha,
+        remoteDelayMs: 100,
         self: {
           visible: selfMesh.visible,
           animation: selfMesh.userData.animation,
           position: selfMesh.position.toArray(),
+          quaternion: selfMesh.quaternion.toArray(),
         },
+        vehicles: [...vehicles.values()].map((v) => ({
+          id: v.id,
+          position: v.mesh.position.toArray(),
+          quaternion: v.mesh.quaternion.toArray(),
+        })),
         peers: [...peers.values()].map((p) => ({
           id: p.id,
           visible: p.mesh.visible,
@@ -987,7 +1033,6 @@ async function initializeScene() {
       el("loading").textContent = "Preparing player and vehicle graphics…";
       await warmupActors(renderer, scene, camera, arena.spawns[0], arena.vehicle.position, quality === "low");
     }
-    renderer.compile(scene, camera);
     simulationClock.reset(performance.now());
     el("loading").textContent = "Ready · " + arena.name;
     sceneReady = true;
