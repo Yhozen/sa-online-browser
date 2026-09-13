@@ -2,7 +2,7 @@
 
 The accepted **round-seventeen build** passed complete native motion and four
 isolated rendering cases. The full **15-scenario acceptance and both supervisor
-checks remain pending**. The latest formal [art review](art-review-round13-2026-09-13.md)
+checks also passed** on clean `2a6ffde`. The latest formal [art review](art-review-round13-2026-09-13.md)
 is still judge thirteen's **5.0/10, Tier 1**; the visual target remains open.
 No new formal score or ready declaration is assigned.
 
@@ -75,7 +75,7 @@ Logical texture storage excludes driver overhead and renderbuffers; maxima are
 sampled. These bounded hardware measurements do not promise constant 120 FPS on
 every route or device.
 
-## Current native motion and pending acceptance
+## Current native motion and acceptance
 
 The **complete all-case motion process exited zero** on this exact build.
 Real UI/server checks covered walking, driving, steering, teleport/reset,
@@ -89,14 +89,28 @@ and 24.25% speed variation, so zero remote stutter is not claimed.
 Both owned motion windows were independently confirmed absent, and health
 returned to zero sessions/workers. See the
 [complete motion record](native-motion-round17-summary.json). This bounded probe
-does not replace the pending full multiplayer suite.
+remains separate from the complete multiplayer acceptance below.
 
-The historical full native run finished **14 passed / 1 failed**. The subsequent
-empty-page heartbeat control and unchanged worker-recovery case passed, but
-those focused results are not a full acceptance pass. A fresh unfiltered
-`verify:poc`, including both supervisor checks, is required after this final
-source/asset freeze. Earlier reset-observer controls and focused soak evidence
-remain in the [acceptance record](native-acceptance-environment.md).
+The final unfiltered `verify:poc` process exited zero at **15:52:49.959 UTC on September 13, 2026** on
+clean `2a6ffde`. All **15 browser scenarios passed in 15 attempts**,
+with no failed, skipped or flaky cases; both supervisor checks passed. The yard
+completed **75 active rounds / 601.902 seconds**, and the neighborhood
+completed **81 rounds / 606.240 seconds**. Both fixtures
+released twenty reconnect slots, and the neighborhood passed twenty resident-tab
+rejoins. All **78** strict browser-clock resets passed within one second
+and below 0.5 m: maximum convergence **272.9 ms**, browser distance
+**0 m**, server distance **0 m**.
+Recorded uncaught browser errors were zero. See the
+[source-hashed summary](native-acceptance-round17a/summary.json) and
+[raw artifact manifest](native-acceptance-round17a/artifact-manifest.json). The manifest
+retains older diagnostics but labels their original timestamps; they are not
+evidence from this successful run. Functional acceptance remains distinct from
+the native hardware FPS audit.
+
+The historical **14 passed / 1 failed** run, subsequent empty-page heartbeat
+control and unchanged worker-recovery pass retain their original outcomes.
+Earlier reset-observer controls and focused soak evidence remain in the
+[acceptance record](native-acceptance-environment.md).
 
 The first final-source attempt on clean `439b916` failed before browser tests
 with **65/67 source checks**. Its raw failure remains preserved. The
@@ -105,7 +119,8 @@ untapered-oak equality and refreshes the native terrain dependency ledger;
 focused checks pass **4/4 oak and 9/9 terrain**. No runtime, shader, delivered
 asset or reflection changed. The motion and performance evidence therefore
 still describes the same runtime, while its original captured native-BLEND
-hashes remain historical and are not rewritten. Full acceptance remains pending.
+hashes remain historical and are not rewritten. The corrected full run passed
+subsequently; this first attempt remains a recorded failure.
 
 ## Earlier round-fifteen milestone (historical)
 

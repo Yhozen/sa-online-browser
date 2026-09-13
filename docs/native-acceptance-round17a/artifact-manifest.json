@@ -1,0 +1,2325 @@
+{
+  "archivedAt": "2026-09-13T15:53:29.829Z",
+  "sourceCommit": "2a6ffdee637f88f313ad5da61089d031bcd59934",
+  "process": {
+    "id": "round17a",
+    "startedAt": "2026-09-13T15:03:18.833Z",
+    "command": [
+      "docker",
+      "compose",
+      "exec",
+      "-T",
+      "-e",
+      "POC_BROWSER_WS_ENDPOINT=ws://host.docker.internal:9344/sa-online-acceptance",
+      "dev",
+      "npm",
+      "run",
+      "verify:poc"
+    ],
+    "sourceCommit": "2a6ffdee637f88f313ad5da61089d031bcd59934",
+    "workingTreeBefore": "",
+    "pid": 19261,
+    "exitCode": 0,
+    "signal": null,
+    "finishedAt": "2026-09-13T15:52:49.959Z",
+    "sourceCommitAfter": "2a6ffdee637f88f313ad5da61089d031bcd59934",
+    "workingTreeAfter": ""
+  },
+  "verifiedAt": "2026-09-13T15:52:49.737Z",
+  "browserScenarios": 15,
+  "workingTreeAtArchive": "",
+  "freshnessValidation": {
+    "startedAt": "2026-09-13T15:03:18.833Z",
+    "finishedAt": "2026-09-13T15:52:49.959Z",
+    "resultStart": "2026-09-13T15:09:07.959Z",
+    "resultEnd": "2026-09-13T15:52:16.008Z",
+    "verifiedAt": "2026-09-13T15:52:49.737Z",
+    "criticalFiles": 17
+  },
+  "freshnessBasis": "Original source mtime captured before copying, relative to the completed process window. All raw files are retained. Critical JSON additionally matches current result times and summary contents; a fresh mtime alone does not prove every byte originated in this run.",
+  "freshnessCounts": {
+    "fresh-for-this-run": 148,
+    "retained-older-diagnostic": 104,
+    "modified-after-run": 1
+  },
+  "files": [
+    {
+      "path": "verification/BrowserCycle_0-1-0.zip",
+      "bytes": 21520245,
+      "sha256": "b8cd3ed122f6a0f2d9c7892d405405bdda8e5a199940cb61a16cad5ef4f573a7",
+      "sourcePath": "artifacts/verification/BrowserCycle_0-1-0.zip",
+      "sourceMtimeMs": 1789300849624.3225,
+      "sourceModifiedAt": "2026-09-13T12:00:49.624Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/BrowserCycle_0-6-0.zip",
+      "bytes": 21591893,
+      "sha256": "b862d91f3ca85d35f0440b8162226433b5161060bf7aa8904e51153b5dca317f",
+      "sourcePath": "artifacts/verification/BrowserCycle_0-6-0.zip",
+      "sourceMtimeMs": 1789313817955.837,
+      "sourceModifiedAt": "2026-09-13T15:36:57.955Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/BrowserCycle_1-2-0.zip",
+      "bytes": 21520008,
+      "sha256": "a661bbfc820671f596172e301cc86df9b70d190d4abefe8d183323ba32ff9365",
+      "sourcePath": "artifacts/verification/BrowserCycle_1-2-0.zip",
+      "sourceMtimeMs": 1789300863828.0247,
+      "sourceModifiedAt": "2026-09-13T12:01:03.828Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/BrowserCycle_1-7-0.zip",
+      "bytes": 21591871,
+      "sha256": "1bc652bf8c8e0b298071c0be8d274024cce82fb5da55dc145d49001f5a6ecf6c",
+      "sourcePath": "artifacts/verification/BrowserCycle_1-7-0.zip",
+      "sourceMtimeMs": 1789313830829.923,
+      "sourceModifiedAt": "2026-09-13T15:37:10.829Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/BrowserCycle_10-11-0.zip",
+      "bytes": 21520288,
+      "sha256": "46f2db0e9cacf264190f8bcf6b48e4ee1cd36a5769828aaa82411874db4e28ba",
+      "sourcePath": "artifacts/verification/BrowserCycle_10-11-0.zip",
+      "sourceMtimeMs": 1789300984179.2722,
+      "sourceModifiedAt": "2026-09-13T12:03:04.179Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/BrowserCycle_10-16-0.zip",
+      "bytes": 21591879,
+      "sha256": "677e84502b9f0b7ec6e49c44ed1bb0dfe1fd6a24da56acc98f407c2971074f60",
+      "sourcePath": "artifacts/verification/BrowserCycle_10-16-0.zip",
+      "sourceMtimeMs": 1789313946456.0364,
+      "sourceModifiedAt": "2026-09-13T15:39:06.456Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/BrowserCycle_11-12-0.zip",
+      "bytes": 21520122,
+      "sha256": "8ce5b45d4e8e28939e3ba1e9d7c5632e64de8c1f2314781c863748f0fba29243",
+      "sourcePath": "artifacts/verification/BrowserCycle_11-12-0.zip",
+      "sourceMtimeMs": 1789300997831.0789,
+      "sourceModifiedAt": "2026-09-13T12:03:17.831Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/BrowserCycle_11-17-0.zip",
+      "bytes": 21591995,
+      "sha256": "ef740e9ab4aacdc2a17dee33ef4ee0013d7fd94021d4bd054ca3e0c24c92a832",
+      "sourcePath": "artifacts/verification/BrowserCycle_11-17-0.zip",
+      "sourceMtimeMs": 1789313959377.2705,
+      "sourceModifiedAt": "2026-09-13T15:39:19.377Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/BrowserCycle_12-13-0.zip",
+      "bytes": 21520087,
+      "sha256": "a5c74166e07c7cb84611895655894b3a4bd8751ac7ce4bece674ba2fdcefb130",
+      "sourcePath": "artifacts/verification/BrowserCycle_12-13-0.zip",
+      "sourceMtimeMs": 1789301010968.4304,
+      "sourceModifiedAt": "2026-09-13T12:03:30.968Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/BrowserCycle_12-18-0.zip",
+      "bytes": 21591883,
+      "sha256": "c52189abfba998a1f699fd01131b6e7a05b9a6731832cfb29f56caf57ed95360",
+      "sourcePath": "artifacts/verification/BrowserCycle_12-18-0.zip",
+      "sourceMtimeMs": 1789313972370.2761,
+      "sourceModifiedAt": "2026-09-13T15:39:32.370Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/BrowserCycle_13-14-0.zip",
+      "bytes": 21520116,
+      "sha256": "aebbcc71ef1cc2bde8ea82f59d0af09a364abae0c51a7ef0b133977ca47f8459",
+      "sourcePath": "artifacts/verification/BrowserCycle_13-14-0.zip",
+      "sourceMtimeMs": 1789301024216.524,
+      "sourceModifiedAt": "2026-09-13T12:03:44.216Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/BrowserCycle_13-19-0.zip",
+      "bytes": 21591985,
+      "sha256": "b8eaa19ffd0bb15a6266949dfaf9f2b6529a4eb73204f041eecdaa199a0cbac3",
+      "sourcePath": "artifacts/verification/BrowserCycle_13-19-0.zip",
+      "sourceMtimeMs": 1789313984984.8489,
+      "sourceModifiedAt": "2026-09-13T15:39:44.984Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/BrowserCycle_14-15-0.zip",
+      "bytes": 21520175,
+      "sha256": "9c3c759b9406e3626b8327a21cbcc8fcdb3beea6020b8432f9046faa48186f39",
+      "sourcePath": "artifacts/verification/BrowserCycle_14-15-0.zip",
+      "sourceMtimeMs": 1789301037094.3406,
+      "sourceModifiedAt": "2026-09-13T12:03:57.094Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/BrowserCycle_14-20-0.zip",
+      "bytes": 21592078,
+      "sha256": "f5e3f5e695ae9fd54531f1b6e52f88a5a76a8f94e80a6404d5c46034f2dd6490",
+      "sourcePath": "artifacts/verification/BrowserCycle_14-20-0.zip",
+      "sourceMtimeMs": 1789313997853.4412,
+      "sourceModifiedAt": "2026-09-13T15:39:57.853Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/BrowserCycle_15-16-0.zip",
+      "bytes": 21520122,
+      "sha256": "31f0523dd9905671de732c7abef4c37f1e9d8e7148dbf03e618abf909fe319ec",
+      "sourcePath": "artifacts/verification/BrowserCycle_15-16-0.zip",
+      "sourceMtimeMs": 1789301049867.0945,
+      "sourceModifiedAt": "2026-09-13T12:04:09.867Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/BrowserCycle_15-21-0.zip",
+      "bytes": 21591894,
+      "sha256": "45795c47bb4a089f97d5a58e797e0685a0f0d98f9cd63fb82b9b9b7d72bc9aa4",
+      "sourcePath": "artifacts/verification/BrowserCycle_15-21-0.zip",
+      "sourceMtimeMs": 1789314010617.327,
+      "sourceModifiedAt": "2026-09-13T15:40:10.617Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/BrowserCycle_16-17-0.zip",
+      "bytes": 21519995,
+      "sha256": "245e3bd3bca8445f19d5ccd7e1ce7e368ae500796da0da269d9871f14fb5c35f",
+      "sourcePath": "artifacts/verification/BrowserCycle_16-17-0.zip",
+      "sourceMtimeMs": 1789301062468.707,
+      "sourceModifiedAt": "2026-09-13T12:04:22.468Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/BrowserCycle_16-22-0.zip",
+      "bytes": 21591834,
+      "sha256": "d84dad0006cfd41d477c028eacc91c7330d5a8bf412312f045233ffc9aa82c13",
+      "sourcePath": "artifacts/verification/BrowserCycle_16-22-0.zip",
+      "sourceMtimeMs": 1789314023616.0396,
+      "sourceModifiedAt": "2026-09-13T15:40:23.616Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/BrowserCycle_17-18-0.zip",
+      "bytes": 21520084,
+      "sha256": "a337929773ea3216df4ba5ce003a5ed7d1dedfe77b8abf0dbbdd74458e9a3d0f",
+      "sourcePath": "artifacts/verification/BrowserCycle_17-18-0.zip",
+      "sourceMtimeMs": 1789301075160.72,
+      "sourceModifiedAt": "2026-09-13T12:04:35.160Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/BrowserCycle_17-23-0.zip",
+      "bytes": 21591862,
+      "sha256": "2f2e7cfbe0c70cf49520f484108c772cd91e0ed6a64fadef8e138d4f0269ff76",
+      "sourcePath": "artifacts/verification/BrowserCycle_17-23-0.zip",
+      "sourceMtimeMs": 1789314036332.043,
+      "sourceModifiedAt": "2026-09-13T15:40:36.332Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/BrowserCycle_18-19-0.zip",
+      "bytes": 21520080,
+      "sha256": "9389e53ea849d407f96b9bd7cadc9de13f019ba13e3945d6c1ba700c1c46dbb9",
+      "sourcePath": "artifacts/verification/BrowserCycle_18-19-0.zip",
+      "sourceMtimeMs": 1789301087920.3901,
+      "sourceModifiedAt": "2026-09-13T12:04:47.920Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/BrowserCycle_18-24-0.zip",
+      "bytes": 21591875,
+      "sha256": "1cdb655beaa71892622fbe2f82bdce871f85eaa83e784a001ca213a79a4c865c",
+      "sourcePath": "artifacts/verification/BrowserCycle_18-24-0.zip",
+      "sourceMtimeMs": 1789314048935.0635,
+      "sourceModifiedAt": "2026-09-13T15:40:48.935Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/BrowserCycle_19-20-0.zip",
+      "bytes": 21520204,
+      "sha256": "e9268890dabe78070e69c41d21056ef8eb2ec727a6c6c1f1aed066af4c95b1bf",
+      "sourcePath": "artifacts/verification/BrowserCycle_19-20-0.zip",
+      "sourceMtimeMs": 1789301100683.827,
+      "sourceModifiedAt": "2026-09-13T12:05:00.683Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/BrowserCycle_19-25-0.zip",
+      "bytes": 21591762,
+      "sha256": "b0e932d841dee342d88bb57b54ff80115b61629ddd55a54fbb7798427f66e576",
+      "sourcePath": "artifacts/verification/BrowserCycle_19-25-0.zip",
+      "sourceMtimeMs": 1789314061604.0076,
+      "sourceModifiedAt": "2026-09-13T15:41:01.604Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/BrowserCycle_2-3-0.zip",
+      "bytes": 21520258,
+      "sha256": "aaf45557d4fc850dcea26c7999b4b20df5b64e3eb8cfe8509a50de7242550b5e",
+      "sourcePath": "artifacts/verification/BrowserCycle_2-3-0.zip",
+      "sourceMtimeMs": 1789300877375.4307,
+      "sourceModifiedAt": "2026-09-13T12:01:17.375Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/BrowserCycle_2-8-0.zip",
+      "bytes": 21591815,
+      "sha256": "e3ada1d324e9b94ee2dd04b2797890770bede7d47a0e5c8ff13260bad952f3fc",
+      "sourcePath": "artifacts/verification/BrowserCycle_2-8-0.zip",
+      "sourceMtimeMs": 1789313843494.342,
+      "sourceModifiedAt": "2026-09-13T15:37:23.494Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/BrowserCycle_3-4-0.zip",
+      "bytes": 21520203,
+      "sha256": "bb0f2ac74efb4912aac352f0d94af4bc7a002d09383b3679cf437b8a7243a371",
+      "sourcePath": "artifacts/verification/BrowserCycle_3-4-0.zip",
+      "sourceMtimeMs": 1789300891231.5518,
+      "sourceModifiedAt": "2026-09-13T12:01:31.231Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/BrowserCycle_3-9-0.zip",
+      "bytes": 21591887,
+      "sha256": "d83feb987015597efe7639fd1bef9565d09ed2e2ea34d650d1721e5357f6068e",
+      "sourcePath": "artifacts/verification/BrowserCycle_3-9-0.zip",
+      "sourceMtimeMs": 1789313856561.582,
+      "sourceModifiedAt": "2026-09-13T15:37:36.561Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/BrowserCycle_4-10-0.zip",
+      "bytes": 21591767,
+      "sha256": "e741b5a1bb8f41a44be9823caa3c8a6c3689218d59a419e23634e21e6f362d50",
+      "sourcePath": "artifacts/verification/BrowserCycle_4-10-0.zip",
+      "sourceMtimeMs": 1789313869296.7593,
+      "sourceModifiedAt": "2026-09-13T15:37:49.296Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/BrowserCycle_4-5-0.zip",
+      "bytes": 21520033,
+      "sha256": "13685429cc4b7682468368b740ed2e1323bd3b26cfc4f59643e61b1ececa4383",
+      "sourcePath": "artifacts/verification/BrowserCycle_4-5-0.zip",
+      "sourceMtimeMs": 1789300904473.3215,
+      "sourceModifiedAt": "2026-09-13T12:01:44.473Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/BrowserCycle_5-11-0.zip",
+      "bytes": 21591873,
+      "sha256": "7ad865996874f69462df04d4c2b45d9f87df6acc6bdf8645572607cf1663063f",
+      "sourcePath": "artifacts/verification/BrowserCycle_5-11-0.zip",
+      "sourceMtimeMs": 1789313881923.3704,
+      "sourceModifiedAt": "2026-09-13T15:38:01.923Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/BrowserCycle_5-6-0.zip",
+      "bytes": 21520116,
+      "sha256": "888587e27ccff2c52d84ce123918cb096267e91115092e4208f2336c655e14b3",
+      "sourcePath": "artifacts/verification/BrowserCycle_5-6-0.zip",
+      "sourceMtimeMs": 1789300917711.8032,
+      "sourceModifiedAt": "2026-09-13T12:01:57.711Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/BrowserCycle_6-12-0.zip",
+      "bytes": 21591996,
+      "sha256": "8d2d70ea005fd21fecb09facfba82e3d72bafcd1042869f3ad0a0a8ace57b388",
+      "sourcePath": "artifacts/verification/BrowserCycle_6-12-0.zip",
+      "sourceMtimeMs": 1789313895049.9163,
+      "sourceModifiedAt": "2026-09-13T15:38:15.049Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/BrowserCycle_6-7-0.zip",
+      "bytes": 21520067,
+      "sha256": "36685745d8403a826358bed192179e0fa0a48a75b7fd651307a8cfd8e503acc7",
+      "sourcePath": "artifacts/verification/BrowserCycle_6-7-0.zip",
+      "sourceMtimeMs": 1789300931308.7483,
+      "sourceModifiedAt": "2026-09-13T12:02:11.308Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/BrowserCycle_7-13-0.zip",
+      "bytes": 21591884,
+      "sha256": "a7ef3cdcd149f8393fb535a50b3167548da7fde11d1d88ba2cde03e0f4db116d",
+      "sourcePath": "artifacts/verification/BrowserCycle_7-13-0.zip",
+      "sourceMtimeMs": 1789313908040.038,
+      "sourceModifiedAt": "2026-09-13T15:38:28.040Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/BrowserCycle_7-8-0.zip",
+      "bytes": 21519997,
+      "sha256": "da983fecf6984f3ade278a2b181a62854cb7f08a177dd14ae8972f9ad9d20da7",
+      "sourcePath": "artifacts/verification/BrowserCycle_7-8-0.zip",
+      "sourceMtimeMs": 1789300944508.4792,
+      "sourceModifiedAt": "2026-09-13T12:02:24.508Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/BrowserCycle_8-14-0.zip",
+      "bytes": 21591854,
+      "sha256": "6d835c4a4f6e0bf0ca58a5b8fe07b81e5225ead12ca1f4918f0cda38b1069d36",
+      "sourcePath": "artifacts/verification/BrowserCycle_8-14-0.zip",
+      "sourceMtimeMs": 1789313920706.0457,
+      "sourceModifiedAt": "2026-09-13T15:38:40.706Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/BrowserCycle_8-9-0.zip",
+      "bytes": 21520132,
+      "sha256": "79f7496e16b1bfa81591334fcf4578cff585d395f0fd878bf9c8a8c3f8b65c35",
+      "sourcePath": "artifacts/verification/BrowserCycle_8-9-0.zip",
+      "sourceMtimeMs": 1789300957639.247,
+      "sourceModifiedAt": "2026-09-13T12:02:37.639Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/BrowserCycle_9-10-0.zip",
+      "bytes": 21520114,
+      "sha256": "fb3f6972d80034552a23a6d4a99865fd694a6a3bbe9ab23daadf1cc3582b247a",
+      "sourcePath": "artifacts/verification/BrowserCycle_9-10-0.zip",
+      "sourceMtimeMs": 1789300970753.0269,
+      "sourceModifiedAt": "2026-09-13T12:02:50.753Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/BrowserCycle_9-15-0.zip",
+      "bytes": 21591866,
+      "sha256": "408c595ec51cfa07f53ed9f8eafdf0e7b3c61fba47a1ca3f549a09a0fa5e82e2",
+      "sourcePath": "artifacts/verification/BrowserCycle_9-15-0.zip",
+      "sourceMtimeMs": 1789313933457.0664,
+      "sourceModifiedAt": "2026-09-13T15:38:53.457Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/Edges_A-21-0.zip",
+      "bytes": 21532355,
+      "sha256": "6c3ab4fc498ba33509560cdb94cc3fdb01d64ad41b3d0526dada016143f4ed17",
+      "sourcePath": "artifacts/verification/Edges_A-21-0.zip",
+      "sourceMtimeMs": 1789301129529.4739,
+      "sourceModifiedAt": "2026-09-13T12:05:29.529Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/Edges_A-26-0.zip",
+      "bytes": 21604537,
+      "sha256": "b0303c42b5f4391980e7faaeaff31f7e4fdd08d85a4bafa09b2be21a1205998a",
+      "sourcePath": "artifacts/verification/Edges_A-26-0.zip",
+      "sourceMtimeMs": 1789314089676.4482,
+      "sourceModifiedAt": "2026-09-13T15:41:29.676Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/Edges_B-22-0.zip",
+      "bytes": 21527550,
+      "sha256": "f7c5790eea6564e043275adf6cd76c9e9bd3aa7fe80e7d7325836134532637bf",
+      "sourcePath": "artifacts/verification/Edges_B-22-0.zip",
+      "sourceMtimeMs": 1789301136366.7322,
+      "sourceModifiedAt": "2026-09-13T12:05:36.366Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/Edges_B-27-0.zip",
+      "bytes": 21599425,
+      "sha256": "75d449e62a10142881b1a2855ecfc23cba7d37dfd448968f7b019eb3bbb98900",
+      "sourcePath": "artifacts/verification/Edges_B-27-0.zip",
+      "sourceMtimeMs": 1789314096223.9368,
+      "sourceModifiedAt": "2026-09-13T15:41:36.223Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/Failure_A-1-0.zip",
+      "bytes": 21524752,
+      "sha256": "54a580906795651aa292a8357ad7884758c0d1e47154401c99491061f7900a01",
+      "sourcePath": "artifacts/verification/Failure_A-1-0.zip",
+      "sourceMtimeMs": 1789302562914.3857,
+      "sourceModifiedAt": "2026-09-13T12:29:22.914Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/Failure_A-2-0.zip",
+      "bytes": 21520217,
+      "sha256": "f4f71449194dc2a132bd69aff4157c65959f651dad3cc76fe27550327798a4a7",
+      "sourcePath": "artifacts/verification/Failure_A-2-0.zip",
+      "sourceMtimeMs": 1789302513433.9626,
+      "sourceModifiedAt": "2026-09-13T12:28:33.433Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/Failure_A-3-0.zip",
+      "bytes": 21596078,
+      "sha256": "9f769b4d8b60c3f2c810601dde1698fbba2c96cbb57a4a449aba627d8ebcff2c",
+      "sourcePath": "artifacts/verification/Failure_A-3-0.zip",
+      "sourceMtimeMs": 1789313804930.6614,
+      "sourceModifiedAt": "2026-09-13T15:36:44.930Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/Failure_A-4-0.zip",
+      "bytes": 21592078,
+      "sha256": "e70fca208166e33758bbb886abc3ab2014f5ce24ff79817dbc82cc7217c209b4",
+      "sourcePath": "artifacts/verification/Failure_A-4-0.zip",
+      "sourceMtimeMs": 1789313753651.8015,
+      "sourceModifiedAt": "2026-09-13T15:35:53.651Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/Proof_A-1-0.zip",
+      "bytes": 21614109,
+      "sha256": "f02ee65efb29ad307749880e7968996714ccab0fefb15e27f09df02f465af953",
+      "sourcePath": "artifacts/verification/Proof_A-1-0.zip",
+      "sourceMtimeMs": 1789313726096.9905,
+      "sourceModifiedAt": "2026-09-13T15:35:26.096Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/Proof_B-2-0.zip",
+      "bytes": 21606396,
+      "sha256": "6054aedbf0a07b15776e099d146ccf004d0a6ff8d874692e09a145c986dab324",
+      "sourcePath": "artifacts/verification/Proof_B-2-0.zip",
+      "sourceMtimeMs": 1789313733021.042,
+      "sourceModifiedAt": "2026-09-13T15:35:33.021Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/Soak_A-23-0.zip",
+      "bytes": 21970560,
+      "sha256": "a6d3e831499ff958d2307e9a8236f85038763c40258569f9610d233aa51fdecd",
+      "sourcePath": "artifacts/verification/Soak_A-23-0.zip",
+      "sourceMtimeMs": 1789301760088.2673,
+      "sourceModifiedAt": "2026-09-13T12:16:00.088Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/Soak_A-28-0.zip",
+      "bytes": 22042202,
+      "sha256": "d540372ec8eda1d9610262444d5a095e63aa53f62472c012acf4feec0593e172",
+      "sourcePath": "artifacts/verification/Soak_A-28-0.zip",
+      "sourceMtimeMs": 1789314719063.2412,
+      "sourceModifiedAt": "2026-09-13T15:51:59.063Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/Soak_B-24-0.zip",
+      "bytes": 21959052,
+      "sha256": "be808bfa1b6311c2f90450ec5176770a92f21d8b71a16ad75bf6a6358b8f8253",
+      "sourcePath": "artifacts/verification/Soak_B-24-0.zip",
+      "sourceMtimeMs": 1789301772028.7104,
+      "sourceModifiedAt": "2026-09-13T12:16:12.028Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/Soak_B-29-0.zip",
+      "bytes": 22032543,
+      "sha256": "90b8ef8aacb06bfbb62f14a4116f02d6d5e0e3c5d50cf202fdb28e1b91fa697c",
+      "sourcePath": "artifacts/verification/Soak_B-29-0.zip",
+      "sourceMtimeMs": 1789314730856.0093,
+      "sourceModifiedAt": "2026-09-13T15:52:10.856Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/Unavailable-3-0.zip",
+      "bytes": 21521526,
+      "sha256": "ebb7cce204ba15359f078ab32210d19090ab43c03f3fc2417f807b6733f427bd",
+      "sourcePath": "artifacts/verification/Unavailable-3-0.zip",
+      "sourceMtimeMs": 1789302549360.225,
+      "sourceModifiedAt": "2026-09-13T12:29:09.360Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/Unavailable-5-0.zip",
+      "bytes": 21593376,
+      "sha256": "9e307c60be88d216afb05ad8dc52a0b9c932037a94f49dddd22896df296a93da",
+      "sourcePath": "artifacts/verification/Unavailable-5-0.zip",
+      "sourceMtimeMs": 1789313791310.9917,
+      "sourceModifiedAt": "2026-09-13T15:36:31.310Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/browser-environment.json",
+      "bytes": 698,
+      "sha256": "7c1d5233665a04641200aae2390c50e42f83355496993be3fbc851292a5198f7",
+      "sourcePath": "artifacts/verification/browser-environment.json",
+      "sourceMtimeMs": 1789312163142.4287,
+      "sourceModifiedAt": "2026-09-13T15:09:23.142Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/browser-errors.json",
+      "bytes": 2121,
+      "sha256": "ac0c7fb0bb3da7306f0a1f99c3f93127123fa37f275b3e28da16409a3d35d8f7",
+      "sourcePath": "artifacts/verification/browser-errors.json",
+      "sourceMtimeMs": 1789314735826.218,
+      "sourceModifiedAt": "2026-09-13T15:52:15.826Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/driver-passenger.png",
+      "bytes": 152563,
+      "sha256": "1b65374c564279299162c66b3dc3851b40861a45e48b62b939587ce3bcfe7757",
+      "sourcePath": "artifacts/verification/driver-passenger.png",
+      "sourceMtimeMs": 1789313713842.7744,
+      "sourceModifiedAt": "2026-09-13T15:35:13.842Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/mature-oak-geometry.json",
+      "bytes": 3652,
+      "sha256": "865461438706d938dc09586f6cb594918713f914d60195e067d375ca612134f7",
+      "sourcePath": "artifacts/verification/mature-oak-geometry.json",
+      "sourceMtimeMs": 1789312010504.5583,
+      "sourceModifiedAt": "2026-09-13T15:06:50.504Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/position-agreements.json",
+      "bytes": 40146,
+      "sha256": "b0d4318c3444987ffa5b53dd49ace033412c46c0ec8f19b058bad7b7c8e43001",
+      "sourcePath": "artifacts/verification/position-agreements.json",
+      "sourceMtimeMs": 1789314735822.553,
+      "sourceModifiedAt": "2026-09-13T15:52:15.822Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/report/index.html",
+      "bytes": 956964,
+      "sha256": "442444991ec85cd3ff30e84374d9d487858b687e88e5ffdd5eceb2d27e9e2a0a",
+      "sourcePath": "artifacts/verification/report/index.html",
+      "sourceMtimeMs": 1789314737023.7493,
+      "sourceModifiedAt": "2026-09-13T15:52:17.023Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/reset-agreements.json",
+      "bytes": 123551,
+      "sha256": "e74c9e8e67d7936e194d6a281cebbb1faf39176c5c55cfb7a914b1a5b6612f6e",
+      "sourcePath": "artifacts/verification/reset-agreements.json",
+      "sourceMtimeMs": 1789314735825.958,
+      "sourceModifiedAt": "2026-09-13T15:52:15.825Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/results.json",
+      "bytes": 676001,
+      "sha256": "4f1a6a0bc3dc7549f666c30c28987115edc07f28ce9b7766808e0d7eeef7fe33",
+      "sourcePath": "artifacts/verification/results.json",
+      "sourceMtimeMs": 1789314736035.487,
+      "sourceModifiedAt": "2026-09-13T15:52:16.035Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/server-observations.json",
+      "bytes": 2672396,
+      "sha256": "34d907ca24ce630fc0569717ee0df0c0851a9d012f04651898184d31e61b778e",
+      "sourcePath": "artifacts/verification/server-observations.json",
+      "sourceMtimeMs": 1789314735819.977,
+      "sourceModifiedAt": "2026-09-13T15:52:15.819Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/server.log",
+      "bytes": 3323272,
+      "sha256": "d80afcc0c0268b01c886aaa180fa58ed2d631d6df3b75c743470f0577ac381be",
+      "sourcePath": "artifacts/verification/server.log",
+      "sourceMtimeMs": 1789314730966.3474,
+      "sourceModifiedAt": "2026-09-13T15:52:10.966Z",
+      "freshness": "fresh-for-this-run",
+      "contentScope": "Append-mode log; may contain earlier runs despite a fresh final mtime."
+    },
+    {
+      "path": "verification/soak-complete.png",
+      "bytes": 177703,
+      "sha256": "f6e53001e65a8957c62bf4c3b7ed9c56412635b44fd30f0acee38a217ebf1ffd",
+      "sourcePath": "artifacts/verification/soak-complete.png",
+      "sourceMtimeMs": 1789314710802.2178,
+      "sourceModifiedAt": "2026-09-13T15:51:50.802Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/soak.json",
+      "bytes": 93,
+      "sha256": "7964c1821258a412749e4b7188e268b63643fdfae035cf3add8b6f4f5973266b",
+      "sourcePath": "artifacts/verification/soak.json",
+      "sourceMtimeMs": 1789314710809.4634,
+      "sourceModifiedAt": "2026-09-13T15:51:50.809Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/summary.json",
+      "bytes": 32350,
+      "sha256": "f4eea2d30e7af0a24397e590b1c8b8c82f34d250750712c111927e8732c1e1db",
+      "sourcePath": "artifacts/verification/summary.json",
+      "sourceMtimeMs": 1789314769832.2856,
+      "sourceModifiedAt": "2026-09-13T15:52:49.832Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/supervisor-sigint.json",
+      "bytes": 196,
+      "sha256": "f150a935437ea8ce1fc9fea86713ab49f3252639506ccc8a835ca0a87cc98178",
+      "sourcePath": "artifacts/verification/supervisor-sigint.json",
+      "sourceMtimeMs": 1789314767766.2573,
+      "sourceModifiedAt": "2026-09-13T15:52:47.766Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/supervisor-sigint.log",
+      "bytes": 1206,
+      "sha256": "ce14bdfda3d0fb98437e1092959665149d4b30ac7bf9d15b8223c9bc0724461e",
+      "sourcePath": "artifacts/verification/supervisor-sigint.log",
+      "sourceMtimeMs": 1789314759628.9365,
+      "sourceModifiedAt": "2026-09-13T15:52:39.628Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/supervisor.json",
+      "bytes": 183,
+      "sha256": "e3bd673087e88502b122b18dea5cf93d1de0e45fe19f9cd2c542cb3f534a00a2",
+      "sourcePath": "artifacts/verification/supervisor.json",
+      "sourceMtimeMs": 1789314748820.9585,
+      "sourceModifiedAt": "2026-09-13T15:52:28.820Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/supervisor.log",
+      "bytes": 1206,
+      "sha256": "9b859c6a53c4df6ab388ae04f80614ddb0c1f8427655d41ae7c1288ad4197b22",
+      "sourcePath": "artifacts/verification/supervisor.log",
+      "sourceMtimeMs": 1789314747887.4038,
+      "sourceModifiedAt": "2026-09-13T15:52:27.887Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/tests/.last-run.json",
+      "bytes": 45,
+      "sha256": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903",
+      "sourcePath": "artifacts/verification/tests/.last-run.json",
+      "sourceMtimeMs": 1789314737025.1333,
+      "sourceModifiedAt": "2026-09-13T15:52:17.025Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/tests/graphics-graphics-disabled-a37f8--without-starting-a-session/webgl-unavailable.png",
+      "bytes": 55088,
+      "sha256": "03a4987067372a9819554b92b01c5826a5b80433cde14dc9cbb9b3576528865c",
+      "sourcePath": "artifacts/verification/tests/graphics-graphics-disabled-a37f8--without-starting-a-session/webgl-unavailable.png",
+      "sourceMtimeMs": 1789312257693.5764,
+      "sourceModifiedAt": "2026-09-13T15:10:57.693Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/videos/BrowserCycle_0-1-0.webm",
+      "bytes": 794183,
+      "sha256": "1a4de4793ac65b0016ef602baa19d3ff1f5dc2f2defa5131fc5c5e285d6cba57",
+      "sourcePath": "artifacts/verification/videos/BrowserCycle_0-1-0.webm",
+      "sourceMtimeMs": 1789300849982.3164,
+      "sourceModifiedAt": "2026-09-13T12:00:49.982Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/videos/BrowserCycle_0-6-0.webm",
+      "bytes": 746707,
+      "sha256": "0edf698bf694d4e5e9b0fc7d6f4aae66b11af3b19904aab8de6c38bfe24533d7",
+      "sourcePath": "artifacts/verification/videos/BrowserCycle_0-6-0.webm",
+      "sourceMtimeMs": 1789313818116.8997,
+      "sourceModifiedAt": "2026-09-13T15:36:58.116Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/videos/BrowserCycle_1-2-0.webm",
+      "bytes": 772571,
+      "sha256": "05de1c7adc899cb14e97ef2b58291145a66bcbb102a363d80c1df4185372b0a2",
+      "sourcePath": "artifacts/verification/videos/BrowserCycle_1-2-0.webm",
+      "sourceMtimeMs": 1789300863986.725,
+      "sourceModifiedAt": "2026-09-13T12:01:03.986Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/videos/BrowserCycle_1-7-0.webm",
+      "bytes": 759784,
+      "sha256": "8e27adfc91f108078612e5610ca124e1aea18ce2ca949c4767641c008cab3af2",
+      "sourcePath": "artifacts/verification/videos/BrowserCycle_1-7-0.webm",
+      "sourceMtimeMs": 1789313830997.3916,
+      "sourceModifiedAt": "2026-09-13T15:37:10.997Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/videos/BrowserCycle_10-11-0.webm",
+      "bytes": 782268,
+      "sha256": "7c66bc8448af2b61ac95220a11bb5fb64d90a8d2bd75aa79dd7fbdef499b3c59",
+      "sourcePath": "artifacts/verification/videos/BrowserCycle_10-11-0.webm",
+      "sourceMtimeMs": 1789300984371.774,
+      "sourceModifiedAt": "2026-09-13T12:03:04.371Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/videos/BrowserCycle_10-16-0.webm",
+      "bytes": 758695,
+      "sha256": "8ca99f6291e939573121101baab83f69b1b682af70fd82a5e425a04044daef1d",
+      "sourcePath": "artifacts/verification/videos/BrowserCycle_10-16-0.webm",
+      "sourceMtimeMs": 1789313946714.9675,
+      "sourceModifiedAt": "2026-09-13T15:39:06.714Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/videos/BrowserCycle_11-12-0.webm",
+      "bytes": 785864,
+      "sha256": "f8d71fded7e4edd96d5eb5040f55bf8cc222417d66fab132052737ff46bd3daa",
+      "sourcePath": "artifacts/verification/videos/BrowserCycle_11-12-0.webm",
+      "sourceMtimeMs": 1789300997986.468,
+      "sourceModifiedAt": "2026-09-13T12:03:17.986Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/videos/BrowserCycle_11-17-0.webm",
+      "bytes": 743597,
+      "sha256": "e865577c0b507cdbadf887d4666306bade68caefbc8803935ccbf7cc35c0b102",
+      "sourcePath": "artifacts/verification/videos/BrowserCycle_11-17-0.webm",
+      "sourceMtimeMs": 1789313959543.5945,
+      "sourceModifiedAt": "2026-09-13T15:39:19.543Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/videos/BrowserCycle_12-13-0.webm",
+      "bytes": 781554,
+      "sha256": "eb62e6aa78744732ba6c6e26e943b554ee473ba7dd0f8ad5fbff8103ef50113f",
+      "sourcePath": "artifacts/verification/videos/BrowserCycle_12-13-0.webm",
+      "sourceMtimeMs": 1789301011155.6064,
+      "sourceModifiedAt": "2026-09-13T12:03:31.155Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/videos/BrowserCycle_12-18-0.webm",
+      "bytes": 776875,
+      "sha256": "0825de83832268f97106db1bca3b4e2a9557b35c73976dd5e525cc29071f9473",
+      "sourcePath": "artifacts/verification/videos/BrowserCycle_12-18-0.webm",
+      "sourceMtimeMs": 1789313972555.7449,
+      "sourceModifiedAt": "2026-09-13T15:39:32.555Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/videos/BrowserCycle_13-14-0.webm",
+      "bytes": 784576,
+      "sha256": "ecaf040f973b4ba6dbb33e0a36a12c9640beff5df7a58c24a0e3b452530e5add",
+      "sourcePath": "artifacts/verification/videos/BrowserCycle_13-14-0.webm",
+      "sourceMtimeMs": 1789301024396.3284,
+      "sourceModifiedAt": "2026-09-13T12:03:44.396Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/videos/BrowserCycle_13-19-0.webm",
+      "bytes": 748610,
+      "sha256": "0c569875cf8f0f6eea05831484847c3a4a5ace7987e617798e4e356ed6dd0509",
+      "sourcePath": "artifacts/verification/videos/BrowserCycle_13-19-0.webm",
+      "sourceMtimeMs": 1789313985161.9768,
+      "sourceModifiedAt": "2026-09-13T15:39:45.161Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/videos/BrowserCycle_14-15-0.webm",
+      "bytes": 758898,
+      "sha256": "49e7866e98881cb443c97e2dfd98a28302e04905e6280b32f482ebbc64c77fb7",
+      "sourcePath": "artifacts/verification/videos/BrowserCycle_14-15-0.webm",
+      "sourceMtimeMs": 1789301037269.5347,
+      "sourceModifiedAt": "2026-09-13T12:03:57.269Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/videos/BrowserCycle_14-20-0.webm",
+      "bytes": 758788,
+      "sha256": "57b035e8bab0543edd06e310f9353e5a361492b57e629130e6750c4f8d0873b4",
+      "sourcePath": "artifacts/verification/videos/BrowserCycle_14-20-0.webm",
+      "sourceMtimeMs": 1789313997993.85,
+      "sourceModifiedAt": "2026-09-13T15:39:57.993Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/videos/BrowserCycle_15-16-0.webm",
+      "bytes": 745059,
+      "sha256": "9f238de7bfaef34956fd4816fdf91db0797207963dae6731998a0c7c509c10b1",
+      "sourcePath": "artifacts/verification/videos/BrowserCycle_15-16-0.webm",
+      "sourceMtimeMs": 1789301050019.797,
+      "sourceModifiedAt": "2026-09-13T12:04:10.019Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/videos/BrowserCycle_15-21-0.webm",
+      "bytes": 766023,
+      "sha256": "99d4770157318758070574f0232ca90af1a8218084ec116c6ebf6d3e4e07c4c1",
+      "sourcePath": "artifacts/verification/videos/BrowserCycle_15-21-0.webm",
+      "sourceMtimeMs": 1789314010772.7842,
+      "sourceModifiedAt": "2026-09-13T15:40:10.772Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/videos/BrowserCycle_16-17-0.webm",
+      "bytes": 752983,
+      "sha256": "05a7b60650b83a440d49a242d449680daee938ef468201a47ff3c992c3ee067a",
+      "sourcePath": "artifacts/verification/videos/BrowserCycle_16-17-0.webm",
+      "sourceMtimeMs": 1789301062648.3767,
+      "sourceModifiedAt": "2026-09-13T12:04:22.648Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/videos/BrowserCycle_16-22-0.webm",
+      "bytes": 748602,
+      "sha256": "4bdfd36b257e04235b6801fae0eb46aa6e8753d4819a4ab4417eccf2ba8be6f7",
+      "sourcePath": "artifacts/verification/videos/BrowserCycle_16-22-0.webm",
+      "sourceMtimeMs": 1789314023753.3267,
+      "sourceModifiedAt": "2026-09-13T15:40:23.753Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/videos/BrowserCycle_17-18-0.webm",
+      "bytes": 755659,
+      "sha256": "f26768cb74305cc54b1382cb0516c45857602cbe6a8738caee54e46d33502db4",
+      "sourcePath": "artifacts/verification/videos/BrowserCycle_17-18-0.webm",
+      "sourceMtimeMs": 1789301075314.4482,
+      "sourceModifiedAt": "2026-09-13T12:04:35.314Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/videos/BrowserCycle_17-23-0.webm",
+      "bytes": 779855,
+      "sha256": "50d3ad5e4a46bbd95028accb93d7ac937627e7220ee90d1468214dafd225c7b3",
+      "sourcePath": "artifacts/verification/videos/BrowserCycle_17-23-0.webm",
+      "sourceMtimeMs": 1789314036518.3274,
+      "sourceModifiedAt": "2026-09-13T15:40:36.518Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/videos/BrowserCycle_18-19-0.webm",
+      "bytes": 752500,
+      "sha256": "f90fde6b450b5103dc5a7911e496165a9cdbea8477a54c9b20adbbba406d4ce0",
+      "sourcePath": "artifacts/verification/videos/BrowserCycle_18-19-0.webm",
+      "sourceMtimeMs": 1789301088086.8613,
+      "sourceModifiedAt": "2026-09-13T12:04:48.086Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/videos/BrowserCycle_18-24-0.webm",
+      "bytes": 754984,
+      "sha256": "306ca1768b9510dc0fa010ac9b10ccd42bf35fa536197ba9478c5add9c0afa75",
+      "sourcePath": "artifacts/verification/videos/BrowserCycle_18-24-0.webm",
+      "sourceMtimeMs": 1789314049081.0974,
+      "sourceModifiedAt": "2026-09-13T15:40:49.081Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/videos/BrowserCycle_19-20-0.webm",
+      "bytes": 759082,
+      "sha256": "0ea90f7fb6d30222cb11861b1a48fe68a877fe681cfb76ce4ea84450193ba598",
+      "sourcePath": "artifacts/verification/videos/BrowserCycle_19-20-0.webm",
+      "sourceMtimeMs": 1789301100900.7822,
+      "sourceModifiedAt": "2026-09-13T12:05:00.900Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/videos/BrowserCycle_19-25-0.webm",
+      "bytes": 746439,
+      "sha256": "c441e74954420f144d94b71fc5423b0d8b2250749badc2cd3a7e334db52b56c1",
+      "sourcePath": "artifacts/verification/videos/BrowserCycle_19-25-0.webm",
+      "sourceMtimeMs": 1789314061761.3313,
+      "sourceModifiedAt": "2026-09-13T15:41:01.761Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/videos/BrowserCycle_2-3-0.webm",
+      "bytes": 777634,
+      "sha256": "59a08df63c831c12e506487305733bfcbf8dcf56598a93ca7d12487c3a535e75",
+      "sourcePath": "artifacts/verification/videos/BrowserCycle_2-3-0.webm",
+      "sourceMtimeMs": 1789300877532.375,
+      "sourceModifiedAt": "2026-09-13T12:01:17.532Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/videos/BrowserCycle_2-8-0.webm",
+      "bytes": 742823,
+      "sha256": "c6bb802dd023a3be35a6a92750138eea9a133c29c3d66cb61194dfe1481c5256",
+      "sourcePath": "artifacts/verification/videos/BrowserCycle_2-8-0.webm",
+      "sourceMtimeMs": 1789313843663.8916,
+      "sourceModifiedAt": "2026-09-13T15:37:23.663Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/videos/BrowserCycle_3-4-0.webm",
+      "bytes": 788004,
+      "sha256": "62b5fa99bc01feddf8867a3bf1deecbadf3f3ef1edd19013db070a15dc3d2885",
+      "sourcePath": "artifacts/verification/videos/BrowserCycle_3-4-0.webm",
+      "sourceMtimeMs": 1789300891400.908,
+      "sourceModifiedAt": "2026-09-13T12:01:31.400Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/videos/BrowserCycle_3-9-0.webm",
+      "bytes": 764686,
+      "sha256": "849447ea0d313ffda4a642d4fd5ba540ea31b2a0424f1aceecd7ee0a56e94453",
+      "sourcePath": "artifacts/verification/videos/BrowserCycle_3-9-0.webm",
+      "sourceMtimeMs": 1789313856739.1548,
+      "sourceModifiedAt": "2026-09-13T15:37:36.739Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/videos/BrowserCycle_4-10-0.webm",
+      "bytes": 744360,
+      "sha256": "f882a3406d916292acae92ce609e6fb78d8bd729a4c89a4f4c982e720773cdeb",
+      "sourcePath": "artifacts/verification/videos/BrowserCycle_4-10-0.webm",
+      "sourceMtimeMs": 1789313869466.453,
+      "sourceModifiedAt": "2026-09-13T15:37:49.466Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/videos/BrowserCycle_4-5-0.webm",
+      "bytes": 775419,
+      "sha256": "7ffe112a253819a725a9db73964c14b1f77fb3bd732e87a65f514e90ee779022",
+      "sourcePath": "artifacts/verification/videos/BrowserCycle_4-5-0.webm",
+      "sourceMtimeMs": 1789300904629.151,
+      "sourceModifiedAt": "2026-09-13T12:01:44.629Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/videos/BrowserCycle_5-11-0.webm",
+      "bytes": 754692,
+      "sha256": "2d591f3d844f61889a4b0a106527379084d3dd6171a671d48c1545167cb581f9",
+      "sourcePath": "artifacts/verification/videos/BrowserCycle_5-11-0.webm",
+      "sourceMtimeMs": 1789313882088.8596,
+      "sourceModifiedAt": "2026-09-13T15:38:02.088Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/videos/BrowserCycle_5-6-0.webm",
+      "bytes": 781106,
+      "sha256": "88a7a79cfb16865b4c9f0fec431e3372d5d557d4497f39296549190bea25cc51",
+      "sourcePath": "artifacts/verification/videos/BrowserCycle_5-6-0.webm",
+      "sourceMtimeMs": 1789300917898.8438,
+      "sourceModifiedAt": "2026-09-13T12:01:57.898Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/videos/BrowserCycle_6-12-0.webm",
+      "bytes": 758966,
+      "sha256": "db056ce9527f2ca6622c97a49987e220cc7e5590cd079713bfaa5ef61326a94d",
+      "sourcePath": "artifacts/verification/videos/BrowserCycle_6-12-0.webm",
+      "sourceMtimeMs": 1789313895205.043,
+      "sourceModifiedAt": "2026-09-13T15:38:15.205Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/videos/BrowserCycle_6-7-0.webm",
+      "bytes": 784912,
+      "sha256": "293d034af97478e34ee9794a48d7a87c785888666634d8866389e7790c55da8d",
+      "sourcePath": "artifacts/verification/videos/BrowserCycle_6-7-0.webm",
+      "sourceMtimeMs": 1789300931489.6091,
+      "sourceModifiedAt": "2026-09-13T12:02:11.489Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/videos/BrowserCycle_7-13-0.webm",
+      "bytes": 738044,
+      "sha256": "270a6702b01cc91d3bfccae1b956175c31395215a5433282034b0aa4ea24abb2",
+      "sourcePath": "artifacts/verification/videos/BrowserCycle_7-13-0.webm",
+      "sourceMtimeMs": 1789313908190.902,
+      "sourceModifiedAt": "2026-09-13T15:38:28.190Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/videos/BrowserCycle_7-8-0.webm",
+      "bytes": 784921,
+      "sha256": "8d235c58b0ec0b8174b7c191545100d58f89a1affe3a16f5ff9b8fddd7eb8d80",
+      "sourcePath": "artifacts/verification/videos/BrowserCycle_7-8-0.webm",
+      "sourceMtimeMs": 1789300944664.4746,
+      "sourceModifiedAt": "2026-09-13T12:02:24.664Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/videos/BrowserCycle_8-14-0.webm",
+      "bytes": 756667,
+      "sha256": "33568debc6d3336be2ffd6d4e6550f1e347293c79bd29c304d7b0da878d8f23f",
+      "sourcePath": "artifacts/verification/videos/BrowserCycle_8-14-0.webm",
+      "sourceMtimeMs": 1789313920860.6675,
+      "sourceModifiedAt": "2026-09-13T15:38:40.860Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/videos/BrowserCycle_8-9-0.webm",
+      "bytes": 788638,
+      "sha256": "df8e6f5b8de2641960e47c88d8a4ee00d5a2e50f137b70aa1463cd27c9d7871c",
+      "sourcePath": "artifacts/verification/videos/BrowserCycle_8-9-0.webm",
+      "sourceMtimeMs": 1789300957826.2122,
+      "sourceModifiedAt": "2026-09-13T12:02:37.826Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/videos/BrowserCycle_9-10-0.webm",
+      "bytes": 784532,
+      "sha256": "336e9b4aadbfcb7d0bd3602cfc7247138fa4accf486b018a942ac8881ca1418a",
+      "sourcePath": "artifacts/verification/videos/BrowserCycle_9-10-0.webm",
+      "sourceMtimeMs": 1789300970932.323,
+      "sourceModifiedAt": "2026-09-13T12:02:50.932Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/videos/BrowserCycle_9-15-0.webm",
+      "bytes": 753388,
+      "sha256": "60c53a3ce4e1f1b5f196c83c240378930b9ded3bcbbf20997bec022f7ceba83a",
+      "sourcePath": "artifacts/verification/videos/BrowserCycle_9-15-0.webm",
+      "sourceMtimeMs": 1789313933621.0564,
+      "sourceModifiedAt": "2026-09-13T15:38:53.621Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/videos/Edges_A-21-0.webm",
+      "bytes": 1991372,
+      "sha256": "cc11dc73e26caacbf28fa645d66d86b92c66a9e5d6f29d43f3e084bb5aad2715",
+      "sourcePath": "artifacts/verification/videos/Edges_A-21-0.webm",
+      "sourceMtimeMs": 1789301129900.3577,
+      "sourceModifiedAt": "2026-09-13T12:05:29.900Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/videos/Edges_A-26-0.webm",
+      "bytes": 1969383,
+      "sha256": "8ea9f8d7b6ff65f7b331039f307cd7109be54cfa58bf23ad8b696df72210e3d4",
+      "sourcePath": "artifacts/verification/videos/Edges_A-26-0.webm",
+      "sourceMtimeMs": 1789314089912.077,
+      "sourceModifiedAt": "2026-09-13T15:41:29.912Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/videos/Edges_B-22-0.webm",
+      "bytes": 1980726,
+      "sha256": "d691b71eb38100c8ae34f8504e853080cff2276e7170427a90da18638810133a",
+      "sourcePath": "artifacts/verification/videos/Edges_B-22-0.webm",
+      "sourceMtimeMs": 1789301136605.4312,
+      "sourceModifiedAt": "2026-09-13T12:05:36.605Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/videos/Edges_B-27-0.webm",
+      "bytes": 1972591,
+      "sha256": "5ba13484262d9db82afdf894a93327c4d5d3b4e2717fd46ec068c44daa746e2e",
+      "sourcePath": "artifacts/verification/videos/Edges_B-27-0.webm",
+      "sourceMtimeMs": 1789314096465.6812,
+      "sourceModifiedAt": "2026-09-13T15:41:36.465Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/videos/Failure_A-1-0.webm",
+      "bytes": 3451311,
+      "sha256": "8b16edab04a5ed69fa83d998a8e95a65bc70f437dd73d35364b8c9c2e7441f45",
+      "sourcePath": "artifacts/verification/videos/Failure_A-1-0.webm",
+      "sourceMtimeMs": 1789302563219.4053,
+      "sourceModifiedAt": "2026-09-13T12:29:23.219Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/videos/Failure_A-2-0.webm",
+      "bytes": 515211,
+      "sha256": "2a9cc97e6068e2a9533a7f324c25415dc65e739a4b6dfbb0ef7ac5784adc6f58",
+      "sourcePath": "artifacts/verification/videos/Failure_A-2-0.webm",
+      "sourceMtimeMs": 1789302513698.9146,
+      "sourceModifiedAt": "2026-09-13T12:28:33.698Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/videos/Failure_A-3-0.webm",
+      "bytes": 3435283,
+      "sha256": "81f827275512651165f7140cf829b5a661366d1ba07452b3d0dabf1bb21ffde2",
+      "sourcePath": "artifacts/verification/videos/Failure_A-3-0.webm",
+      "sourceMtimeMs": 1789313805235.4539,
+      "sourceModifiedAt": "2026-09-13T15:36:45.235Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/videos/Failure_A-4-0.webm",
+      "bytes": 434343,
+      "sha256": "0937da6b95f7cd0a452dcf29cdb77a4d8d12e0ce9c2122457511e03eedf0014c",
+      "sourcePath": "artifacts/verification/videos/Failure_A-4-0.webm",
+      "sourceMtimeMs": 1789313753786.9324,
+      "sourceModifiedAt": "2026-09-13T15:35:53.786Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/videos/Proof_A-1-0.webm",
+      "bytes": 3096400,
+      "sha256": "b971c1f2454ead21d9d3f0fec842f523b103ef600d38a026d3d5f20bc6adf759",
+      "sourcePath": "artifacts/verification/videos/Proof_A-1-0.webm",
+      "sourceMtimeMs": 1789313726540.273,
+      "sourceModifiedAt": "2026-09-13T15:35:26.540Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/videos/Proof_B-2-0.webm",
+      "bytes": 2834132,
+      "sha256": "fdda0b0594f148fc5c1f96f6e48c54424e8d8e16137daeed4700083bf30aa617",
+      "sourcePath": "artifacts/verification/videos/Proof_B-2-0.webm",
+      "sourceMtimeMs": 1789313733321.457,
+      "sourceModifiedAt": "2026-09-13T15:35:33.321Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/videos/Soak_A-23-0.webm",
+      "bytes": 61046635,
+      "sha256": "5de537069e191ac52f5535af874520441c53deafdb8ea7abb8412887a20130b4",
+      "sourcePath": "artifacts/verification/videos/Soak_A-23-0.webm",
+      "sourceMtimeMs": 1789301764911.768,
+      "sourceModifiedAt": "2026-09-13T12:16:04.911Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/videos/Soak_A-28-0.webm",
+      "bytes": 61036688,
+      "sha256": "8e07e8427c2bc271e41cd806d4e284fb8bc2696060a9c0637b85a9333b963610",
+      "sourcePath": "artifacts/verification/videos/Soak_A-28-0.webm",
+      "sourceMtimeMs": 1789314724049.6245,
+      "sourceModifiedAt": "2026-09-13T15:52:04.049Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/videos/Soak_B-24-0.webm",
+      "bytes": 61030340,
+      "sha256": "433141941d38a28bbbcd1cd492df9646c514eaf02af1ae3cda552e4f8fbc86d5",
+      "sourcePath": "artifacts/verification/videos/Soak_B-24-0.webm",
+      "sourceMtimeMs": 1789301776195.6768,
+      "sourceModifiedAt": "2026-09-13T12:16:16.195Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/videos/Soak_B-29-0.webm",
+      "bytes": 60773234,
+      "sha256": "d40e445748588c3427d1063bc8f28714e79852da9e7479c2234663070b966015",
+      "sourcePath": "artifacts/verification/videos/Soak_B-29-0.webm",
+      "sourceMtimeMs": 1789314734938.1985,
+      "sourceModifiedAt": "2026-09-13T15:52:14.938Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/videos/Unavailable-3-0.webm",
+      "bytes": 531829,
+      "sha256": "c0ce957da16db0a88ee9b5bbec10bc19eb9a388885fe0f3c502f5bdb87de82b6",
+      "sourcePath": "artifacts/verification/videos/Unavailable-3-0.webm",
+      "sourceMtimeMs": 1789302549491.802,
+      "sourceModifiedAt": "2026-09-13T12:29:09.491Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "verification/videos/Unavailable-5-0.webm",
+      "bytes": 597863,
+      "sha256": "259061f78aedc25796b850ba383812788df04b54478e2b0ca7161cd8e067d614",
+      "sourcePath": "artifacts/verification/videos/Unavailable-5-0.webm",
+      "sourceMtimeMs": 1789313791449.656,
+      "sourceModifiedAt": "2026-09-13T15:36:31.449Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/walking-chat.png",
+      "bytes": 190314,
+      "sha256": "3f869a03da2c0283fd5d94ec4b9d358c3eaef80194d825a235857fa8b80146de",
+      "sourcePath": "artifacts/verification/walking-chat.png",
+      "sourceMtimeMs": 1789313707433.3262,
+      "sourceModifiedAt": "2026-09-13T15:35:07.433Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "verification/wall-exit.png",
+      "bytes": 144486,
+      "sha256": "459a93b24d079955ef5d4ffb5f71cf0d346e401399f3eb13a8255f463a6e12cb",
+      "sourcePath": "artifacts/verification/wall-exit.png",
+      "sourceMtimeMs": 1789314081554.7864,
+      "sourceModifiedAt": "2026-09-13T15:41:21.554Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/ArroyoCycle-0c319bdd-a169-4e43-84bf-53b33c46e76c.zip",
+      "bytes": 33258326,
+      "sha256": "f0e4713403eb8c1c078159e30d94dc5335f925bbe7e6fb8356f2c911b245424a",
+      "sourcePath": "artifacts/neighborhood/ArroyoCycle-0c319bdd-a169-4e43-84bf-53b33c46e76c.zip",
+      "sourceMtimeMs": 1789299710934.8623,
+      "sourceModifiedAt": "2026-09-13T11:41:50.934Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/ArroyoCycle-1648dfc8-9963-430b-9399-028b98278f91.zip",
+      "bytes": 33640281,
+      "sha256": "3fbe4ee6a732beccd672ad6db988797b3b43e043a13f9de55ea49e5c8a039d82",
+      "sourcePath": "artifacts/neighborhood/ArroyoCycle-1648dfc8-9963-430b-9399-028b98278f91.zip",
+      "sourceMtimeMs": 1789312761217.977,
+      "sourceModifiedAt": "2026-09-13T15:19:21.217Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/ArroyoCycle-2317f173-9f64-4a24-97fb-5062ca1f43a5.zip",
+      "bytes": 33258096,
+      "sha256": "ac333547589f717e7177fd454ff61a5fe3c9da1eb1c9e433f98fd1625bec82c1",
+      "sourcePath": "artifacts/neighborhood/ArroyoCycle-2317f173-9f64-4a24-97fb-5062ca1f43a5.zip",
+      "sourceMtimeMs": 1789299692440.548,
+      "sourceModifiedAt": "2026-09-13T11:41:32.440Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/ArroyoCycle-2460d226-c5f1-4627-96ef-d821e351421f.zip",
+      "bytes": 33640667,
+      "sha256": "bc96e3290e5673713f5dd546ec3f1d73571a70598be916aec2e2a0eaf50eb026",
+      "sourcePath": "artifacts/neighborhood/ArroyoCycle-2460d226-c5f1-4627-96ef-d821e351421f.zip",
+      "sourceMtimeMs": 1789312601308.41,
+      "sourceModifiedAt": "2026-09-13T15:16:41.308Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/ArroyoCycle-30510b15-eafe-4677-b87c-aa38fc86154f.zip",
+      "bytes": 33258184,
+      "sha256": "f84fa040fb18503fc10f0702794af61960b34879f1803c2b2496da02bdfece27",
+      "sourcePath": "artifacts/neighborhood/ArroyoCycle-30510b15-eafe-4677-b87c-aa38fc86154f.zip",
+      "sourceMtimeMs": 1789299838738.3489,
+      "sourceModifiedAt": "2026-09-13T11:43:58.738Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/ArroyoCycle-317c8e29-6c67-42af-afb4-388760f23014.zip",
+      "bytes": 33258115,
+      "sha256": "6683f1b5856a4ea8464c234aa1bf88f89011f6f54eeb92feec84fb17f9cd9b6e",
+      "sourcePath": "artifacts/neighborhood/ArroyoCycle-317c8e29-6c67-42af-afb4-388760f23014.zip",
+      "sourceMtimeMs": 1789299765376.7976,
+      "sourceModifiedAt": "2026-09-13T11:42:45.376Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/ArroyoCycle-3278b4a1-3d14-4e37-a8f2-16176d8b1cb2.zip",
+      "bytes": 33258190,
+      "sha256": "4cf21bc49d40c15176c55eb4206fc275d60559fad5f2801943cb27b030a39484",
+      "sourcePath": "artifacts/neighborhood/ArroyoCycle-3278b4a1-3d14-4e37-a8f2-16176d8b1cb2.zip",
+      "sourceMtimeMs": 1789299967195.4302,
+      "sourceModifiedAt": "2026-09-13T11:46:07.195Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/ArroyoCycle-45cc3e69-245f-42c2-a52b-08dc5e0ff41f.zip",
+      "bytes": 33640436,
+      "sha256": "d3a76bc77810b6797cd2ad34ea86ddf905e9cc3df0a5a5404a4a53b7e18926cd",
+      "sourcePath": "artifacts/neighborhood/ArroyoCycle-45cc3e69-245f-42c2-a52b-08dc5e0ff41f.zip",
+      "sourceMtimeMs": 1789312652050.641,
+      "sourceModifiedAt": "2026-09-13T15:17:32.050Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/ArroyoCycle-4d0248b9-f95b-444f-819c-ee44dacdc0e5.zip",
+      "bytes": 33640233,
+      "sha256": "1279006ec5be4f995092506dae561eda523acb6af798ea918b11984d8f28ae68",
+      "sourcePath": "artifacts/neighborhood/ArroyoCycle-4d0248b9-f95b-444f-819c-ee44dacdc0e5.zip",
+      "sourceMtimeMs": 1789312870435.2786,
+      "sourceModifiedAt": "2026-09-13T15:21:10.435Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/ArroyoCycle-50608822-51da-4d9c-9965-759d24411f65.zip",
+      "bytes": 33258102,
+      "sha256": "a0f0e4170ec9b0e404e490b0ddb06889aac4cac690c209df0fa0f3e59d533f90",
+      "sourcePath": "artifacts/neighborhood/ArroyoCycle-50608822-51da-4d9c-9965-759d24411f65.zip",
+      "sourceMtimeMs": 1789299949149.6167,
+      "sourceModifiedAt": "2026-09-13T11:45:49.149Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/ArroyoCycle-5b3c83f6-5f94-433e-81ee-8caa5938ba16.zip",
+      "bytes": 33258214,
+      "sha256": "30de2e12da2e3020dc0cdccdd4f4b203c1b1386bdf70303a5b4ccb1b33fafc91",
+      "sourcePath": "artifacts/neighborhood/ArroyoCycle-5b3c83f6-5f94-433e-81ee-8caa5938ba16.zip",
+      "sourceMtimeMs": 1789299783722.248,
+      "sourceModifiedAt": "2026-09-13T11:43:03.722Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/ArroyoCycle-6ab0243d-ce82-4bbf-adc7-189828fade1e.zip",
+      "bytes": 33258119,
+      "sha256": "dfa4d43f62c89f2b5b22a8c51f1bce174b9cc8705c19bf5e4bfc1c0554feef7e",
+      "sourcePath": "artifacts/neighborhood/ArroyoCycle-6ab0243d-ce82-4bbf-adc7-189828fade1e.zip",
+      "sourceMtimeMs": 1789299893860.1367,
+      "sourceModifiedAt": "2026-09-13T11:44:53.860Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/ArroyoCycle-6ed8d522-181a-42c6-996a-76a7e87ee67e.zip",
+      "bytes": 33640234,
+      "sha256": "61c2fd82c03512c2463b32d556e16f4f83a611b4a699930331b9f85ace5a6ab4",
+      "sourcePath": "artifacts/neighborhood/ArroyoCycle-6ed8d522-181a-42c6-996a-76a7e87ee67e.zip",
+      "sourceMtimeMs": 1789312924996.053,
+      "sourceModifiedAt": "2026-09-13T15:22:04.996Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/ArroyoCycle-703dbe8f-6c87-481b-a0a4-a09264bf84f5.zip",
+      "bytes": 33640486,
+      "sha256": "f3122d3006952e17a0b13d3e5b387a803796bf81013531f7efd9dba20c99439f",
+      "sourcePath": "artifacts/neighborhood/ArroyoCycle-703dbe8f-6c87-481b-a0a4-a09264bf84f5.zip",
+      "sourceMtimeMs": 1789312574255.3252,
+      "sourceModifiedAt": "2026-09-13T15:16:14.255Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/ArroyoCycle-7050e761-015d-4aa6-ab02-a6021a600845.zip",
+      "bytes": 33640139,
+      "sha256": "5deaee1704e19eb9bca055bd6ff849ced543e10a532a3d07153fdb31851d6c93",
+      "sourcePath": "artifacts/neighborhood/ArroyoCycle-7050e761-015d-4aa6-ab02-a6021a600845.zip",
+      "sourceMtimeMs": 1789312724814.5085,
+      "sourceModifiedAt": "2026-09-13T15:18:44.814Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/ArroyoCycle-747a0bb8-1435-4327-b979-6b1d47fdd790.zip",
+      "bytes": 33258130,
+      "sha256": "1475073b5f3f5cde77632956fd6fdcab53931fa233366b60092b17c73dc61c7b",
+      "sourcePath": "artifacts/neighborhood/ArroyoCycle-747a0bb8-1435-4327-b979-6b1d47fdd790.zip",
+      "sourceMtimeMs": 1789299912613.5298,
+      "sourceModifiedAt": "2026-09-13T11:45:12.613Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/ArroyoCycle-7aa2f52b-580f-49ce-a10a-0ad2897cf5b7.zip",
+      "bytes": 33258101,
+      "sha256": "e9532d07d5a741aaa94f6415fef7b38ceee70575e46269d0db5f63bd0e14c3f3",
+      "sourcePath": "artifacts/neighborhood/ArroyoCycle-7aa2f52b-580f-49ce-a10a-0ad2897cf5b7.zip",
+      "sourceMtimeMs": 1789299801892.1636,
+      "sourceModifiedAt": "2026-09-13T11:43:21.892Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/ArroyoCycle-7c830453-ab8e-452e-8fad-ce5ecdb9ee28.zip",
+      "bytes": 33258117,
+      "sha256": "71a2af216ce0a8307e5ab23386e57ba76c1d10ead2e23d268c0300428063cdce",
+      "sourcePath": "artifacts/neighborhood/ArroyoCycle-7c830453-ab8e-452e-8fad-ce5ecdb9ee28.zip",
+      "sourceMtimeMs": 1789299856754.8262,
+      "sourceModifiedAt": "2026-09-13T11:44:16.754Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/ArroyoCycle-885e1759-2a86-4d75-ad8c-8666539effb4.zip",
+      "bytes": 33640311,
+      "sha256": "3764f1ef4113447574ce579b0122f2cf004bac12a9551dd3a1e0bd8c554fe507",
+      "sourcePath": "artifacts/neighborhood/ArroyoCycle-885e1759-2a86-4d75-ad8c-8666539effb4.zip",
+      "sourceMtimeMs": 1789312833448.6245,
+      "sourceModifiedAt": "2026-09-13T15:20:33.448Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/ArroyoCycle-8b471491-b054-465f-bfe5-dd5d264c965f.zip",
+      "bytes": 33258021,
+      "sha256": "b86216372f00d2f7dc70db2f789e4de5abcff436cbb034c34cd8cf0a5a398b21",
+      "sourcePath": "artifacts/neighborhood/ArroyoCycle-8b471491-b054-465f-bfe5-dd5d264c965f.zip",
+      "sourceMtimeMs": 1789299985576.7886,
+      "sourceModifiedAt": "2026-09-13T11:46:25.576Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/ArroyoCycle-8e0993a2-a34e-4f39-aad7-e62ec7de02c8.zip",
+      "bytes": 33640388,
+      "sha256": "42b8d722baf3fddd29e1347ddee0b42cb78b9d05224e27c1084bb9af6c48914c",
+      "sourcePath": "artifacts/neighborhood/ArroyoCycle-8e0993a2-a34e-4f39-aad7-e62ec7de02c8.zip",
+      "sourceMtimeMs": 1789312797522.8303,
+      "sourceModifiedAt": "2026-09-13T15:19:57.522Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/ArroyoCycle-9085a1f6-107b-4c10-99b0-7a23e2c8c3d1.zip",
+      "bytes": 33640217,
+      "sha256": "04e177ec5929d2e901d09cd2b25d5fb71a768727a912860c0646788eb9bd5707",
+      "sourcePath": "artifacts/neighborhood/ArroyoCycle-9085a1f6-107b-4c10-99b0-7a23e2c8c3d1.zip",
+      "sourceMtimeMs": 1789312852309.6423,
+      "sourceModifiedAt": "2026-09-13T15:20:52.309Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/ArroyoCycle-9c71b05d-386d-473f-a753-9f8afd50dae2.zip",
+      "bytes": 33258040,
+      "sha256": "7c239b37397b7e4c3a8acf98b93e419afe086c09ecaefa1c7b0e0305fce32904",
+      "sourcePath": "artifacts/neighborhood/ArroyoCycle-9c71b05d-386d-473f-a753-9f8afd50dae2.zip",
+      "sourceMtimeMs": 1789299728675.7314,
+      "sourceModifiedAt": "2026-09-13T11:42:08.675Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/ArroyoCycle-9df67597-938d-43eb-89d6-6d4b182fca42.zip",
+      "bytes": 33258099,
+      "sha256": "2679215b70b91a063a636c1f759a24601b532d9082f3ca9fdc27fe4d0542c1fc",
+      "sourcePath": "artifacts/neighborhood/ArroyoCycle-9df67597-938d-43eb-89d6-6d4b182fca42.zip",
+      "sourceMtimeMs": 1789299747075.9868,
+      "sourceModifiedAt": "2026-09-13T11:42:27.075Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/ArroyoCycle-a3c0168b-f5ab-4d27-9636-2134e23e54b4.zip",
+      "bytes": 33640131,
+      "sha256": "9eb18ff31462e5c0b43b4df6b52f1cdbd0e3941aa95b5501df2c1286522c70c4",
+      "sourcePath": "artifacts/neighborhood/ArroyoCycle-a3c0168b-f5ab-4d27-9636-2134e23e54b4.zip",
+      "sourceMtimeMs": 1789312888723.9016,
+      "sourceModifiedAt": "2026-09-13T15:21:28.723Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/ArroyoCycle-a5fe4d3c-70b5-4ee1-9a19-3d09fc3d0e4d.zip",
+      "bytes": 33640557,
+      "sha256": "72bffbe4373ecbd74a46bb83c146b1e15a46600cf38438ad447b5d32dd44548d",
+      "sourcePath": "artifacts/neighborhood/ArroyoCycle-a5fe4d3c-70b5-4ee1-9a19-3d09fc3d0e4d.zip",
+      "sourceMtimeMs": 1789312628739.0571,
+      "sourceModifiedAt": "2026-09-13T15:17:08.739Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/ArroyoCycle-aea5b780-bd0f-42c6-84e7-a01a7541270d.zip",
+      "bytes": 33258034,
+      "sha256": "1ee78748ca2f3e64b3b0ed259b3ee41e22ae431f64f28cd3f07d225edab4ece1",
+      "sourcePath": "artifacts/neighborhood/ArroyoCycle-aea5b780-bd0f-42c6-84e7-a01a7541270d.zip",
+      "sourceMtimeMs": 1789299820423.906,
+      "sourceModifiedAt": "2026-09-13T11:43:40.423Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/ArroyoCycle-b12e47a4-bb24-4be8-8499-d790327a978a.zip",
+      "bytes": 33640208,
+      "sha256": "cae5bef58419baa0603af0e72f5d81216b94063f9d22222c82e8cfa044c1c061",
+      "sourcePath": "artifacts/neighborhood/ArroyoCycle-b12e47a4-bb24-4be8-8499-d790327a978a.zip",
+      "sourceMtimeMs": 1789312779157.3325,
+      "sourceModifiedAt": "2026-09-13T15:19:39.157Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/ArroyoCycle-b84c9743-6693-411c-8620-9af25473f325.zip",
+      "bytes": 33640455,
+      "sha256": "522b485c3911e65a0837198bfa8ccbb2f76146a8e15baa01b367c6d61e624831",
+      "sourcePath": "artifacts/neighborhood/ArroyoCycle-b84c9743-6693-411c-8620-9af25473f325.zip",
+      "sourceMtimeMs": 1789312547859.8674,
+      "sourceModifiedAt": "2026-09-13T15:15:47.859Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/ArroyoCycle-c0492dd0-3f38-45fe-900f-7626b96cdc5f.zip",
+      "bytes": 33640146,
+      "sha256": "6f921de4d19efc46d3e9aca0b464e3f6b9d5fa55128e4290cdcb535ecde2c369",
+      "sourcePath": "artifacts/neighborhood/ArroyoCycle-c0492dd0-3f38-45fe-900f-7626b96cdc5f.zip",
+      "sourceMtimeMs": 1789312669892.4702,
+      "sourceModifiedAt": "2026-09-13T15:17:49.892Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/ArroyoCycle-c0eba68a-e90f-4cce-9c9d-2cc730cadfc5.zip",
+      "bytes": 33640381,
+      "sha256": "9d57b181d3d9ca60802c5964a2d0df2a16e1b383c584839046e2796734962504",
+      "sourcePath": "artifacts/neighborhood/ArroyoCycle-c0eba68a-e90f-4cce-9c9d-2cc730cadfc5.zip",
+      "sourceMtimeMs": 1789312906629.709,
+      "sourceModifiedAt": "2026-09-13T15:21:46.629Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/ArroyoCycle-c71f6457-1fd8-44ab-832d-963f087df59e.zip",
+      "bytes": 33258205,
+      "sha256": "dddcb746d8ab1a60f5a62bb29f0b2156493a23e31c0407c42690f0dee9af3dea",
+      "sourcePath": "artifacts/neighborhood/ArroyoCycle-c71f6457-1fd8-44ab-832d-963f087df59e.zip",
+      "sourceMtimeMs": 1789299673767.1094,
+      "sourceModifiedAt": "2026-09-13T11:41:13.767Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/ArroyoCycle-ccf6ff10-ae7d-431a-a33f-492adbc31f02.zip",
+      "bytes": 33258078,
+      "sha256": "a2b660ba48c6a8cfd363560c50c20be3d534af69fbbd2b1cfa3eb846e130f3f3",
+      "sourcePath": "artifacts/neighborhood/ArroyoCycle-ccf6ff10-ae7d-431a-a33f-492adbc31f02.zip",
+      "sourceMtimeMs": 1789299655697.8303,
+      "sourceModifiedAt": "2026-09-13T11:40:55.697Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/ArroyoCycle-d4baca50-50d3-4f29-96d3-a1b3643aa650.zip",
+      "bytes": 33640370,
+      "sha256": "4e6a2e96fbc17cc32ebef0abe13a6c4621449e4645e9b026155afde9453b3d3d",
+      "sourcePath": "artifacts/neighborhood/ArroyoCycle-d4baca50-50d3-4f29-96d3-a1b3643aa650.zip",
+      "sourceMtimeMs": 1789312688548.9746,
+      "sourceModifiedAt": "2026-09-13T15:18:08.548Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/ArroyoCycle-d76d94f3-834d-48c9-a5f9-099d69f5a9c3.zip",
+      "bytes": 33640263,
+      "sha256": "04e7654a31fc7d8aa2e86c272f36d047fe90034e0e82a5e5366d71cc7ccea43b",
+      "sourcePath": "artifacts/neighborhood/ArroyoCycle-d76d94f3-834d-48c9-a5f9-099d69f5a9c3.zip",
+      "sourceMtimeMs": 1789312815467.3784,
+      "sourceModifiedAt": "2026-09-13T15:20:15.467Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/ArroyoCycle-da901348-4e13-4ba1-8ad1-a407a74c8e77.zip",
+      "bytes": 33258133,
+      "sha256": "2bdb6e28c82aab9d3f79d29cf9bdcfd9cc72aad7719cfe380bd853c11a3ca9c6",
+      "sourcePath": "artifacts/neighborhood/ArroyoCycle-da901348-4e13-4ba1-8ad1-a407a74c8e77.zip",
+      "sourceMtimeMs": 1789299931040.2595,
+      "sourceModifiedAt": "2026-09-13T11:45:31.040Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/ArroyoCycle-e7d92f84-a74c-4775-9849-d7c350f97b54.zip",
+      "bytes": 33258213,
+      "sha256": "4b02b1f2da0914aad9923d2abadfb577f342f366f132587839e4834816835d17",
+      "sourcePath": "artifacts/neighborhood/ArroyoCycle-e7d92f84-a74c-4775-9849-d7c350f97b54.zip",
+      "sourceMtimeMs": 1789299636475.693,
+      "sourceModifiedAt": "2026-09-13T11:40:36.475Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/ArroyoCycle-ea43a420-4e42-4d7b-af59-aae0d8e6b62b.zip",
+      "bytes": 33258229,
+      "sha256": "02d86ef821eb214db392470487c4c6cab944a94c3508a4a75a61c676db8e7b41",
+      "sourcePath": "artifacts/neighborhood/ArroyoCycle-ea43a420-4e42-4d7b-af59-aae0d8e6b62b.zip",
+      "sourceMtimeMs": 1789299875544.528,
+      "sourceModifiedAt": "2026-09-13T11:44:35.544Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/ArroyoCycle-f16fa36f-a89f-4297-b428-edb0e4bcedb2.zip",
+      "bytes": 33640303,
+      "sha256": "65439d779285f66946773bd431ef03c557094694f7ebb118e779f04d9b2f1e55",
+      "sourcePath": "artifacts/neighborhood/ArroyoCycle-f16fa36f-a89f-4297-b428-edb0e4bcedb2.zip",
+      "sourceMtimeMs": 1789312706879.5713,
+      "sourceModifiedAt": "2026-09-13T15:18:26.879Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/ArroyoCycle-f8e86f33-1e2a-48eb-b165-70487566f766.zip",
+      "bytes": 33640351,
+      "sha256": "a0080a41cffc97d6c4d82cdbdcd19ca9d8305a0d69762896b7412d4ade170fc6",
+      "sourcePath": "artifacts/neighborhood/ArroyoCycle-f8e86f33-1e2a-48eb-b165-70487566f766.zip",
+      "sourceMtimeMs": 1789312743140.3694,
+      "sourceModifiedAt": "2026-09-13T15:19:03.140Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/ArroyoSoak_A-ae6e1f10-d04d-406b-9ed2-43663045655a.zip",
+      "bytes": 36314113,
+      "sha256": "8929f9d92eb1e43787637e8ae84c67ae0a898382a447a95f5ea21429dfdef140",
+      "sourcePath": "artifacts/neighborhood/ArroyoSoak_A-ae6e1f10-d04d-406b-9ed2-43663045655a.zip",
+      "sourceMtimeMs": 1789300623378.7603,
+      "sourceModifiedAt": "2026-09-13T11:57:03.378Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/ArroyoSoak_A-e7682332-153c-42b4-a218-db0dd50c4d22.zip",
+      "bytes": 36707832,
+      "sha256": "09f1394d5e3f1ddbedcc212d81bbd82150ffcd0957fd723abbb5e2fe1e43cc5d",
+      "sourcePath": "artifacts/neighborhood/ArroyoSoak_A-e7682332-153c-42b4-a218-db0dd50c4d22.zip",
+      "sourceMtimeMs": 1789313564995.9644,
+      "sourceModifiedAt": "2026-09-13T15:32:44.995Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/ArroyoSoak_B-54b9df4f-1c73-482e-bc8e-e014f3275ec3.zip",
+      "bytes": 36293081,
+      "sha256": "3229b62d500d52c1bc2d989732ded8aa76d3ee576b58f5c09dec9b2e1994db40",
+      "sourcePath": "artifacts/neighborhood/ArroyoSoak_B-54b9df4f-1c73-482e-bc8e-e014f3275ec3.zip",
+      "sourceMtimeMs": 1789300640609.3901,
+      "sourceModifiedAt": "2026-09-13T11:57:20.609Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/ArroyoSoak_B-757a0d27-9d98-4fdc-9a40-aafb57cbcf32.zip",
+      "bytes": 36692717,
+      "sha256": "591612157a1d0bbc790b725bfef4d2513d465f46f6108f2f3dbdde09b86f3e07",
+      "sourcePath": "artifacts/neighborhood/ArroyoSoak_B-757a0d27-9d98-4fdc-9a40-aafb57cbcf32.zip",
+      "sourceMtimeMs": 1789313582167.4072,
+      "sourceModifiedAt": "2026-09-13T15:33:02.167Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/Arroyo_A-84ab857c-8906-43b6-adff-0ed534acc3c7.zip",
+      "bytes": 34717181,
+      "sha256": "9a911877cbe01e845f87ffcdcdb737343a41e3c9949fcd850d480a4806eebf1b",
+      "sourcePath": "artifacts/neighborhood/Arroyo_A-84ab857c-8906-43b6-adff-0ed534acc3c7.zip",
+      "sourceMtimeMs": 1789312495751.6733,
+      "sourceModifiedAt": "2026-09-13T15:14:55.751Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/Arroyo_A-c837c1a8-80b4-4cb6-adcb-e06ab8cd0aea.zip",
+      "bytes": 34608791,
+      "sha256": "ca0c13642da9974fcceba34b602dd00428884bfda582dcaebcdc24f7a43f3aa6",
+      "sourcePath": "artifacts/neighborhood/Arroyo_A-c837c1a8-80b4-4cb6-adcb-e06ab8cd0aea.zip",
+      "sourceMtimeMs": 1789299604966.4834,
+      "sourceModifiedAt": "2026-09-13T11:40:04.966Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/Arroyo_B-649fb02a-6ad0-4bb7-8d7c-49d7deee9dc2.zip",
+      "bytes": 34533751,
+      "sha256": "c64dc345f0784f3d795b36b8f8b28bbd7292c07af4acb739d2f653aabe6709bc",
+      "sourcePath": "artifacts/neighborhood/Arroyo_B-649fb02a-6ad0-4bb7-8d7c-49d7deee9dc2.zip",
+      "sourceMtimeMs": 1789299616877.1313,
+      "sourceModifiedAt": "2026-09-13T11:40:16.877Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/Arroyo_B-81b62f1b-fb66-4c74-b931-131afdf9c442.zip",
+      "bytes": 34672344,
+      "sha256": "f65353a0ea7446d7e12fc429961274bc9b1e5b5ff278bb665dae08536795ad4a",
+      "sourcePath": "artifacts/neighborhood/Arroyo_B-81b62f1b-fb66-4c74-b931-131afdf9c442.zip",
+      "sourceMtimeMs": 1789312519625.7239,
+      "sourceModifiedAt": "2026-09-13T15:15:19.625Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/ResidentTab-45d2b5d7-e09b-4919-b229-b8a8266affd3.zip",
+      "bytes": 33948809,
+      "sha256": "2029a904e46e1b7ea021361c52f00cecaebffdfa375aea7b7d43e0b87b25bc4f",
+      "sourcePath": "artifacts/neighborhood/ResidentTab-45d2b5d7-e09b-4919-b229-b8a8266affd3.zip",
+      "sourceMtimeMs": 1789313683671.962,
+      "sourceModifiedAt": "2026-09-13T15:34:43.671Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/ResidentTab-ea6a0ed0-b6fc-4e25-a09d-6ea263e82ed5.zip",
+      "bytes": 33562606,
+      "sha256": "ca29859f95998f24552d8745364bf59fb7e63b46b065d1df8617f698b1617039",
+      "sourcePath": "artifacts/neighborhood/ResidentTab-ea6a0ed0-b6fc-4e25-a09d-6ea263e82ed5.zip",
+      "sourceMtimeMs": 1789300739177.0842,
+      "sourceModifiedAt": "2026-09-13T11:58:59.177Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/agreements.json",
+      "bytes": 62368,
+      "sha256": "8a4a0c8e9588583a159d3e7f1b938fbe27188c27df1555ec0b728b0b365a2d49",
+      "sourcePath": "artifacts/neighborhood/agreements.json",
+      "sourceMtimeMs": 1789313684814.5593,
+      "sourceModifiedAt": "2026-09-13T15:34:44.814Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/camera-obstruction.png",
+      "bytes": 81195,
+      "sha256": "5484cd4eb91dc44e7735b0dd528a377b4f7786eff9cb9a86c4b2496a3191f3d1",
+      "sourcePath": "artifacts/neighborhood/camera-obstruction.png",
+      "sourceMtimeMs": 1789312356708.731,
+      "sourceModifiedAt": "2026-09-13T15:12:36.708Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/cycles.json",
+      "bytes": 61,
+      "sha256": "2fe31e312c89a96f4a6f6ca48fe73b264cbc8e39881bb72908e9783c9b52d92c",
+      "sourcePath": "artifacts/neighborhood/cycles.json",
+      "sourceMtimeMs": 1789312925263.2175,
+      "sourceModifiedAt": "2026-09-13T15:22:05.263Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/driver.png",
+      "bytes": 1398870,
+      "sha256": "2adbcdf6d65e56efc56e22cd80037ba64a750b88829f01f2a4fa6851bead6b40",
+      "sourcePath": "artifacts/neighborhood/driver.png",
+      "sourceMtimeMs": 1789312363408.3162,
+      "sourceModifiedAt": "2026-09-13T15:12:43.408Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/errors.json",
+      "bytes": 2,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "sourcePath": "artifacts/neighborhood/errors.json",
+      "sourceMtimeMs": 1789313684814.7786,
+      "sourceModifiedAt": "2026-09-13T15:34:44.814Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/observations.json",
+      "bytes": 2271339,
+      "sha256": "5ad98717eabe27b32fd706aa80082f41e820e363cb119763fba77ea246f2a816",
+      "sourcePath": "artifacts/neighborhood/observations.json",
+      "sourceMtimeMs": 1789313684810.498,
+      "sourceModifiedAt": "2026-09-13T15:34:44.810Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/passenger.png",
+      "bytes": 1315342,
+      "sha256": "a3e1739114bd6f6261e199c42003652703c63acfdb2414d945f3aaf5ee5c090b",
+      "sourcePath": "artifacts/neighborhood/passenger.png",
+      "sourceMtimeMs": 1789312364932.2007,
+      "sourceModifiedAt": "2026-09-13T15:12:44.932Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/pedestrian.png",
+      "bytes": 1413931,
+      "sha256": "8b312a819d3ca83e59ebcfa1a927a6b4dbd67f3f7fac8f50f658fd45acad5e30",
+      "sourcePath": "artifacts/neighborhood/pedestrian.png",
+      "sourceMtimeMs": 1789312359277.1045,
+      "sourceModifiedAt": "2026-09-13T15:12:39.277Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/performance.json",
+      "bytes": 1405,
+      "sha256": "34a004ab4a47745c67f74565cdab5d0fccbf6485832d946a847048109f6ff2b6",
+      "sourcePath": "artifacts/neighborhood/performance.json",
+      "sourceMtimeMs": 1789313647754.562,
+      "sourceModifiedAt": "2026-09-13T15:34:07.754Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/resident-rejoins.json",
+      "bytes": 1951,
+      "sha256": "b3f7cce775896a90ee0abb462d94b5451a7cebbd8a4a90b89020d15b7aa7a1ee",
+      "sourcePath": "artifacts/neighborhood/resident-rejoins.json",
+      "sourceMtimeMs": 1789313674116.696,
+      "sourceModifiedAt": "2026-09-13T15:34:34.116Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/routes.json",
+      "bytes": 7921,
+      "sha256": "0ba64dc822ac97956f8ca3d99fa807d031648e93cbc860f16a5adabe55428fab",
+      "sourcePath": "artifacts/neighborhood/routes.json",
+      "sourceMtimeMs": 1789312463058.3474,
+      "sourceModifiedAt": "2026-09-13T15:14:23.058Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/server.log",
+      "bytes": 2065749,
+      "sha256": "7e362518f3b7665814f85cc392ac3109b81e21d1a01c09dd90692a04ef486715",
+      "sourcePath": "artifacts/neighborhood/server.log",
+      "sourceMtimeMs": 1789313673988.9116,
+      "sourceModifiedAt": "2026-09-13T15:34:33.988Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/session-transitions.json",
+      "bytes": 8994,
+      "sha256": "985aed153d7602dfc29cebb06479b3e63307dee28067985514b908d24d5a34ac",
+      "sourcePath": "artifacts/neighborhood/session-transitions.json",
+      "sourceMtimeMs": 1789313684815.2034,
+      "sourceModifiedAt": "2026-09-13T15:34:44.815Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/soak.json",
+      "bytes": 71275,
+      "sha256": "a41c0f1c929cabcf201f58985e66816ca409c7fc483763d4701a00a7974a6186",
+      "sourcePath": "artifacts/neighborhood/soak.json",
+      "sourceMtimeMs": 1789313549622.3157,
+      "sourceModifiedAt": "2026-09-13T15:32:29.622Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/standard-driver.png",
+      "bytes": 1500529,
+      "sha256": "865513d90d9723709a583d63f3817f3f6c43e3eb553cf3deed97018b905c7385",
+      "sourcePath": "artifacts/neighborhood/standard-driver.png",
+      "sourceMtimeMs": 1789312362945.9468,
+      "sourceModifiedAt": "2026-09-13T15:12:42.945Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/standard-passenger.png",
+      "bytes": 1453057,
+      "sha256": "d0ecc9bdf6615aaf7ee746222c938e213bc2d9d72bd7e0c2d58b1e12b4ae9349",
+      "sourcePath": "artifacts/neighborhood/standard-passenger.png",
+      "sourceMtimeMs": 1789312364509.472,
+      "sourceModifiedAt": "2026-09-13T15:12:44.509Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/standard-street.png",
+      "bytes": 1509121,
+      "sha256": "2fc6fdb86934e9d220bd5ce968608fe1b48df9d6e20200d62736c0c603cacd4a",
+      "sourcePath": "artifacts/neighborhood/standard-street.png",
+      "sourceMtimeMs": 1789312347353.5088,
+      "sourceModifiedAt": "2026-09-13T15:12:27.353Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/street.png",
+      "bytes": 1383862,
+      "sha256": "c9d2bc46acf26ce9a77e6c96143f894a6993d71d6869b94c9a3e403d3a950c6c",
+      "sourcePath": "artifacts/neighborhood/street.png",
+      "sourceMtimeMs": 1789312347764.4934,
+      "sourceModifiedAt": "2026-09-13T15:12:27.764Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/videos/ArroyoCycle-0c319bdd-a169-4e43-84bf-53b33c46e76c.webm",
+      "bytes": 842153,
+      "sha256": "92af82b58e10fb2f3ef7e3f1019d267fab6e30111db6a11b54c900a421bd84b4",
+      "sourcePath": "artifacts/neighborhood/videos/ArroyoCycle-0c319bdd-a169-4e43-84bf-53b33c46e76c.webm",
+      "sourceMtimeMs": 1789299711077.7183,
+      "sourceModifiedAt": "2026-09-13T11:41:51.077Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/videos/ArroyoCycle-1648dfc8-9963-430b-9399-028b98278f91.webm",
+      "bytes": 810852,
+      "sha256": "8b74896d5a0ae39b468d569e85f91cd96361c6bcc2195ae79e0725e2e6d365da",
+      "sourcePath": "artifacts/neighborhood/videos/ArroyoCycle-1648dfc8-9963-430b-9399-028b98278f91.webm",
+      "sourceMtimeMs": 1789312761400.3262,
+      "sourceModifiedAt": "2026-09-13T15:19:21.400Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/videos/ArroyoCycle-2317f173-9f64-4a24-97fb-5062ca1f43a5.webm",
+      "bytes": 806225,
+      "sha256": "67a126c9823644a41e30d313fdee0a40977ca2c0448618801be9c0c5fa6816ef",
+      "sourcePath": "artifacts/neighborhood/videos/ArroyoCycle-2317f173-9f64-4a24-97fb-5062ca1f43a5.webm",
+      "sourceMtimeMs": 1789299692650.4985,
+      "sourceModifiedAt": "2026-09-13T11:41:32.650Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/videos/ArroyoCycle-2460d226-c5f1-4627-96ef-d821e351421f.webm",
+      "bytes": 1019176,
+      "sha256": "d0fb3bf2edac2e9b1db8e43d0c1b3bcac110840910b02f985560e39c3091469f",
+      "sourcePath": "artifacts/neighborhood/videos/ArroyoCycle-2460d226-c5f1-4627-96ef-d821e351421f.webm",
+      "sourceMtimeMs": 1789312602117.2227,
+      "sourceModifiedAt": "2026-09-13T15:16:42.117Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/videos/ArroyoCycle-30510b15-eafe-4677-b87c-aa38fc86154f.webm",
+      "bytes": 801347,
+      "sha256": "3ffd5c7e30f884d5ce4db346448c85f5721947a80f455a2b0882fcb226f8459c",
+      "sourcePath": "artifacts/neighborhood/videos/ArroyoCycle-30510b15-eafe-4677-b87c-aa38fc86154f.webm",
+      "sourceMtimeMs": 1789299838933.9365,
+      "sourceModifiedAt": "2026-09-13T11:43:58.933Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/videos/ArroyoCycle-317c8e29-6c67-42af-afb4-388760f23014.webm",
+      "bytes": 776892,
+      "sha256": "5378f063b127378a5aff981ae04cc27348252f7e346411fd45240db705cba776",
+      "sourcePath": "artifacts/neighborhood/videos/ArroyoCycle-317c8e29-6c67-42af-afb4-388760f23014.webm",
+      "sourceMtimeMs": 1789299765528.6758,
+      "sourceModifiedAt": "2026-09-13T11:42:45.528Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/videos/ArroyoCycle-3278b4a1-3d14-4e37-a8f2-16176d8b1cb2.webm",
+      "bytes": 801492,
+      "sha256": "c7d830e1ed32bcaf2266704bffa38cc30b498ff571d39b2643cc0e4c76239998",
+      "sourcePath": "artifacts/neighborhood/videos/ArroyoCycle-3278b4a1-3d14-4e37-a8f2-16176d8b1cb2.webm",
+      "sourceMtimeMs": 1789299967367.032,
+      "sourceModifiedAt": "2026-09-13T11:46:07.367Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/videos/ArroyoCycle-45cc3e69-245f-42c2-a52b-08dc5e0ff41f.webm",
+      "bytes": 918852,
+      "sha256": "3a7ba77bf68e205788928a9651fce4f84a973201e565478c9ec59a28f243453f",
+      "sourcePath": "artifacts/neighborhood/videos/ArroyoCycle-45cc3e69-245f-42c2-a52b-08dc5e0ff41f.webm",
+      "sourceMtimeMs": 1789312652203.8608,
+      "sourceModifiedAt": "2026-09-13T15:17:32.203Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/videos/ArroyoCycle-4d0248b9-f95b-444f-819c-ee44dacdc0e5.webm",
+      "bytes": 798191,
+      "sha256": "078ff1b5b6715bd8f85fb22fd860952eae8da4c9017ffa94d1380ef89cd8b61e",
+      "sourcePath": "artifacts/neighborhood/videos/ArroyoCycle-4d0248b9-f95b-444f-819c-ee44dacdc0e5.webm",
+      "sourceMtimeMs": 1789312870588.5745,
+      "sourceModifiedAt": "2026-09-13T15:21:10.588Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/videos/ArroyoCycle-50608822-51da-4d9c-9965-759d24411f65.webm",
+      "bytes": 804352,
+      "sha256": "0c12bb1d034ee70893ab9d9e40830c8e008177ef7c51bcfffca7c5606d62412e",
+      "sourcePath": "artifacts/neighborhood/videos/ArroyoCycle-50608822-51da-4d9c-9965-759d24411f65.webm",
+      "sourceMtimeMs": 1789299949306.2173,
+      "sourceModifiedAt": "2026-09-13T11:45:49.306Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/videos/ArroyoCycle-5b3c83f6-5f94-433e-81ee-8caa5938ba16.webm",
+      "bytes": 800340,
+      "sha256": "1b9222d070996870d465eb56f22257099556c113bdee8b89d094e6ae46339468",
+      "sourcePath": "artifacts/neighborhood/videos/ArroyoCycle-5b3c83f6-5f94-433e-81ee-8caa5938ba16.webm",
+      "sourceMtimeMs": 1789299783904.568,
+      "sourceModifiedAt": "2026-09-13T11:43:03.904Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/videos/ArroyoCycle-6ab0243d-ce82-4bbf-adc7-189828fade1e.webm",
+      "bytes": 776803,
+      "sha256": "32703116638cf6582acd47dc875dbe23843e2ba4e34b3ca6932ec238719672c8",
+      "sourcePath": "artifacts/neighborhood/videos/ArroyoCycle-6ab0243d-ce82-4bbf-adc7-189828fade1e.webm",
+      "sourceMtimeMs": 1789299894006.652,
+      "sourceModifiedAt": "2026-09-13T11:44:54.006Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/videos/ArroyoCycle-6ed8d522-181a-42c6-996a-76a7e87ee67e.webm",
+      "bytes": 792114,
+      "sha256": "cc4a47696911bdd325bd4a485df63d31b111f3165fa65ccb071637de06dbc454",
+      "sourcePath": "artifacts/neighborhood/videos/ArroyoCycle-6ed8d522-181a-42c6-996a-76a7e87ee67e.webm",
+      "sourceMtimeMs": 1789312925171.293,
+      "sourceModifiedAt": "2026-09-13T15:22:05.171Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/videos/ArroyoCycle-703dbe8f-6c87-481b-a0a4-a09264bf84f5.webm",
+      "bytes": 968550,
+      "sha256": "81a2eab5bb71b5cef36d65ab0f9644327189f840522b09f3f2ebb3a3756877fe",
+      "sourcePath": "artifacts/neighborhood/videos/ArroyoCycle-703dbe8f-6c87-481b-a0a4-a09264bf84f5.webm",
+      "sourceMtimeMs": 1789312574486.0664,
+      "sourceModifiedAt": "2026-09-13T15:16:14.486Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/videos/ArroyoCycle-7050e761-015d-4aa6-ab02-a6021a600845.webm",
+      "bytes": 806566,
+      "sha256": "fede9b2ad6839109d49c557137bbcfb4a7926ba62548f995a7ed459aca26e1c5",
+      "sourcePath": "artifacts/neighborhood/videos/ArroyoCycle-7050e761-015d-4aa6-ab02-a6021a600845.webm",
+      "sourceMtimeMs": 1789312724971.477,
+      "sourceModifiedAt": "2026-09-13T15:18:44.971Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/videos/ArroyoCycle-747a0bb8-1435-4327-b979-6b1d47fdd790.webm",
+      "bytes": 794205,
+      "sha256": "556b92b3ea24d0cbd6ca2ae5af49fa9a621cd84a0bae9a5b59ff2ee298bda944",
+      "sourcePath": "artifacts/neighborhood/videos/ArroyoCycle-747a0bb8-1435-4327-b979-6b1d47fdd790.webm",
+      "sourceMtimeMs": 1789299912799.2349,
+      "sourceModifiedAt": "2026-09-13T11:45:12.799Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/videos/ArroyoCycle-7aa2f52b-580f-49ce-a10a-0ad2897cf5b7.webm",
+      "bytes": 809570,
+      "sha256": "3c5bf1adf722279b12dfe2d4996fce67346fbb3d4a84223cd03a230e313caaf6",
+      "sourcePath": "artifacts/neighborhood/videos/ArroyoCycle-7aa2f52b-580f-49ce-a10a-0ad2897cf5b7.webm",
+      "sourceMtimeMs": 1789299802042.5913,
+      "sourceModifiedAt": "2026-09-13T11:43:22.042Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/videos/ArroyoCycle-7c830453-ab8e-452e-8fad-ce5ecdb9ee28.webm",
+      "bytes": 808622,
+      "sha256": "90904e5751704f2093f4764c09cad399412c7920d8b3884efce334d90de21639",
+      "sourcePath": "artifacts/neighborhood/videos/ArroyoCycle-7c830453-ab8e-452e-8fad-ce5ecdb9ee28.webm",
+      "sourceMtimeMs": 1789299856910.505,
+      "sourceModifiedAt": "2026-09-13T11:44:16.910Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/videos/ArroyoCycle-885e1759-2a86-4d75-ad8c-8666539effb4.webm",
+      "bytes": 798148,
+      "sha256": "a1693cd8f209bae6807837bf49406e383dd10cc781aa9cf875004604cf6fa82b",
+      "sourcePath": "artifacts/neighborhood/videos/ArroyoCycle-885e1759-2a86-4d75-ad8c-8666539effb4.webm",
+      "sourceMtimeMs": 1789312834028.4585,
+      "sourceModifiedAt": "2026-09-13T15:20:34.028Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/videos/ArroyoCycle-8b471491-b054-465f-bfe5-dd5d264c965f.webm",
+      "bytes": 815396,
+      "sha256": "f98775e307b4b9967cc1624ea3bf7d693468a60edf95b73a0b6488f73bc33bb7",
+      "sourcePath": "artifacts/neighborhood/videos/ArroyoCycle-8b471491-b054-465f-bfe5-dd5d264c965f.webm",
+      "sourceMtimeMs": 1789299985934.8503,
+      "sourceModifiedAt": "2026-09-13T11:46:25.934Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/videos/ArroyoCycle-8e0993a2-a34e-4f39-aad7-e62ec7de02c8.webm",
+      "bytes": 778398,
+      "sha256": "6885fed71a4289eaff3860e128e894018f8b8e13715961dc4f60a4a7ee7dd4fc",
+      "sourcePath": "artifacts/neighborhood/videos/ArroyoCycle-8e0993a2-a34e-4f39-aad7-e62ec7de02c8.webm",
+      "sourceMtimeMs": 1789312797681.7175,
+      "sourceModifiedAt": "2026-09-13T15:19:57.681Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/videos/ArroyoCycle-9085a1f6-107b-4c10-99b0-7a23e2c8c3d1.webm",
+      "bytes": 800569,
+      "sha256": "acbe9a3537ba1fb8800994552d573941d7a6967dab35b36def41023d0381ce60",
+      "sourcePath": "artifacts/neighborhood/videos/ArroyoCycle-9085a1f6-107b-4c10-99b0-7a23e2c8c3d1.webm",
+      "sourceMtimeMs": 1789312852466.8088,
+      "sourceModifiedAt": "2026-09-13T15:20:52.466Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/videos/ArroyoCycle-9c71b05d-386d-473f-a753-9f8afd50dae2.webm",
+      "bytes": 819527,
+      "sha256": "ffef8d76552c8d1bf801e590f6f6c42b97150092ca629f0049598c9f32d55511",
+      "sourcePath": "artifacts/neighborhood/videos/ArroyoCycle-9c71b05d-386d-473f-a753-9f8afd50dae2.webm",
+      "sourceMtimeMs": 1789299728835.6367,
+      "sourceModifiedAt": "2026-09-13T11:42:08.835Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/videos/ArroyoCycle-9df67597-938d-43eb-89d6-6d4b182fca42.webm",
+      "bytes": 835106,
+      "sha256": "99a9c5ebfb60887591a214c5468d3f3a55356810dbabc4ab76942952e12a1c5e",
+      "sourcePath": "artifacts/neighborhood/videos/ArroyoCycle-9df67597-938d-43eb-89d6-6d4b182fca42.webm",
+      "sourceMtimeMs": 1789299747275.6355,
+      "sourceModifiedAt": "2026-09-13T11:42:27.275Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/videos/ArroyoCycle-a3c0168b-f5ab-4d27-9636-2134e23e54b4.webm",
+      "bytes": 818256,
+      "sha256": "342991f336d98b5a62b4d764e3de75a0890076fe73f285f199a4e851a6a750c4",
+      "sourcePath": "artifacts/neighborhood/videos/ArroyoCycle-a3c0168b-f5ab-4d27-9636-2134e23e54b4.webm",
+      "sourceMtimeMs": 1789312888910.272,
+      "sourceModifiedAt": "2026-09-13T15:21:28.910Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/videos/ArroyoCycle-a5fe4d3c-70b5-4ee1-9a19-3d09fc3d0e4d.webm",
+      "bytes": 1004911,
+      "sha256": "7fb2feca1968be35f7793e857a958b7ec79f8a4922e62aa1ce3d7e58a89fa04e",
+      "sourcePath": "artifacts/neighborhood/videos/ArroyoCycle-a5fe4d3c-70b5-4ee1-9a19-3d09fc3d0e4d.webm",
+      "sourceMtimeMs": 1789312628957.0022,
+      "sourceModifiedAt": "2026-09-13T15:17:08.957Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/videos/ArroyoCycle-aea5b780-bd0f-42c6-84e7-a01a7541270d.webm",
+      "bytes": 810213,
+      "sha256": "01eb4cf251185ec036459be50ac7788cb8259e4386c548f8498af0eec2fc8769",
+      "sourcePath": "artifacts/neighborhood/videos/ArroyoCycle-aea5b780-bd0f-42c6-84e7-a01a7541270d.webm",
+      "sourceMtimeMs": 1789299820667.4534,
+      "sourceModifiedAt": "2026-09-13T11:43:40.667Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/videos/ArroyoCycle-b12e47a4-bb24-4be8-8499-d790327a978a.webm",
+      "bytes": 818973,
+      "sha256": "17d8e4dfb61516615c33942c80fe660e9c1f33f1d6bb3c6c138c5095e9da4e35",
+      "sourcePath": "artifacts/neighborhood/videos/ArroyoCycle-b12e47a4-bb24-4be8-8499-d790327a978a.webm",
+      "sourceMtimeMs": 1789312779308.2441,
+      "sourceModifiedAt": "2026-09-13T15:19:39.308Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/videos/ArroyoCycle-b84c9743-6693-411c-8620-9af25473f325.webm",
+      "bytes": 1000109,
+      "sha256": "eed63355915794950fe44a8772fe6ce6cc19288dad162b567cb6e9c1e1f0ebb8",
+      "sourcePath": "artifacts/neighborhood/videos/ArroyoCycle-b84c9743-6693-411c-8620-9af25473f325.webm",
+      "sourceMtimeMs": 1789312548241.1711,
+      "sourceModifiedAt": "2026-09-13T15:15:48.241Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/videos/ArroyoCycle-c0492dd0-3f38-45fe-900f-7626b96cdc5f.webm",
+      "bytes": 810124,
+      "sha256": "2c9770b5f173427bfccff8affae42b0afde0426d1f11641d67ab12149485e86e",
+      "sourcePath": "artifacts/neighborhood/videos/ArroyoCycle-c0492dd0-3f38-45fe-900f-7626b96cdc5f.webm",
+      "sourceMtimeMs": 1789312670072.3313,
+      "sourceModifiedAt": "2026-09-13T15:17:50.072Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/videos/ArroyoCycle-c0eba68a-e90f-4cce-9c9d-2cc730cadfc5.webm",
+      "bytes": 803949,
+      "sha256": "be06331dfbf45c175a26553f8aa1c85e9333fa7615bc6341d4b086a1c8d38fb7",
+      "sourcePath": "artifacts/neighborhood/videos/ArroyoCycle-c0eba68a-e90f-4cce-9c9d-2cc730cadfc5.webm",
+      "sourceMtimeMs": 1789312906825.062,
+      "sourceModifiedAt": "2026-09-13T15:21:46.825Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/videos/ArroyoCycle-c71f6457-1fd8-44ab-832d-963f087df59e.webm",
+      "bytes": 790062,
+      "sha256": "1c553c43e8708dad2fbf33970008a0aeb7d89d7cec4751bde6e22b8c800efef4",
+      "sourcePath": "artifacts/neighborhood/videos/ArroyoCycle-c71f6457-1fd8-44ab-832d-963f087df59e.webm",
+      "sourceMtimeMs": 1789299673948.9192,
+      "sourceModifiedAt": "2026-09-13T11:41:13.948Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/videos/ArroyoCycle-ccf6ff10-ae7d-431a-a33f-492adbc31f02.webm",
+      "bytes": 779706,
+      "sha256": "da24d5bfe3e220cc396fa5f182145dc42ea6e3087da0e5ea5b521b16a4069f68",
+      "sourcePath": "artifacts/neighborhood/videos/ArroyoCycle-ccf6ff10-ae7d-431a-a33f-492adbc31f02.webm",
+      "sourceMtimeMs": 1789299655892.6096,
+      "sourceModifiedAt": "2026-09-13T11:40:55.892Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/videos/ArroyoCycle-d4baca50-50d3-4f29-96d3-a1b3643aa650.webm",
+      "bytes": 826910,
+      "sha256": "948c433c816720882852c1a0995a4620ab7a93ee44384fbcd03969867803c0c2",
+      "sourcePath": "artifacts/neighborhood/videos/ArroyoCycle-d4baca50-50d3-4f29-96d3-a1b3643aa650.webm",
+      "sourceMtimeMs": 1789312688725.2112,
+      "sourceModifiedAt": "2026-09-13T15:18:08.725Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/videos/ArroyoCycle-d76d94f3-834d-48c9-a5f9-099d69f5a9c3.webm",
+      "bytes": 818340,
+      "sha256": "c126fd7a9301faee4064bbe3c02ddc74c086a472b38f6edad2a9f0c783bc5f30",
+      "sourcePath": "artifacts/neighborhood/videos/ArroyoCycle-d76d94f3-834d-48c9-a5f9-099d69f5a9c3.webm",
+      "sourceMtimeMs": 1789312815622.806,
+      "sourceModifiedAt": "2026-09-13T15:20:15.622Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/videos/ArroyoCycle-da901348-4e13-4ba1-8ad1-a407a74c8e77.webm",
+      "bytes": 815462,
+      "sha256": "f92db56f6df539408a17b555c8f030e6bc8bbbdda935dc22d5d2bfb924413f41",
+      "sourcePath": "artifacts/neighborhood/videos/ArroyoCycle-da901348-4e13-4ba1-8ad1-a407a74c8e77.webm",
+      "sourceMtimeMs": 1789299931235.3389,
+      "sourceModifiedAt": "2026-09-13T11:45:31.235Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/videos/ArroyoCycle-e7d92f84-a74c-4775-9849-d7c350f97b54.webm",
+      "bytes": 818898,
+      "sha256": "aa910649c91e8c7a542b9ff9868289897cbdeef0f7b81b4f65b24ca285ae0dc5",
+      "sourcePath": "artifacts/neighborhood/videos/ArroyoCycle-e7d92f84-a74c-4775-9849-d7c350f97b54.webm",
+      "sourceMtimeMs": 1789299636634.1606,
+      "sourceModifiedAt": "2026-09-13T11:40:36.634Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/videos/ArroyoCycle-ea43a420-4e42-4d7b-af59-aae0d8e6b62b.webm",
+      "bytes": 799201,
+      "sha256": "f781771652915d11d2a1e5621b581eecee2c48e1d6c19e5a057b62c935c034f8",
+      "sourcePath": "artifacts/neighborhood/videos/ArroyoCycle-ea43a420-4e42-4d7b-af59-aae0d8e6b62b.webm",
+      "sourceMtimeMs": 1789299875741.4812,
+      "sourceModifiedAt": "2026-09-13T11:44:35.741Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/videos/ArroyoCycle-f16fa36f-a89f-4297-b428-edb0e4bcedb2.webm",
+      "bytes": 801030,
+      "sha256": "fedcd3e7304614809df16da0316511610ae78024bc5fdd15925acd2755e1c9a3",
+      "sourcePath": "artifacts/neighborhood/videos/ArroyoCycle-f16fa36f-a89f-4297-b428-edb0e4bcedb2.webm",
+      "sourceMtimeMs": 1789312707056.4346,
+      "sourceModifiedAt": "2026-09-13T15:18:27.056Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/videos/ArroyoCycle-f8e86f33-1e2a-48eb-b165-70487566f766.webm",
+      "bytes": 803298,
+      "sha256": "ba4c5d3ac238ddc3ec526b2eefb8324b80c8c9200adaf7ae552614a5579d4d10",
+      "sourcePath": "artifacts/neighborhood/videos/ArroyoCycle-f8e86f33-1e2a-48eb-b165-70487566f766.webm",
+      "sourceMtimeMs": 1789312743298.079,
+      "sourceModifiedAt": "2026-09-13T15:19:03.298Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/videos/ArroyoSoak_A-ae6e1f10-d04d-406b-9ed2-43663045655a.webm",
+      "bytes": 73207319,
+      "sha256": "b004cd949ec867fa898c3dd32b7252597a794a86651070866b0449b6afbbcfb6",
+      "sourcePath": "artifacts/neighborhood/videos/ArroyoSoak_A-ae6e1f10-d04d-406b-9ed2-43663045655a.webm",
+      "sourceMtimeMs": 1789300628734.8179,
+      "sourceModifiedAt": "2026-09-13T11:57:08.734Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/videos/ArroyoSoak_A-e7682332-153c-42b4-a218-db0dd50c4d22.webm",
+      "bytes": 73285988,
+      "sha256": "a1224226e8b0dccaae2a69b004f647086aa2952ac3c37e291712407a9d97c4e2",
+      "sourcePath": "artifacts/neighborhood/videos/ArroyoSoak_A-e7682332-153c-42b4-a218-db0dd50c4d22.webm",
+      "sourceMtimeMs": 1789313570190.4885,
+      "sourceModifiedAt": "2026-09-13T15:32:50.190Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/videos/ArroyoSoak_B-54b9df4f-1c73-482e-bc8e-e014f3275ec3.webm",
+      "bytes": 72700175,
+      "sha256": "d547e3908106cb4e44f646b1cc80b0f401ccb69c54be1080999f4d1cbe0efccb",
+      "sourcePath": "artifacts/neighborhood/videos/ArroyoSoak_B-54b9df4f-1c73-482e-bc8e-e014f3275ec3.webm",
+      "sourceMtimeMs": 1789300645285.5046,
+      "sourceModifiedAt": "2026-09-13T11:57:25.285Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/videos/ArroyoSoak_B-757a0d27-9d98-4fdc-9a40-aafb57cbcf32.webm",
+      "bytes": 72768198,
+      "sha256": "a853f73ee968e231e85db9dcfa0829ef5bccc05e75bf597c1f34d817805c519d",
+      "sourcePath": "artifacts/neighborhood/videos/ArroyoSoak_B-757a0d27-9d98-4fdc-9a40-aafb57cbcf32.webm",
+      "sourceMtimeMs": 1789313586919.69,
+      "sourceModifiedAt": "2026-09-13T15:33:06.919Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/videos/Arroyo_A-84ab857c-8906-43b6-adff-0ed534acc3c7.webm",
+      "bytes": 16029240,
+      "sha256": "e551b06f9abeccbb144155836b86eca4f6761fe390ad609eb7688b8db2d01ba0",
+      "sourcePath": "artifacts/neighborhood/videos/Arroyo_A-84ab857c-8906-43b6-adff-0ed534acc3c7.webm",
+      "sourceMtimeMs": 1789312498525.727,
+      "sourceModifiedAt": "2026-09-13T15:14:58.525Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/videos/Arroyo_A-c837c1a8-80b4-4cb6-adcb-e06ab8cd0aea.webm",
+      "bytes": 13894748,
+      "sha256": "ebf78f7a439cbbae7de0d2c7ab0f5cc137ea1aef6cd4f694a12d02b20892f054",
+      "sourcePath": "artifacts/neighborhood/videos/Arroyo_A-c837c1a8-80b4-4cb6-adcb-e06ab8cd0aea.webm",
+      "sourceMtimeMs": 1789299606270.0347,
+      "sourceModifiedAt": "2026-09-13T11:40:06.270Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/videos/Arroyo_B-649fb02a-6ad0-4bb7-8d7c-49d7deee9dc2.webm",
+      "bytes": 12868489,
+      "sha256": "6a91fe92a42907d2c7d2c5262824202815d98a6a14fd3345305f64c7bdb4b3a2",
+      "sourcePath": "artifacts/neighborhood/videos/Arroyo_B-649fb02a-6ad0-4bb7-8d7c-49d7deee9dc2.webm",
+      "sourceMtimeMs": 1789299617765.4304,
+      "sourceModifiedAt": "2026-09-13T11:40:17.765Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "neighborhood/videos/Arroyo_B-81b62f1b-fb66-4c74-b931-131afdf9c442.webm",
+      "bytes": 14790144,
+      "sha256": "e8088267815ec6f9a1d402c06ab124efd45b8e281ef8195ff8c6ef2e332dbe7c",
+      "sourcePath": "artifacts/neighborhood/videos/Arroyo_B-81b62f1b-fb66-4c74-b931-131afdf9c442.webm",
+      "sourceMtimeMs": 1789312521088.3347,
+      "sourceModifiedAt": "2026-09-13T15:15:21.088Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/videos/ResidentTab-45d2b5d7-e09b-4919-b229-b8a8266affd3.webm",
+      "bytes": 2880965,
+      "sha256": "61177cc0c2efaf3db2b0567fccb2f63324d134476a278c27f77dad95c39a13f0",
+      "sourcePath": "artifacts/neighborhood/videos/ResidentTab-45d2b5d7-e09b-4919-b229-b8a8266affd3.webm",
+      "sourceMtimeMs": 1789313683934.2715,
+      "sourceModifiedAt": "2026-09-13T15:34:43.934Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "neighborhood/videos/ResidentTab-ea6a0ed0-b6fc-4e25-a09d-6ea263e82ed5.webm",
+      "bytes": 2790637,
+      "sha256": "66b654d10fb414ec8eb7dbfd084e37c729269e9182289d71f4c208525cfa94f9",
+      "sourcePath": "artifacts/neighborhood/videos/ResidentTab-ea6a0ed0-b6fc-4e25-a09d-6ea263e82ed5.webm",
+      "sourceMtimeMs": 1789300739433.7295,
+      "sourceModifiedAt": "2026-09-13T11:58:59.433Z",
+      "freshness": "retained-older-diagnostic"
+    },
+    {
+      "path": "run.log",
+      "bytes": 375192,
+      "sha256": "139015e1b0acf044ceb370e7808a75cf011e71e87819541aa47ed77a96880483",
+      "sourcePath": ".dream-loop/full-native-acceptance-round17a.log",
+      "sourceMtimeMs": 1789314769838.8704,
+      "sourceModifiedAt": "2026-09-13T15:52:49.838Z",
+      "freshness": "fresh-for-this-run"
+    },
+    {
+      "path": "process.json",
+      "bytes": 557,
+      "sha256": "574e19c43097b81d7e617bc478c945d7fd583e3b9d123a6c96cb8b47fc027bd7",
+      "sourcePath": ".dream-loop/full-native-acceptance-round17a-process.json",
+      "sourceMtimeMs": 1789314769994.6057,
+      "sourceModifiedAt": "2026-09-13T15:52:49.994Z",
+      "freshness": "modified-after-run"
+    }
+  ]
+}

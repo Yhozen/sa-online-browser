@@ -32,9 +32,16 @@ Focused assets/character tests passed **6/6**, verges clearance/budget tests
 exited one; the corrected command passed **2/2**. The integration record preserves
 both outcomes.
 
-**The full 15-scenario acceptance and both supervisor checks remain pending.**
-The historical 14/15 failed full run and the later focused heartbeat/lifecycle
-pass are separate evidence, not a full-suite pass. **The visual target remains
+**The full 15-scenario acceptance and both supervisor checks passed** on clean
+`2a6ffde`, with 15 successful attempts and no failed, skipped or flaky
+cases. The yard completed **75 rounds / 601.902 seconds**; the
+neighborhood completed **81 rounds / 606.240 seconds**.
+Both twenty-cycle reconnect checks and twenty resident-tab rejoins passed. The
+strict reset checks covered **78 resets**, with maximum browser convergence
+**272.9 ms** and browser/server distances **0 /
+0 m**. See the [archived acceptance](native-acceptance-round17a/summary.json).
+The historical 14/15 failed run and focused heartbeat/lifecycle pass remain
+separate records. **The visual target remains
 open:** the latest formal [review](art-review-round13-2026-09-13.md) is still
 judge thirteen's **5.0/10, Tier 1**. No new formal score or ready declaration is
 assigned to this build.
@@ -46,7 +53,8 @@ save refreshed its stale dependency ledger. Focused oak and terrain checks now
 pass **4/4 and 9/9**. Runtime and delivered assets are unchanged, so the motion
 and performance measurements above still describe this build; their original
 captured authoring hashes remain intact. The [repair record](native-validation-repair-round17.json)
-preserves the failure separately. A fresh full run is still required.
+preserves the failure separately. The corrected full run subsequently passed;
+the failed attempt remains failed.
 
 ## Earlier native milestone — round fifteen
 

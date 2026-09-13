@@ -1,0 +1,9 @@
+{
+  "startup": true,
+  "normalWorkerSpawn": true,
+  "signal": "SIGTERM",
+  "exitCode": 0,
+  "pidFileRemoved": true,
+  "allSupervisedProcessesExited": true,
+  "upstreamAbort": false
+}

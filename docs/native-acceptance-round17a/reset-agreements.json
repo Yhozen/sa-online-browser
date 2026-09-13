@@ -1,0 +1,5228 @@
+[
+  {
+    "token": "__acceptance_reset_58e6d247-c769-4285-8174-ffd84c2f0f78",
+    "scenario": "end-to-end: normal players walk, chat, share a car and recover",
+    "requestedAt": 1789313707444,
+    "priorResetCount": 0,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691054,
+      "playerId": 0,
+      "startedAt": 16197.90000000596,
+      "elapsedMs": 215.7999999821186,
+      "baseline": {
+        "selfPosition": 1,
+        "selfHeading": 0,
+        "vehicleState": 0
+      },
+      "last": {
+        "elapsedMs": 215.7999999821186,
+        "counters": {
+          "selfPosition": 2,
+          "selfHeading": 1,
+          "vehicleState": 2
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          -4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 13
+    },
+    "retrievedAt": 1789313707733,
+    "serverReset": {
+      "event": "reset",
+      "tick": 20923,
+      "receivedAt": 1789313707716
+    },
+    "serverResetIndex": 129,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 89,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 20930,
+      "receivedAt": 1789313707723
+    },
+    "serverVehicleIndex": 132,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_da19c8e4-e77b-45eb-81f1-4cf13711af95",
+    "scenario": "end-to-end: normal players walk, chat, share a car and recover",
+    "requestedAt": 1789313716552,
+    "priorResetCount": 1,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691054,
+      "playerId": 0,
+      "startedAt": 25299.59999999404,
+      "elapsedMs": 110.30000001192093,
+      "baseline": {
+        "selfPosition": 2,
+        "selfHeading": 1,
+        "vehicleState": 70
+      },
+      "last": {
+        "elapsedMs": 110.30000001192093,
+        "counters": {
+          "selfPosition": 3,
+          "selfHeading": 2,
+          "vehicleState": 73
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          -4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 7
+    },
+    "retrievedAt": 1789313716727,
+    "serverReset": {
+      "event": "reset",
+      "tick": 29916,
+      "receivedAt": 1789313716709
+    },
+    "serverResetIndex": 282,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 134,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 29923,
+      "receivedAt": 1789313716716
+    },
+    "serverVehicleIndex": 285,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_b9b58c85-5905-42ef-8aed-c5ba1dad1e49",
+    "scenario": "end-to-end: normal players walk, chat, share a car and recover",
+    "requestedAt": 1789313717112,
+    "priorResetCount": 2,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691054,
+      "playerId": 0,
+      "startedAt": 25855,
+      "elapsedMs": 164.09999999403954,
+      "baseline": {
+        "selfPosition": 3,
+        "selfHeading": 2,
+        "vehicleState": 73
+      },
+      "last": {
+        "elapsedMs": 164.09999999403954,
+        "counters": {
+          "selfPosition": 4,
+          "selfHeading": 3,
+          "vehicleState": 75
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          -4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 10
+    },
+    "retrievedAt": 1789313717336,
+    "serverReset": {
+      "event": "reset",
+      "tick": 30513,
+      "receivedAt": 1789313717306
+    },
+    "serverResetIndex": 298,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 137,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 30518,
+      "receivedAt": 1789313717312
+    },
+    "serverVehicleIndex": 301,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_223789c8-43bd-447d-a6b1-53211aa1a3c4",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314108914,
+    "priorResetCount": 5,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691085,
+      "playerId": 0,
+      "startedAt": 12229.100000023842,
+      "elapsedMs": 143.59999999403954,
+      "baseline": {
+        "selfPosition": 1,
+        "selfHeading": 0,
+        "vehicleState": 0
+      },
+      "last": {
+        "elapsedMs": 143.59999999403954,
+        "counters": {
+          "selfPosition": 2,
+          "selfHeading": 1,
+          "vehicleState": 2
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          -4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 9
+    },
+    "retrievedAt": 1789314109131,
+    "serverReset": {
+      "event": "reset",
+      "tick": 315642,
+      "receivedAt": 1789314109117
+    },
+    "serverResetIndex": 2833,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 1560,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 315648,
+      "receivedAt": 1789314109122
+    },
+    "serverVehicleIndex": 2836,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_11ae3577-b21d-4877-a35b-03a5545440b6",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314116876,
+    "priorResetCount": 6,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691086,
+      "playerId": 1,
+      "startedAt": 14556.299999982119,
+      "elapsedMs": 135.5,
+      "baseline": {
+        "selfPosition": 2,
+        "selfHeading": 1,
+        "vehicleState": 52
+      },
+      "last": {
+        "elapsedMs": 135.5,
+        "counters": {
+          "selfPosition": 3,
+          "selfHeading": 2,
+          "vehicleState": 53
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 9
+    },
+    "retrievedAt": 1789314117143,
+    "serverReset": {
+      "event": "reset",
+      "tick": 323646,
+      "receivedAt": 1789314117120
+    },
+    "serverResetIndex": 2964,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 1600,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 323652,
+      "receivedAt": 1789314117132
+    },
+    "serverVehicleIndex": 2967,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_39a8bd09-b66a-4a65-8ae5-91381d99420b",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314125021,
+    "priorResetCount": 7,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691085,
+      "playerId": 0,
+      "startedAt": 28333.90000000596,
+      "elapsedMs": 74.59999999403954,
+      "baseline": {
+        "selfPosition": 3,
+        "selfHeading": 2,
+        "vehicleState": 56
+      },
+      "last": {
+        "elapsedMs": 74.59999999403954,
+        "counters": {
+          "selfPosition": 4,
+          "selfHeading": 3,
+          "vehicleState": 58
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          -4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 5
+    },
+    "retrievedAt": 1789314125166,
+    "serverReset": {
+      "event": "reset",
+      "tick": 331665,
+      "receivedAt": 1789314125139
+    },
+    "serverResetIndex": 3095,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 1640,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 331670,
+      "receivedAt": 1789314125145
+    },
+    "serverVehicleIndex": 3098,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_ff1373fe-4665-4f48-b7f2-95826eff3089",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314133025,
+    "priorResetCount": 8,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691086,
+      "playerId": 1,
+      "startedAt": 30659.79999998212,
+      "elapsedMs": 247.09999999403954,
+      "baseline": {
+        "selfPosition": 4,
+        "selfHeading": 3,
+        "vehicleState": 108
+      },
+      "last": {
+        "elapsedMs": 247.09999999403954,
+        "counters": {
+          "selfPosition": 5,
+          "selfHeading": 4,
+          "vehicleState": 110
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 15
+    },
+    "retrievedAt": 1789314133358,
+    "serverReset": {
+      "event": "reset",
+      "tick": 339851,
+      "receivedAt": 1789314133325
+    },
+    "serverResetIndex": 3229,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 1681,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 339857,
+      "receivedAt": 1789314133331
+    },
+    "serverVehicleIndex": 3232,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_7d868365-b4eb-4233-9c8f-c3904b0de26f",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314141127,
+    "priorResetCount": 9,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691085,
+      "playerId": 0,
+      "startedAt": 44418.10000002384,
+      "elapsedMs": 193.39999997615814,
+      "baseline": {
+        "selfPosition": 5,
+        "selfHeading": 4,
+        "vehicleState": 110
+      },
+      "last": {
+        "elapsedMs": 193.39999997615814,
+        "counters": {
+          "selfPosition": 6,
+          "selfHeading": 5,
+          "vehicleState": 112
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          -4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 12
+    },
+    "retrievedAt": 1789314141368,
+    "serverReset": {
+      "event": "reset",
+      "tick": 347864,
+      "receivedAt": 1789314141338
+    },
+    "serverResetIndex": 3360,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 1721,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 347869,
+      "receivedAt": 1789314141343
+    },
+    "serverVehicleIndex": 3363,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_23a7e1ec-b46f-47a6-984e-aef9a9bd939b",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314149128,
+    "priorResetCount": 10,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691086,
+      "playerId": 1,
+      "startedAt": 46728.5,
+      "elapsedMs": 192.39999997615814,
+      "baseline": {
+        "selfPosition": 6,
+        "selfHeading": 5,
+        "vehicleState": 164
+      },
+      "last": {
+        "elapsedMs": 192.39999997615814,
+        "counters": {
+          "selfPosition": 7,
+          "selfHeading": 6,
+          "vehicleState": 166
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 12
+    },
+    "retrievedAt": 1789314149369,
+    "serverReset": {
+      "event": "reset",
+      "tick": 355868,
+      "receivedAt": 1789314149342
+    },
+    "serverResetIndex": 3491,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 1761,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 355875,
+      "receivedAt": 1789314149348
+    },
+    "serverVehicleIndex": 3494,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_dbd56ce4-b444-4f9c-855f-d52ad5ada5a1",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314157219,
+    "priorResetCount": 11,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691085,
+      "playerId": 0,
+      "startedAt": 60526.60000002384,
+      "elapsedMs": 91.2999999821186,
+      "baseline": {
+        "selfPosition": 7,
+        "selfHeading": 6,
+        "vehicleState": 169
+      },
+      "last": {
+        "elapsedMs": 91.2999999821186,
+        "counters": {
+          "selfPosition": 8,
+          "selfHeading": 7,
+          "vehicleState": 171
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          -4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 6
+    },
+    "retrievedAt": 1789314157375,
+    "serverReset": {
+      "event": "reset",
+      "tick": 363874,
+      "receivedAt": 1789314157348
+    },
+    "serverResetIndex": 3622,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 1801,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 363880,
+      "receivedAt": 1789314157358
+    },
+    "serverVehicleIndex": 3625,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_5bfd4336-07ab-42d0-963a-4d92eae6ed67",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314165083,
+    "priorResetCount": 12,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691086,
+      "playerId": 1,
+      "startedAt": 62684,
+      "elapsedMs": 242,
+      "baseline": {
+        "selfPosition": 8,
+        "selfHeading": 7,
+        "vehicleState": 218
+      },
+      "last": {
+        "elapsedMs": 242,
+        "counters": {
+          "selfPosition": 9,
+          "selfHeading": 8,
+          "vehicleState": 219
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 15
+    },
+    "retrievedAt": 1789314165374,
+    "serverReset": {
+      "event": "reset",
+      "tick": 371884,
+      "receivedAt": 1789314165357
+    },
+    "serverResetIndex": 3753,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 1841,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 371889,
+      "receivedAt": 1789314165363
+    },
+    "serverVehicleIndex": 3756,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_32525a8d-8188-4475-a4af-fdfca4ec4c88",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314173235,
+    "priorResetCount": 13,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691085,
+      "playerId": 0,
+      "startedAt": 76528,
+      "elapsedMs": 105.40000000596046,
+      "baseline": {
+        "selfPosition": 9,
+        "selfHeading": 8,
+        "vehicleState": 227
+      },
+      "last": {
+        "elapsedMs": 105.40000000596046,
+        "counters": {
+          "selfPosition": 10,
+          "selfHeading": 9,
+          "vehicleState": 229
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          -4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 7
+    },
+    "retrievedAt": 1789314173390,
+    "serverReset": {
+      "event": "reset",
+      "tick": 379886,
+      "receivedAt": 1789314173360
+    },
+    "serverResetIndex": 3884,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 1881,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 379892,
+      "receivedAt": 1789314173366
+    },
+    "serverVehicleIndex": 3887,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_5319eafc-9552-49ab-a4fa-240c3342ccdd",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314181180,
+    "priorResetCount": 14,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691086,
+      "playerId": 1,
+      "startedAt": 78777.29999998212,
+      "elapsedMs": 162.5,
+      "baseline": {
+        "selfPosition": 10,
+        "selfHeading": 9,
+        "vehicleState": 276
+      },
+      "last": {
+        "elapsedMs": 162.5,
+        "counters": {
+          "selfPosition": 11,
+          "selfHeading": 10,
+          "vehicleState": 278
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 10
+    },
+    "retrievedAt": 1789314181388,
+    "serverReset": {
+      "event": "reset",
+      "tick": 387897,
+      "receivedAt": 1789314181371
+    },
+    "serverResetIndex": 4015,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 1921,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 387903,
+      "receivedAt": 1789314181377
+    },
+    "serverVehicleIndex": 4018,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_1e5a8cfe-365e-491a-b6d3-b4a1f6bfabad",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314189206,
+    "priorResetCount": 15,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691085,
+      "playerId": 0,
+      "startedAt": 92499.20000001788,
+      "elapsedMs": 143.69999998807907,
+      "baseline": {
+        "selfPosition": 11,
+        "selfHeading": 10,
+        "vehicleState": 283
+      },
+      "last": {
+        "elapsedMs": 143.69999998807907,
+        "counters": {
+          "selfPosition": 12,
+          "selfHeading": 11,
+          "vehicleState": 285
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          -4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 9
+    },
+    "retrievedAt": 1789314189399,
+    "serverReset": {
+      "event": "reset",
+      "tick": 395901,
+      "receivedAt": 1789314189375
+    },
+    "serverResetIndex": 4146,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 1961,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 395907,
+      "receivedAt": 1789314189382
+    },
+    "serverVehicleIndex": 4149,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_a3971e1d-1c02-4ae1-839b-95f2210116fc",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314197112,
+    "priorResetCount": 16,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691086,
+      "playerId": 1,
+      "startedAt": 94715.89999997616,
+      "elapsedMs": 251.2000000178814,
+      "baseline": {
+        "selfPosition": 12,
+        "selfHeading": 11,
+        "vehicleState": 334
+      },
+      "last": {
+        "elapsedMs": 251.2000000178814,
+        "counters": {
+          "selfPosition": 13,
+          "selfHeading": 12,
+          "vehicleState": 336
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 15
+    },
+    "retrievedAt": 1789314197416,
+    "serverReset": {
+      "event": "reset",
+      "tick": 403914,
+      "receivedAt": 1789314197387
+    },
+    "serverResetIndex": 4277,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 2001,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 403919,
+      "receivedAt": 1789314197393
+    },
+    "serverVehicleIndex": 4280,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_f663d62e-31bf-45d2-8344-ae19ba640d43",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314205125,
+    "priorResetCount": 17,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691085,
+      "playerId": 0,
+      "startedAt": 108416.30000001192,
+      "elapsedMs": 248.80000001192093,
+      "baseline": {
+        "selfPosition": 13,
+        "selfHeading": 12,
+        "vehicleState": 336
+      },
+      "last": {
+        "elapsedMs": 248.80000001192093,
+        "counters": {
+          "selfPosition": 14,
+          "selfHeading": 13,
+          "vehicleState": 338
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          -4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 15
+    },
+    "retrievedAt": 1789314205423,
+    "serverReset": {
+      "event": "reset",
+      "tick": 411919,
+      "receivedAt": 1789314205393
+    },
+    "serverResetIndex": 4408,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 2041,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 411925,
+      "receivedAt": 1789314205399
+    },
+    "serverVehicleIndex": 4411,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_4da9ffca-b54d-4f58-969a-9aabdbe9111d",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314213135,
+    "priorResetCount": 18,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691086,
+      "playerId": 1,
+      "startedAt": 110742.39999997616,
+      "elapsedMs": 227,
+      "baseline": {
+        "selfPosition": 14,
+        "selfHeading": 13,
+        "vehicleState": 390
+      },
+      "last": {
+        "elapsedMs": 227,
+        "counters": {
+          "selfPosition": 15,
+          "selfHeading": 14,
+          "vehicleState": 392
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 14
+    },
+    "retrievedAt": 1789314213417,
+    "serverReset": {
+      "event": "reset",
+      "tick": 419919,
+      "receivedAt": 1789314213393
+    },
+    "serverResetIndex": 4539,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 2081,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 419925,
+      "receivedAt": 1789314213399
+    },
+    "serverVehicleIndex": 4542,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_2ee9d0a9-238a-41f7-a520-45632970edcd",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314221080,
+    "priorResetCount": 19,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691085,
+      "playerId": 0,
+      "startedAt": 124367.30000001192,
+      "elapsedMs": 93.59999999403954,
+      "baseline": {
+        "selfPosition": 15,
+        "selfHeading": 14,
+        "vehicleState": 391
+      },
+      "last": {
+        "elapsedMs": 93.59999999403954,
+        "counters": {
+          "selfPosition": 16,
+          "selfHeading": 15,
+          "vehicleState": 393
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          -4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 6
+    },
+    "retrievedAt": 1789314221217,
+    "serverReset": {
+      "event": "reset",
+      "tick": 427725,
+      "receivedAt": 1789314221199
+    },
+    "serverResetIndex": 4667,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 2120,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 427731,
+      "receivedAt": 1789314221205
+    },
+    "serverVehicleIndex": 4670,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_79f22abf-7ff3-4016-a2f4-a5b7daacdb35",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314228932,
+    "priorResetCount": 20,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691086,
+      "playerId": 1,
+      "startedAt": 126531.89999997616,
+      "elapsedMs": 262.80000001192093,
+      "baseline": {
+        "selfPosition": 16,
+        "selfHeading": 15,
+        "vehicleState": 446
+      },
+      "last": {
+        "elapsedMs": 262.80000001192093,
+        "counters": {
+          "selfPosition": 17,
+          "selfHeading": 16,
+          "vehicleState": 448
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 16
+    },
+    "retrievedAt": 1789314229243,
+    "serverReset": {
+      "event": "reset",
+      "tick": 435737,
+      "receivedAt": 1789314229210
+    },
+    "serverResetIndex": 4798,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 2160,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 435742,
+      "receivedAt": 1789314229216
+    },
+    "serverVehicleIndex": 4801,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_59a35991-479b-4b7f-840e-8b2313096b99",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314236962,
+    "priorResetCount": 21,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691085,
+      "playerId": 0,
+      "startedAt": 140264.70000001788,
+      "elapsedMs": 218,
+      "baseline": {
+        "selfPosition": 17,
+        "selfHeading": 16,
+        "vehicleState": 445
+      },
+      "last": {
+        "elapsedMs": 218,
+        "counters": {
+          "selfPosition": 18,
+          "selfHeading": 17,
+          "vehicleState": 447
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          -4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 13
+    },
+    "retrievedAt": 1789314237239,
+    "serverReset": {
+      "event": "reset",
+      "tick": 443742,
+      "receivedAt": 1789314237216
+    },
+    "serverResetIndex": 4929,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 2200,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 443748,
+      "receivedAt": 1789314237222
+    },
+    "serverVehicleIndex": 4932,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_bf8b62a8-2ce1-4513-85ba-7351b9f32adf",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314245009,
+    "priorResetCount": 22,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691086,
+      "playerId": 1,
+      "startedAt": 142610.69999998808,
+      "elapsedMs": 191.69999998807907,
+      "baseline": {
+        "selfPosition": 18,
+        "selfHeading": 17,
+        "vehicleState": 501
+      },
+      "last": {
+        "elapsedMs": 191.69999998807907,
+        "counters": {
+          "selfPosition": 19,
+          "selfHeading": 18,
+          "vehicleState": 503
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 12
+    },
+    "retrievedAt": 1789314245250,
+    "serverReset": {
+      "event": "reset",
+      "tick": 451748,
+      "receivedAt": 1789314245222
+    },
+    "serverResetIndex": 5060,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 2240,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 451754,
+      "receivedAt": 1789314245228
+    },
+    "serverVehicleIndex": 5063,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_7dbc0e32-ac91-4e5b-8ab4-21636624533b",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314252991,
+    "priorResetCount": 23,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691085,
+      "playerId": 0,
+      "startedAt": 156283.5,
+      "elapsedMs": 210.2000000178814,
+      "baseline": {
+        "selfPosition": 19,
+        "selfHeading": 18,
+        "vehicleState": 500
+      },
+      "last": {
+        "elapsedMs": 210.2000000178814,
+        "counters": {
+          "selfPosition": 20,
+          "selfHeading": 19,
+          "vehicleState": 502
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          -4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 13
+    },
+    "retrievedAt": 1789314253250,
+    "serverReset": {
+      "event": "reset",
+      "tick": 459754,
+      "receivedAt": 1789314253227
+    },
+    "serverResetIndex": 5191,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 2280,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 459759,
+      "receivedAt": 1789314253233
+    },
+    "serverVehicleIndex": 5194,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_3774e19d-11d2-4be6-97a4-f1e6ca8d7a9e",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314261002,
+    "priorResetCount": 24,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691086,
+      "playerId": 1,
+      "startedAt": 158602.69999998808,
+      "elapsedMs": 207.90000000596046,
+      "baseline": {
+        "selfPosition": 20,
+        "selfHeading": 19,
+        "vehicleState": 556
+      },
+      "last": {
+        "elapsedMs": 207.90000000596046,
+        "counters": {
+          "selfPosition": 21,
+          "selfHeading": 20,
+          "vehicleState": 558
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 13
+    },
+    "retrievedAt": 1789314261263,
+    "serverReset": {
+      "event": "reset",
+      "tick": 467758,
+      "receivedAt": 1789314261232
+    },
+    "serverResetIndex": 5322,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 2320,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 467764,
+      "receivedAt": 1789314261240
+    },
+    "serverVehicleIndex": 5325,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_7c16db30-27e3-4823-88d8-5e47c6b2632b",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314269027,
+    "priorResetCount": 25,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691085,
+      "playerId": 0,
+      "startedAt": 172320.30000001192,
+      "elapsedMs": 189.90000000596046,
+      "baseline": {
+        "selfPosition": 21,
+        "selfHeading": 20,
+        "vehicleState": 555
+      },
+      "last": {
+        "elapsedMs": 189.90000000596046,
+        "counters": {
+          "selfPosition": 22,
+          "selfHeading": 21,
+          "vehicleState": 557
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          -4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 12
+    },
+    "retrievedAt": 1789314269267,
+    "serverReset": {
+      "event": "reset",
+      "tick": 475760,
+      "receivedAt": 1789314269234
+    },
+    "serverResetIndex": 5453,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 2360,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 475766,
+      "receivedAt": 1789314269240
+    },
+    "serverVehicleIndex": 5456,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_563f9cf5-2589-482e-af1c-f6f028dd1b71",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314277113,
+    "priorResetCount": 26,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691086,
+      "playerId": 1,
+      "startedAt": 174729.19999998808,
+      "elapsedMs": 90.90000000596046,
+      "baseline": {
+        "selfPosition": 22,
+        "selfHeading": 21,
+        "vehicleState": 612
+      },
+      "last": {
+        "elapsedMs": 90.90000000596046,
+        "counters": {
+          "selfPosition": 23,
+          "selfHeading": 22,
+          "vehicleState": 614
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 6
+    },
+    "retrievedAt": 1789314277268,
+    "serverReset": {
+      "event": "reset",
+      "tick": 483765,
+      "receivedAt": 1789314277239
+    },
+    "serverResetIndex": 5584,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 2400,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 483771,
+      "receivedAt": 1789314277245
+    },
+    "serverVehicleIndex": 5587,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_e6729c6e-e686-4820-9d84-f84e520b9819",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314285199,
+    "priorResetCount": 27,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691085,
+      "playerId": 0,
+      "startedAt": 188498.70000001788,
+      "elapsedMs": 213.69999998807907,
+      "baseline": {
+        "selfPosition": 23,
+        "selfHeading": 22,
+        "vehicleState": 611
+      },
+      "last": {
+        "elapsedMs": 213.69999998807907,
+        "counters": {
+          "selfPosition": 24,
+          "selfHeading": 23,
+          "vehicleState": 613
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          -4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 13
+    },
+    "retrievedAt": 1789314285469,
+    "serverReset": {
+      "event": "reset",
+      "tick": 491972,
+      "receivedAt": 1789314285446
+    },
+    "serverResetIndex": 5718,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 2441,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 491978,
+      "receivedAt": 1789314285453
+    },
+    "serverVehicleIndex": 5721,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_d1f33bad-a8a8-44a3-b5d0-4c01c08d8f16",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314293305,
+    "priorResetCount": 28,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691086,
+      "playerId": 1,
+      "startedAt": 190919.79999998212,
+      "elapsedMs": 107.59999999403954,
+      "baseline": {
+        "selfPosition": 24,
+        "selfHeading": 23,
+        "vehicleState": 667
+      },
+      "last": {
+        "elapsedMs": 107.59999999403954,
+        "counters": {
+          "selfPosition": 25,
+          "selfHeading": 24,
+          "vehicleState": 669
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 7
+    },
+    "retrievedAt": 1789314293476,
+    "serverReset": {
+      "event": "reset",
+      "tick": 499976,
+      "receivedAt": 1789314293449
+    },
+    "serverResetIndex": 5849,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 2481,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 499981,
+      "receivedAt": 1789314293456
+    },
+    "serverVehicleIndex": 5852,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_c0369274-beec-4baf-8e96-c5d09d84e3e3",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314301365,
+    "priorResetCount": 29,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691085,
+      "playerId": 0,
+      "startedAt": 204671.60000002384,
+      "elapsedMs": 53.5,
+      "baseline": {
+        "selfPosition": 25,
+        "selfHeading": 24,
+        "vehicleState": 668
+      },
+      "last": {
+        "elapsedMs": 53.5,
+        "counters": {
+          "selfPosition": 26,
+          "selfHeading": 25,
+          "vehicleState": 670
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          -4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 4
+    },
+    "retrievedAt": 1789314301483,
+    "serverReset": {
+      "event": "reset",
+      "tick": 507990,
+      "receivedAt": 1789314301464
+    },
+    "serverResetIndex": 5980,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 2521,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 507996,
+      "receivedAt": 1789314301471
+    },
+    "serverVehicleIndex": 5983,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_e752f0d5-5b50-4290-863f-035a50d25478",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314309526,
+    "priorResetCount": 30,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691086,
+      "playerId": 1,
+      "startedAt": 207130.29999998212,
+      "elapsedMs": 121.09999999403954,
+      "baseline": {
+        "selfPosition": 26,
+        "selfHeading": 25,
+        "vehicleState": 726
+      },
+      "last": {
+        "elapsedMs": 121.09999999403954,
+        "counters": {
+          "selfPosition": 27,
+          "selfHeading": 26,
+          "vehicleState": 728
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 8
+    },
+    "retrievedAt": 1789314309700,
+    "serverReset": {
+      "event": "reset",
+      "tick": 516197,
+      "receivedAt": 1789314309672
+    },
+    "serverResetIndex": 6114,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 2562,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 516202,
+      "receivedAt": 1789314309680
+    },
+    "serverVehicleIndex": 6117,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_e8001b06-f8fd-4a0d-8b78-ec266dc3e070",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314317543,
+    "priorResetCount": 31,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691085,
+      "playerId": 0,
+      "startedAt": 220848,
+      "elapsedMs": 95.60000002384186,
+      "baseline": {
+        "selfPosition": 27,
+        "selfHeading": 26,
+        "vehicleState": 725
+      },
+      "last": {
+        "elapsedMs": 95.60000002384186,
+        "counters": {
+          "selfPosition": 28,
+          "selfHeading": 27,
+          "vehicleState": 727
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          -4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 6
+    },
+    "retrievedAt": 1789314317701,
+    "serverReset": {
+      "event": "reset",
+      "tick": 524203,
+      "receivedAt": 1789314317677
+    },
+    "serverResetIndex": 6245,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 2602,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 524209,
+      "receivedAt": 1789314317684
+    },
+    "serverVehicleIndex": 6248,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_98e3436c-dbf3-4ad1-bd4f-ef84456c6ae0",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314325388,
+    "priorResetCount": 32,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691086,
+      "playerId": 1,
+      "startedAt": 222994.5,
+      "elapsedMs": 256.39999997615814,
+      "baseline": {
+        "selfPosition": 28,
+        "selfHeading": 27,
+        "vehicleState": 781
+      },
+      "last": {
+        "elapsedMs": 256.39999997615814,
+        "counters": {
+          "selfPosition": 29,
+          "selfHeading": 28,
+          "vehicleState": 783
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 16
+    },
+    "retrievedAt": 1789314325699,
+    "serverReset": {
+      "event": "reset",
+      "tick": 532204,
+      "receivedAt": 1789314325679
+    },
+    "serverResetIndex": 6376,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 2642,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 532209,
+      "receivedAt": 1789314325684
+    },
+    "serverVehicleIndex": 6379,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_9dbf28c7-94af-4a1a-9a24-980bfecfe189",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314333537,
+    "priorResetCount": 33,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691085,
+      "playerId": 0,
+      "startedAt": 236835.20000001788,
+      "elapsedMs": 108.7999999821186,
+      "baseline": {
+        "selfPosition": 29,
+        "selfHeading": 28,
+        "vehicleState": 783
+      },
+      "last": {
+        "elapsedMs": 108.7999999821186,
+        "counters": {
+          "selfPosition": 30,
+          "selfHeading": 29,
+          "vehicleState": 785
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          -4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 7
+    },
+    "retrievedAt": 1789314333700,
+    "serverReset": {
+      "event": "reset",
+      "tick": 540210,
+      "receivedAt": 1789314333685
+    },
+    "serverResetIndex": 6507,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 2682,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 540216,
+      "receivedAt": 1789314333692
+    },
+    "serverVehicleIndex": 6510,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_ef5a2362-0aa2-4808-9849-dd4ca0a0e03b",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314341438,
+    "priorResetCount": 34,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691086,
+      "playerId": 1,
+      "startedAt": 239044.79999998212,
+      "elapsedMs": 209.5,
+      "baseline": {
+        "selfPosition": 30,
+        "selfHeading": 29,
+        "vehicleState": 835
+      },
+      "last": {
+        "elapsedMs": 209.5,
+        "counters": {
+          "selfPosition": 31,
+          "selfHeading": 30,
+          "vehicleState": 836
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 13
+    },
+    "retrievedAt": 1789314341703,
+    "serverReset": {
+      "event": "reset",
+      "tick": 548210,
+      "receivedAt": 1789314341685
+    },
+    "serverResetIndex": 6638,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 2722,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 548216,
+      "receivedAt": 1789314341691
+    },
+    "serverVehicleIndex": 6641,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_f25574bc-8eba-4b6e-8475-22d8c3cf7730",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314349504,
+    "priorResetCount": 35,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691085,
+      "playerId": 0,
+      "startedAt": 252808.90000000596,
+      "elapsedMs": 158.90000000596046,
+      "baseline": {
+        "selfPosition": 31,
+        "selfHeading": 30,
+        "vehicleState": 838
+      },
+      "last": {
+        "elapsedMs": 158.90000000596046,
+        "counters": {
+          "selfPosition": 32,
+          "selfHeading": 31,
+          "vehicleState": 840
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          -4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 10
+    },
+    "retrievedAt": 1789314349725,
+    "serverReset": {
+      "event": "reset",
+      "tick": 556222,
+      "receivedAt": 1789314349696
+    },
+    "serverResetIndex": 6769,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 2762,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 556227,
+      "receivedAt": 1789314349702
+    },
+    "serverVehicleIndex": 6772,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_cccff835-ffcf-4a61-acd7-d768079e5f3e",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314357541,
+    "priorResetCount": 36,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691086,
+      "playerId": 1,
+      "startedAt": 255152,
+      "elapsedMs": 123.19999998807907,
+      "baseline": {
+        "selfPosition": 32,
+        "selfHeading": 31,
+        "vehicleState": 892
+      },
+      "last": {
+        "elapsedMs": 123.19999998807907,
+        "counters": {
+          "selfPosition": 33,
+          "selfHeading": 32,
+          "vehicleState": 894
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 8
+    },
+    "retrievedAt": 1789314357725,
+    "serverReset": {
+      "event": "reset",
+      "tick": 564232,
+      "receivedAt": 1789314357707
+    },
+    "serverResetIndex": 6900,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 2802,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 564238,
+      "receivedAt": 1789314357715
+    },
+    "serverVehicleIndex": 6903,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_06fea95e-c005-43b3-98b2-1b18674873d8",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314365504,
+    "priorResetCount": 37,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691085,
+      "playerId": 0,
+      "startedAt": 268798.3000000119,
+      "elapsedMs": 194.19999998807907,
+      "baseline": {
+        "selfPosition": 33,
+        "selfHeading": 32,
+        "vehicleState": 893
+      },
+      "last": {
+        "elapsedMs": 194.19999998807907,
+        "counters": {
+          "selfPosition": 34,
+          "selfHeading": 33,
+          "vehicleState": 895
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          -4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 12
+    },
+    "retrievedAt": 1789314365749,
+    "serverReset": {
+      "event": "reset",
+      "tick": 572237,
+      "receivedAt": 1789314365712
+    },
+    "serverResetIndex": 7031,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 2842,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 572243,
+      "receivedAt": 1789314365718
+    },
+    "serverVehicleIndex": 7034,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_588d2c3a-ec83-48aa-9c09-197df8a783d3",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314373513,
+    "priorResetCount": 38,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691086,
+      "playerId": 1,
+      "startedAt": 271123.2999999821,
+      "elapsedMs": 169.59999999403954,
+      "baseline": {
+        "selfPosition": 34,
+        "selfHeading": 33,
+        "vehicleState": 948
+      },
+      "last": {
+        "elapsedMs": 169.59999999403954,
+        "counters": {
+          "selfPosition": 35,
+          "selfHeading": 34,
+          "vehicleState": 950
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 11
+    },
+    "retrievedAt": 1789314373741,
+    "serverReset": {
+      "event": "reset",
+      "tick": 580243,
+      "receivedAt": 1789314373718
+    },
+    "serverResetIndex": 7162,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 2882,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 580249,
+      "receivedAt": 1789314373725
+    },
+    "serverVehicleIndex": 7165,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_27ba4860-fd19-495b-ae8f-cf870b802cb2",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314381488,
+    "priorResetCount": 39,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691085,
+      "playerId": 0,
+      "startedAt": 284781.40000000596,
+      "elapsedMs": 204.40000000596046,
+      "baseline": {
+        "selfPosition": 35,
+        "selfHeading": 34,
+        "vehicleState": 949
+      },
+      "last": {
+        "elapsedMs": 204.40000000596046,
+        "counters": {
+          "selfPosition": 36,
+          "selfHeading": 35,
+          "vehicleState": 950
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          -4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 13
+    },
+    "retrievedAt": 1789314381742,
+    "serverReset": {
+      "event": "reset",
+      "tick": 588249,
+      "receivedAt": 1789314381724
+    },
+    "serverResetIndex": 7293,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 2922,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 588255,
+      "receivedAt": 1789314381730
+    },
+    "serverVehicleIndex": 7296,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_8a30534d-b889-49f1-ae53-c2bef1556e5b",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314389547,
+    "priorResetCount": 40,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691086,
+      "playerId": 1,
+      "startedAt": 287148.59999999404,
+      "elapsedMs": 152.2999999821186,
+      "baseline": {
+        "selfPosition": 36,
+        "selfHeading": 35,
+        "vehicleState": 1004
+      },
+      "last": {
+        "elapsedMs": 152.2999999821186,
+        "counters": {
+          "selfPosition": 37,
+          "selfHeading": 36,
+          "vehicleState": 1006
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 10
+    },
+    "retrievedAt": 1789314389749,
+    "serverReset": {
+      "event": "reset",
+      "tick": 596254,
+      "receivedAt": 1789314389730
+    },
+    "serverResetIndex": 7424,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 2962,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 596260,
+      "receivedAt": 1789314389735
+    },
+    "serverVehicleIndex": 7427,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_992cfa08-8a61-48b1-9a8b-7f7d7d24e34c",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314397483,
+    "priorResetCount": 41,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691085,
+      "playerId": 0,
+      "startedAt": 300783,
+      "elapsedMs": 230.40000000596046,
+      "baseline": {
+        "selfPosition": 37,
+        "selfHeading": 36,
+        "vehicleState": 1005
+      },
+      "last": {
+        "elapsedMs": 230.40000000596046,
+        "counters": {
+          "selfPosition": 38,
+          "selfHeading": 37,
+          "vehicleState": 1007
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          -4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 14
+    },
+    "retrievedAt": 1789314397771,
+    "serverReset": {
+      "event": "reset",
+      "tick": 604272,
+      "receivedAt": 1789314397747
+    },
+    "serverResetIndex": 7555,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 3002,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 604278,
+      "receivedAt": 1789314397755
+    },
+    "serverVehicleIndex": 7558,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_3a015d67-0040-4abf-a45a-e3796e0e3513",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314405588,
+    "priorResetCount": 42,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691086,
+      "playerId": 1,
+      "startedAt": 303191,
+      "elapsedMs": 128.59999999403954,
+      "baseline": {
+        "selfPosition": 38,
+        "selfHeading": 37,
+        "vehicleState": 1060
+      },
+      "last": {
+        "elapsedMs": 128.59999999403954,
+        "counters": {
+          "selfPosition": 39,
+          "selfHeading": 38,
+          "vehicleState": 1062
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 8
+    },
+    "retrievedAt": 1789314405767,
+    "serverReset": {
+      "event": "reset",
+      "tick": 612270,
+      "receivedAt": 1789314405746
+    },
+    "serverResetIndex": 7686,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 3042,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 612277,
+      "receivedAt": 1789314405751
+    },
+    "serverVehicleIndex": 7689,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_d5896b74-9420-4338-8073-3f60c1b2b287",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314413518,
+    "priorResetCount": 43,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691085,
+      "playerId": 0,
+      "startedAt": 316814.40000000596,
+      "elapsedMs": 208.7000000178814,
+      "baseline": {
+        "selfPosition": 39,
+        "selfHeading": 38,
+        "vehicleState": 1060
+      },
+      "last": {
+        "elapsedMs": 208.7000000178814,
+        "counters": {
+          "selfPosition": 40,
+          "selfHeading": 39,
+          "vehicleState": 1062
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          -4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 13
+    },
+    "retrievedAt": 1789314413781,
+    "serverReset": {
+      "event": "reset",
+      "tick": 620278,
+      "receivedAt": 1789314413754
+    },
+    "serverResetIndex": 7817,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 3082,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 620284,
+      "receivedAt": 1789314413759
+    },
+    "serverVehicleIndex": 7820,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_71b21a6b-9e38-4397-a29f-aaf4508fe055",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314421597,
+    "priorResetCount": 44,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691086,
+      "playerId": 1,
+      "startedAt": 319197.89999997616,
+      "elapsedMs": 139.7000000178814,
+      "baseline": {
+        "selfPosition": 40,
+        "selfHeading": 39,
+        "vehicleState": 1115
+      },
+      "last": {
+        "elapsedMs": 139.7000000178814,
+        "counters": {
+          "selfPosition": 41,
+          "selfHeading": 40,
+          "vehicleState": 1117
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 9
+    },
+    "retrievedAt": 1789314421785,
+    "serverReset": {
+      "event": "reset",
+      "tick": 628278,
+      "receivedAt": 1789314421752
+    },
+    "serverResetIndex": 7948,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 3122,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 628284,
+      "receivedAt": 1789314421759
+    },
+    "serverVehicleIndex": 7951,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_7a829ec6-c999-427a-b5b6-944215ab5954",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314429506,
+    "priorResetCount": 45,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691085,
+      "playerId": 0,
+      "startedAt": 332802.3000000119,
+      "elapsedMs": 227.09999999403954,
+      "baseline": {
+        "selfPosition": 41,
+        "selfHeading": 40,
+        "vehicleState": 1117
+      },
+      "last": {
+        "elapsedMs": 227.09999999403954,
+        "counters": {
+          "selfPosition": 42,
+          "selfHeading": 41,
+          "vehicleState": 1119
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          -4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 14
+    },
+    "retrievedAt": 1789314429785,
+    "serverReset": {
+      "event": "reset",
+      "tick": 636284,
+      "receivedAt": 1789314429759
+    },
+    "serverResetIndex": 8079,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 3162,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 636290,
+      "receivedAt": 1789314429766
+    },
+    "serverVehicleIndex": 8082,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_73f07308-6aa6-4cff-813e-9541b0857ba1",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314437611,
+    "priorResetCount": 46,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691086,
+      "playerId": 1,
+      "startedAt": 335220.39999997616,
+      "elapsedMs": 123.5,
+      "baseline": {
+        "selfPosition": 42,
+        "selfHeading": 41,
+        "vehicleState": 1172
+      },
+      "last": {
+        "elapsedMs": 123.5,
+        "counters": {
+          "selfPosition": 43,
+          "selfHeading": 42,
+          "vehicleState": 1174
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 8
+    },
+    "retrievedAt": 1789314437793,
+    "serverReset": {
+      "event": "reset",
+      "tick": 644285,
+      "receivedAt": 1789314437760
+    },
+    "serverResetIndex": 8210,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 3202,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 644291,
+      "receivedAt": 1789314437767
+    },
+    "serverVehicleIndex": 8213,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_f10a6748-f1ee-4a57-9c22-609d71604eea",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314445624,
+    "priorResetCount": 47,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691085,
+      "playerId": 0,
+      "startedAt": 348920.2000000179,
+      "elapsedMs": 106.90000000596046,
+      "baseline": {
+        "selfPosition": 43,
+        "selfHeading": 42,
+        "vehicleState": 1171
+      },
+      "last": {
+        "elapsedMs": 106.90000000596046,
+        "counters": {
+          "selfPosition": 44,
+          "selfHeading": 43,
+          "vehicleState": 1173
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          -4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 7
+    },
+    "retrievedAt": 1789314445783,
+    "serverReset": {
+      "event": "reset",
+      "tick": 652285,
+      "receivedAt": 1789314445760
+    },
+    "serverResetIndex": 8341,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 3242,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 652291,
+      "receivedAt": 1789314445766
+    },
+    "serverVehicleIndex": 8344,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_9530b5a6-745b-47f5-9348-2cb74291272c",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314453422,
+    "priorResetCount": 48,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691086,
+      "playerId": 1,
+      "startedAt": 351023.5,
+      "elapsedMs": 120.69999998807907,
+      "baseline": {
+        "selfPosition": 44,
+        "selfHeading": 43,
+        "vehicleState": 1226
+      },
+      "last": {
+        "elapsedMs": 120.69999998807907,
+        "counters": {
+          "selfPosition": 45,
+          "selfHeading": 44,
+          "vehicleState": 1228
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 8
+    },
+    "retrievedAt": 1789314453592,
+    "serverReset": {
+      "event": "reset",
+      "tick": 660091,
+      "receivedAt": 1789314453566
+    },
+    "serverResetIndex": 8469,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 3281,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 660097,
+      "receivedAt": 1789314453573
+    },
+    "serverVehicleIndex": 8472,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_0e3b706d-4de6-4483-8e67-44fb61de3497",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314461273,
+    "priorResetCount": 49,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691085,
+      "playerId": 0,
+      "startedAt": 364568.7000000179,
+      "elapsedMs": 74.09999999403954,
+      "baseline": {
+        "selfPosition": 45,
+        "selfHeading": 44,
+        "vehicleState": 1227
+      },
+      "last": {
+        "elapsedMs": 74.09999999403954,
+        "counters": {
+          "selfPosition": 46,
+          "selfHeading": 45,
+          "vehicleState": 1229
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          -4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 5
+    },
+    "retrievedAt": 1789314461399,
+    "serverReset": {
+      "event": "reset",
+      "tick": 667898,
+      "receivedAt": 1789314461372
+    },
+    "serverResetIndex": 8597,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 3320,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 667903,
+      "receivedAt": 1789314461377
+    },
+    "serverVehicleIndex": 8600,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_55d1ba68-420d-49a6-9231-430ac138a1c0",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314469221,
+    "priorResetCount": 50,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691086,
+      "playerId": 1,
+      "startedAt": 366824.1999999881,
+      "elapsedMs": 126.80000001192093,
+      "baseline": {
+        "selfPosition": 46,
+        "selfHeading": 45,
+        "vehicleState": 1283
+      },
+      "last": {
+        "elapsedMs": 126.80000001192093,
+        "counters": {
+          "selfPosition": 47,
+          "selfHeading": 46,
+          "vehicleState": 1285
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 8
+    },
+    "retrievedAt": 1789314469398,
+    "serverReset": {
+      "event": "reset",
+      "tick": 675898,
+      "receivedAt": 1789314469372
+    },
+    "serverResetIndex": 8728,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 3360,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 675904,
+      "receivedAt": 1789314469378
+    },
+    "serverVehicleIndex": 8731,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_424ac770-624c-45d0-bb27-ac63c340b966",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314477241,
+    "priorResetCount": 51,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691085,
+      "playerId": 0,
+      "startedAt": 380545.3000000119,
+      "elapsedMs": 91.59999999403954,
+      "baseline": {
+        "selfPosition": 47,
+        "selfHeading": 46,
+        "vehicleState": 1283
+      },
+      "last": {
+        "elapsedMs": 91.59999999403954,
+        "counters": {
+          "selfPosition": 48,
+          "selfHeading": 47,
+          "vehicleState": 1285
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          -4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 6
+    },
+    "retrievedAt": 1789314477392,
+    "serverReset": {
+      "event": "reset",
+      "tick": 683904,
+      "receivedAt": 1789314477378
+    },
+    "serverResetIndex": 8859,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 3400,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 683910,
+      "receivedAt": 1789314477384
+    },
+    "serverVehicleIndex": 8862,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_c0a7925d-37fa-4f36-980e-1ea323bc91da",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314485214,
+    "priorResetCount": 52,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691086,
+      "playerId": 1,
+      "startedAt": 382818.6999999881,
+      "elapsedMs": 146.40000000596046,
+      "baseline": {
+        "selfPosition": 48,
+        "selfHeading": 47,
+        "vehicleState": 1339
+      },
+      "last": {
+        "elapsedMs": 146.40000000596046,
+        "counters": {
+          "selfPosition": 49,
+          "selfHeading": 48,
+          "vehicleState": 1341
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 9
+    },
+    "retrievedAt": 1789314485413,
+    "serverReset": {
+      "event": "reset",
+      "tick": 691909,
+      "receivedAt": 1789314485382
+    },
+    "serverResetIndex": 8990,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 3440,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 691915,
+      "receivedAt": 1789314485389
+    },
+    "serverVehicleIndex": 8993,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_2a0f8b98-7baf-4bdf-9b02-9bcda61703e4",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314493256,
+    "priorResetCount": 53,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691085,
+      "playerId": 0,
+      "startedAt": 396549.3000000119,
+      "elapsedMs": 111.5,
+      "baseline": {
+        "selfPosition": 49,
+        "selfHeading": 48,
+        "vehicleState": 1339
+      },
+      "last": {
+        "elapsedMs": 111.5,
+        "counters": {
+          "selfPosition": 50,
+          "selfHeading": 49,
+          "vehicleState": 1341
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          -4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 7
+    },
+    "retrievedAt": 1789314493417,
+    "serverReset": {
+      "event": "reset",
+      "tick": 699910,
+      "receivedAt": 1789314493384
+    },
+    "serverResetIndex": 9121,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 3480,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 699916,
+      "receivedAt": 1789314493391
+    },
+    "serverVehicleIndex": 9124,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_219d7d63-064c-4197-823c-ec3a18813b59",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314501225,
+    "priorResetCount": 54,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691086,
+      "playerId": 1,
+      "startedAt": 398824.89999997616,
+      "elapsedMs": 143.10000002384186,
+      "baseline": {
+        "selfPosition": 50,
+        "selfHeading": 49,
+        "vehicleState": 1396
+      },
+      "last": {
+        "elapsedMs": 143.10000002384186,
+        "counters": {
+          "selfPosition": 51,
+          "selfHeading": 50,
+          "vehicleState": 1398
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 9
+    },
+    "retrievedAt": 1789314501416,
+    "serverReset": {
+      "event": "reset",
+      "tick": 707917,
+      "receivedAt": 1789314501390
+    },
+    "serverResetIndex": 9252,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 3520,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 707923,
+      "receivedAt": 1789314501397
+    },
+    "serverVehicleIndex": 9255,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_62d8621d-9b37-427f-a52e-573f95510bd5",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314509132,
+    "priorResetCount": 55,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691085,
+      "playerId": 0,
+      "startedAt": 412429.8000000119,
+      "elapsedMs": 243.59999999403954,
+      "baseline": {
+        "selfPosition": 51,
+        "selfHeading": 50,
+        "vehicleState": 1395
+      },
+      "last": {
+        "elapsedMs": 243.59999999403954,
+        "counters": {
+          "selfPosition": 52,
+          "selfHeading": 51,
+          "vehicleState": 1397
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          -4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 15
+    },
+    "retrievedAt": 1789314509431,
+    "serverReset": {
+      "event": "reset",
+      "tick": 715922,
+      "receivedAt": 1789314509396
+    },
+    "serverResetIndex": 9383,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 3560,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 715928,
+      "receivedAt": 1789314509402
+    },
+    "serverVehicleIndex": 9386,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_bcab3fac-25d6-4ac4-a91a-e2ff687fc10f",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314517252,
+    "priorResetCount": 56,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691086,
+      "playerId": 1,
+      "startedAt": 414868.39999997616,
+      "elapsedMs": 111,
+      "baseline": {
+        "selfPosition": 52,
+        "selfHeading": 51,
+        "vehicleState": 1451
+      },
+      "last": {
+        "elapsedMs": 111,
+        "counters": {
+          "selfPosition": 53,
+          "selfHeading": 52,
+          "vehicleState": 1453
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 7
+    },
+    "retrievedAt": 1789314517427,
+    "serverReset": {
+      "event": "reset",
+      "tick": 723924,
+      "receivedAt": 1789314517397
+    },
+    "serverResetIndex": 9514,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 3600,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 723929,
+      "receivedAt": 1789314517403
+    },
+    "serverVehicleIndex": 9517,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_ba2267dc-2467-44db-8581-ed29d182ba8e",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314525300,
+    "priorResetCount": 57,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691085,
+      "playerId": 0,
+      "startedAt": 428596.10000002384,
+      "elapsedMs": 87.7999999821186,
+      "baseline": {
+        "selfPosition": 53,
+        "selfHeading": 52,
+        "vehicleState": 1452
+      },
+      "last": {
+        "elapsedMs": 87.7999999821186,
+        "counters": {
+          "selfPosition": 54,
+          "selfHeading": 53,
+          "vehicleState": 1454
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          -4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 6
+    },
+    "retrievedAt": 1789314525440,
+    "serverReset": {
+      "event": "reset",
+      "tick": 731941,
+      "receivedAt": 1789314525415
+    },
+    "serverResetIndex": 9645,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 3640,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 731947,
+      "receivedAt": 1789314525421
+    },
+    "serverVehicleIndex": 9648,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_eba84788-b72b-4510-a5c4-42223e7eec7e",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314533298,
+    "priorResetCount": 58,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691086,
+      "playerId": 1,
+      "startedAt": 430906.09999999404,
+      "elapsedMs": 71.5,
+      "baseline": {
+        "selfPosition": 54,
+        "selfHeading": 53,
+        "vehicleState": 1507
+      },
+      "last": {
+        "elapsedMs": 71.5,
+        "counters": {
+          "selfPosition": 55,
+          "selfHeading": 54,
+          "vehicleState": 1509
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 5
+    },
+    "retrievedAt": 1789314533425,
+    "serverReset": {
+      "event": "reset",
+      "tick": 739931,
+      "receivedAt": 1789314533405
+    },
+    "serverResetIndex": 9776,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 3680,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 739936,
+      "receivedAt": 1789314533410
+    },
+    "serverVehicleIndex": 9779,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_edda1d45-8a02-4a2c-a47d-d8c28dcefba6",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314541277,
+    "priorResetCount": 59,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691085,
+      "playerId": 0,
+      "startedAt": 444574.8000000119,
+      "elapsedMs": 94,
+      "baseline": {
+        "selfPosition": 55,
+        "selfHeading": 54,
+        "vehicleState": 1509
+      },
+      "last": {
+        "elapsedMs": 94,
+        "counters": {
+          "selfPosition": 56,
+          "selfHeading": 55,
+          "vehicleState": 1511
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          -4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 6
+    },
+    "retrievedAt": 1789314541424,
+    "serverReset": {
+      "event": "reset",
+      "tick": 747936,
+      "receivedAt": 1789314541409
+    },
+    "serverResetIndex": 9907,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 3720,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 747941,
+      "receivedAt": 1789314541415
+    },
+    "serverVehicleIndex": 9910,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_2d21166e-4852-4edd-a81b-2c87e6ea7093",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314549306,
+    "priorResetCount": 60,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691086,
+      "playerId": 1,
+      "startedAt": 446912.09999999404,
+      "elapsedMs": 91.40000000596046,
+      "baseline": {
+        "selfPosition": 56,
+        "selfHeading": 55,
+        "vehicleState": 1563
+      },
+      "last": {
+        "elapsedMs": 91.40000000596046,
+        "counters": {
+          "selfPosition": 57,
+          "selfHeading": 56,
+          "vehicleState": 1565
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 6
+    },
+    "retrievedAt": 1789314549451,
+    "serverReset": {
+      "event": "reset",
+      "tick": 755943,
+      "receivedAt": 1789314549418
+    },
+    "serverResetIndex": 10038,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 3760,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 755949,
+      "receivedAt": 1789314549424
+    },
+    "serverVehicleIndex": 10041,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_f093b306-82f0-4abe-8515-4c47b2df35cb",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314557287,
+    "priorResetCount": 61,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691085,
+      "playerId": 0,
+      "startedAt": 460592.40000000596,
+      "elapsedMs": 91.90000000596046,
+      "baseline": {
+        "selfPosition": 57,
+        "selfHeading": 56,
+        "vehicleState": 1564
+      },
+      "last": {
+        "elapsedMs": 91.90000000596046,
+        "counters": {
+          "selfPosition": 58,
+          "selfHeading": 57,
+          "vehicleState": 1566
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          -4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 6
+    },
+    "retrievedAt": 1789314557440,
+    "serverReset": {
+      "event": "reset",
+      "tick": 763942,
+      "receivedAt": 1789314557415
+    },
+    "serverResetIndex": 10169,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 3800,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 763947,
+      "receivedAt": 1789314557423
+    },
+    "serverVehicleIndex": 10172,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_949604ab-198f-4313-9170-a624bb2504cd",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314565189,
+    "priorResetCount": 62,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691086,
+      "playerId": 1,
+      "startedAt": 462793.89999997616,
+      "elapsedMs": 197.90000000596046,
+      "baseline": {
+        "selfPosition": 58,
+        "selfHeading": 57,
+        "vehicleState": 1619
+      },
+      "last": {
+        "elapsedMs": 197.90000000596046,
+        "counters": {
+          "selfPosition": 59,
+          "selfHeading": 58,
+          "vehicleState": 1621
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 12
+    },
+    "retrievedAt": 1789314565441,
+    "serverReset": {
+      "event": "reset",
+      "tick": 771944,
+      "receivedAt": 1789314565417
+    },
+    "serverResetIndex": 10300,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 3840,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 771949,
+      "receivedAt": 1789314565423
+    },
+    "serverVehicleIndex": 10303,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_65490623-6708-4b4b-86f7-c935439c8e4f",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314573322,
+    "priorResetCount": 63,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691085,
+      "playerId": 0,
+      "startedAt": 476622.60000002384,
+      "elapsedMs": 69.59999999403954,
+      "baseline": {
+        "selfPosition": 59,
+        "selfHeading": 58,
+        "vehicleState": 1621
+      },
+      "last": {
+        "elapsedMs": 69.59999999403954,
+        "counters": {
+          "selfPosition": 60,
+          "selfHeading": 59,
+          "vehicleState": 1623
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          -4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 5
+    },
+    "retrievedAt": 1789314573449,
+    "serverReset": {
+      "event": "reset",
+      "tick": 779949,
+      "receivedAt": 1789314573422
+    },
+    "serverResetIndex": 10431,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 3880,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 779954,
+      "receivedAt": 1789314573430
+    },
+    "serverVehicleIndex": 10434,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_fa5a7d66-aac9-4850-95d9-9c48a43d1d55",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314581288,
+    "priorResetCount": 64,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691086,
+      "playerId": 1,
+      "startedAt": 478892.6999999881,
+      "elapsedMs": 109.80000001192093,
+      "baseline": {
+        "selfPosition": 60,
+        "selfHeading": 59,
+        "vehicleState": 1676
+      },
+      "last": {
+        "elapsedMs": 109.80000001192093,
+        "counters": {
+          "selfPosition": 61,
+          "selfHeading": 60,
+          "vehicleState": 1678
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 7
+    },
+    "retrievedAt": 1789314581450,
+    "serverReset": {
+      "event": "reset",
+      "tick": 787953,
+      "receivedAt": 1789314581427
+    },
+    "serverResetIndex": 10562,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 3920,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 787959,
+      "receivedAt": 1789314581433
+    },
+    "serverVehicleIndex": 10565,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_64024e76-675f-4022-88a3-0b6edacc48f5",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314589339,
+    "priorResetCount": 65,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691085,
+      "playerId": 0,
+      "startedAt": 492633.3000000119,
+      "elapsedMs": 268.80000001192093,
+      "baseline": {
+        "selfPosition": 61,
+        "selfHeading": 60,
+        "vehicleState": 1679
+      },
+      "last": {
+        "elapsedMs": 268.80000001192093,
+        "counters": {
+          "selfPosition": 62,
+          "selfHeading": 61,
+          "vehicleState": 1681
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          -4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 16
+    },
+    "retrievedAt": 1789314589659,
+    "serverReset": {
+      "event": "reset",
+      "tick": 796155,
+      "receivedAt": 1789314589630
+    },
+    "serverResetIndex": 10696,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 3961,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 796160,
+      "receivedAt": 1789314589635
+    },
+    "serverVehicleIndex": 10699,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_bc52e29e-48c1-44c8-b13c-b52e16cf72f7",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314597552,
+    "priorResetCount": 66,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691086,
+      "playerId": 1,
+      "startedAt": 495169.1999999881,
+      "elapsedMs": 241.80000001192093,
+      "baseline": {
+        "selfPosition": 62,
+        "selfHeading": 61,
+        "vehicleState": 1732
+      },
+      "last": {
+        "elapsedMs": 241.80000001192093,
+        "counters": {
+          "selfPosition": 63,
+          "selfHeading": 62,
+          "vehicleState": 1734
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 15
+    },
+    "retrievedAt": 1789314597859,
+    "serverReset": {
+      "event": "reset",
+      "tick": 804354,
+      "receivedAt": 1789314597829
+    },
+    "serverResetIndex": 10830,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 4002,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 804360,
+      "receivedAt": 1789314597835
+    },
+    "serverVehicleIndex": 10833,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_b4a502a3-9f05-4bc0-9380-9d8042f8ca8b",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314605653,
+    "priorResetCount": 67,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691085,
+      "playerId": 0,
+      "startedAt": 508948.40000000596,
+      "elapsedMs": 154.7000000178814,
+      "baseline": {
+        "selfPosition": 63,
+        "selfHeading": 62,
+        "vehicleState": 1734
+      },
+      "last": {
+        "elapsedMs": 154.7000000178814,
+        "counters": {
+          "selfPosition": 64,
+          "selfHeading": 63,
+          "vehicleState": 1736
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          -4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 10
+    },
+    "retrievedAt": 1789314605859,
+    "serverReset": {
+      "event": "reset",
+      "tick": 812354,
+      "receivedAt": 1789314605829
+    },
+    "serverResetIndex": 10961,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 4042,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 812360,
+      "receivedAt": 1789314605835
+    },
+    "serverVehicleIndex": 10964,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_2715a71b-7722-4f6c-90bb-40c04dbdebdf",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314613579,
+    "priorResetCount": 68,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691086,
+      "playerId": 1,
+      "startedAt": 511186.59999999404,
+      "elapsedMs": 231.19999998807907,
+      "baseline": {
+        "selfPosition": 64,
+        "selfHeading": 63,
+        "vehicleState": 1787
+      },
+      "last": {
+        "elapsedMs": 231.19999998807907,
+        "counters": {
+          "selfPosition": 65,
+          "selfHeading": 64,
+          "vehicleState": 1789
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 14
+    },
+    "retrievedAt": 1789314613865,
+    "serverReset": {
+      "event": "reset",
+      "tick": 820367,
+      "receivedAt": 1789314613842
+    },
+    "serverResetIndex": 11092,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 4082,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 820372,
+      "receivedAt": 1789314613848
+    },
+    "serverVehicleIndex": 11095,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_d1081768-53bc-435a-afae-178d67ef230a",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314621613,
+    "priorResetCount": 69,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691085,
+      "playerId": 0,
+      "startedAt": 524917.5,
+      "elapsedMs": 192.5,
+      "baseline": {
+        "selfPosition": 65,
+        "selfHeading": 64,
+        "vehicleState": 1789
+      },
+      "last": {
+        "elapsedMs": 192.5,
+        "counters": {
+          "selfPosition": 66,
+          "selfHeading": 65,
+          "vehicleState": 1791
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          -4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 12
+    },
+    "retrievedAt": 1789314621866,
+    "serverReset": {
+      "event": "reset",
+      "tick": 828367,
+      "receivedAt": 1789314621842
+    },
+    "serverResetIndex": 11223,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 4122,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 828373,
+      "receivedAt": 1789314621848
+    },
+    "serverVehicleIndex": 11226,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_2ad90410-a24d-4016-99b9-fabb0b71e775",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314629771,
+    "priorResetCount": 70,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691086,
+      "playerId": 1,
+      "startedAt": 527381.599999994,
+      "elapsedMs": 245.7999999821186,
+      "baseline": {
+        "selfPosition": 66,
+        "selfHeading": 65,
+        "vehicleState": 1843
+      },
+      "last": {
+        "elapsedMs": 245.7999999821186,
+        "counters": {
+          "selfPosition": 67,
+          "selfHeading": 66,
+          "vehicleState": 1845
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 15
+    },
+    "retrievedAt": 1789314630075,
+    "serverReset": {
+      "event": "reset",
+      "tick": 836574,
+      "receivedAt": 1789314630047
+    },
+    "serverResetIndex": 11357,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 4163,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 836579,
+      "receivedAt": 1789314630054
+    },
+    "serverVehicleIndex": 11360,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_ea18bdab-9203-4faf-a5f4-18400013335b",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314638027,
+    "priorResetCount": 71,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691085,
+      "playerId": 0,
+      "startedAt": 541332,
+      "elapsedMs": 180.60000002384186,
+      "baseline": {
+        "selfPosition": 67,
+        "selfHeading": 66,
+        "vehicleState": 1846
+      },
+      "last": {
+        "elapsedMs": 180.60000002384186,
+        "counters": {
+          "selfPosition": 68,
+          "selfHeading": 67,
+          "vehicleState": 1848
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          -4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 11
+    },
+    "retrievedAt": 1789314638268,
+    "serverReset": {
+      "event": "reset",
+      "tick": 844780,
+      "receivedAt": 1789314638254
+    },
+    "serverResetIndex": 11491,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 4204,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 844786,
+      "receivedAt": 1789314638260
+    },
+    "serverVehicleIndex": 11494,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_59b9e859-cb9c-496e-969e-21a98f243c13",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314646004,
+    "priorResetCount": 72,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691086,
+      "playerId": 1,
+      "startedAt": 543610.1999999881,
+      "elapsedMs": 228,
+      "baseline": {
+        "selfPosition": 68,
+        "selfHeading": 67,
+        "vehicleState": 1899
+      },
+      "last": {
+        "elapsedMs": 228,
+        "counters": {
+          "selfPosition": 69,
+          "selfHeading": 68,
+          "vehicleState": 1901
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 14
+    },
+    "retrievedAt": 1789314646286,
+    "serverReset": {
+      "event": "reset",
+      "tick": 852785,
+      "receivedAt": 1789314646259
+    },
+    "serverResetIndex": 11622,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 4244,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 852791,
+      "receivedAt": 1789314646265
+    },
+    "serverVehicleIndex": 11625,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_090b48a3-1c51-423c-a406-d2e4a82682f4",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314654061,
+    "priorResetCount": 73,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691085,
+      "playerId": 0,
+      "startedAt": 557361.2000000179,
+      "elapsedMs": 174.5,
+      "baseline": {
+        "selfPosition": 69,
+        "selfHeading": 68,
+        "vehicleState": 1904
+      },
+      "last": {
+        "elapsedMs": 174.5,
+        "counters": {
+          "selfPosition": 70,
+          "selfHeading": 69,
+          "vehicleState": 1906
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          -4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 11
+    },
+    "retrievedAt": 1789314654292,
+    "serverReset": {
+      "event": "reset",
+      "tick": 860791,
+      "receivedAt": 1789314654265
+    },
+    "serverResetIndex": 11753,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 4284,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 860796,
+      "receivedAt": 1789314654271
+    },
+    "serverVehicleIndex": 11756,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_e4b97ecd-c009-4749-ae09-e94c7ab02cc7",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314662031,
+    "priorResetCount": 74,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691086,
+      "playerId": 1,
+      "startedAt": 559644.8999999762,
+      "elapsedMs": 211.30000001192093,
+      "baseline": {
+        "selfPosition": 70,
+        "selfHeading": 69,
+        "vehicleState": 1954
+      },
+      "last": {
+        "elapsedMs": 211.30000001192093,
+        "counters": {
+          "selfPosition": 71,
+          "selfHeading": 70,
+          "vehicleState": 1956
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 13
+    },
+    "retrievedAt": 1789314662306,
+    "serverReset": {
+      "event": "reset",
+      "tick": 868807,
+      "receivedAt": 1789314662280
+    },
+    "serverResetIndex": 11884,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 4324,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 868812,
+      "receivedAt": 1789314662289
+    },
+    "serverVehicleIndex": 11887,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_1a121e0b-266c-449d-b11f-3ca447459c8c",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314670259,
+    "priorResetCount": 75,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691085,
+      "playerId": 0,
+      "startedAt": 573563.1000000238,
+      "elapsedMs": 190.2999999821186,
+      "baseline": {
+        "selfPosition": 71,
+        "selfHeading": 70,
+        "vehicleState": 1964
+      },
+      "last": {
+        "elapsedMs": 190.2999999821186,
+        "counters": {
+          "selfPosition": 72,
+          "selfHeading": 71,
+          "vehicleState": 1966
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          -4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 12
+    },
+    "retrievedAt": 1789314670509,
+    "serverReset": {
+      "event": "reset",
+      "tick": 877011,
+      "receivedAt": 1789314670486
+    },
+    "serverResetIndex": 12018,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 4365,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 877017,
+      "receivedAt": 1789314670492
+    },
+    "serverVehicleIndex": 12021,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_4d919f9a-986b-4618-83d6-5edb0d3c3772",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314678331,
+    "priorResetCount": 76,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691086,
+      "playerId": 1,
+      "startedAt": 575938.1999999881,
+      "elapsedMs": 123.69999998807907,
+      "baseline": {
+        "selfPosition": 72,
+        "selfHeading": 71,
+        "vehicleState": 2011
+      },
+      "last": {
+        "elapsedMs": 123.69999998807907,
+        "counters": {
+          "selfPosition": 73,
+          "selfHeading": 72,
+          "vehicleState": 2013
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 8
+    },
+    "retrievedAt": 1789314678509,
+    "serverReset": {
+      "event": "reset",
+      "tick": 885012,
+      "receivedAt": 1789314678487
+    },
+    "serverResetIndex": 12149,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 4405,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 885018,
+      "receivedAt": 1789314678493
+    },
+    "serverVehicleIndex": 12152,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_748cde60-7c97-49e5-a00f-ced65244f8f2",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314686388,
+    "priorResetCount": 77,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691085,
+      "playerId": 0,
+      "startedAt": 589689,
+      "elapsedMs": 272.90000000596046,
+      "baseline": {
+        "selfPosition": 73,
+        "selfHeading": 72,
+        "vehicleState": 2021
+      },
+      "last": {
+        "elapsedMs": 272.90000000596046,
+        "counters": {
+          "selfPosition": 74,
+          "selfHeading": 73,
+          "vehicleState": 2023
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          -4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 17
+    },
+    "retrievedAt": 1789314686721,
+    "serverReset": {
+      "event": "reset",
+      "tick": 893218,
+      "receivedAt": 1789314686692
+    },
+    "serverResetIndex": 12283,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 4446,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 893223,
+      "receivedAt": 1789314686698
+    },
+    "serverVehicleIndex": 12286,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_4197db82-9e05-45bb-b891-abd51676038d",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314694667,
+    "priorResetCount": 78,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691086,
+      "playerId": 1,
+      "startedAt": 592272.599999994,
+      "elapsedMs": 204.90000000596046,
+      "baseline": {
+        "selfPosition": 74,
+        "selfHeading": 73,
+        "vehicleState": 2068
+      },
+      "last": {
+        "elapsedMs": 204.90000000596046,
+        "counters": {
+          "selfPosition": 75,
+          "selfHeading": 74,
+          "vehicleState": 2070
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 13
+    },
+    "retrievedAt": 1789314694929,
+    "serverReset": {
+      "event": "reset",
+      "tick": 901424,
+      "receivedAt": 1789314694899
+    },
+    "serverResetIndex": 12417,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 4487,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 901430,
+      "receivedAt": 1789314694906
+    },
+    "serverVehicleIndex": 12420,
+    "serverDistance": 0
+  },
+  {
+    "token": "__acceptance_reset_ad3b98c6-b8d2-45a8-bc97-bd2ba82d22c4",
+    "scenario": "soak: ten minutes of active two-player walking chat and driving",
+    "requestedAt": 1789314702730,
+    "priorResetCount": 79,
+    "serverDeadlineMs": 1000,
+    "browser": {
+      "passed": true,
+      "reason": "fresh-correction-within-deadline",
+      "limitMs": 1000,
+      "tolerance": 0.5,
+      "vehicleId": 1,
+      "epoch": 1789313691085,
+      "playerId": 0,
+      "startedAt": 606034.3000000119,
+      "elapsedMs": 127.40000000596046,
+      "baseline": {
+        "selfPosition": 75,
+        "selfHeading": 74,
+        "vehicleState": 2079
+      },
+      "last": {
+        "elapsedMs": 127.40000000596046,
+        "counters": {
+          "selfPosition": 76,
+          "selfHeading": 75,
+          "vehicleState": 2081
+        },
+        "fresh": true,
+        "mode": "onFoot",
+        "selfPosition": [
+          -4,
+          0,
+          10
+        ],
+        "vehiclePosition": [
+          0,
+          6,
+          10
+        ],
+        "distance": 0
+      },
+      "sampleCount": 8
+    },
+    "retrievedAt": 1789314702920,
+    "serverReset": {
+      "event": "reset",
+      "tick": 909430,
+      "receivedAt": 1789314702905
+    },
+    "serverResetIndex": 12548,
+    "serverVehicle": {
+      "event": "vehicle",
+      "seq": 4527,
+      "vehicle": 1,
+      "driver": 65535,
+      "passenger": 65535,
+      "x": 0,
+      "y": 6,
+      "z": 10,
+      "heading": 0,
+      "tick": 909436,
+      "receivedAt": 1789314702912
+    },
+    "serverVehicleIndex": 12551,
+    "serverDistance": 0
+  }
+]

@@ -60,8 +60,9 @@ The native static PMREM bake is 11,647,597 compressed bytes, SHA256
 `7fb519596f3825a101330cb12e0ae96423013005d59e9f10aa1c2c562af47504`,
 with finite peak linear radiance 7.4765625. `source/reflection-bake.json` records
 the unchanged source/asset bracket and zero-player/zero-worker capture. Complete
-native motion and four isolated performance cases pass; full 15-scenario
-acceptance is pending and the formal art target remains open. The quality cycles
+native motion, four isolated performance cases and the
+[full 15-scenario acceptance with both supervisor checks](../docs/native-acceptance-round17a/summary.json)
+pass; the formal art target remains open. The quality cycles
 completed, but strict pixel equality failed at five one-pixel, one-level car-edge
 comparisons; this is not reported as a bitwise restoration pass.
 
@@ -73,7 +74,8 @@ ledger. Current `source/horizon.blend` is 6,091,983 bytes, SHA256
 delivered inventory and reflections are unchanged. Earlier measurement records
 retain the exact authoring hash captured at their run time. Focused terrain
 checks pass 9/9; the separately repaired accepted-taper test passes 4/4. The
-failed pre-browser acceptance attempt remains failed, and a full rerun is pending.
+failed pre-browser acceptance attempt remains failed; the corrected full run
+subsequently passed on `2a6ffde`, without changing the measured runtime.
 
 ### Earlier structural refinement (September 13, round twelve)
 
