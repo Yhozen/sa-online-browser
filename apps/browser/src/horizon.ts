@@ -28,8 +28,8 @@ function decodeTerrain16(encoded: string, count: number, signed: boolean) {
 }
 
 /** Original remeshed upper ridges with one static, linear irradiance bake.
- * Sun direction is fixed in this neighborhood; the player only moves its
- * shadow-camera target. Neither quality preset relights this diffuse bake.
+ * Sun direction and shadow coverage are fixed in this neighborhood.
+ * Neither quality preset relights this diffuse bake.
  * Texture identity, shared map sampling and distance fog stay unchanged. */
 export function buildHorizon(scene: THREE.Scene, groundZ: number) {
   const { segments, rings } = sculpt, stride = segments + 1;

@@ -1,0 +1,521 @@
+{
+  "version": 1,
+  "passed": true,
+  "errors": [],
+  "shots": [
+    {
+      "at": "2026-09-13T13:09:24.976Z",
+      "path": ".dream-loop/quality-round14/0-standard.png",
+      "bytes": 2641395,
+      "sha256": "4efdfa7eb4680ebd213daf23e4841b54259e8d037629a1d00917da86062151b0",
+      "scene": {
+        "id": "neighborhood",
+        "revision": "7115db0e4f80afb9",
+        "ready": true
+      },
+      "graphics": {
+        "preset": "standard",
+        "antialias": "FXAA at native resolution",
+        "sceneDownloadBytes": 46826180,
+        "memory": {
+          "geometries": 267,
+          "textures": 51,
+          "programs": 60
+        },
+        "renderScale": 2,
+        "renderSize": [
+          3344,
+          1882
+        ],
+        "triangles": 5246623,
+        "calls": 945,
+        "assets": {
+          "bytes": 45223519,
+          "textureBytes": 114990005.33333333,
+          "files": 25
+        },
+        "frameCount": 504,
+        "camera": {
+          "position": [
+            -3.9999999999999987,
+            -5.813474530263866,
+            12.234423755527137
+          ],
+          "yaw": 0,
+          "obstruction": 1
+        }
+      },
+      "contextLost": false,
+      "error": 0
+    },
+    {
+      "at": "2026-09-13T13:09:27.449Z",
+      "path": ".dream-loop/quality-round14/1-low.png",
+      "bytes": 2482039,
+      "sha256": "f856e750f8597ddabc17cf3860dbefc151969ff475e032714a7fbdb84905d51b",
+      "scene": {
+        "id": "neighborhood",
+        "revision": "7115db0e4f80afb9",
+        "ready": true
+      },
+      "graphics": {
+        "preset": "low",
+        "antialias": "FXAA at native resolution",
+        "sceneDownloadBytes": 46826180,
+        "memory": {
+          "geometries": 267,
+          "textures": 51,
+          "programs": 60
+        },
+        "renderScale": 2,
+        "renderSize": [
+          3344,
+          1882
+        ],
+        "triangles": 1615534,
+        "calls": 272,
+        "assets": {
+          "bytes": 45223519,
+          "textureBytes": 114990005.33333333,
+          "files": 25
+        },
+        "frameCount": 793,
+        "camera": {
+          "position": [
+            -3.9999999999999996,
+            -5.813474530263868,
+            12.234423755527137
+          ],
+          "yaw": 0,
+          "obstruction": 1
+        }
+      },
+      "contextLost": false,
+      "error": 0
+    },
+    {
+      "at": "2026-09-13T13:09:30.036Z",
+      "path": ".dream-loop/quality-round14/2-standard.png",
+      "bytes": 2641257,
+      "sha256": "750fcad6eb11e67ca2ef0b1eb005348dafb3831760565b3473f356d345a786ca",
+      "scene": {
+        "id": "neighborhood",
+        "revision": "7115db0e4f80afb9",
+        "ready": true
+      },
+      "graphics": {
+        "preset": "standard",
+        "antialias": "FXAA at native resolution",
+        "sceneDownloadBytes": 46826180,
+        "memory": {
+          "geometries": 267,
+          "textures": 51,
+          "programs": 60
+        },
+        "renderScale": 2,
+        "renderSize": [
+          3344,
+          1882
+        ],
+        "triangles": 5246623,
+        "calls": 945,
+        "assets": {
+          "bytes": 45223519,
+          "textureBytes": 114990005.33333333,
+          "files": 25
+        },
+        "frameCount": 988,
+        "camera": {
+          "position": [
+            -4,
+            -5.813474530263869,
+            12.234423755527137
+          ],
+          "yaw": 0,
+          "obstruction": 1
+        }
+      },
+      "contextLost": false,
+      "error": 0
+    },
+    {
+      "at": "2026-09-13T13:09:32.511Z",
+      "path": ".dream-loop/quality-round14/3-low.png",
+      "bytes": 2481992,
+      "sha256": "89649981c8b56a2d84e80a7ad3fe6c27fc9ed6452af9aecb63a815032a1ad3b4",
+      "scene": {
+        "id": "neighborhood",
+        "revision": "7115db0e4f80afb9",
+        "ready": true
+      },
+      "graphics": {
+        "preset": "low",
+        "antialias": "FXAA at native resolution",
+        "sceneDownloadBytes": 46826180,
+        "memory": {
+          "geometries": 267,
+          "textures": 51,
+          "programs": 60
+        },
+        "renderScale": 2,
+        "renderSize": [
+          3344,
+          1882
+        ],
+        "triangles": 1615534,
+        "calls": 272,
+        "assets": {
+          "bytes": 45223519,
+          "textureBytes": 114990005.33333333,
+          "files": 25
+        },
+        "frameCount": 1274,
+        "camera": {
+          "position": [
+            -4,
+            -5.813474530263869,
+            12.234423755527137
+          ],
+          "yaw": 0,
+          "obstruction": 1
+        }
+      },
+      "contextLost": false,
+      "error": 0
+    },
+    {
+      "at": "2026-09-13T13:09:35.100Z",
+      "path": ".dream-loop/quality-round14/4-standard.png",
+      "bytes": 2641426,
+      "sha256": "454a10bcd5313708cc01228fb50a4ef5d2db96cd63453ae859925054a42437f2",
+      "scene": {
+        "id": "neighborhood",
+        "revision": "7115db0e4f80afb9",
+        "ready": true
+      },
+      "graphics": {
+        "preset": "standard",
+        "antialias": "FXAA at native resolution",
+        "sceneDownloadBytes": 46826180,
+        "memory": {
+          "geometries": 267,
+          "textures": 51,
+          "programs": 60
+        },
+        "renderScale": 2,
+        "renderSize": [
+          3344,
+          1882
+        ],
+        "triangles": 5246623,
+        "calls": 945,
+        "assets": {
+          "bytes": 45223519,
+          "textureBytes": 114990005.33333333,
+          "files": 25
+        },
+        "frameCount": 1466,
+        "camera": {
+          "position": [
+            -4,
+            -5.813474530263869,
+            12.234423755527137
+          ],
+          "yaw": 0,
+          "obstruction": 1
+        }
+      },
+      "contextLost": false,
+      "error": 0
+    },
+    {
+      "at": "2026-09-13T13:09:37.575Z",
+      "path": ".dream-loop/quality-round14/5-low.png",
+      "bytes": 2482128,
+      "sha256": "a0c0788dfa238086676fa334478abfcb2ca28e768f17a1bff1c6f64fb2012bac",
+      "scene": {
+        "id": "neighborhood",
+        "revision": "7115db0e4f80afb9",
+        "ready": true
+      },
+      "graphics": {
+        "preset": "low",
+        "antialias": "FXAA at native resolution",
+        "sceneDownloadBytes": 46826180,
+        "memory": {
+          "geometries": 267,
+          "textures": 51,
+          "programs": 60
+        },
+        "renderScale": 2,
+        "renderSize": [
+          3344,
+          1882
+        ],
+        "triangles": 1615534,
+        "calls": 272,
+        "assets": {
+          "bytes": 45223519,
+          "textureBytes": 114990005.33333333,
+          "files": 25
+        },
+        "frameCount": 1752,
+        "camera": {
+          "position": [
+            -4,
+            -5.813474530263869,
+            12.234423755527137
+          ],
+          "yaw": 0,
+          "obstruction": 1
+        }
+      },
+      "contextLost": false,
+      "error": 0
+    },
+    {
+      "at": "2026-09-13T13:09:40.168Z",
+      "path": ".dream-loop/quality-round14/6-standard.png",
+      "bytes": 2641259,
+      "sha256": "0b842663b411262f2344e40d19d090b70177d45786b39db50fdf6d04ebe60230",
+      "scene": {
+        "id": "neighborhood",
+        "revision": "7115db0e4f80afb9",
+        "ready": true
+      },
+      "graphics": {
+        "preset": "standard",
+        "antialias": "FXAA at native resolution",
+        "sceneDownloadBytes": 46826180,
+        "memory": {
+          "geometries": 267,
+          "textures": 51,
+          "programs": 60
+        },
+        "renderScale": 2,
+        "renderSize": [
+          3344,
+          1882
+        ],
+        "triangles": 5246623,
+        "calls": 945,
+        "assets": {
+          "bytes": 45223519,
+          "textureBytes": 114990005.33333333,
+          "files": 25
+        },
+        "frameCount": 1942,
+        "camera": {
+          "position": [
+            -4,
+            -5.813474530263869,
+            12.234423755527137
+          ],
+          "yaw": 0,
+          "obstruction": 1
+        }
+      },
+      "contextLost": false,
+      "error": 0
+    }
+  ],
+  "cleanup": {
+    "targetId": "2812BF9D12B04122CF6CE1EE321FB09E",
+    "cleanup": {
+      "success": true
+    },
+    "at": "2026-09-13T13:09:40.171Z"
+  },
+  "pixelComparison": {
+    "regions": {
+      "curb_sidewalk": [
+        430,
+        530,
+        655,
+        780
+      ],
+      "middle_road": [
+        800,
+        300,
+        1020,
+        425
+      ],
+      "terrain": [
+        1470,
+        123,
+        1570,
+        162
+      ],
+      "front_lawn": [
+        170,
+        415,
+        330,
+        510
+      ]
+    },
+    "rows": [
+      {
+        "baseline": "0-standard.png",
+        "comparison": "2-standard.png",
+        "region": "curb_sidewalk",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "0-standard.png",
+        "comparison": "2-standard.png",
+        "region": "middle_road",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "0-standard.png",
+        "comparison": "2-standard.png",
+        "region": "terrain",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "0-standard.png",
+        "comparison": "2-standard.png",
+        "region": "front_lawn",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "0-standard.png",
+        "comparison": "4-standard.png",
+        "region": "curb_sidewalk",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "0-standard.png",
+        "comparison": "4-standard.png",
+        "region": "middle_road",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "0-standard.png",
+        "comparison": "4-standard.png",
+        "region": "terrain",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "0-standard.png",
+        "comparison": "4-standard.png",
+        "region": "front_lawn",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "0-standard.png",
+        "comparison": "6-standard.png",
+        "region": "curb_sidewalk",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "0-standard.png",
+        "comparison": "6-standard.png",
+        "region": "middle_road",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "0-standard.png",
+        "comparison": "6-standard.png",
+        "region": "terrain",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "0-standard.png",
+        "comparison": "6-standard.png",
+        "region": "front_lawn",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "1-low.png",
+        "comparison": "3-low.png",
+        "region": "curb_sidewalk",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "1-low.png",
+        "comparison": "3-low.png",
+        "region": "middle_road",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "1-low.png",
+        "comparison": "3-low.png",
+        "region": "terrain",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "1-low.png",
+        "comparison": "3-low.png",
+        "region": "front_lawn",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "1-low.png",
+        "comparison": "5-low.png",
+        "region": "curb_sidewalk",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "1-low.png",
+        "comparison": "5-low.png",
+        "region": "middle_road",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "1-low.png",
+        "comparison": "5-low.png",
+        "region": "terrain",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "1-low.png",
+        "comparison": "5-low.png",
+        "region": "front_lawn",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      }
+    ],
+    "scope": "Read-only comparison of native PNGs; same-quality static regions only. Actor animation excluded. Source brackets were not captured for this quality cycle; exact final source proof remains required."
+  },
+  "sourceScope": "No separate local-input brackets were captured for this cycle. The final rendering audit supplies exact before/after canonical and served identities on this same scene."
+}

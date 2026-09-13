@@ -2,27 +2,28 @@
 
 ## Current native milestone — September 13
 
-Round thirteen integrates coordinated sunlight, terrain irradiance and native
-reflections on top of the original Blender assets and gameplay fixes in
-`b49e186`. The current scene is `7ef8f91ef0fd9fec`; source, assets and served
-module fingerprints are in the [native results](native-dream-results.md).
+Round fourteen adds fixed sun-shadow coverage for distant crowns and genuine
+coupe rear recesses, including open exhaust bores. The current scene is
+`7115db0e4f80afb9`; native source/model equivalence and exact runtime fingerprints
+are in the [integration record](native-integration-round14.json).
 
 Standard and Low both measured **120.5 FPS median** at full native DPR 2 in
 2560×1440 and 3344×1882 buffers. Maximum logical texture storage is 315.72 MiB,
-downloads 46,810,131 B, geometry 4,921,215 triangles and 906 calls. Original
+downloads 46,826,381 B, geometry 5,246,623 triangles and 945 calls. Original
 budget ceilings remain. Three real quality-switch cycles restore static pixels
 exactly, with zero browser errors. The separately owned reference window remained
-frozen throughout the [current audit](native-rendering-round13-summary.json).
+frozen throughout each interval of the [current audit](native-rendering-round14-summary.json).
 
 The prior round-twelve motion regression passes, including local walk/drive
 interpolation, jump/seat exits and shared-driving resets. A fresh final-source
 motion run remains pending. Remote movement retains measurable network variation.
 
-**The visual target remains open.** The fresh
-[round-thirteen review](art-review-round13-2026-09-13.md) scores 5.0/10, Tier 1.
-Road shade improved; crown separation and mountain illumination remain open.
-Compare the [current capture](images/native-street-round13-2026-09-13.png) with the
-[generated target](images/native-concept-2026-09-13.png).
+**The visual target remains open.** The latest formal
+[review](art-review-round13-2026-09-13.md), from round thirteen, scores 5.0/10,
+Tier 1. Round fourteen gives modest crown depth and car detail improvements;
+no new formal score is claimed. Broader crown lighting and mountain relief remain
+open. Compare the [current capture](images/native-street-round14-2026-09-13.png)
+with the [generated target](images/native-concept-2026-09-13.png).
 
 **The complete 15-scenario acceptance suite still needs a fresh pass.** The previous
 full run ended 14 passed / 1 failed on a yard-reset observation timeout, with correct

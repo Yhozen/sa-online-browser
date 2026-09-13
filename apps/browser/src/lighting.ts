@@ -4,7 +4,7 @@ import { environmentTexture, reflectionTexture, bakingReflections, bindAssetEnvi
 import { encodeReflection } from "./reflection-storage";
 import { installStreetBounce } from "./surface-lighting";
 
-/** One sun, physical sky reflections, and a stable shadow volume around the player. */
+/** One sun, physical sky reflections, and stable shadows over the bounded fixtures. */
 export function installAtmosphere(scene: THREE.Scene, renderer: THREE.WebGLRenderer) {
   const ambient = new THREE.HemisphereLight(0xb5cce6, 0x97805f, 1.55);
   // The game is Z-up; sky fill must come from above, including shaded facades.
@@ -13,7 +13,7 @@ export function installAtmosphere(scene: THREE.Scene, renderer: THREE.WebGLRende
   sun.castShadow = true;
   const shadowSize = Math.min(4096, renderer.capabilities.maxTextureSize);
   sun.shadow.mapSize.set(shadowSize, shadowSize);
-  Object.assign(sun.shadow.camera, { left: -88, right: 88, top: 88, bottom: -88, near: 1, far: 320 });
+  Object.assign(sun.shadow.camera, { left: -138, right: 132, top: 88, bottom: -88, near: 1, far: 320 });
   sun.shadow.normalBias = 0.04;
   sun.shadow.bias = -0.00008;
   sun.shadow.radius = 2;
@@ -110,10 +110,10 @@ export function installAtmosphere(scene: THREE.Scene, renderer: THREE.WebGLRende
     },
   };
 }
-export function updateSun(rig: ReturnType<typeof installAtmosphere>, target: THREE.Vector3) {
-  // Quantize in shadow texels to prevent crawling shadows during camera motion.
-  const texel = 176 / rig.sun.shadow.mapSize.x;
-  rig.sun.target.position.set(Math.round(target.x / texel) * texel, Math.round(target.y / texel) * texel, 9);
-  rig.sun.position.copy(rig.sun.target.position).add(rig.offset);
+export function updateSun(rig: ReturnType<typeof installAtmosphere>) {
+  // Cover every static crown and the playable fixtures in one stable map.
+  // Keep the physical direction unchanged; distance only positions its camera.
+  rig.sun.target.position.set(0, 0, 9);
+  rig.sun.position.copy(rig.sun.target.position).addScaledVector(rig.offset, 2.5);
   rig.sun.target.updateMatrixWorld();
 }

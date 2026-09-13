@@ -205,3 +205,21 @@ The next original kit pass creates seven interlocking oak crown lobes (630 attac
 The subsequent structural pass uses the same original image inputs. House walls now contain actual cut openings with front/side glazing roughly 14–20 cm behind the exterior; the four variants pass exported-mesh ray tests. The coupe roof, formed A/C pillars, glazing, hood/fenders and end covers share sampled boundaries rather than independent rails. Its exact whole-vehicle envelope, wheel and seat transforms remain unchanged. Low grass and soil islands derive from the shared scene manifest, with triangle-level clearance checks; they reuse the existing grass map. Broad distant mineral/scrub regions preserve the sampled skyline. Canopy normals follow the measured crown volume, with center Z 6.05 m rather than 5.15 m; geometry and leaf UVs remain unchanged. All editable sources and exports are original GPL-3.0-or-later.
 
 The authored 12 m asphalt study is now mapped across 9.6 m to reduce aggregate/fissure scale 20%; normal strength falls from .55 to .4 while base exposure remains unchanged. The unused earlier atlas-asphalt map allocation is removed. Navy paint shifts from `#193d5a` to `#233d50`, reducing saturation at similar luminance after the body-continuity correction. Reflection provenance and hashes were regenerated with the complete final asset build. These are material/art choices, not resolution reductions.
+
+
+### September 13, round fourteen
+
+Native Blender 5.2.1 rebuilt the original coupe from `tools/assets/heroes.py`,
+adding open-mouth exhaust bores and shallow recessed rear lamp, vent and plate
+assemblies. The ordinary selective asset pipeline retains the editable source,
+exact generator fingerprints and final GLB in `source/asset-build.json`.
+The final GLB preserves all staged vertex attributes and oriented triangles;
+its smaller file uses equivalent index-buffer packing. Seats, wheels, materials
+and protected body surfaces retain their verified geometry.
+
+The fixed sun-shadow volume leaves physical sun direction and terrain irradiance
+unchanged. The supported terrain build refreshed native source provenance, and
+the native browser rebaked static reflections with the corrected coverage.
+See [round-fourteen integration](../docs/native-integration-round14.json) for
+exact hashes, original source lineage, native measurements and limitations.
+No external game models or textures were imported.

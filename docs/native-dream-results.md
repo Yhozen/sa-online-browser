@@ -1,12 +1,12 @@
 # Native Dream-loop results — September 13, 2026
 
-Round thirteen adds coordinated cross-street sunlight to the original Blender
-assets and movement fixes from round twelve. Runtime light, terrain irradiance
-and the native reflection bake use the same physical inputs. The current native
-rendering and quality-switch checks pass; fresh final-source motion and complete
-acceptance are pending. **The visual target remains unfinished:** the fresh
-[round-thirteen review](art-review-round13-2026-09-13.md) scores **5.0/10, Tier 1**.
-Road shade improved; crown separation and mountain relief remain the lighting gate.
+Round fourteen gives distant crowns correct sun-shadow coverage and adds real
+exhaust bores and recessed rear trim to the original coupe. It retains the
+coordinated sunlight and Blender foliage/terrain work from earlier rounds.
+Current native rendering and quality-switch checks pass; fresh final-source
+motion and complete acceptance are pending. **The visual target remains
+unfinished.** The latest formal [review](art-review-round13-2026-09-13.md), from
+round thirteen, scores **5.0/10, Tier 1**. No new formal score is claimed.
 
 The fresh full run started at 11:30 UTC finished **14 passed / 1 failed**. Both
 ten-minute soaks passed, but the browser connection closed before rejoining in
@@ -17,18 +17,18 @@ host's new [WebSocket keepalive](native-transport-heartbeat.json) passed both a
 60-second quiet control and the unchanged recovery case. The
 [failed-run record](native-acceptance-round12-failed.json) preserves the results.
 
-The tested scene is **`7ef8f91ef0fd9fec`**, built from the round-thirteen lighting
-changes on source base `2108faa`. The served module is `main-BRewO_K2.js`, SHA256
-`c86bd004f54b7e5368e9dc2c72354a4149409e4863d7b18f16b3be3f44e95379`.
+The tested scene is **`7115db0e4f80afb9`**, built from the round-fourteen shadow
+and model changes on source base `3575f91`. The served module is `main-D776tr6v.js`, SHA256
+`0596abea734e1dee05f73ddd46fad9268ab7e39f4bdf2980bcbc0dc13619127f`.
 Exact source, asset and served identities are retained in the
-[round-thirteen rendering record](native-rendering-round13-summary.json).
+[round-fourteen rendering record](native-rendering-round14-summary.json).
 
 ## Current appearance and authoring
 
-![Actual native Standard gameplay](images/native-street-round13-2026-09-13.png)
+![Actual native Standard gameplay](images/native-street-round14-2026-09-13.png)
 
 This is an actual Chrome gameplay capture, rendered at 3344×1882 native pixels
-and captured as a 1672×941 comparison image. Its [capture record](images/native-street-round13-2026-09-13.json)
+and captured as a 1672×941 comparison image. Its [capture record](images/native-street-round14-2026-09-13.json)
 identifies the build and image hash. The [generated target](images/native-concept-2026-09-13.png)
 is reference art, with a separate [origin record](images/native-concept-2026-09-13.json).
 
@@ -42,24 +42,39 @@ and [asset provenance](../assets/PROVENANCE.md) retain exact sources and exports
 Untouched models retain their earlier pinned provenance; no external game assets
 or new texture service is required.
 
+The coupe now has 80 mm deep open-mouth exhaust interiors, recessed lamp housings,
+a 45 mm deep vent and a recessed plate. Native validation preserves all seat,
+cabin and wheel anchors, materials and protected body surfaces. It adds 520
+triangles and 15,136 raw bytes. The final native GLB differs in index packing from
+the preview export, while every attribute and oriented triangle matches. The
+[current integration record](native-integration-round14.json) retains that proof.
+
+The fixed shadow camera covers the actual distant trees and both bounded gameplay
+fixtures. It preserves the sun direction/intensity and the original 4096² map,
+with slightly wider horizontal shadow texels. Native comparison showed modestly
+clearer crown interiors without an objectionable road-shadow softness change.
+This does not solve the broader warm/cool crown grouping requested by the concept.
+
 The three terrain meshes retain 172,800 triangles and all 218 perimeter placements.
 A packed, connected gully mesh carries one baked diffuse-irradiance field, applied
 once in both presets. Its editable native source matches the actual decoded
 Float32 geometry. The [terrain record](native-terrain-integration-round12.json)
 identifies the earlier geometry provenance. The current
-[lighting integration](native-lighting-integration-round13.json) identifies the
-rebuilt native source, unchanged geometry and new irradiance. Ten road/sidewalk surfaces receive broad
+[integration](native-integration-round14.json) identifies the
+rebuilt native source and unchanged geometry/irradiance from round thirteen. Ten road/sidewalk surfaces receive broad
 pigment variation, and 57 added frontage shrubs bring that count to 141. Existing
 plant transforms and sidewalk dirt remain exact; [ground checks](native-ground-integration-round12.json)
 retain the details.
 
 Three real Standard → Low → Standard cycles kept full native resolution and
 reported no rendering errors. Repeated same-preset pixels were identical in four
-static road, curb, terrain and lawn regions; see the [pixel comparisons](native-quality-cycle-round13.json).
+static road, curb, terrain and lawn regions; see the [pixel comparisons](native-quality-cycle-round14.json).
 This also verifies the material-isolation fix that prevents Low shading from
-altering the restored Standard curbs.
+altering the restored Standard curbs. This quality cycle records actual scene and
+render state; its local source hashes were not separately bracketed. The later
+isolated rendering audit supplies exact source and served-input brackets.
 
-The current review credits the changed street shade and clearer lawn light. It
+The latest formal review, from round thirteen, credits the changed street shade and clearer lawn light. It
 still asks for connected warm crown faces, cooler crown interiors and stronger
 mountain gullies, plus vehicle finish and smaller surface details. The
 [round-twelve review](art-review-round12-2026-09-13.md) and
@@ -71,23 +86,25 @@ normal changes and the first lower-sun direction. Their numerical checks do not
 imply visual acceptance. The accepted lower sun crosses from the opposite side
 of the street and restores the hero's light. See the
 [experiment record](native-visual-studies-round12.md) and
-[current integration record](native-lighting-integration-round13.json).
+[round-thirteen lighting record](native-lighting-integration-round13.json).
+A later terrain specimen increased measured contrast but produced smooth conical
+peaks in native Chrome; it was rejected and the original skyline remains.
 
 ## Native rendering
 
 Chrome **153.0.8010.37**, **ANGLE Metal on Apple M5 Pro**, native DPR 2. Each case
 used a fresh context, five-second warmup, twenty-second idle sample and four-second
-walk. The isolated audit completed at **12:45 UTC**.
+walk. The isolated audit completed at **13:15 UTC**.
 
 | Preset / CSS viewport | Native drawing buffer | Idle / walking median FPS | p95 idle / walking | Logical texture storage |
 | --- | --- | ---: | ---: | ---: |
-| Standard, 1280×720 | 2560×1440 | 120.5 / 120.5 | 9.6 / 9.4 ms | 266.00 MiB |
-| Low, 1280×720 | 2560×1440 | 120.5 / 120.5 | 9.7 / 9.8 ms | 119.34 MiB |
-| Standard, 1672×941 | 3344×1882 | 120.5 / 120.5 | 9.8 / 9.9 ms | 315.72 MiB |
-| Low, 1672×941 | 3344×1882 | 120.5 / 120.5 | 9.6 / 9.7 ms | 169.06 MiB |
+| Standard, 1280×720 | 2560×1440 | 120.5 / 120.5 | 8.9 / 8.9 ms | 266.00 MiB |
+| Low, 1280×720 | 2560×1440 | 120.5 / 120.5 | 9.2 / 9.1 ms | 119.34 MiB |
+| Standard, 1672×941 | 3344×1882 | 120.5 / 120.5 | 9.0 / 9.0 ms | 315.72 MiB |
+| Low, 1672×941 | 3344×1882 | 120.5 / 120.5 | 9.2 / 9.1 ms | 169.06 MiB |
 
-Maximum sampled downloads were **46,810,131 bytes**, geometry **4,921,215 triangles**
-and draw calls **906**. All unchanged 48 MB / 320 MiB / 6 million triangle /
+Maximum sampled downloads were **46,826,381 bytes**, geometry **5,246,623 triangles**
+and draw calls **945**. All unchanged 48 MB / 320 MiB / 6 million triangle /
 1,000 call / 60 FPS gates pass. No browser errors or frame stalls over 50 ms
 were recorded. These are short hardware-specific samples, not a promise of
 constant 120 FPS on every route. Logical texture storage excludes driver overhead
@@ -97,17 +114,17 @@ An earlier round-twelve measurement also passed 60 FPS but measured 61.35 FPS
 at the largest Standard size. A separate owned, disconnected reference window
 was then observed rendering 91 frames in 750 ms. The exact cause of its
 reactivation was not established. The corrected audit explicitly freezes that
-caller-selected page and proves its counter remains at 604,395 throughout each
+caller-selected page and proves its counter remains at 641,764 throughout each
 warmup, idle and walking interval. It changes no resolution or quality setting.
 The earlier result remains under `.dream-loop/native-render-audit/round-12/`;
 the [round-twelve audit](native-rendering-verification.json) preserves its earlier
-measurement. The [current compact audit](native-rendering-round13-summary.json)
-contains the round-thirteen measurements and exact inputs.
+measurement. The [current compact audit](native-rendering-round14-summary.json)
+contains the round-fourteen measurements and exact inputs.
 
 ## Movement and multiplayer
 
 The [round-twelve native motion proof](native-motion/README.md) passes on the prior
-scene. Gameplay code is unchanged by round thirteen; a fresh final-source motion
+scene. The deterministic simulation and network movement code remain unchanged; a fresh final-source motion
 run remains pending. Local walking and driving both measured 120.5 FPS with **zero repeated
 rendered positions**, while the deterministic 60 Hz simulation still repeated on
 approximately half the display frames. Both jump/seat/exit cases produced zero

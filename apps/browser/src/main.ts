@@ -824,7 +824,7 @@ function frame(now: number) {
       delta,
       collisionIndex,
     );
-  updateSun(sun, target);
+  updateSun(sun);
   if (!document.hidden && sceneReady) antialias.render(quality === "standard");
   if (sceneReady) {
     frameCount++;

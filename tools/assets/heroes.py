@@ -292,6 +292,52 @@ for side in [-1,1]:
     box('inner door card',(side*.79,-.02,-.40),(.08,1.65,.37),leather,.035)
     box('door armrest',(side*.735,-.16,-.33),(.12,.45,.07),dark,.027)
 
+def rear_recess(name, x, z, width, height, corner, mouth, back, inset):
+    """Closed thin housing with an open mouth, real inner walls and a deep back.
+
+    Everything stays ahead of the intact fascia. The flat front region is only
+    a narrow annulus; there is no polygon covering the opening at the rim plane.
+    """
+    def outline(w,h,r,y):
+        result=[]
+        for cx,cz,a0 in [(w/2-r,h/2-r,0),(-w/2+r,h/2-r,math.pi/2),
+                         (-w/2+r,-h/2+r,math.pi),(w/2-r,-h/2+r,3*math.pi/2)]:
+            for i in range(5):
+                a=a0+i*math.pi/8
+                result.append((x+cx+r*math.cos(a),y,z+cz+r*math.sin(a)))
+        return result
+    rings=[outline(width,height,corner,back+.002),
+           outline(width,height,corner,mouth),
+           outline(width-2*inset,height-2*inset,max(.004,corner-inset),mouth),
+           outline(width-2*inset-.003,height-2*inset-.003,max(.004,corner-inset-.0015),back)]
+    n=len(rings[0]);verts=[p for ring in rings for p in ring]
+    faces=[(j*n+i,j*n+(i+1)%n,(j+1)*n+(i+1)%n,(j+1)*n+i)
+           for j in range(3) for i in range(n)]
+    faces.extend([tuple(reversed(range(n))),tuple(3*n+i for i in range(n))])
+    return mesh(name,verts,faces,dark)
+
+
+def hollow_exhaust(x):
+    """Rolled metal lip around a genuine 80mm deep, open-mouth exhaust bore.
+
+    The dark inner wall and internal back baffle are geometry, not a painted
+    mouth disc. The baffle remains in front of the unchanged body fascia.
+    """
+    profile=[(-2.150,.055),(-2.278,.055),(-2.284,.052),(-2.287,.048),
+             (-2.283,.043),(-2.207,.043)]
+    n=24;verts=[(x+r*math.cos(i*math.tau/n),y,-.70+r*math.sin(i*math.tau/n))
+                for y,r in profile for i in range(n)]
+    faces=[(j*n+i,j*n+(i+1)%n,(j+1)*n+(i+1)%n,(j+1)*n+i)
+           for j in range(len(profile)-1) for i in range(n)]
+    faces.extend([tuple(reversed(range(n))),tuple((len(profile)-1)*n+i for i in range(n))])
+    # Separate at the real metal/inner-wall boundary so the normal exporter
+    # joins both pieces into its existing chrome/rubber material batches.
+    for name,mat,is_inner in [('rolled exhaust metal lip',chrome,False),('deep exhaust inner bore',dark,True)]:
+        selected=[(j,f) for j,f in enumerate(faces) if (4*n<=j<5*n or j==len(faces)-1)==is_inner]
+        o=mesh(name,verts,[f for j,f in selected],mat)
+        for p,(j,f) in zip(o.data.polygons,selected):p.use_smooth=j<len(faces)-2
+
+
 # Front and rear fascias follow the outline of the continuous shell.
 for y, facing in [(2.15,1),(-2.15,-1)]:
     # End cover uses exactly the same outer ring as the side shell: each
@@ -304,12 +350,20 @@ for y, facing in [(2.15,1),(-2.15,-1)]:
     fs=[(j*49+i,j*49+i+1,(j+1)*49+i+1,(j+1)*49+i) for j in range(8) for i in range(48)]
     smooth(mesh('continuous fitted end cover',verts,fs if facing>0 else [tuple(reversed(f)) for f in fs],paint))
     box('lower impact strip',(0,facing*2.210,-.626),(1.34,.028,.028),dark,.009)
-    box('lower grille',(0,y+facing*.066,-.56),(.94,.018,.115),dark,.04)
-    for i in (range(-6,7) if facing > 0 else [-5,0,5]):
-        box('grille blades',(i*.064,y+facing*.08,-.56),(.016,.012,.09),brake,.004)
-    box('license recess',(0,y+facing*.07,-.345),(.38,.016,.14),dark,.015)
-    box('ivory plate',(0,y+facing*.081,-.345),(.335,.008,.108),white,.006)
-    for x in [-.145,.145]:sphere('plate screw',(x,y+facing*.087,-.345),(.008,.005,.008),chrome,8,4)
+    if facing > 0:
+        box('lower grille',(0,y+facing*.066,-.56),(.94,.018,.115),dark,.04)
+        for i in range(-6,7):
+            box('grille blades',(i*.064,y+facing*.08,-.56),(.016,.012,.09),brake,.004)
+        box('license recess',(0,y+facing*.07,-.345),(.38,.016,.14),dark,.015)
+        box('ivory plate',(0,y+facing*.081,-.345),(.335,.008,.108),white,.006)
+        for x in [-.145,.145]:sphere('plate screw',(x,y+facing*.087,-.345),(.008,.005,.008),chrome,8,4)
+    else:
+        rear_recess('rear bumper vent cavity',0,-.56,.94,.115,.04,-2.243,-2.198,.006)
+        for i in [-5,0,5]:
+            box('rear inset grille blades',(i*.064,-2.208,-.56),(.016,.012,.09),brake,.004)
+        rear_recess('rear plate pocket',0,-.345,.38,.14,.015,-2.243,-2.204,.008)
+        box('inset ivory rear plate',(0,-2.213,-.345),(.335,.008,.108),white,.006)
+        for x in [-.145,.145]:sphere('inset rear plate screw',(x,-2.219,-.345),(.008,.005,.008),chrome,8,4)
 
 for side in [-1,1]:
     # Recessed smoked surround, twin projector optics and narrow running strip.
@@ -320,14 +374,13 @@ for side in [-1,1]:
         cyl('projector surround',(x+dx,2.203,-.33),(x+dx,2.213,-.33),.050,chrome,20)
         sphere('projector lens',(x+dx,2.219,-.33),(.038,.018,.038),lampglass,16,8)
     box('running light',(x,2.211,-.285),(.30,.012,.012),white,.006)
-    # Keep the complete fitted light assembly beyond the fascia at y=-2.20.
-    # Lens / optic layering uses explicit 8–10 mm clearance, avoiding z fighting.
-    box('tail smoked surround',(side*.60,-2.219,-.305),(.45,.018,.105),dark,.025)
-    box('red tail lens',(side*.60,-2.234,-.298),(.40,.012,.058),red,.018)
-    for dx in [-.11,-.04,.03,.10]:box('tail optic',(side*.60+dx,-2.244,-.298),(.025,.009,.035),red,.009)
-    box('reverse lamp',(side*.42,-2.235,-.327),(.065,.009,.016),white,.004)
-    cyl('exhaust metal',(side*.60,-2.15,-.70),(side*.60,-2.28,-.70),.055,chrome,16)
-    cyl('exhaust dark bore',(side*.60,-2.283,-.70),(side*.60,-2.287,-.70),.043,dark,16)
+    # Narrow smoked rims frame a real 33mm housing. Lens and optic fronts
+    # sit 20–28mm behind the mouth, still clear of the unchanged painted fascia.
+    rear_recess('rear lamp socket',side*.60,-.305,.45,.105,.025,-2.247,-2.214,.008)
+    box('recessed red tail lens',(side*.60,-2.219,-.298),(.40,.006,.058),red,.002)
+    for dx in [-.11,-.04,.03,.10]:box('inset tail optic',(side*.60+dx,-2.226,-.298),(.025,.006,.035),red,.002)
+    box('recessed reverse lamp',(side*.42,-2.222,-.327),(.065,.006,.016),white,.002)
+    hollow_exhaust(side*.60)
 
 # Glasshouse is authored from shared boundaries. Roof, glazing and stamped
 # pillar patches share every edge; no freestanding tubes or visor overhang.
