@@ -79,6 +79,7 @@ test.afterAll(async () => {
   writeFileSync(`${dir}/session-transitions.json`, JSON.stringify(sessionTransitions, null, 2));
 });
 async function session(browser, name, recording = true) {
+  const recordingId = `${name}-${randomUUID()}`;
   const context = await browser.newContext({
     viewport: { width: 1280, height: 720 },
     ...(recording
@@ -91,8 +92,11 @@ async function session(browser, name, recording = true) {
       : {}),
   });
   await context.addInitScript(() => localStorage.setItem("poc-quality", "low"));
+  // Native steering produces ~44 trace JPEGs/second in addition to the WebM.
+  // Keep action/DOM/network traces, explicit PNGs and continuous video; avoid
+  // recompressing that duplicate video in the emulated runner.
   if (recording)
-    await context.tracing.start({ screenshots: true, snapshots: true });
+    await context.tracing.start({ screenshots: !acceptanceConnectOptions(), snapshots: true });
   const page = await context.newPage();
   await context.addInitScript(installTextureAudit);
   page.on("pageerror", (e) => errors.push({ name, message: e.message }));
@@ -113,12 +117,15 @@ async function session(browser, name, recording = true) {
       let timer;
       try {
         if (recording) await Promise.race([
-          context.tracing.stop({ path: `${dir}/${name}.zip` }),
-          new Promise((_, reject) => {timer=setTimeout(() => reject(Error(`Trace flush timed out for ${name}`)),30000);}),
+          context.tracing.stop({ path: `${dir}/${recordingId}.zip` }),
+          // Remote traces retain every resource and stack; Playwright recompresses
+          // their archive in the runner before returning. Allow that file work
+          // separately from the unchanged one-second gameplay agreement gate.
+          new Promise((_, reject) => {timer=setTimeout(() => reject(Error(`Trace flush timed out for ${name}`)),acceptanceConnectOptions() ? 120000 : 30000);}),
         ]);
       } finally {
         clearTimeout(timer);await context.close();
-        if (acceptanceConnectOptions()) await page.video()?.saveAs(`${dir}/videos/${name}-${randomUUID()}.webm`);
+        if (acceptanceConnectOptions()) await page.video()?.saveAs(`${dir}/videos/${recordingId}.webm`);
       }
     },
   };
@@ -415,7 +422,9 @@ test("neighborhood: walking, fences, camera, occupants, loop and role swap", asy
 test("neighborhood: twenty reconnects release browser workers and server slots", async ({
   browser,
 }) => {
-  test.setTimeout(300000);
+  // Native-host admissions plus complete recorded artifacts measured ~29s per
+  // cycle through the emulated runner. Preserve all twenty cycles and releases.
+  test.setTimeout(acceptanceConnectOptions() ? 900000 : 300000);
   const ids = [];
   for (let i = 0; i < 20; i++) {
     const s = await session(browser, "ArroyoCycle");

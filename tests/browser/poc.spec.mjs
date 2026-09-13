@@ -51,7 +51,9 @@ async function session(browser, name, testInfo) {
   // Network/lifecycle fixtures use the explicit Low fallback at full native size.
   // Standard and both DPRs are exercised independently by graphics/desktop cases.
   await context.addInitScript(() => localStorage.setItem('poc-quality', 'low'));
-  await context.tracing.start({ screenshots: true, snapshots: true });
+  // Continuous WebM and explicit PNGs retain visual evidence. Native-host
+  // traces keep actions, DOM and network without a duplicate JPEG timeline.
+  await context.tracing.start({ screenshots: !acceptanceConnectOptions(), snapshots: true });
   const page = await context.newPage(); const errors = [];
   page.on('pageerror', e => errors.push(e.message));
   await page.goto(URL); await page.getByTestId('nickname').fill(name); await page.getByTestId('join').click();
@@ -170,7 +172,9 @@ test('failures: duplicate name, worker crash, unavailable server and restart', a
 test('lifecycle: twenty browser connection cycles release sessions', async ({ browser }, info) => {
   // Twenty fresh native-resolution asset admissions plus trace flushes exceed
   // two minutes on SwiftShader. Keep every cycle and its cleanup assertions.
-  test.setTimeout(180000);
+  // Remote native-browser traces also undergo complete ZIP recompression in
+  // the runner (~24–30s per 60MB trace). Keep every recording and release check.
+  test.setTimeout(acceptanceConnectOptions() ? 900000 : 180000);
   for (let i = 0; i < 20; i++) {
     const s = await session(browser, `BrowserCycle_${i}`, info);
     const id = await spawned(s), connectedAt = last('connect', id)?.receivedAt;
