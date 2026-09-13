@@ -1,24 +1,24 @@
 {
   "version": 1,
-  "generatedAt": "2026-09-13T06:26:54.628Z",
+  "generatedAt": "2026-09-13T09:18:44.281Z",
   "format": "PMR1: uint32-le magic,width,height; RGBA16F PMREM atlas; gzip",
   "width": 1536,
   "height": 2048,
-  "compressedBytes": 11285036,
+  "compressedBytes": 11332340,
   "uncompressedBytes": 25165836,
-  "sha256": "588d808d87d0d77e86b0cc98cca5ddbb130772d8a733b13060fd506f305c4797",
-  "uncompressedSha256": "f6d0dd4538c0ded59555049f3b03e66ef1ae83500ff9f7877af5e7f6e9a4e570",
+  "sha256": "61b37b24beab121b8b01a29bf26a02132609dddf2a50c347bf596256fe993c5d",
+  "uncompressedSha256": "0b13d038962400185b9fe99bd972814b12fc8b83893ae4305bd54b37fe1b939d",
   "browser": "Chrome/153.0.8010.37",
   "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
   "peakRadiance": 3.8046875,
   "scene": {
     "id": "neighborhood",
-    "revision": "086c81b26d005af5"
+    "revision": "c8797c2d8384edf0"
   },
   "inputSnapshot": {
-    "capturedAt": "2026-09-13T06:26:50.508Z",
-    "sceneSha256": "b1fc30f6031fe394cb29c57dffa6b784f5e5c38f6c7c348cd2f258207b7453db",
-    "inventorySha256": "941abd5e2032b59185ae23a308622081bb104db1147421ef6425c1dd518e30c1"
+    "capturedAt": "2026-09-13T09:18:41.281Z",
+    "sceneSha256": "c6ceac40d99b8b3f54abd1a5bf3bedfec74928124db2227904ae77de4a199ec7",
+    "inventorySha256": "6b507c9878f4799531669ded326a2c94c865bbeda5de7b26f7cde55370cc1c77"
   },
   "sources": {
     "apps/browser/index.html": "5c7e3e0d86ebc6d6e88fb1514c0e592903af7ab85d4dadd5b13a2f43e2387e24",
@@ -28,7 +28,7 @@
     "apps/browser/src/main.ts": "a9263b57d32640e8dc73012982105ae05f4258f44fdb5adf97420bb96167a2f3",
     "apps/browser/src/graphics.ts": "22b713f3ab445dd4a8effb2160c631515b1e65a14d7ad97731e4db8ca615b297",
     "apps/browser/src/antialias.ts": "29aad63b1b86354605f740bd8ce7b76bc0784afa84bebaad7ddb7ce315924161",
-    "apps/browser/src/assets.ts": "97eccedfc1a64cfebe268d5ff556844f1342b5b5e83c74d352fb290392684845",
+    "apps/browser/src/assets.ts": "2f690c66ea6fba8fdeaa25e24181efedc1a78175ebe131a0b414a30334fb592c",
     "apps/browser/src/lighting.ts": "a88d2532b54083df2b8177b6cdc8300164dedc93ad449e759157cf3437dee057",
     "apps/browser/src/environment.ts": "05d39747b99d625e34a750ffde4dcf939e469f4bc850fd4b56f90317514e7f03",
     "apps/browser/src/surface-textures.ts": "2309c51c318e786734dd90470cbfcb3bb83e67eef2691cf6e3dc5c7028edac56",
@@ -37,10 +37,11 @@
     "apps/browser/src/foliage-mips.ts": "bf7fe1414777bf98dc331fcf323a747dd6a1d20e1df857cde5e5ad47a98cb15c",
     "apps/browser/src/reflection-storage.ts": "8b7f07a99248d1885e509aa3e916b87982ad33019348ae87fd04e09635c13720",
     "apps/browser/src/garden.ts": "2a4b2df656dd1863c94249a1ace3de49078bb4ade310887686f8aba99eaf2649",
-    "apps/browser/src/horizon.ts": "6c5d77348bff4cef0f1fdbcf328770231a2c73d4f29064b37c63526222fed72e",
+    "apps/browser/src/horizon.ts": "5d84b3f5a357552e4fbf11c82f269926fd1d73bc5eb96db7147bbb5622e62d82",
     "assets/horizon-relief.json": "42b9fd6aba7e4e7e9416d33722b6661f3deb09ce34baccdc410a3812c0bae557",
     "apps/browser/src/road-detail.ts": "5cb264c86d9f41cb689d904f3d567bf04acf46c36027657bf6ad5edc3cd9a6c1",
-    "apps/browser/src/verges.ts": "6480673efbdb6e68ef61b7d1b44ce5d496edb99f43552bc828cac2477ab73d88",
+    "apps/browser/src/verges.ts": "c631fd92661b9b863525a1bfef409701b739e27dcf3be79e1b33461229232817",
+    "apps/browser/src/ground-cover.ts": "8e5a7a64144227c24a5aa6c54ad735e07c7ee68b414602d39f21e0e88c757b89",
     "apps/browser/src/warmup.ts": "2db7cbf9d34a1a13b65fe8b52cd8509360903d7084741b216be60e9cadad3406",
     "apps/browser/src/characters.ts": "92f0aea16b7e509bc9ed6f47ab298ae0f88b7ca2f74eafc447be560d1a99021b",
     "apps/browser/src/character-animation.ts": "0782bb10ef3fedfe9744937687dd63566e32abafae70d75e1420c4a62922e8bb",
@@ -55,30 +56,30 @@
     "packages/shared/protocol.ts": "63056480786a5caf48b42fcef1d59427a7525b3eff7c4136e49b86f88758ccde",
     "packages/shared/scene.ts": "1a3a1fd90813248ba8ad85ce22254e5e7ae1b8c0d05e2b4c6876df4833064c5b",
     "packages/shared/scene.mjs": "bf854bf1c671d16b9ac3ec47a08b02bfbd78b32a545bdb2d39ce814d621c5cd4",
-    "packages/shared/scenes/neighborhood.json": "94655c56f18483620c46926f86f2b46d7d8970826dc97fe82095dd4fbb3d9dd2",
+    "packages/shared/scenes/neighborhood.json": "a396b576a26d665224ef38c643d9308866f886babab999baa767f9946db8422d",
     "packages/shared/scenes/yard.json": "eafd501e8fef4ffa7df59050ec41059c4d86b53e510aa83e7479e936497ed5ac",
     "services/gateway/server.mjs": "c2e08a361dd313443790050bda4fb308c33bc38ade6e3a0aba5e9f7ff8e0f326",
-    "tools/asset-inventory.mjs": "b0e3c59ae80648d9fe8f528a1e5a4548a6cfad7148f7958b43f3014d3e9bc577",
-    "tools/bake-reflections-native.mjs": "7c75326a11c99284328c52397956d73eaa142cb19090c786e8b721987c7da6f3",
+    "tools/asset-inventory.mjs": "4d1016f0f8173daff518472121801494b0e5f37722894786660702902d179fcc",
+    "tools/bake-reflections-native.mjs": "cfb89ae095a22667ca6f2f837d476cada8070091dfe98e2b3287b08658b373d0",
     "package.json": "1f2d46278fb3f0ae6ee93d9b70b8b337486515cc36ce2de8b3663616686d7f90",
     "package-lock.json": "b99e5c05368deae7d0cd82a86505d33671cc2275c0852eed3f08afbd0b07bd74"
   },
   "servedBuild": {
     "/": {
       "bytes": 449,
-      "sha256": "1e6a0e518a25859cb1e065cc06e8589324142e0b16aa2a63291d8b78e0f14c82"
-    },
-    "/assets/index-B4sE8_wI.js": {
-      "bytes": 578469,
-      "sha256": "dfc6848470db38220d1997c56aa12030f44be3927a132fe372ea62318234d0a1"
+      "sha256": "aa9d158113ab781ee6b441db219316194beb7f87596c240d0a18d55571636698"
     },
     "/assets/index-CLSF4nJg.css": {
       "bytes": 6991,
       "sha256": "0655f264cfc9ca400288720b93a106c022f381daa4c7ce52c88deb326995367a"
     },
-    "/assets/main-BPdxmQSB.js": {
-      "bytes": 2420067,
-      "sha256": "f5aad4991e99ab88a04f1560273e33fe5fbb4386a864e307569f1b9bcc07f912"
+    "/assets/index-DPst8Nfr.js": {
+      "bytes": 578469,
+      "sha256": "0934eba860479b51ce6dc011e1973e1416a76b2dceecf5aebf464586389d8ef0"
+    },
+    "/assets/main-CikiOjfC.js": {
+      "bytes": 2422001,
+      "sha256": "ca575d044bdd1174c693fb685b3242031b4895289294157bdde7d37b76aa096a"
     }
   },
   "inputs": {
@@ -174,9 +175,21 @@
       "bytes": 10416,
       "sha256": "4a0fea05e8451630f0030e999b284cd50bd3ba6e0d237fb416043c6b549227c0"
     },
+    "roadside-oak.glb": {
+      "bytes": 672964,
+      "sha256": "45877fa170478212222df2590702fb9c9a9e2126122b2ecda96ff721fd19a01a"
+    },
+    "roadside-oak.glb.gz": {
+      "bytes": 408477,
+      "sha256": "455cc769c6c496940e9368ca5987fa3400dc3f57e26d99b0a3a3a21199c89c36"
+    },
     "tree.glb": {
       "bytes": 672908,
       "sha256": "4e4dc0b9a2ee0535126f0e7ad1631a809facacbab83d09ae5bf1131f6e89c41e"
+    },
+    "tree.glb.gz": {
+      "bytes": 407840,
+      "sha256": "e4f763eb911ba86f739d18754d72d758350e577370b26ee6e3628b7db549dc68"
     }
   },
   "network": {

@@ -4,6 +4,7 @@ import assert from "node:assert/strict";
 import { existsSync, mkdtempSync, mkdirSync, writeFileSync, readFileSync, readdirSync, rmSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
+import { gunzipSync } from "node:zlib";
 import os from "node:os";
 import path from "node:path";
 
@@ -65,6 +66,22 @@ test("explicit native builds publish selected models with exact generator and ou
   }
   const inventory = JSON.parse(readFileSync(path.join(f.output, "apps/browser/public/assets/inventory.json"), "utf8"));
   assert.equal(inventory.files["bin.glb"].sha256, record.models.bin.glb.sha256);
+});
+
+test("oak delivery compression preserves exact authored models and both inventory hashes", t => {
+  const f = fixture(t), result = f.run("--models", "tree,roadside-oak");
+  assert.equal(result.status, 0, result.stderr);
+  const directory = path.join(f.output, "apps/browser/public/assets");
+  const inventory = JSON.parse(readFileSync(path.join(directory, "inventory.json"), "utf8"));
+  const record = JSON.parse(readFileSync(path.join(f.output, "assets/source/asset-build.json"), "utf8"));
+  for (const name of ["tree", "roadside-oak"]) {
+    const model = readFileSync(path.join(directory, `${name}.glb`));
+    const delivery = readFileSync(path.join(directory, `${name}.glb.gz`));
+    assert.deepEqual(gunzipSync(delivery), model);
+    assert.equal(inventory.files[`${name}.glb.gz`].sha256, digest(delivery));
+    assert.deepEqual(record.models[name].gzip, inventory.files[`${name}.glb.gz`]);
+    assert.deepEqual(record.models[name].glb, inventory.files[`${name}.glb`]);
+  }
 });
 
 test("a failing native exporter cannot replace a previously working asset", t => {

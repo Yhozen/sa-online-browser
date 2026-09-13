@@ -523,8 +523,33 @@ def detailed_palm():
  env_finish('palm')
 
 
-def detailed_oak():
- if 'tree' not in SELECTED:return
+
+def grow_mature_oak():
+ """Connected mature scaffold; preserve low trunk and transported leaf normals."""
+ bpy.context.view_layer.update()
+ for o in bpy.context.scene.objects:
+  if o.type != 'MESH':continue
+  world=o.matrix_world.copy();inverse=world.inverted()
+  normal_to_world=world.to_3x3().inverted().transposed()
+  normal_to_local=normal_to_world.inverted()
+  old=[world @ v.co for v in o.data.vertices]
+  leaf_normals=[n.vector.copy() for n in o.data.corner_normals] if o.name.startswith('leaf-card') else None
+  for v,p in zip(o.data.vertices,old):
+   if p.z <= 2.1:continue
+   q=p.copy();q.z += 3.0*(1-math.exp(-(p.z-2.1)/.5));v.co=inverse @ q
+  o.data.update()
+  if leaf_normals is not None:
+   transported=[]
+   for loop,n in zip(o.data.loops,leaf_normals):
+    z=old[loop.vertex_index].z
+    derivative=1+6*math.exp(-(z-2.1)/.5) if z>2.1 else 1
+    normal=normal_to_world @ n;normal.z/=derivative
+    transported.append((normal_to_local @ normal.normalized()).normalized())
+   o.data.normals_split_custom_set(transported);o.data.update()
+ # Wood retains its existing smooth polygon flags and natural geometric normals.
+
+def detailed_oak(name='tree'):
+ if name not in SELECTED:return
  start()
  # Root envelope and the first branching height retain the gameplay clearance.
  woody_curve('oak trunk',[(0,0,0),(.035,-.04,.8),(.11,.015,1.65),(.15,.06,2.45),(.26,.07,3.10)],.32)
@@ -567,9 +592,11 @@ def detailed_oak():
  # Canonical crown bounds stay around 4.1–8.4m; local-volume shading is blended
  # into the common outward field so all copies retain a coherent lit shoulder.
  sculpt_canopy_normals()
- env_finish('tree')
+ if name == 'roadside-oak':grow_mature_oak()
+ env_finish(name)
 
 
 detailed_palm()
 detailed_oak()
+detailed_oak('roadside-oak')
 print('Original connected botanical oak and feather palm exported.')

@@ -4,6 +4,7 @@ import {
   copyFileSync, rmSync, realpathSync,
 } from "node:fs";
 import { createHash } from "node:crypto";
+import { gzipSync } from "node:zlib";
 import { spawnSync } from "node:child_process";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -16,7 +17,8 @@ const archiveHash = "da4e69b06b75b9e642d106496c50e7e240218b411d2f6e18271c1d1d819
 const binaryHash = "e3ce4e960a2fd3beb1f9d2299e38b3804475ccd395193013aec239a4b75bfbfe";
 const pinnedBinary = path.join(root, ".runtime/blender-" + pinnedVersion + "-linux-x64/blender");
 const macBinary = "/Applications/Blender.app/Contents/MacOS/Blender";
-const models = ["house-0", "house-1", "house-2", "house-3", "palm", "tree", "fence", "fence-low", "mailbox", "bin", "pole", "lamp", "coupe", "neighbor", "garden-low", "garden-shrub"];
+const models = ["house-0", "house-1", "house-2", "house-3", "palm", "tree", "roadside-oak", "fence", "fence-low", "mailbox", "bin", "pole", "lamp", "coupe", "neighbor", "garden-low", "garden-shrub"];
+const compressedModels = new Set(["tree", "roadside-oak"]);
 const recipes = ["tools/build-assets.mjs", "tools/assets/build.py", "tools/assets/environment-kit.py", "tools/assets/heroes.py", "tools/assets/garden-kit.py"];
 const hash = bytes => createHash("sha256").update(bytes).digest("hex");
 const identify = filename => {
@@ -125,16 +127,20 @@ try {
   const generatedAt = new Date().toISOString();
   // Check every product before copying any of them, including editable sources.
   for (const name of selected) {
+    const modelPath = path.join(staging, "apps/browser/public/assets", name + ".glb");
+    if (compressedModels.has(name)) writeFileSync(modelPath + ".gz", gzipSync(readFileSync(modelPath), { level: 9 }));
     record.models[name] = {
       generatedAt, blender: generator, recipes: inputs,
       glb: identify(path.join(staging, "apps/browser/public/assets", name + ".glb")),
       blend: identify(path.join(staging, "assets/source", name + ".blend")),
+      ...(compressedModels.has(name) ? { gzip: identify(modelPath + ".gz") } : {}),
     };
   }
   mkdirSync(output, { recursive: true });
   mkdirSync(source, { recursive: true });
   for (const name of selected) {
     copyFileSync(path.join(staging, "apps/browser/public/assets", name + ".glb"), path.join(output, name + ".glb"));
+    if (compressedModels.has(name)) copyFileSync(path.join(staging, "apps/browser/public/assets", name + ".glb.gz"), path.join(output, name + ".glb.gz"));
     copyFileSync(path.join(staging, "assets/source", name + ".blend"), path.join(source, name + ".blend"));
   }
   copyFileSync(path.join(root, "assets/textures/neighborhood-atlas.png"), path.join(output, "neighborhood-atlas.png"));

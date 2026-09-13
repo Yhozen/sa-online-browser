@@ -2,7 +2,7 @@
   "version": 1,
   "models": {
     "tree": {
-      "generatedAt": "2026-09-13T03:46:25.689Z",
+      "generatedAt": "2026-09-13T09:12:04.819Z",
       "blender": {
         "version": "5.2.1",
         "buildHash": "9e2066aef7ef",
@@ -12,19 +12,23 @@
         "executableSha256": "ea651e507c6b197df0e234bfa04e5ed43e7f4d498267a7df93fcb38f21928a5c"
       },
       "recipes": {
-        "tools/build-assets.mjs": "a7803adf33e1ce694e3b8646336b7bcf5ee558a2cb9b207bd8fe8974facf05b2",
-        "tools/assets/build.py": "5113f422b62de8bbe3482c9f9ad290f8d3e6bef032cb09ac36dbefc321be720b",
-        "tools/assets/environment-kit.py": "0abf148e1f20c488534af5c0aa22dc0dec301ad84dd58ec7f7fdfea297c0de15",
-        "tools/assets/heroes.py": "53f73f2441f1ee646db930cd21ace2ef132ab6df3aaa37c6f7f5d159d58edfca",
-        "tools/assets/garden-kit.py": "819ffb70f9c7185d6e40f1ca99cae42213ca00d14aee788891ac41a4afd216f1"
+        "tools/build-assets.mjs": "8e9fb12971d128a23526bea7b96d8866f7d786ee20398f1b7b0db95bdd77b7a1",
+        "tools/assets/build.py": "3eb0039ccbd34a3c3aec5e88aced09f34c8ac3677f9d777b97ece47daad9a53e",
+        "tools/assets/environment-kit.py": "1b10679fbebe29ae835688e031c197e639445919bc847eddb9dbbcaaf2ca11a2",
+        "tools/assets/heroes.py": "78d6d41ac6d4aa6ee127d72e7ab277362004edbd7cea72602b1611d42298e9b8",
+        "tools/assets/garden-kit.py": "974d3add6e6f4ad5b9f52d681eeecb69dde28cb8b2a6d471365dcca4ddbf1c8e"
       },
       "glb": {
         "bytes": 672908,
         "sha256": "4e4dc0b9a2ee0535126f0e7ad1631a809facacbab83d09ae5bf1131f6e89c41e"
       },
       "blend": {
-        "bytes": 458795,
-        "sha256": "dd1e3dc1f770474c6fb1b35adf05def98853eacaeb17060c1649dfccaf44dd4d"
+        "bytes": 455475,
+        "sha256": "8cb8b248716571ea8adfd5152d8c2b15af8832314c74ca9ae6b3cdf744ccf4d9"
+      },
+      "gzip": {
+        "bytes": 407840,
+        "sha256": "e4f763eb911ba86f739d18754d72d758350e577370b26ee6e3628b7db549dc68"
       }
     },
     "palm": {
@@ -129,6 +133,36 @@
       "blend": {
         "bytes": 170297,
         "sha256": "56e76b1110a5bc5627fa43502225a932cc6391d33d2cd75034a124c09f7e1df6"
+      }
+    },
+    "roadside-oak": {
+      "generatedAt": "2026-09-13T09:12:04.819Z",
+      "blender": {
+        "version": "5.2.1",
+        "buildHash": "9e2066aef7ef",
+        "distribution": "native-macos",
+        "platform": "darwin",
+        "architecture": "arm64",
+        "executableSha256": "ea651e507c6b197df0e234bfa04e5ed43e7f4d498267a7df93fcb38f21928a5c"
+      },
+      "recipes": {
+        "tools/build-assets.mjs": "8e9fb12971d128a23526bea7b96d8866f7d786ee20398f1b7b0db95bdd77b7a1",
+        "tools/assets/build.py": "3eb0039ccbd34a3c3aec5e88aced09f34c8ac3677f9d777b97ece47daad9a53e",
+        "tools/assets/environment-kit.py": "1b10679fbebe29ae835688e031c197e639445919bc847eddb9dbbcaaf2ca11a2",
+        "tools/assets/heroes.py": "78d6d41ac6d4aa6ee127d72e7ab277362004edbd7cea72602b1611d42298e9b8",
+        "tools/assets/garden-kit.py": "974d3add6e6f4ad5b9f52d681eeecb69dde28cb8b2a6d471365dcca4ddbf1c8e"
+      },
+      "glb": {
+        "bytes": 672964,
+        "sha256": "45877fa170478212222df2590702fb9c9a9e2126122b2ecda96ff721fd19a01a"
+      },
+      "blend": {
+        "bytes": 456124,
+        "sha256": "c6e1b0a5fd29ad602c5bd14cd7f2d5e056a032f4286478456d2202dafba1a4a5"
+      },
+      "gzip": {
+        "bytes": 408477,
+        "sha256": "455cc769c6c496940e9368ca5987fa3400dc3f57e26d99b0a3a3a21199c89c36"
       }
     }
   }

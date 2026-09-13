@@ -150,6 +150,10 @@ for (const x of [22, 50])
     n.props.push({ asset: "palm", position: [x, y, 9], rotation: 0 });
     barrier(`palm-street-${x}-${y}`, x, y, 0.7, 0.7, 8);
   }
+// Append the mature oak so existing prop indices (and their garden layouts)
+// remain stable. Its overhead crown casts real shade into the middle road.
+n.props.push({ asset: "roadside-oak", position: [-13, 14, 9], rotation: 0 });
+barrier("roadside-oak-0", -13, 14, 0.7, 0.7, 11.4);
 for (const scene of [yard, n])
   writeFileSync(
     `packages/shared/scenes/${scene.id}.json`,

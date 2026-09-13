@@ -1044,6 +1044,19 @@
         0.7,
         8
       ]
+    },
+    {
+      "id": "roadside-oak-0",
+      "position": [
+        -13,
+        14,
+        14.7
+      ],
+      "size": [
+        0.7,
+        0.7,
+        11.4
+      ]
     }
   ],
   "houses": [
@@ -2245,6 +2258,15 @@
       "position": [
         50,
         21,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "asset": "roadside-oak",
+      "position": [
+        -13,
+        14,
         9
       ],
       "rotation": 0

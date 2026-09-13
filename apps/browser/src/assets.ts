@@ -7,6 +7,7 @@ import { clone } from "three/addons/utils/SkeletonUtils.js";
 import { surfaceTexture } from "./surface-textures";
 import { decodeReflection } from "./reflection-storage";
 import { installStreetBounce } from "./surface-lighting";
+import { groundCoverGLSL } from "./ground-cover.ts";
 export let environmentTexture: THREE.Texture | undefined;
 export let reflectionTexture: THREE.Texture | undefined;
 export const bakingReflections = new URLSearchParams(location.search).get("bake-reflections") === "1";
@@ -33,6 +34,7 @@ const names = [
   "house-3",
   "palm",
   "tree",
+  "roadside-oak",
   "garden-low",
   "garden-shrub",
   "fence",
@@ -73,20 +75,29 @@ export async function loadAssets(
   }
 
   const canonical = new Map<string, THREE.Material>();
+  const requiredNames = neighborhoodReflections ? names : names.filter(name => name !== "roadside-oak");
   // Sequential loading keeps peak decode memory predictable and provides useful progress.
-  for (const name of names) {
-    progress(`Loading ${name} · ${count + 1}/${names.length + 1}`);
-    const response = await fetch(`/assets/${name}.glb`, {
+  for (const name of requiredNames) {
+    const file = `${name}.glb${name === "tree" || name === "roadside-oak" ? ".gz" : ""}`;
+    progress(`Loading ${name} · ${count + 1}/${requiredNames.length + 1}`);
+    const response = await fetch(`/assets/${file}`, {
       signal: AbortSignal.timeout(15000),
     });
     if (!response.ok)
       throw Error(
-        `${name}.glb could not load (HTTP ${response.status}). Check the asset build and retry.`,
+        `${file} could not load (HTTP ${response.status}). Check the asset build and retry.`,
       );
     const bytes = await response.arrayBuffer();
-    await verify(`${name}.glb`, bytes);
+    await verify(file, bytes);
     assetStats.bytes += bytes.byteLength;
-    const gltf = await loader.parseAsync(bytes, "/assets/");
+    // Preserve every authored GLB byte while keeping both oak specimens within
+    // the download budget. Verify compressed delivery and decoded model identity.
+    let modelBytes = bytes;
+    if (file.endsWith(".gz")) {
+      modelBytes = await new Response(new Blob([bytes]).stream().pipeThrough(new DecompressionStream("gzip"))).arrayBuffer();
+      await verify(`${name}.glb`, modelBytes);
+    }
+    const gltf = await loader.parseAsync(modelBytes, "/assets/");
     gltf.scene.traverse((o) => {
       if (o instanceof THREE.Mesh) {
         o.castShadow = true;
@@ -215,18 +226,14 @@ export async function loadAssets(
     shader.vertexShader = `varying vec2 vGrassMetres;\n${shader.vertexShader}`
       .replace("#include <begin_vertex>", "#include <begin_vertex>\nvGrassMetres = (modelMatrix * vec4(transformed, 1.)).xy;");
     shader.fragmentShader = `varying vec2 vGrassMetres;
-      float turfHash(vec2 p) { return fract(sin(dot(p, vec2(127.1,311.7))) * 43758.5453); }
-      float turfCover(vec2 p) {
-        vec2 i=floor(p),f=fract(p); f=f*f*(3.-2.*f);
-        return mix(mix(turfHash(i),turfHash(i+vec2(1.,0.)),f.x),
-          mix(turfHash(i+vec2(0.,1.)),turfHash(i+vec2(1.,1.)),f.x),f.y);
-      }\n${shader.fragmentShader}`
+      ${groundCoverGLSL}\n${shader.fragmentShader}`
       .replace("#include <map_fragment>", `#include <map_fragment>
-        float cover = turfCover(vGrassMetres*.18) * .72 + turfCover(vGrassMetres*.43+vec2(3.,7.))*.28;
-        diffuseColor.rgb *= mix(vec3(.66,.82,.56),vec3(1.08,1.,.78),smoothstep(.25,.70,cover));
+        float dryRegion = smoothstep(.25,.70,groundCover(vGrassMetres));
+        diffuseColor.rgb *= mix(vec3(.66,.82,.56),vec3(1.08,1.,.78),dryRegion)
+          * mix(vec3(.95,1.,.95),vec3(.90,.92,.90),dryRegion);
       `);
   };
-  groundGrass.customProgramCacheKey = () => "arroyo-live-dry-grass-regions-v1";
+  groundGrass.customProgramCacheKey = () => "arroyo-live-dry-grass-regions-v2";
   surfaceMaterials.set("grass", groundGrass);
   assetStats.textureBytes += 1024 * 1024 * 4 * 4 / 3 * 3;
   grassInput.close();
@@ -283,9 +290,9 @@ export async function loadAssets(
           THREE.ShaderChunk.lights_physical_pars_fragment.replace(
             "reflectedLight.directDiffuse += irradiance * BRDF_Lambert( material.diffuseContribution );",
             `reflectedLight.directDiffuse += saturate(dot(${name.startsWith("foliage") ? "normalize(vNormal)" : "geometryNormal"}, directLight.direction) * 0.75 + 0.25) * directLight.color * BRDF_Lambert(material.diffuseContribution)
-              ${name.startsWith("foliage") ? "* mix(vec3(1.),vec3(1.32,1.16,.91),smoothstep(.05,.85,dot(normalize(vNormal),directLight.direction)))" : ""};`));
+              ${name.startsWith("foliage") ? "* mix(vec3(1.),vec3(1.56,1.37,1.07),smoothstep(.05,.85,dot(normalize(vNormal),directLight.direction)))" : ""};`));
       };
-      material.customProgramCacheKey = () => `arroyo-thin-leaf-diffuse-v5-${name.startsWith("foliage") ? "canopy" : "palm"}`;
+      material.customProgramCacheKey = () => `arroyo-thin-leaf-diffuse-v6-${name.startsWith("foliage") ? "canopy" : "palm"}`;
       material.needsUpdate = true;
     }
     if (name === "glass") { material.envMapIntensity = 1.4; material.roughness = .24; if(material instanceof THREE.MeshPhysicalMaterial)material.specularIntensity=.12; }

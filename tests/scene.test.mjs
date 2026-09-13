@@ -25,7 +25,7 @@ test("manifest geometry, clear spawn/exit areas and bounded camera obstruction",
   assert.equal(index.fraction([-4, 0, 11], [-4, -7, 13]), 1);
   assert.ok(index.fraction([-15, -18, 11], [-30, -18, 11]) < 1);
   assert.equal(index.fraction([-15, -18, 30], [-30, -18, 30]), 1);
-  for (const p of n.props.filter((p) => ["tree", "palm"].includes(p.asset))) {
+  for (const p of n.props.filter((p) => ["tree", "palm", "roadside-oak"].includes(p.asset))) {
     assert.ok(
       n.barriers.some(
         (b) =>

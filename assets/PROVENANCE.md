@@ -29,7 +29,45 @@ The six surface, detail, foliage, sky, asphalt and lawn WebP inputs recorded in 
 
 The current asphalt is an original built-in image edit with quieter fissures and warm mineral aggregate, retained byte-for-byte at `textures/arroyo-asphalt.png`. `source/asphalt-authoring.json` records its exact prompt and generation identity. Runtime samples it across four metres and derives aligned surface maps. The current sky is an original four-edit refinement with fuller warm-white clouds, a midpoint horizon and open blue at the panorama wrap. `source/arroyo-sky-generation.json` and `source/arroyo-sky-prompts.txt` retain every exact prompt, input and generated-output identity. Its opposite cloud-band edges differ by at most 4/255 mean RGB in the measured 29–33° band; this is a closely matched wrap, not a claim of mathematically identical edges.
 
-### Current grass tussock atlas and planting
+### Latest street refinement (September 13, 09:12 UTC build)
+
+The native Blender pipeline now also builds `roadside-oak`: a mature specimen with
+one continuous 3 m growth deformation above the unchanged 2.1 m low trunk.
+It has 9,256 triangles, a 7.095–11.397 m leaf envelope, and 720 leaf-stem anchors
+within 3.136 cm of the scaffold. The ordinary `tree.glb` rebuild remains
+byte-identical. `source/asset-build.json` records both native sources, exports,
+recipe hashes and lossless gzip deliveries. The standard GLBs remain available
+for editing and geometry tests; the browser verifies both compressed and decoded
+identities. Delivering both trees costs 816,317 bytes, a net addition of 143,409
+bytes over the prior uncompressed oak. No texture or external asset was added.
+
+The mature oak is appended at (−13,14,9) with a matching trunk collider. Existing
+prop/collider values and indices remain unchanged. Actual-GLB tests verify roads,
+turning sidewalk, house access, roofs, lamp, sign and center landmarks. Native
+visual review accepts the heavier left tree cluster; the new tree overlaps
+26.863% of the separately sampled left-palm geometry, so that landmark is not
+claimed unobstructed. CPU alpha projection estimates 14.03% additional shade in
+the measured middle-road band; native PCF and overlap with other shadows differ.
+
+Current grass redistribution retains 23,000 yard tufts in 52 grass batches and
+493,294 total grass/soil triangles. All existing travel and access exclusions
+remain. A shared integer lattice hash aligns turf pigment and tuft color;
+54 native GPU samples agree with the CPU field within 0.00000205. Original
+textures and coverage-preserving cutout mips remain. The current decorative
+planting is 30 bed specimens, 27 verge specimens and 84 frontage shrubs.
+
+The three existing terrain meshes retain all 172,800 triangles, positions,
+indices, textures and smooth seam attributes. Standard uses a bounded blend of
+smooth and actual face normals at authored gullies, preserving the angular seam;
+Low retains its existing cached material behavior. Exposed bank pixels in the
+controlled native preview changed by 18–41 RGB levels. This is visible relief,
+not a claim that every geological-detail target has been achieved. The latest
+reflection identity is always the current `source/reflection-bake.json` record.
+
+The dated paragraphs below retain earlier authoring measurements; where their
+counts or cache identities differ, this latest section and current ledgers win.
+
+### Earlier grass tussock atlas integration
 
 `textures/arroyo-grass-clumps.png` is a new original built-in ImageGen output: four isolated olive and straw grass tussocks in a transparent 2×2 atlas. No external image or model was supplied. `source/grass-clump-generation.json` retains the complete prompt, source/output identities and independent exact RGBA verification. Lossless WebP preserves all 1,572,516 pixels, including invisible RGB. Runtime prepares a 1024² cutout mip chain using the existing coverage-preserving filter.
 
@@ -39,7 +77,7 @@ Three curved crossed cards replace one grass ribbon variant; the other retains i
 
 The original `garden-shrub` variant reuses the accepted foliage atlas in three overlapping olive crowns, with three basal leaders, 21 connected lateral shoots, 63 folded sprays and four small attached flowers. It contains 1,496 triangles in four material primitives and occupies 102,380 bytes; actual exported radius is 0.5304 m and height is 0.5082 m, within the 0.65 m authoring limits. Local low-crown normals and complete atlas UVs are validated from the export. Its editable native Blender source and exact recipe/output identities are recorded separately in `source/asset-build.json`. The accepted `garden-low` GLB and Blender source remain byte-identical. Isolated single/group previews are authoring checks; frontage placement and final appearance are verified in the browser. The current fixture adds 86 frontage shrubs and 27 verge `garden-low` specimens, alongside 30 specimens in the existing masonry beds. The independent exported-triangle test inspects 202,852 triangles across the 113 frontage/verge plants, with a maximum height of 0.604 m and a minimum measured vertex-to-sidewalk gap of 0.299 m.
 
-### Current distant terrain
+### Earlier distant terrain authoring
 
 `tools/assets/horizon.py` authors the original distant terrain in native Blender 5.2.1 LTS. `source/horizon.blend` is editable, `horizon-relief.json` supplies relief and mineral/vegetation fields, and `source/horizon-build.json` records exact native executable, recipe and output hashes. The current sculpt has connected multiscale folds beneath a narrow 1.9–3.5 m crown strip, with a smooth three-metre transition toward a 36° radial slope. This replaces the rejected isolated crest points that produced triangular teeth. All 1,443 sampled crown heights, horizontal coordinates, topology and playable boundaries remain unchanged; 44,661 vertices move subtractively. Native Blender and runtime match all 88,023 coordinates and triangle indices exactly. Runtime retains three terrain batches and 172,800 triangles. Median immediate crown-edge inclination drops from the rejected 25.36° to 2.35°, while 68–74% of the former exposed top-metre band carries relief. Mean projected skyline change is 0.01090°, maximum 0.12395°. Native Chrome/M5 Pro review at DPR 2, sun 6.2 and sky fill 1.55 measured average upper-band brightness changes of +1.86% north and +0.46% northeast with no browser errors; source hashes remained stable. This establishes geometric and brightness checks, not the requested universal twofold tonal-variation gate. The staged review record is retained under `.dream-loop/terrain-planes-stage/`.
 
@@ -61,11 +99,11 @@ The 2 cm geometric projection raster measures unchanged sun-projected union and 
 
 Published `palm.glb`: 830,960 bytes, SHA256 `777457b436e1f8d5ca350fb30886e57461bac0718a914068fe7f09a3f3598060`. Editable `palm.blend`: 644,297 bytes, SHA256 `8f3818975770d7dded5fe84c48e74cf89b1eba2eedca97a1da198161669e8930`. Only the palm ledger entry was replaced; all other model records were preserved.
 
-### Current reflection cache
+### Earlier reflection cache snapshot
 
 `tools/bake-reflections-native.mjs` provides an additional native Chrome/GPU bake path for the local empty fixture. It validates source, model, inventory, served scene and browser bundle identities before publication, and records the actual renderer. The pinned provisioned bake path remains available.
 
-The authoritative current cache is the native bake recorded at **2026-09-13T05:43:56.509Z** (approximately 05:44 UTC) in `source/reflection-bake.json`: Chrome 153.0.8010.37, ANGLE Metal on Apple M5 Pro, scene revision `382505ade0366b07`. The 1536×2048 RGBA16F PMREM cache occupies 11,216,349 compressed bytes; SHA256 is `cdf4b001427fd4cded2023be7302e86799b177910a50d67be152e08297789205`. The record includes every input identity, served bundle identity and a zero-player/zero-worker capture. It is a static probe at the vehicle reset position, not a claim of dynamic reflections everywhere or gameplay acceptance. Historical pinned Chromium/SwiftShader bakes are described below.
+The earlier cache snapshot was the native bake recorded at **2026-09-13T05:43:56.509Z** (approximately 05:44 UTC) in `source/reflection-bake.json`: Chrome 153.0.8010.37, ANGLE Metal on Apple M5 Pro, scene revision `382505ade0366b07`. The 1536×2048 RGBA16F PMREM cache occupies 11,216,349 compressed bytes; SHA256 is `cdf4b001427fd4cded2023be7302e86799b177910a50d67be152e08297789205`. The record includes every input identity, served bundle identity and a zero-player/zero-worker capture. It is a static probe at the vehicle reset position, not a claim of dynamic reflections everywhere or gameplay acceptance. Historical pinned Chromium/SwiftShader bakes are described below.
 
 ### Earlier September 13 authoring stages (historical)
 

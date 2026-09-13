@@ -219,9 +219,18 @@ export function buildHorizon(scene: THREE.Scene, groundZ: number) {
     if (grass?.map && concrete?.map) {
       material.onBeforeCompile = shader => {
         shader.uniforms.arroyoRock = { value: concrete.map };
-        shader.vertexShader = `attribute vec2 terrainMix; varying vec2 vTerrainMix;\n${shader.vertexShader}`
-          .replace("#include <begin_vertex>", "#include <begin_vertex>\nvTerrainMix = terrainMix;");
-        shader.fragmentShader = `uniform sampler2D arroyoRock; varying vec2 vTerrainMix;\n${shader.fragmentShader}`
+        shader.vertexShader = `attribute vec2 terrainMix; varying vec2 vTerrainMix;
+          varying float vTerrainCreaseSeam;\n${shader.vertexShader}`
+          .replace("#include <begin_vertex>", `#include <begin_vertex>
+            vTerrainMix = terrainMix;
+            // Keep the authored smooth angular closure intact. Outside its
+            // five-column guard, creases depend only on real surface geometry.
+            float seamSlope = abs(position.y) / max(1., abs(position.x));
+            vTerrainCreaseSeam = position.x > 0.
+              ? smoothstep(.02620, .06550, seamSlope) : 1.;
+          `);
+        shader.fragmentShader = `uniform sampler2D arroyoRock; varying vec2 vTerrainMix;
+          varying float vTerrainCreaseSeam;\n${shader.fragmentShader}`
           .replace("#include <map_fragment>", `
             #ifdef USE_MAP
               vec3 dryCover = texture2D(map, vMapUv).rgb;
@@ -234,11 +243,26 @@ export function buildHorizon(scene: THREE.Scene, groundZ: number) {
               diffuseColor.rgb *= terrain;
             #endif
           `)
+          // Area-averaged normals can light the sheltered side of a narrow
+          // authored gully. Restore part of its real face orientation only
+          // where the smooth field disagrees by roughly 13-37 degrees.
+          // Do this before Three builds the tangent frame: the existing fine
+          // normal map then follows the corrected bank instead of being lost.
+          .replace("#include <normal_fragment_begin>",
+            THREE.ShaderChunk.normal_fragment_begin.replace(
+              "vec3 normal = normalize( vNormal );", `
+                vec3 terrainSmoothNormal = normalize(vNormal);
+                vec3 terrainFaceNormal = normalize(cross(
+                  dFdx(vViewPosition), dFdy(vViewPosition))) * faceDirection;
+                float terrainCrease = .75 * vTerrainCreaseSeam * smoothstep(
+                  .025, .20, 1. - clamp(dot(terrainSmoothNormal, terrainFaceNormal), -1., 1.));
+                vec3 normal = normalize(mix(terrainSmoothNormal, terrainFaceNormal, terrainCrease));
+              `))
           // Elevated distant terrain retains more clear-air contrast than the
           // ground haze through the neighborhood; sky/background stay untouched.
           .replace("#include <fog_fragment>", THREE.ShaderChunk.fog_fragment.replace("fogColor, fogFactor", "fogColor, fogFactor * .7"));
       };
-      material.customProgramCacheKey = () => "arroyo-watershed-terrain-v5";
+      material.customProgramCacheKey = () => "arroyo-watershed-terrain-v6-crease";
     }
     const mesh = new THREE.Mesh(geometry, material); mesh.name = `Arroyo eroded ridge ${layer}`;
     mesh.receiveShadow = true; scene.add(mesh);
