@@ -2,10 +2,12 @@
 import { visualBudgets as budget } from "../../tools/visual-budgets.mjs";
 import { test, expect } from "@playwright/test";
 import { spawn } from "node:child_process";
+import { randomUUID } from "node:crypto";
 import { mkdirSync, writeFileSync, createWriteStream } from "node:fs";
 import { createGateway } from "../../services/gateway/server.mjs";
 import { loadScene } from "../../packages/shared/scene.mjs";
 import { installTextureAudit } from "../../tools/texture-audit.mjs";
+import { acceptanceConnectOptions } from "../../tools/browser-options.mjs";
 const URL = "http://127.0.0.1:3300",
   manifest = loadScene("neighborhood"),
   dir = process.env.POC_NEIGHBORHOOD_ARTIFACTS || "artifacts/neighborhood";
@@ -114,7 +116,10 @@ async function session(browser, name, recording = true) {
           context.tracing.stop({ path: `${dir}/${name}.zip` }),
           new Promise((_, reject) => {timer=setTimeout(() => reject(Error(`Trace flush timed out for ${name}`)),30000);}),
         ]);
-      } finally { clearTimeout(timer);await context.close(); }
+      } finally {
+        clearTimeout(timer);await context.close();
+        if (acceptanceConnectOptions()) await page.video()?.saveAs(`${dir}/videos/${name}-${randomUUID()}.webm`);
+      }
     },
   };
 }
@@ -526,7 +531,7 @@ test("neighborhood: ten minute recorded active session", async ({
 
 // Performance is measured without the instrumentation overhead of video and tracing.
 // The recorded soak above retains its own metrics, including capture overhead.
-test("neighborhood: two full-resolution cloud views meet the low graphics budget", async ({
+test("neighborhood: two full-resolution views meet the low graphics budget", async ({
   browser,
 }) => {
   test.setTimeout(240000);

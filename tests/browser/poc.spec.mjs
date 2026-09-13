@@ -4,6 +4,7 @@ import playwright from 'playwright';
 import { spawn } from 'node:child_process';
 import { mkdirSync, createWriteStream, readFileSync, writeFileSync } from 'node:fs';
 import { createGateway } from '../../services/gateway/server.mjs';
+import { acceptanceConnectOptions, setAcceptanceFocusEmulation } from '../../tools/browser-options.mjs';
 
 const URL = 'http://127.0.0.1:3000';
 let gateway, server, observations = [], agreements = [], browserErrors = [], traceCounter = 0, serverReady = false;
@@ -54,7 +55,7 @@ async function session(browser, name, testInfo) {
   const page = await context.newPage(); const errors = [];
   page.on('pageerror', e => errors.push(e.message));
   await page.goto(URL); await page.getByTestId('nickname').fill(name); await page.getByTestId('join').click();
-  return { context, page, errors, name, async close() { browserErrors.push({ name, traceId, errors: [...errors] }); await context.tracing.stop({ path: `artifacts/verification/${name}-${traceId}-${testInfo.retry}.zip` }); await context.close(); } };
+  return { context, page, errors, name, async close() { browserErrors.push({ name, traceId, errors: [...errors] }); await context.tracing.stop({ path: `artifacts/verification/${name}-${traceId}-${testInfo.retry}.zip` }); await context.close(); if (acceptanceConnectOptions()) await page.video()?.saveAs(`artifacts/verification/videos/${name}-${traceId}-${testInfo.retry}.webm`); } };
 }
 async function spawned(s) { await expect.poll(async () => (await snapshot(s.page)).self.spawned).toBe(true); return (await snapshot(s.page)).self.id; }
 async function focus(page) { await page.bringToFront(); await page.mouse.click(720, 400); }
@@ -208,9 +209,7 @@ test('edges: jump, wall collision, safe passenger exit and hidden-tab cleanup', 
     // session; another CDP session cannot disable it. This test-only adapter
     // removes that override, then switches actual Chrome tabs. No app state
     // or document visibility properties are injected.
-    const implementation = playwright._connection.toImpl(b.page);
-    const cdp = implementation.delegate._mainFrameSession._client;
-    await cdp.send('Emulation.setFocusEmulationEnabled', { enabled: false });
+    const cdp = await setAcceptanceFocusEmulation(b.page, false, playwright);
     const { targetInfo } = await cdp.send('Target.getTargetInfo');
     const { targetId } = await cdp.send('Target.createTarget', { url: 'about:blank', browserContextId: targetInfo.browserContextId, newWindow: false, background: false, forTab: true });
     await cdp.send('Target.activateTarget', { targetId });
@@ -221,7 +220,7 @@ test('edges: jump, wall collision, safe passenger exit and hidden-tab cleanup', 
     expect((await snapshot(b.page)).peers).toEqual([]);
     expect((await snapshot(b.page)).vehicles).toEqual([]);
     await expect.poll(async () => (await snapshot(b.page)).status).toMatch(/hidden/i);
-    await cdp.send('Emulation.setFocusEmulationEnabled', { enabled: true });
+    await setAcceptanceFocusEmulation(b.page, true, playwright);
     await b.page.getByTestId('join').click(); await spawned(b);
     expect(a.errors).toEqual([]); expect(b.errors).toEqual([]);
   } finally { await a.close(); await b.close(); }

@@ -4,6 +4,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
 import { chromium } from "playwright";
+import { acceptanceConnectOptions } from "./browser-options.mjs";
 const dir = "artifacts/verification";
 const read = (name) => JSON.parse(readFileSync(`${dir}/${name}`, "utf8"));
 const results = read("results.json"),
@@ -48,6 +49,13 @@ function visit(suite) {
 for (const suite of results.suites) visit(suite);
 if (cases.length !== 15 || cases.some((x) => x.status !== "expected"))
   throw new Error("All yard, graphics and neighborhood scenarios must pass.");
+const remoteBrowser = acceptanceConnectOptions() ? read("browser-environment.json") : undefined;
+if (remoteBrowser && (
+  remoteBrowser.transport !== "remote-playwright-loopback" ||
+  !remoteBrowser.chromium || !remoteBrowser.renderer ||
+  !(Date.parse(remoteBrowser.capturedAt) >= Date.parse(results.stats.startTime)) ||
+  !(Date.parse(remoteBrowser.capturedAt) <= Date.parse(results.stats.startTime) + results.stats.duration)
+)) throw new Error("Current remote browser version and WebGL renderer evidence is required.");
 const active = new Map(),
   cycles = [];
 for (const event of observations) {
@@ -118,6 +126,7 @@ const sourceFiles = [
   "tests/browser/poc.spec.mjs",
   "tests/browser/graphics.spec.mjs",
   "tools/browser-options.mjs",
+  "tools/acceptance-browser-server.mjs",
   "tools/open-browser.mjs",
   "playwright.config.mjs",
   "tools/dev.mjs",
@@ -185,11 +194,14 @@ const summary = {
     node: process.version,
     platform: process.platform,
     architecture: process.arch,
-    chromium: execFileSync(chromium.executablePath(), ["--version"], {
+    chromium: remoteBrowser?.chromium || execFileSync(chromium.executablePath(), ["--version"], {
       encoding: "utf8",
     }).trim(),
     headed: process.env.POC_HEADLESS !== "1",
-    rendering: "SwiftShader under Xvfb; functional rendering only",
+    rendering: remoteBrowser
+      ? `${remoteBrowser.renderer}; remote browser with Linux loopback fixture; functional acceptance only, separate from native FPS audit`
+      : "SwiftShader under Xvfb; functional rendering only",
+    ...(remoteBrowser ? { browser: remoteBrowser } : {}),
   },
   upstream: JSON.parse(readFileSync("test-server/manifest.json")).openmp,
   browserScenarios: cases,
@@ -239,6 +251,7 @@ const summary = {
   nativeWorkerSha256: hash("native/build/poc-worker"),
   evidence: [
     "results.json",
+    ...(remoteBrowser ? ["browser-environment.json"] : []),
     "server-observations.json",
     "position-agreements.json",
     "browser-errors.json",

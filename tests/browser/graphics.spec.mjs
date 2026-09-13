@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import { test, expect, chromium } from '@playwright/test';
 import { createGateway } from '../../services/gateway/server.mjs';
+import { launchAcceptanceBrowser, recordAcceptanceBrowserEnvironment } from '../../tools/browser-options.mjs';
 
 const url = 'http://127.0.0.1:3100';
 let gateway, neighborhoodGateway;
@@ -12,12 +13,13 @@ test.beforeAll(async () => {
 });
 test.afterAll(async () => { await Promise.all([gateway?.close(),neighborhoodGateway?.close()]); });
 
-test('graphics: software WebGL starts the playground', async ({ page }) => {
+test('graphics: WebGL starts the playground', async ({ page }, info) => {
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
     await page.goto(url);
     await expect(page.getByTestId('join')).toBeEnabled({timeout:60000});
     await expect(page.locator('#viewport canvas')).toBeVisible();
+    await recordAcceptanceBrowserEnvironment(page, info);
     await expect.poll(() => page.evaluate(() => window.__poc?.status)).toBe('Not connected');
     expect(await page.evaluate(() => window.__poc.graphics.preset)).toBe('standard');
     await page.locator('#quality').selectOption('low');
@@ -74,7 +76,7 @@ test('graphics: both presets preserve native screen resolution after resize and 
 
 test('graphics: disabled WebGL shows recovery without starting a session', async ({}, info) => {
     // Real browser-level failure, independent of the normal SwiftShader config.
-    const browser = await chromium.launch({ headless: info.project.use.headless, args: ['--disable-webgl'] });
+    const browser = await launchAcceptanceBrowser(chromium, { headless: info.project.use.headless, args: ['--disable-webgl'] });
     try {
         const page = await browser.newPage();
         const errors = [], sockets = [];
