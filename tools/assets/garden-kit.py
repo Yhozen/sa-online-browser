@@ -76,3 +76,73 @@ def detailed_garden_low():
 
 
 detailed_garden_low()
+
+
+def detailed_garden_shrub():
+ """Original connected three-lobe olive shrub for overlapping frontage planting."""
+ if 'garden-shrub' not in SELECTED:return
+ start()
+ petals=material('garden-petals',(.73,.55,.20),.92)
+ base=Vector((0,0,.025));blooms=[]
+ lobes=[(Vector((-.19,-.025,.22)),.23,.24),
+        (Vector((.175,.105,.24)),.26,.27),
+        (Vector((.065,-.205,.205)),.22,.235)]
+ for lobe,(center,reach,shoot_length) in enumerate(lobes):
+  fork=base.lerp(center,.57)+Vector((0,0,.020))
+  woody_curve('shrub connected basal leader',[base,fork,center],.013)
+  for shoot in range(7):
+   angle=shoot*2.399+lobe*1.41
+   radial=Vector((math.cos(angle),math.sin(angle),0))
+   # Every leafy shoot joins its lobe leader. Unequal crown shoulders overlap
+   # without detached outer cards or three visible ball-shaped solid meshes.
+   anchor=fork.lerp(center,.48+.07*(shoot%3))
+   tip=center+radial*(reach*.43)+Vector((0,0,.023+.018*(shoot%3)))
+   mid=anchor.lerp(tip,.56)+Vector((0,0,.016))
+   woody_curve('shrub attached lateral shoot',[anchor,mid,tip],.0065)
+   for spray in range(3):
+    t=.32+.29*spray;root=mid.lerp(tip,t)
+    heading=angle+(spray-1)*.60
+    pitch=.34+.28*spray+.055*math.sin(shoot*1.71+lobe)
+    direction=Vector((math.cos(heading)*math.cos(pitch),math.sin(heading)*math.cos(pitch),math.sin(pitch)))
+    length=shoot_length*(.95+.055*((shoot+spray)%3))
+    leaf_mesh=attached_leaf_spray(root,direction,length,shoot*.63+lobe*.47+spray*.71,
+      leaf2 if (shoot+spray+lobe)%7==0 else leaf)
+    # Lighting follows each low botanical crown, retaining a small folded-leaf
+    # contribution. It does not borrow the tall oak's world-space normal field.
+    normals=[]
+    for polygon in leaf_mesh.data.polygons:
+     real=polygon.normal.copy()
+     for loop in polygon.loop_indices:
+      position=leaf_mesh.data.vertices[leaf_mesh.data.loops[loop].vertex_index].co
+      delta=position-center
+      radial_normal=Vector((delta.x/.32**2,delta.y/.32**2,delta.z/.25**2))
+      if radial_normal.length_squared<1e-10:radial_normal=Vector((0,0,1))
+      normal=(radial_normal.normalized()*.76+Vector((0,0,.20))+real*.04).normalized()
+      normals.append(normal)
+     polygon.use_smooth=True
+    leaf_mesh.data.normals_split_custom_set(normals)
+   if (lobe,shoot) in [(0,2),(1,1),(1,5),(2,4)]:blooms.append((tip,angle))
+ # Four tiny flowers are subordinate to the olive foliage; all attach to shoots.
+ for tip,angle in blooms:
+  center=tip+Vector((math.cos(angle)*.038,math.sin(angle)*.038,.10))
+  cyl('shrub fine flower pedicel',tip,center,.0025,wood,4,.0014)
+  for petal in range(5):
+   a=petal*math.tau/5+angle;radial=Vector((math.cos(a),math.sin(a),.20));side=Vector((-math.sin(a),math.cos(a),0))
+   stem=center+radial*.004;shoulder=center+radial*.012;end=center+radial*.021
+   mesh('small folded shrub petal',[stem,shoulder-side*.007,shoulder+Vector((0,0,.003)),shoulder+side*.007,end],
+     [(0,1,2),(0,2,3),(1,4,2),(2,4,3)],petals)
+  sphere('subtle shrub flower heart',center+Vector((0,0,.004)),(.004,.004,.004),wood,6,3)
+ bpy.context.view_layer.update();triangles=0
+ for o in bpy.context.scene.objects:
+  if o.type!='MESH':continue
+  o.data.calc_loop_triangles();triangles+=len(o.data.loop_triangles)
+  for vertex in o.data.vertices:
+   p=o.matrix_world @ vertex.co
+   assert p.xy.length<=.65+1e-6,(o.name,tuple(p))
+   assert -.005<=p.z<=.65,(o.name,tuple(p))
+ assert 1200<=triangles<=1600,triangles
+ print('garden-shrub:',triangles,'triangles within 0.65m radial/height limits')
+ env_finish('garden-shrub')
+
+
+detailed_garden_shrub()

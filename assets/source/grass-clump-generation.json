@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "createdAt": "2026-09-13T05:41:20.491Z",
+  "origin": "Original OpenAI ImageGen output generated for Arroyo; no third-party image inputs.",
+  "generation": {
+    "prompt": "Create an original production-ready game foliage texture atlas, square PNG with genuine transparent background and no painted checkerboard. Four isolated botanical grass tussocks arranged in a precise 2x2 grid, each clump centered in its own quadrant with fully transparent padding all around and roots sitting at 90% down that quadrant. All four must fit separately without touching quadrant edges. Camera orthographic at grass eye level, looking straight at a roughly hemispherical low California lawn grass tussock. Many fine bending blades and a few broader folded olive green leaves, authentic irregular overlapping silhouette, wispy outer tips, substantial leafy opaque volume in the lower two-thirds. Clump dimensions in reality approximately 35cm wide by 22cm tall; different asymmetric silhouettes in each quadrant. Mix rich muted olive green, dusty live green, a few dry straw gold blades, darker natural roots but NO cast shadow on a floor. Diffuse neutral daylight only; no glossy shine, no photographic background, no soil slab, no flowers, no tall reed seedheads, no pots, no text, no outlines. Detailed natural botanical albedo intended for crossed three-dimensional grass cards in a realistic sunny Southern California neighborhood game. Avoid oversharpened grain or painterly strokes. Keep interior foliage fairly dense while individual curled blades remain distinct and the perimeter is cleanly cut out with true alpha.",
+    "outputId": "exec-e5bd7ff2-c9c2-4c71-a7b7-f8de66765ad4"
+  },
+  "source": {
+    "path": "assets/textures/arroyo-grass-clumps.png",
+    "bytes": 1978680,
+    "sha256": "3e2c3eeb45f36db4c214ff492cef6370196184c23c78a7503175a0c203b385f9",
+    "width": 1254,
+    "height": 1254
+  },
+  "encoding": {
+    "path": "assets/textures/arroyo-grass-clumps.webp",
+    "bytes": 1468482,
+    "sha256": "e8cbf331e24e0bfeb4904c9e767e92d166c1283f476f619d6f854236d4c3b70d",
+    "encoder": "cwebp 1.6.0 (libsharpyuv 0.4.2)",
+    "arguments": [
+      "-lossless",
+      "-exact",
+      "-m",
+      "6"
+    ],
+    "verification": {
+      "decoder": "dwebp 1.6.0 plus independent PNG scanline decoder",
+      "pixels": 1572516,
+      "channels": "RGBA including zero-alpha RGB",
+      "identical": true,
+      "decodedRgbaSha256": "a74ac625e693a172faee9116d3c714517345f0deed9e46fc81a87d6a7f5872b3"
+    }
+  },
+  "runtime": {
+    "size": [
+      1024,
+      1024
+    ],
+    "format": "RGBA8 SRGB",
+    "flipY": false,
+    "alphaTest": 0.45,
+    "mipmaps": "cutoutMipmaps preserves alpha coverage",
+    "geometry": "three curved crossed cards for grass variant1; fine geometric blades retained in variant0"
+  }
+}

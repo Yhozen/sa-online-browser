@@ -13,9 +13,146 @@ function noise(x: number, y: number) {
     THREE.MathUtils.lerp(hash(ix, iy + 1), hash(ix + 1, iy + 1), sx), sy);
 }
 
+/** Static terrain sits beyond the player's shadow map. Bake geological cover
+ * and missing self-visibility into colors; the live sun supplies plane shading.
+ * Samples follow the authored radial heightfields, including adjacent layers.
+ * This adds no textures, draw calls, shader branches, or per-frame work. */
+function bakeTerrainVisibility(geometries: THREE.BufferGeometry[]) {
+  const { segments, rings } = sculpt, stride = segments + 1;
+  const fields = geometries.map((geometry, layer) => ({
+    positions: geometry.getAttribute("position"),
+    width: 90 + layer * 50,
+    inner: 250 + layer * 125 - (90 + layer * 50) * .47,
+  }));
+  function heightAt(x: number, y: number) {
+    const radius = Math.hypot(x, y);
+    const angle = (Math.atan2(y, x) / (Math.PI * 2) + 1) % 1 * segments;
+    const i = Math.floor(angle), u = angle - i;
+    let height = -Infinity;
+    for (const field of fields) {
+      const radial = (radius - field.inner) / field.width * rings;
+      if (radial < 0 || radial > rings) continue;
+      const j = Math.min(rings - 1, Math.floor(radial)), v = radial - j;
+      const k = j * stride + i, p = field.positions;
+      // Match the mesh's triangle diagonal rather than averaging over a wash.
+      const z = u + v <= 1
+        ? p.getZ(k) + (p.getZ(k + 1) - p.getZ(k)) * u + (p.getZ(k + stride) - p.getZ(k)) * v
+        : p.getZ(k + stride + 1) + (p.getZ(k + stride) - p.getZ(k + stride + 1)) * (1 - u)
+          + (p.getZ(k + 1) - p.getZ(k + stride + 1)) * (1 - v);
+      height = Math.max(height, z);
+    }
+    return height;
+  }
+  // Keep this direction aligned with installAtmosphere's fixed sun offset.
+  const sun = new THREE.Vector3(-58, 12, 47).normalize();
+  const horizontal = Math.hypot(sun.x, sun.y), sx = sun.x / horizontal, sy = sun.y / horizontal;
+  const sunSlope = sun.z / horizontal;
+  const sunSteps = [2, 4, 7, 11, 16, 23, 32, 44, 60, 82, 112];
+  const skySteps = [2, 5, 11, 23, 47, 95];
+  const skyDirections = Array.from({ length: 8 }, (_, i) => {
+    const angle = i * Math.PI / 4;
+    return [Math.cos(angle), Math.sin(angle)];
+  });
+  const luminance = (c: THREE.Color) => c.r * .2126 + c.g * .7152 + c.b * .0722;
+  const color = new THREE.Color(), cool = new THREE.Color(0x6b94c1), tint = new THREE.Color();
+  for (const geometry of geometries) {
+    const positions = geometry.getAttribute("position"), normals = geometry.getAttribute("normal");
+    const colors = geometry.getAttribute("color"), areas = new Float32Array(positions.count);
+    const crowns = new Uint8Array(stride), drainage = new Float32Array(stride);
+    const depth = (i: number, j: number) => {
+      const at = (offset: number) => positions.getZ(j * stride + (i + offset + segments) % segments);
+      // Connected broad washes and smaller tributaries come from the sculpt,
+      // rather than world-space noise painted across unrelated rock planes.
+      return Math.max(0, (at(-1) + at(1)) * .5 - at(0)) * .45
+        + Math.max(0, (at(-3) + at(3)) * .5 - at(0)) * .4
+        + Math.max(0, (at(-7) + at(7)) * .5 - at(0)) * .15;
+    };
+    for (let i = 0; i <= segments; i++) {
+      for (let j = 1; j <= rings; j++)
+        if (positions.getZ(j * stride + i) > positions.getZ(crowns[i] * stride + i)) crowns[i] = j;
+      // Weathered darker bedrock follows each existing drainage up to the
+      // rounded crown. Its upper paint need not create another jagged summit.
+      drainage[i] = depth(i, Math.max(0, crowns[i] - 5)) * .5
+        + depth(i, Math.max(0, crowns[i] - 9)) * .3
+        + depth(i, Math.max(0, crowns[i] - 13)) * .2;
+    }
+    const indices = geometry.getIndex()!;
+    const a = new THREE.Vector3(), b = new THREE.Vector3(), c = new THREE.Vector3();
+    for (let triangle = 0; triangle < indices.count; triangle += 3) {
+      const ia = indices.getX(triangle), ib = indices.getX(triangle + 1), ic = indices.getX(triangle + 2);
+      a.fromBufferAttribute(positions, ia); b.fromBufferAttribute(positions, ib); c.fromBufferAttribute(positions, ic);
+      const area = b.sub(a).cross(c.sub(a)).length();
+      areas[ia] += area; areas[ib] += area; areas[ic] += area;
+    }
+    // Visibility varies across metre-scale folds, so a two-cell bake grid is
+    // enough; interpolate it over the unchanged full-resolution render mesh.
+    const sampleColumns = Math.ceil(segments / 2) + 1, sampleRows = Math.ceil(rings / 2) + 1;
+    const sunSamples = new Float32Array(sampleColumns * sampleRows), skySamples = new Float32Array(sunSamples.length);
+    for (let row = 0; row < sampleRows; row++) for (let column = 0; column < sampleColumns; column++) {
+      const k = Math.min(rings, row * 2) * stride + Math.min(segments, column * 2);
+      const x = positions.getX(k), y = positions.getY(k), z = positions.getZ(k) + .18;
+      const nx = normals.getX(k), ny = normals.getY(k), nz = normals.getZ(k);
+      let sunHorizon = -Infinity;
+      for (const distance of sunSteps)
+        sunHorizon = Math.max(sunHorizon, (heightAt(x + sx * distance, y + sy * distance) - z) / distance);
+      const visibleSun = THREE.MathUtils.smoothstep(sunSlope - sunHorizon, -.025, .025);
+      let openSky = 0, visibleSky = 0;
+      for (const [dx, dy] of skyDirections) {
+        let horizon = 0;
+        for (const distance of skySteps)
+          horizon = Math.max(horizon, (heightAt(x + dx * distance, y + dy * distance) - z) / distance);
+        const facing = nx * dx + ny * dy;
+        // Integrate cosine-weighted sky above the horizon in this azimuth.
+        // A surface cannot receive sky behind its own tangent plane.
+        const tangent = Math.max(0, Math.atan2(-facing, Math.max(.001, nz)));
+        const integral = (low: number) => facing * (Math.PI / 4 - low / 2 - Math.sin(2 * low) / 4)
+          + nz * Math.cos(low) ** 2 / 2;
+        openSky += integral(tangent);
+        visibleSky += integral(Math.max(tangent, Math.atan(horizon)));
+      }
+      const skyVisibility = THREE.MathUtils.clamp(visibleSky / Math.max(.001, openSky), 0, 1);
+      sunSamples[row * sampleColumns + column] = visibleSun;
+      skySamples[row * sampleColumns + column] = skyVisibility;
+    }
+    const sample = (values: Float32Array, i: number, j: number) => {
+      const column = Math.min(sampleColumns - 2, Math.floor(i / 2)), row = Math.min(sampleRows - 2, Math.floor(j / 2));
+      const u = (i - column * 2) / Math.min(2, segments - column * 2), v = (j - row * 2) / Math.min(2, rings - row * 2);
+      const k = row * sampleColumns + column;
+      return THREE.MathUtils.lerp(THREE.MathUtils.lerp(values[k], values[k + 1], u),
+        THREE.MathUtils.lerp(values[k + sampleColumns], values[k + sampleColumns + 1], u), v);
+    };
+    let beforeEnergy = 0, afterEnergy = 0;
+    for (let k = 0; k < positions.count; k++) {
+      const i = k % stride, j = Math.floor(k / stride);
+      const visibleSun = sample(sunSamples, i, j), skyVisibility = sample(skySamples, i, j);
+      const nx = normals.getX(k), ny = normals.getY(k), nz = normals.getZ(k);
+      const direct = 6.2 * Math.max(0, nx * sun.x + ny * sun.y + nz * sun.z);
+      const sky = 1.55 * (.5 + .5 * Math.max(0, nz)) + .34, bounce = .2;
+      const transmitted = (direct * visibleSun + sky * skyVisibility + bounce) / (direct + sky + bounce);
+      color.fromBufferAttribute(colors, k);
+      const energy = luminance(color);
+      beforeEnergy += energy * areas[k];
+      const wash = THREE.MathUtils.smoothstep(drainage[i] * .7 + depth(i, j) * .3, .04, .7);
+      // Occluded sunlight leaves blue sky fill. Preserve tint luminance before
+      // applying the energy loss, so cool valleys do not acquire bright paint.
+      tint.copy(cool).multiplyScalar(energy / luminance(cool));
+      color.lerp(tint, Math.min(.94, wash * .82 + (1 - visibleSun) * .72 + (1 - skyVisibility) * .18))
+        .multiplyScalar(transmitted * (1.22 - wash * .88));
+      colors.setXYZ(k, color.r, color.g, color.b);
+      afterEnergy += luminance(color) * areas[k];
+    }
+    // Preserve each layer's area-weighted mean linear albedo while moving
+    // contrast from occluded, weathered washes to exposed mineral ridgelines.
+    const exposure = beforeEnergy / Math.max(.001, afterEnergy);
+    for (let k = 0; k < colors.count; k++)
+      colors.setXYZ(k, colors.getX(k) * exposure, colors.getY(k) * exposure, colors.getZ(k) * exposure);
+  }
+}
+
 /** Eroded ridge networks beyond the closed, level playable fixture. */
 export function buildHorizon(scene: THREE.Scene, groundZ: number) {
   const dry = new THREE.Color(0xbda174), rock = new THREE.Color(0xdec6a0), scrub = new THREE.Color(0x535b3c);
+  const terrain: THREE.BufferGeometry[] = [];
   for (let layer = 0; layer < 3; layer++) {
     const { segments, rings } = sculpt, geology = sculpt.layers[layer];
     const acceptedHeights: number[] = [];
@@ -51,8 +188,8 @@ export function buildHorizon(scene: THREE.Scene, groundZ: number) {
       const flankCut = THREE.MathUtils.smoothstep(watershed, .33, .71) * 1.65 *
         Math.sin(slope * Math.PI) ** 2 * profile * (1 - THREE.MathUtils.smoothstep(slope, .55, .78));
       const accepted = Math.max(-3, broad * profile + (shoulder * 2.8 - gully * 3 - rill * 1.4 + ridgeBreak * .55) * erosionMask - 6);
-      // Native Blender authored this subtractive relief beneath the accepted
-      // crest band: connected washes, planar spurs and exposed bedrock benches.
+      // Native Blender authored this subtractive relief beside the accepted
+      // crown: connected washes, planar spurs and exposed bedrock shoulders.
       // It preserves the existing three batched meshes and playable boundary.
       const sample = j * (segments + 1) + i;
       const z = Math.max(-3, accepted - flankCut - geology.relief[sample]);
@@ -71,15 +208,16 @@ export function buildHorizon(scene: THREE.Scene, groundZ: number) {
         indices.push(k, k + segments + 1, k + 1, k + 1, k + segments + 1, k + segments + 2);
       }
     }
-    // Lock the upper one-metre crest band on each azimuth, including unusually
-    // low saddles: the new geology cannot change the accepted skyline.
+    // Preserve the exact crown line, including unusually low saddles. The
+    // native sculpt eases into these points with rounded, slope-limited
+    // shoulders, so they cannot stand alone beside a full-depth relief cut.
     for (let i = 0; i <= segments; i++) {
-      let crestHeight = -Infinity;
-      for (let j = 0; j <= rings; j++) crestHeight = Math.max(crestHeight, acceptedHeights[j * (segments + 1) + i]);
-      for (let j = 0; j <= rings; j++) {
+      let crown = i;
+      for (let j = 1; j <= rings; j++) {
         const k = j * (segments + 1) + i;
-        if (acceptedHeights[k] >= crestHeight - 1) vertices[k * 3 + 2] = acceptedHeights[k];
+        if (acceptedHeights[k] > acceptedHeights[crown]) crown = k;
       }
+      vertices[crown * 3 + 2] = acceptedHeights[crown];
     }
     const geometry = new THREE.BufferGeometry();
     geometry.setAttribute("position", new THREE.Float32BufferAttribute(vertices, 3));
@@ -87,18 +225,23 @@ export function buildHorizon(scene: THREE.Scene, groundZ: number) {
     geometry.setAttribute("uv", new THREE.Float32BufferAttribute(uv, 2));
     geometry.setAttribute("terrainMix", new THREE.Float32BufferAttribute(mix, 2));
     geometry.setIndex(indices); geometry.computeVertexNormals();
-    // Subtle warm mineral faces and cooler sheltered plant regions reinforce
-    // the real normal/sun lighting, without baking a dark fake shadow mask.
-    // This static ridge material keeps contrast broad; grain stays in maps.
+    terrain.push(geometry);
+    // Mineral hue follows the actual newly sculpted planes. Cool, sheltered
+    // folds expose darker stone; sunward shoulders retain ochre. The overall
+    // albedo compensates for the larger area of exposed rock instead of
+    // increasing the horizon's brightness with its new surface definition.
     const normals = geometry.getAttribute("normal"), colorAttribute = geometry.getAttribute("color");
     const sunward = new THREE.Vector3(-58, 12, 0).normalize();
+    const ochre = new THREE.Color(0xbfa16d), shadedRock = new THREE.Color(0x8798a1);
+    const luminance = (c: THREE.Color) => c.r * .2126 + c.g * .7152 + c.b * .0722;
+    const faceColor = new THREE.Color(), tint = new THREE.Color();
     for (let k = 0; k < normals.count; k++) {
       const aspect = THREE.MathUtils.clamp((normals.getX(k) * sunward.x + normals.getY(k) * sunward.y) * 2.5, -1, 1);
-      const warm = Math.max(0, aspect), cool = Math.max(0, -aspect);
-      colorAttribute.setXYZ(k,
-        colorAttribute.getX(k) * (1 + .16 * warm - .27 * cool),
-        colorAttribute.getY(k) * (1 + .06 * warm - .13 * cool),
-        colorAttribute.getZ(k) * (1 - .04 * warm + .14 * cool));
+      faceColor.fromBufferAttribute(colorAttribute, k);
+      tint.copy(aspect >= 0 ? ochre : shadedRock).multiplyScalar(luminance(faceColor) / luminance(aspect >= 0 ? ochre : shadedRock));
+      faceColor.lerp(tint, Math.abs(aspect) * .78);
+      faceColor.multiplyScalar(.69 * (1 + .10 * Math.max(0, aspect) - .45 * Math.max(0, -aspect)));
+      colorAttribute.setXYZ(k, faceColor.r, faceColor.g, faceColor.b);
     }
     const grass = surfaceMaterials.get("grass"), concrete = surfaceMaterials.get("concrete");
     const material = new THREE.MeshStandardMaterial({ color: 0xf1e9d9, vertexColors: true, roughness: 1,
@@ -120,13 +263,17 @@ export function buildHorizon(scene: THREE.Scene, groundZ: number) {
               terrain = mix(terrain, dryCover * vec3(.64,.75,.47), vTerrainMix.y * .70);
               diffuseColor.rgb *= terrain;
             #endif
-          `);
+          `)
+          // Elevated distant terrain retains more clear-air contrast than the
+          // ground haze through the neighborhood; sky/background stay untouched.
+          .replace("#include <fog_fragment>", THREE.ShaderChunk.fog_fragment.replace("fogColor, fogFactor", "fogColor, fogFactor * .7"));
       };
-      material.customProgramCacheKey = () => "arroyo-watershed-terrain-v3";
+      material.customProgramCacheKey = () => "arroyo-watershed-terrain-v4";
     }
     const mesh = new THREE.Mesh(geometry, material); mesh.name = `Arroyo eroded ridge ${layer}`;
     mesh.receiveShadow = true; scene.add(mesh);
   }
+  bakeTerrainVisibility(terrain);
 
   const placements: Placement[] = [];
   let seed = 6303;
@@ -136,18 +283,20 @@ export function buildHorizon(scene: THREE.Scene, groundZ: number) {
   }
   for (let side = 0; side < 4; side++) {
     // Tree foliage occupies local Z≈4.15–8.46m and ±4m horizontally. Derive
-    // buried-root heights from those actual bounds: upper leaves span 0.7–6.7m,
-    // lower leaves span −0.25–4.4m. Both tiers extend across the wall's inner ±89m
+    // buried-root heights from those actual bounds: upper leaves span 0.7–9.7m,
+    // lower leaves span −0.25–5.6m. Both tiers extend across the wall's inner ±89m
     // face, while every root stays outside ±90m. This masks the full 4m wall,
     // rather than placing small shrubs entirely behind its opaque face.
     for (let along = -99; along < 105; along += 9.5 + random() * 3.5) {
       const [x, y] = point(side, along, 91.2 + random() * .55);
-      const width = 2.15 + random() * .6, height = .95 + random() * .65;
+      // Keep the existing instance count, but restore individual upright
+      // crowns instead of stretching every tree into a low horizontal strip.
+      const width = 1.68 + random() * .44, height = 1.12 + random() * .96;
       const upperRootDepth = height * 4.15 - .7;
       placements.push({ asset: "tree", position: [x, y, groundZ - upperRootDepth],
         rotation: random() * Math.PI * 2, scale: [width, width * (.92 + random() * .13), height] });
       const [bx, by] = point(side, along + 3.2 + random() * 1.5, 92.2 + random() * .8);
-      const lowerWidth = 2.1 + random() * .65, lowerHeight = .68 + random() * .55;
+      const lowerWidth = 1.95 + random() * .55, lowerHeight = .85 + random() * .5;
       placements.push({ asset: "tree", position: [bx, by, groundZ - lowerHeight * 4.15 - .25],
         rotation: random() * Math.PI * 2, scale: [lowerWidth, lowerWidth * (.95 + random() * .12), lowerHeight] });
     }
@@ -162,5 +311,20 @@ export function buildHorizon(scene: THREE.Scene, groundZ: number) {
       }
     }
   }
+  const firstTreeBatch = scene.children.length;
   instantiateStatic(scene, placements);
+  const matrix = new THREE.Matrix4(), foliage = new THREE.Color();
+  const olive = new THREE.Color().setRGB(.81, .89, .76), gold = new THREE.Color().setRGB(1.06, .98, .80);
+  for (const mesh of scene.children.slice(firstTreeBatch)) {
+    if (!(mesh instanceof THREE.InstancedMesh)) continue;
+    const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
+    if (!materials.some(material => material.name.startsWith("foliage"))) continue;
+    // Stable per-crown cover variation shares the existing batched meshes and
+    // material textures. It adds only instance colors, never cloned materials.
+    for (let i = 0; i < mesh.count; i++) {
+      mesh.getMatrixAt(i, matrix);
+      foliage.copy(gold).lerp(olive, noise(matrix.elements[12] * .13, matrix.elements[13] * .13));
+      mesh.setColorAt(i, foliage);
+    }
+  }
 }

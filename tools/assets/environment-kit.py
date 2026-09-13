@@ -453,7 +453,12 @@ def detailed_palm():
  # Three age cohorts form an asymmetric crown: hanging old leaves, spreading
  # photosynthetic feathers and upright young growth. The outer leaves are long
  # continuous arches rather than separate radial blades glued to a pole.
- for i in range(34):
+ # Keep established arch directions and the outer silhouette, while removing
+ # nearly coincident feathers between age cohorts. Layering all 34 crowns filled
+ # every gap in the light projection even after individual leaflets were thinned.
+ fronds=[0,1,2,3,4,5,6,7,11,12,14,15,16,17,18,19,20,21,25,26,28,29,30,31]
+ leaflet_shapes=[];accepted_crown=[]
+ for i in fronds:
   a=i*2.399+.13*math.sin(i*1.3);direction=Vector((math.cos(a),math.sin(a),0));side=Vector((-math.sin(a),math.cos(a),0))
   age=0 if i<14 else 1 if i<28 else 2
   length=(3.25+.44*math.sin(i*1.77)) if age!=2 else (2.24+.30*math.sin(i))
@@ -475,6 +480,7 @@ def detailed_palm():
    if j:
     for k in range(4):ribfaces.append(((j-1)*4+k,(j-1)*4+(k+1)%4,j*4+(k+1)%4,j*4+k))
   rib=mesh('connected tapered palm rachis',ribs,ribfaces,palmgreen)
+  accepted_crown.extend(ribs)
   for face in rib.data.polygons:face.use_smooth=True
   for j in range(1,24):
    for sign in [-1,1]:
@@ -484,14 +490,36 @@ def detailed_palm():
     tip=root+side*(sign*leaf_length)+direction*(.18+.35*t)+Vector((0,0,-.20-.27*t))
     # A longitudinal fold catches a narrow highlight; tapered ends and downward
     # curling tips leave clean feathers at distance without alpha edge artefacts.
-    bladeverts=[root]
+    bladeverts=[root];original=[root]
     for q in [.32,.72]:
      center=root.lerp(tip,q)+Vector((0,0,.15*math.sin(q*math.pi)))
-     width=(.021+.104*math.sin(t*math.pi))*math.sin(math.pi*q)**.70
-     bladeverts.extend([center-direction*width,center+Vector((0,0,.031*math.sin(q*math.pi))),center+direction*width])
+     # Twist a wider folded cross-section along the neighborhood's incident
+     # sunlight. This is actual hanging leaf geometry: moving its edges along
+     # the light ray retains their ground projection while widening the camera
+     # silhouette. Every root, tip and raised midrib stays on its existing arch.
+     width=.6*(.0105+.052*math.sin(t*math.pi))*math.sin(math.pi*q)**.70
+     sun_axis=Vector((-58,12,47)).normalized()
+     tilt=math.copysign(2.5+.25*math.sin(i*1.9+j*.8),direction.dot(sun_axis))
+     across=direction*width+sun_axis*(width*tilt)
+     bladeverts.extend([center-across,center+Vector((0,0,.031*math.sin(q*math.pi))),center+across])
+     original.extend([center-direction*width,center+Vector((0,0,.031*math.sin(q*math.pi))),center+direction*width])
     bladeverts.append(tip)
+    original.append(tip);accepted_crown.extend(original)
     blade=mesh('folded tapered palm leaflet',bladeverts,[(0,1,2),(0,2,3),(1,4,5,2),(2,5,6,3),(4,7,5),(5,7,6)],palmgreen if (i+j)%7 else palmlight)
+    leaflet_shapes.append((blade,original))
     for face in blade.data.polygons:face.use_smooth=True
+ # Retain the established crown bounds. Shorten only an edge's new displacement
+ # along the same light ray; never clip one coordinate and change its shadow.
+ minimum=[min(v[k] for v in accepted_crown) for k in range(3)]
+ maximum=[max(v[k] for v in accepted_crown) for k in range(3)]
+ for blade,original in leaflet_shapes:
+  for vertex,old in zip(blade.data.vertices,original):
+   delta=vertex.co-old;amount=1.0
+   for k in range(3):
+    if delta[k]>1e-8:amount=min(amount,(maximum[k]-old[k])/delta[k])
+    elif delta[k]<-1e-8:amount=min(amount,(minimum[k]-old[k])/delta[k])
+   vertex.co=old+delta*max(0,amount)
+  blade.data.update()
  env_finish('palm')
 
 

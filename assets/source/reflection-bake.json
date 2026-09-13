@@ -1,24 +1,24 @@
 {
   "version": 1,
-  "generatedAt": "2026-09-13T04:22:45.000Z",
+  "generatedAt": "2026-09-13T05:43:56.509Z",
   "format": "PMR1: uint32-le magic,width,height; RGBA16F PMREM atlas; gzip",
   "width": 1536,
   "height": 2048,
-  "compressedBytes": 11177285,
+  "compressedBytes": 11216349,
   "uncompressedBytes": 25165836,
-  "sha256": "1a17cc771f4e928fec70283851a286b8c65b5a782169b9604e834b613397dfb7",
-  "uncompressedSha256": "aa2a8255d0415a1d71f370e85df68f4a79715c4e0ca933efb224d44443967889",
+  "sha256": "cdf4b001427fd4cded2023be7302e86799b177910a50d67be152e08297789205",
+  "uncompressedSha256": "1e2e734486b6d73ddfbce3c1e262e9906802df6937bbc5613fd90d2e1ff1c7fb",
   "browser": "Chrome/153.0.8010.37",
   "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
-  "peakRadiance": 3.76171875,
+  "peakRadiance": 3.8046875,
   "scene": {
     "id": "neighborhood",
-    "revision": "b09254eed9c7c3e8"
+    "revision": "382505ade0366b07"
   },
   "inputSnapshot": {
-    "capturedAt": "2026-09-13T04:22:41.845Z",
-    "sceneSha256": "13c2b9d04c3d97e15406fa5d2dea002752c640ecefb446ae9668e2c202a80b31",
-    "inventorySha256": "fcb3db76ebf8335697e1d582ee7ac04a9564dfab34a555f6d47f540e00aedf96"
+    "capturedAt": "2026-09-13T05:43:52.494Z",
+    "sceneSha256": "7acf6046a6cbb1c275caf87788e03f290eabdce5f2f738d6794c6b5c545c9da3",
+    "inventorySha256": "c8f16ed8a70a34d17815a929a2d7201f40d2ba280aaafb780ee1f85818f6d9b8"
   },
   "sources": {
     "apps/browser/index.html": "5c7e3e0d86ebc6d6e88fb1514c0e592903af7ab85d4dadd5b13a2f43e2387e24",
@@ -27,21 +27,22 @@
     "apps/browser/src/style.css": "33e340bf401787473e31dfd3b18a2ab63edca9016dd462217cdd29530a56e0aa",
     "apps/browser/src/main.ts": "a9263b57d32640e8dc73012982105ae05f4258f44fdb5adf97420bb96167a2f3",
     "apps/browser/src/graphics.ts": "22b713f3ab445dd4a8effb2160c631515b1e65a14d7ad97731e4db8ca615b297",
-    "apps/browser/src/antialias.ts": "4b431578258f5e4c822f07b3003b58f9f802767a99f86a300cdf8f8a5392f602",
-    "apps/browser/src/assets.ts": "4f1f54ff0a94f327eb8e4f2de77aa7e9fd52a60696b22f2633b54007c95f514d",
-    "apps/browser/src/lighting.ts": "5247cd5d35eca7090a9c26cf85caa199313fa77289c271b034685b7004d6721f",
-    "apps/browser/src/environment.ts": "26fcae1c3985888cd6f936d50f08873163d9d7ded837ba936eeae054182ea823",
+    "apps/browser/src/antialias.ts": "29aad63b1b86354605f740bd8ce7b76bc0784afa84bebaad7ddb7ce315924161",
+    "apps/browser/src/assets.ts": "5c290a421ed977155d3d13b38ace5696599d82ffa91d6576873b7709ca909f47",
+    "apps/browser/src/lighting.ts": "a88d2532b54083df2b8177b6cdc8300164dedc93ad449e759157cf3437dee057",
+    "apps/browser/src/environment.ts": "05d39747b99d625e34a750ffde4dcf939e469f4bc850fd4b56f90317514e7f03",
     "apps/browser/src/surface-textures.ts": "2309c51c318e786734dd90470cbfcb3bb83e67eef2691cf6e3dc5c7028edac56",
-    "apps/browser/src/surface-pixels.ts": "562df4dededa3093e9cd4b64b1006becf5707b8fbd3f2bcba3c6cd397242a24e",
+    "apps/browser/src/surface-pixels.ts": "327e2cc8c0971fc872b5459c65694c92cfb38a2e25182395470db28f5afdbabe",
+    "apps/browser/src/surface-lighting.ts": "a01bfef9ccd0a7685a18f0ef355dae70ab2d537c5252c8075c811d34fc58992f",
     "apps/browser/src/foliage-mips.ts": "bf7fe1414777bf98dc331fcf323a747dd6a1d20e1df857cde5e5ad47a98cb15c",
     "apps/browser/src/reflection-storage.ts": "8b7f07a99248d1885e509aa3e916b87982ad33019348ae87fd04e09635c13720",
-    "apps/browser/src/garden.ts": "d378e0a70835d4f6698284050f120ab452ba9d4e293acf3baecc06eecf66bceb",
-    "apps/browser/src/horizon.ts": "fbb5d78893ba19a1cbd20261c793229c9ff0e6b4177ff584ff886184dbc24684",
-    "assets/horizon-relief.json": "dd9cded94acdb2974d531e9b2d425e95cb2bfd52d6c9bbd4e7f3b2b47df6d7df",
-    "apps/browser/src/road-detail.ts": "c86c9dc38d2b45274475a9eb7509a27be259d72da48da9ded30157e3ff491592",
-    "apps/browser/src/verges.ts": "86c7df7168ec11c2fd8b704f745e29a289f7dd72258163de3e5dad831661c3bc",
+    "apps/browser/src/garden.ts": "2a4b2df656dd1863c94249a1ace3de49078bb4ade310887686f8aba99eaf2649",
+    "apps/browser/src/horizon.ts": "4a2d78975f53afc73bfdf7953a3c6edf678c21c54eb707c5a2a74cd49183df04",
+    "assets/horizon-relief.json": "cb41d5d00b0a4389f4f302b10f544400f30cd8bdf377a304546aab32b5dc8261",
+    "apps/browser/src/road-detail.ts": "7f39d4e7572237d2e4cb9d85586cb3aa23479b8922e960fe57a8b77e38f7434e",
+    "apps/browser/src/verges.ts": "6480673efbdb6e68ef61b7d1b44ce5d496edb99f43552bc828cac2477ab73d88",
     "apps/browser/src/warmup.ts": "2db7cbf9d34a1a13b65fe8b52cd8509360903d7084741b216be60e9cadad3406",
-    "apps/browser/src/characters.ts": "0362d915cd15692bb7259140836d6a90fff610f73735357e0121e497e4432c96",
+    "apps/browser/src/characters.ts": "92f0aea16b7e509bc9ed6f47ab298ae0f88b7ca2f74eafc447be560d1a99021b",
     "apps/browser/src/character-animation.ts": "0782bb10ef3fedfe9744937687dd63566e32abafae70d75e1420c4a62922e8bb",
     "apps/browser/src/shadows.ts": "5201573101a62ae060534d77123c496f03b8b07617a1da5109341603b86c7be0",
     "apps/browser/src/camera.ts": "ab610c86911ff9f33ae3a91a5cb7cf2f16f4528028bc8abe0eff055a635c9ed6",
@@ -58,26 +59,26 @@
     "packages/shared/scenes/yard.json": "eafd501e8fef4ffa7df59050ec41059c4d86b53e510aa83e7479e936497ed5ac",
     "services/gateway/server.mjs": "c2e08a361dd313443790050bda4fb308c33bc38ade6e3a0aba5e9f7ff8e0f326",
     "tools/asset-inventory.mjs": "b0e3c59ae80648d9fe8f528a1e5a4548a6cfad7148f7958b43f3014d3e9bc577",
-    "tools/bake-reflections-native.mjs": "eb523d06c277ea2a444ba06dfc8e5dc65f4972ad14a8345391abe1ef41aa31d1",
+    "tools/bake-reflections-native.mjs": "7c75326a11c99284328c52397956d73eaa142cb19090c786e8b721987c7da6f3",
     "package.json": "1f2d46278fb3f0ae6ee93d9b70b8b337486515cc36ce2de8b3663616686d7f90",
     "package-lock.json": "b99e5c05368deae7d0cd82a86505d33671cc2275c0852eed3f08afbd0b07bd74"
   },
   "servedBuild": {
     "/": {
       "bytes": 449,
-      "sha256": "a9123801edc7c787455d9325001cce9407c6d937b49a9781f91d6f55d3ac537a"
-    },
-    "/assets/index-BJkAPRSj.js": {
-      "bytes": 578444,
-      "sha256": "a864102ad9250171c582f53cdc4ccc9ac5e5f3368cda6047ec60bcaf2ff3e66d"
+      "sha256": "a842602a3b025376e164e30421e9638d80df638f2cf952acf0f72be7dbdfa7b3"
     },
     "/assets/index-CLSF4nJg.css": {
       "bytes": 6991,
       "sha256": "0655f264cfc9ca400288720b93a106c022f381daa4c7ce52c88deb326995367a"
     },
-    "/assets/main-C-6HtUXz.js": {
-      "bytes": 1108785,
-      "sha256": "1c9adfa45fac74b18529e80eb0cf0c5f5cc68148cfe9236599a19db2e933db65"
+    "/assets/index-CpkWJa7v.js": {
+      "bytes": 578469,
+      "sha256": "2afedec2737282bbf7b985c896ba501a0294c45ee1880ef76338705f47ec1bfb"
+    },
+    "/assets/main-CXPv_yyV.js": {
+      "bytes": 1204841,
+      "sha256": "c829f3f4343574d21ce329c82983427c9bad891582e1a09f29b2db854e337cde"
     }
   },
   "inputs": {
@@ -92,6 +93,10 @@
     "arroyo-foliage.webp": {
       "bytes": 1131330,
       "sha256": "3b54fbaba32d6281b19346e41a60fb88f2858888cc73327edef4a1fcd30d539b"
+    },
+    "arroyo-grass-clumps.webp": {
+      "bytes": 1468482,
+      "sha256": "e8cbf331e24e0bfeb4904c9e767e92d166c1283f476f619d6f854236d4c3b70d"
     },
     "arroyo-grass.webp": {
       "bytes": 2840886,
@@ -125,6 +130,10 @@
       "bytes": 216084,
       "sha256": "bd515240ae8f8dcb05d539a3c354a114e9aeb4d0c10ee682a7233a280f605e56"
     },
+    "garden-shrub.glb": {
+      "bytes": 102380,
+      "sha256": "08eef3cb1db02a4f55ba4b9721c88a2d3da9b9c2d98caf8c94f76de4bc95f9e4"
+    },
     "house-0.glb": {
       "bytes": 2214460,
       "sha256": "42cbcb9a02bbf1a550f28903b2b301ea05ee2de937d73b45ab411ab6d89e5aa0"
@@ -150,16 +159,16 @@
       "sha256": "34c2f0adc8180dc0df68dbec19d2e9af2162fcd0ffc2acdd0442bb93ea97abe3"
     },
     "neighbor.glb": {
-      "bytes": 6891620,
-      "sha256": "951eb4a4f5ce608533f09cd4cf23b384c6568f9c7d148226901fb3723db7c4c9"
+      "bytes": 6365356,
+      "sha256": "cf14bd6ff88bee0e4333d9a67eea1b1c53d67200efb72aade705ff677e9f70e7"
     },
     "neighborhood-atlas.png": {
       "bytes": 3529016,
       "sha256": "03157ab45abb63aaf697823c9e6a8d927ac1b062ca27fdf21fcf7a8bd0948269"
     },
     "palm.glb": {
-      "bytes": 1028776,
-      "sha256": "a223240b44469e2d730be38e561a5997609555158e4f94b3526171ca8474f130"
+      "bytes": 830960,
+      "sha256": "777457b436e1f8d5ca350fb30886e57461bac0718a914068fe7f09a3f3598060"
     },
     "pole.glb": {
       "bytes": 10416,

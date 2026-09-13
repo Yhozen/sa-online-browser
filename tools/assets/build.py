@@ -5,7 +5,7 @@ from mathutils import Vector
 ROOT=pathlib.Path(__file__).resolve().parents[2]
 parser=argparse.ArgumentParser()
 parser.add_argument('--output-root',type=pathlib.Path,default=ROOT)
-parser.add_argument('--models',default='house-0,house-1,house-2,house-3,palm,tree,fence,fence-low,mailbox,bin,pole,lamp,coupe,neighbor,garden-low')
+parser.add_argument('--models',default='house-0,house-1,house-2,house-3,palm,tree,fence,fence-low,mailbox,bin,pole,lamp,coupe,neighbor,garden-low,garden-shrub')
 parser.add_argument('--blender-version',default='4.5.13')
 args=parser.parse_args(sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else [])
 SELECTED=set(args.models.split(',')); PHASE='base'
@@ -247,6 +247,6 @@ print('Original asset kit exported with Blender',bpy.app.version_string)
 
 # Selected final assets share the same export and editable source pipeline.
 PHASE='detailed'
-for extension,names in [("environment-kit.py",{'house-0','house-1','house-2','house-3','palm','tree','garden-low'}),("garden-kit.py",{'garden-low'}),("heroes.py",{'coupe','neighbor'})]:
+for extension,names in [("environment-kit.py",{'house-0','house-1','house-2','house-3','palm','tree','garden-low','garden-shrub'}),("garden-kit.py",{'garden-low','garden-shrub'}),("heroes.py",{'coupe','neighbor'})]:
  if SELECTED & names:
   exec(compile((ROOT/"tools/assets"/extension).read_text(),str(ROOT/"tools/assets"/extension),"exec"))

@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import { gardenPlacements, vergeGardenPlacements } from '../apps/browser/src/garden.ts';
+import { gardenPlacements, vergeGardenPlacements, frontageGardenPlacements } from '../apps/browser/src/garden.ts';
 
 async function exportedGeometry(name) {
   const bytes = readFileSync(`apps/browser/public/assets/${name}.glb`);
@@ -85,11 +85,14 @@ function triangleSegmentDistance(points, a, b) {
 
 test('actual verge garden triangles remain low and clear of roads, access paths and existing fixtures', async t => {
   const manifest = JSON.parse(readFileSync('packages/shared/scenes/neighborhood.json', 'utf8'));
-  const original = structuredClone(manifest), placements = vergeGardenPlacements(manifest);
+  const original = structuredClone(manifest), frontage = frontageGardenPlacements(manifest);
+  const placements = [...vergeGardenPlacements(manifest), ...frontage];
   assert.deepEqual(manifest, original, 'decorative placement must not alter the authoritative fixture');
   assert.ok(placements.length >= 10, 'retain substantial low verge planting');
-  const authored = await gardenModel;
-  assert.ok(authored.vertices.length > 1000 && authored.triangles.length > 1000, 'inspect the actual exported specimen');
+  assert.ok(frontage.length >= 30, 'retain substantial original shrubs along the house frontages');
+  const plantModels = new Map([['garden-low', await gardenModel], ['garden-shrub', await exportedGeometry('garden-shrub')]]);
+  for (const authored of plantModels.values())
+    assert.ok(authored.vertices.length > 1000 && authored.triangles.length > 1000, 'inspect the actual exported specimens');
   const exclusions = manifest.barriers.map(b => rectangle(b.id, new THREE.Vector2(...b.position), new THREE.Vector2(b.size[0] / 2, b.size[1] / 2)));
   for (const house of manifest.houses) {
     const transform = placementMatrix(house), sx = house.scale?.[0] ?? 1, sy = house.scale?.[1] ?? 1;
@@ -122,7 +125,7 @@ test('actual verge garden triangles remain low and clear of roads, access paths 
   const circle = manifest.culdesac && { center: new THREE.Vector2(...manifest.culdesac.center), radius: manifest.culdesac.radius + 2.5 };
   let inspectedTriangles = 0, maxHeight = -Infinity, minimumRoadGap = Infinity;
   for (const [index, placement] of placements.entries()) {
-    assert.equal(placement.asset, 'garden-low');
+    const authored = plantModels.get(placement.asset); assert.ok(authored, 'known original plant asset');
     const world = placementMatrix(placement); assert.ok(world.elements.every(Number.isFinite));
     const points = authored.vertices.map(p => p.clone().applyMatrix4(world));
     for (const point of points) {

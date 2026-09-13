@@ -10,6 +10,11 @@ export function nativeAntialias(renderer:THREE.WebGLRenderer,scene:THREE.Scene,c
   const target=new THREE.WebGLRenderTarget(1,1,{type:THREE.HalfFloatType});
   target.depthTexture=new THREE.DepthTexture(1,1,THREE.UnsignedIntType);
   const composer=new EffectComposer(renderer,target);
+  // Only the beauty input needs scene depth. Keep one depth texture and reset
+  // the ping-pong orientation each frame; fullscreen output never needs a
+  // second native-size depth attachment.
+  const beauty=composer.readBuffer, post=composer.writeBuffer;
+  post.depthTexture?.dispose(); post.depthTexture=null; post.depthBuffer=false;
   composer.addPass(new RenderPass(scene,camera));
   // Reconstruct local geometry from the actual beauty depth, preserving alpha-tested
   // foliage and skinned silhouettes. No substitute normal pass or reduced-size buffer.
@@ -53,6 +58,9 @@ export function nativeAntialias(renderer:THREE.WebGLRenderer,scene:THREE.Scene,c
   renderer.info.autoReset=false;
   return {
     resize(){composer.setPixelRatio(devicePixelRatio);composer.setSize(innerWidth,innerHeight);edges.uniforms.resolution.value.set(1/(innerWidth*devicePixelRatio),1/(innerHeight*devicePixelRatio));contact.uniforms.resolution.value.set(innerWidth*devicePixelRatio,innerHeight*devicePixelRatio);},
-    render(standard:boolean){contact.enabled=standard;renderer.info.reset();composer.render();},
+    render(standard:boolean){
+      composer.readBuffer=beauty; composer.writeBuffer=post;
+      contact.enabled=standard;renderer.info.reset();composer.render();
+    },
   };
 }

@@ -57,7 +57,7 @@ test("explicit native builds publish selected models with exact generator and ou
   }
   const files = readdirSync(path.join(f.output, "apps/browser/public/assets"));
   assert.deepEqual(files.filter(name => name.endsWith(".glb")).sort(), ["bin.glb", "mailbox.glb"]);
-  for (const name of ["surfaces", "details", "foliage", "sky", "asphalt", "grass"]) {
+  for (const name of ["surfaces", "details", "foliage", "sky", "asphalt", "grass", "grass-clumps"]) {
     assert.ok(files.includes(`arroyo-${name}.webp`));
     assert.ok(!files.includes(`arroyo-${name}.png`));
     assert.equal(digest(readFileSync(path.join(f.output, "apps/browser/public/assets", `arroyo-${name}.webp`))),

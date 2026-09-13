@@ -16,7 +16,7 @@ const archiveHash = "da4e69b06b75b9e642d106496c50e7e240218b411d2f6e18271c1d1d819
 const binaryHash = "e3ce4e960a2fd3beb1f9d2299e38b3804475ccd395193013aec239a4b75bfbfe";
 const pinnedBinary = path.join(root, ".runtime/blender-" + pinnedVersion + "-linux-x64/blender");
 const macBinary = "/Applications/Blender.app/Contents/MacOS/Blender";
-const models = ["house-0", "house-1", "house-2", "house-3", "palm", "tree", "fence", "fence-low", "mailbox", "bin", "pole", "lamp", "coupe", "neighbor", "garden-low"];
+const models = ["house-0", "house-1", "house-2", "house-3", "palm", "tree", "fence", "fence-low", "mailbox", "bin", "pole", "lamp", "coupe", "neighbor", "garden-low", "garden-shrub"];
 const recipes = ["tools/build-assets.mjs", "tools/assets/build.py", "tools/assets/environment-kit.py", "tools/assets/heroes.py", "tools/assets/garden-kit.py"];
 const hash = bytes => createHash("sha256").update(bytes).digest("hex");
 const identify = filename => {
@@ -140,7 +140,7 @@ try {
   copyFileSync(path.join(root, "assets/textures/neighborhood-atlas.png"), path.join(output, "neighborhood-atlas.png"));
   // Original imagegen PNGs remain editable inputs. Committed lossless encodings
   // need no encoder dependency at build time and retain the same texel data.
-  for (const name of ["surfaces", "details", "foliage", "sky", "asphalt", "grass"]) {
+  for (const name of ["surfaces", "details", "foliage", "sky", "asphalt", "grass", "grass-clumps"]) {
     copyFileSync(path.join(root, `assets/textures/arroyo-${name}.webp`), path.join(output, `arroyo-${name}.webp`));
     rmSync(path.join(output, `arroyo-${name}.png`), { force: true });
   }

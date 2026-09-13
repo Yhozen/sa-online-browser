@@ -4,11 +4,16 @@
 Run: /Applications/Blender.app/Contents/MacOS/Blender --background --python tools/assets/horizon.py
 The scene is editable authoring source, not a game screenshot or a new collision surface.
 """
-import bpy, math, json, pathlib, hashlib, datetime
+import bpy, math, json, pathlib, hashlib, datetime, argparse, sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-OUT = ROOT / 'assets' / 'horizon-relief.json'
-SOURCE = ROOT / 'assets' / 'source'
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--output-root', type=pathlib.Path, default=ROOT,
+                    help='Stage the complete terrain export outside the live assets directory.')
+args = parser.parse_args(sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else [])
+OUT = args.output_root.resolve() / 'assets' / 'horizon-relief.json'
+SOURCE = args.output_root.resolve() / 'assets' / 'source'
+OUT.parent.mkdir(parents=True, exist_ok=True)
 SEGMENTS, RINGS = 480, 60
 
 def clamp(x, a=0, b=1): return min(b, max(a, x))
@@ -26,7 +31,7 @@ bpy.context.preferences.filepaths.save_version = 0
 bpy.ops.object.select_all(action='SELECT'); bpy.ops.object.delete(use_global=False)
 layers=[]
 for layer in range(3):
-    vertices=[]; faces=[]; relief=[]; mineral=[]; vegetation=[]; accepted=[]
+    vertices=[]; faces=[]; relief=[]; mineral=[]; vegetation=[]; accepted=[]; flanks=[]
     for j in range(RINGS+1):
         for i in range(SEGMENTS+1):
             a=i/SEGMENTS*math.tau; t=j/RINGS; width=90+layer*50
@@ -45,6 +50,7 @@ for layer in range(3):
             base=max(-3,broad*profile+(shoulder*2.8-gully*3-rill*1.4+ridge_break*.55)*erosion-6)
             baseline_flank=smooth(.33,.71,noise(x/47+9.2,y/47-3.1))*1.65*math.sin(slope*math.pi)**2*profile*(1-smooth(.55,.78,slope))
             accepted.append(base)
+            flanks.append(baseline_flank)
             # Forty-four connected drainages wrap the ridge. Two tributaries
             # converge into each wash; their uncut shoulders remain continuous
             # sandstone spurs rather than independent conical mounds.
@@ -72,12 +78,69 @@ for layer in range(3):
                 faces.extend([(k,k+SEGMENTS+1,k+1),(k+1,k+SEGMENTS+1,k+SEGMENTS+2)])
     locked=0
     for i in range(SEGMENTS+1):
-        height=max(accepted[j*(SEGMENTS+1)+i] for j in range(RINGS+1))
+        # The previous one-metre lock retained an inflated, featureless roof:
+        # it covered almost the entire band visible above the perimeter trees.
+        # Keep its exact crown line. A rounded, slope-limited transition carries
+        # weathering into the adjacent band without isolated pointed teeth.
+        crown=max(range(RINGS+1), key=lambda j: accepted[j*(SEGMENTS+1)+i])
+        height=accepted[crown*(SEGMENTS+1)+i]
+        # The published surface retained the entire upper metre. Reconstruct it
+        # so the new rounded shoulder cannot raise any existing terrain point.
+        old_heights=[9+accepted[j*(SEGMENTS+1)+i]*.84
+                     if accepted[j*(SEGMENTS+1)+i]*.84>=height*.84-1
+                     else vertices[j*(SEGMENTS+1)+i][2] for j in range(RINGS+1)]
+        a=i/SEGMENTS*math.tau
         for j in range(RINGS+1):
             k=j*(SEGMENTS+1)+i
-            if accepted[k]*.84 >= height*.84-1:
-                relief[k]=0; locked+=1
-                vertices[k]=(vertices[k][0],vertices[k][1],9+accepted[k]*.84)
+            if j==crown:
+                relief[k]=0; flanks[k]=0
+                locked+=1
+                mineral[k]=217; vegetation[k]=6
+            else:
+                distance=abs(j-crown)/(crown if j<crown else RINGS-crown)
+                # A piecewise linear cross-section creates a shallow upper
+                # shoulder, a steep exposed face, and a broad lower apron.
+                # Unlike a sine dome, its crest-adjacent normals catch the sun.
+                roof_drop=(.92*min(distance,.14)
+                           +1.42*clamp(distance-.14,0,.28)
+                           +.81655172414*max(0,distance-.42))
+                # Interlocking 18–28 major folds have 2–3 smaller angular
+                # tributaries each. Their diagonal paths share the crown but
+                # split on the flank; triangular sections form real planes.
+                fold=a/math.tau*(18+layer*5)+.16*math.sin(a*5+layer)
+                fold+=distance*(.42*math.sin(a*7+layer)+.21)
+                valley=max(0,1-abs(fract(fold+.5)-.5)/.32)
+                branch=fold*2.87+.19*math.sin(a*13+distance*2)+distance*.7
+                tributary=max(0,1-abs(fract(branch+.5)-.5)/.26)
+                upper_fold=math.sin(math.pi*distance)**.72
+                fold_depth=((2.8+max(0,height)*.11)*valley
+                            +(2.8+max(0,height)*.12)*tributary)*upper_fold
+                roof=height-(height+3)*roof_drop-fold_depth
+                relief[k]=round(max(relief[k],accepted[k]-flanks[k]-roof),3)
+                # Begin with a rounded crown: zero derivative at the crown,
+                # easing over three metres toward a 36-degree radial slope.
+                # A smooth saturating limit avoids the normal discontinuity of
+                # clipping an already-deep cut beside a single locked point.
+                # Adjacent azimuths can choose neighboring radial crown rings.
+                # Keep the intervening grid strip connected before easing the
+                # cut; otherwise the fixed triangle diagonal makes little teeth.
+                cell=(90+layer*50)/RINGS
+                metres=max(0,abs(j-crown)*cell-min(3.5,cell*1.25))
+                crown_drop=math.tan(math.radians(36))*(math.hypot(metres,3)-3)
+                published_drop=9+height*.84-old_heights[j]
+                available=max(0,crown_drop-published_drop)
+                proposed=9+max(-3,accepted[k]-flanks[k]-relief[k])*.84
+                desired=max(0,old_heights[j]-proposed)
+                weathering=available*math.tanh(desired/available) if available>1e-9 else 0
+                rounded=old_heights[j]-weathering
+                relief[k]=math.ceil(max(0,accepted[k]-flanks[k]-(rounded-9)/.84)*10000)/10000
+                # Exposed upper shoulders remain mineral all the way to the
+                # crest. Scrub follows the lower drainage instead of tinting
+                # every high, visible face the same dusty beige.
+                upper=1-smooth(.22,.70,distance)
+                mineral[k]=round(clamp(.46+upper*.39-valley*.19+tributary*.06)*255)
+                vegetation[k]=round(clamp((valley*.31+tributary*.10)*smooth(.10,.65,distance)+.025)*255)
+            vertices[k]=(vertices[k][0],vertices[k][1],9+max(-3,accepted[k]-flanks[k]-relief[k])*.84)
     mesh=bpy.data.meshes.new(f'Watershed mesh {layer}');mesh.from_pydata(vertices,[],faces);mesh.update()
     obj=bpy.data.objects.new(f'Arroyo authored watershed {layer}',mesh);bpy.context.collection.objects.link(obj)
     colors=mesh.color_attributes.new(name='Geological cover',type='FLOAT_COLOR',domain='POINT')
@@ -92,8 +155,8 @@ for layer in range(3):
     obj.data.materials.append(material)
     layers.append({'relief':relief,'mineral':mineral,'vegetation':vegetation,'lockedVertices':locked})
 
-OUT.write_text(json.dumps({'version':1,'segments':SEGMENTS,'rings':RINGS,'layers':layers},separators=(',',':'))+'\n')
-SOURCE.mkdir(exist_ok=True)
+OUT.write_text(json.dumps({'version':2,'segments':SEGMENTS,'rings':RINGS,'layers':layers},separators=(',',':'))+'\n')
+SOURCE.mkdir(parents=True, exist_ok=True)
 bpy.ops.wm.save_as_mainfile(filepath=str(SOURCE/'horizon.blend'),compress=True)
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 (SOURCE/'horizon-build.json').write_text(json.dumps({
@@ -103,6 +166,6 @@ sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
     'recipe':'tools/assets/horizon.py','recipeSha256':sha(pathlib.Path(__file__)),
     'relief':'assets/horizon-relief.json','reliefSha256':sha(OUT),
     'sourceSha256':sha(SOURCE/'horizon.blend'),'triangles':len(faces)*3,
-    'notes':'Original authored connected watersheds. Accepted crest band, radial apron and three-mesh topology retained.'
+    'notes':'Original connected weathered shoulders and branching rock folds, with a three-metre rounded crown transition bounded toward a 36-degree radial slope. Exact crown heights, radial apron, three meshes and indexed topology retained; all relief remains subtractive.'
 },indent=2)+'\n')
 print('HORIZON_EXPORT',json.dumps({'bytes':OUT.stat().st_size,'triangles':len(faces)*3,'lockedVertices':[x['lockedVertices'] for x in layers]}))

@@ -3,7 +3,7 @@ import * as THREE from "three";
 import { plantVerges } from "./verges";
 import { roadDetail } from "./road-detail";
 import { buildHorizon } from "./horizon";
-import { gardenPlacements, vergeGardenPlacements } from "./garden";
+import { gardenPlacements, vergeGardenPlacements, frontageGardenPlacements } from "./garden";
 import type { SceneManifest } from "../../../packages/shared/scene";
 import { instantiateStatic, surfaceMaterials, assetStats } from "./assets";
 export function buildEnvironment(scene: THREE.Scene, manifest: SceneManifest) {
@@ -45,9 +45,9 @@ export function buildEnvironment(scene: THREE.Scene, manifest: SceneManifest) {
     material: THREE.Material,
   ) {
     const g = new THREE.PlaneGeometry(w, d),
-      uv = g.getAttribute("uv");
+      uv = g.getAttribute("uv"), position = g.getAttribute("position");
     for (let i = 0; i < uv.count; i++)
-      uv.setXY(i, (uv.getX(i) * w) / 4, (uv.getY(i) * d) / 4);
+      uv.setXY(i, (position.getX(i) + x) / 4, (position.getY(i) + y) / 4);
     const mesh = new THREE.Mesh(g, material);
     mesh.position.set(x, y, height);
     mesh.receiveShadow = true;
@@ -107,9 +107,9 @@ export function buildEnvironment(scene: THREE.Scene, manifest: SceneManifest) {
       [c.radius, 0.05, asphalt],
     ] as const) {
       const g = new THREE.CircleGeometry(r, 64);
-      const uv = g.getAttribute("uv");
+      const uv = g.getAttribute("uv"), position = g.getAttribute("position");
       for (let i = 0; i < uv.count; i++)
-        uv.setXY(i, (uv.getX(i) * r) / 2, (uv.getY(i) * r) / 2);
+        uv.setXY(i, (position.getX(i) + c.center[0]) / 4, (position.getY(i) + c.center[1]) / 4);
       const mesh = new THREE.Mesh(g, m);
       mesh.position.set(...c.center, z + h);
       mesh.receiveShadow = true;
@@ -181,9 +181,9 @@ export function buildEnvironment(scene: THREE.Scene, manifest: SceneManifest) {
           }
       }
     roadDetail(scene, manifest);
-    plantVerges(scene, manifest, surfaceMaterials.get("grass"));
+    plantVerges(scene, manifest, surfaceMaterials.get("grass"), surfaceMaterials.get("grass-clump")?.map ?? undefined);
     instantiateStatic(scene, [...manifest.houses, ...manifest.props]);
-    instantiateStatic(scene, [...gardenPlacements(manifest), ...vergeGardenPlacements(manifest)]);
+    instantiateStatic(scene, [...gardenPlacements(manifest), ...vergeGardenPlacements(manifest), ...frontageGardenPlacements(manifest)]);
     for (const b of manifest.barriers.filter((b) =>
       b.id?.startsWith("boundary"),
     ))

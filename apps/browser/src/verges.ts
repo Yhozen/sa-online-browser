@@ -3,7 +3,7 @@ import * as THREE from "three";
 import type { SceneManifest } from "../../../packages/shared/scene";
 
 /** Fine curved turf distributed across clear yards, with drier gaps and taller fence edges. */
-export function plantVerges(scene: THREE.Scene, manifest: SceneManifest, ground?: THREE.MeshStandardMaterial) {
+export function plantVerges(scene: THREE.Scene, manifest: SceneManifest, ground?: THREE.MeshStandardMaterial, atlas?: THREE.Texture) {
   let seed = 918;
   const random = () => { seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0; return seed / 4294967296; };
   const material = new THREE.MeshStandardMaterial({ vertexColors: true, side: THREE.DoubleSide, roughness: 1 });
@@ -27,11 +27,13 @@ export function plantVerges(scene: THREE.Scene, manifest: SceneManifest, ground?
     const count = 4 + variant * 2;
     for (let blade = 0; blade < count; blade++) {
       const angle = (blade / count + (random() - .5) * .14) * Math.PI * 2;
-      const h = .065 + random() * (.11 + variant * .03);
-      const width = .005 + random() * .0035, bend = .026 + random() * .07;
+      const h = .11 + random() * (.065 + variant * .03);
+      // Mixed broad and narrow leaf ribbons overlap in projection, giving the
+      // lawn real cover instead of thousands of isolated subpixel needles.
+      const width = (blade % 3 === 0 ? .013 : .008) + random() * .0045, bend = .04 + random() * .08;
       const dx = Math.cos(angle), dy = Math.sin(angle), root = .018 + random() * .052;
       const start = positions.length / 3;
-      const baseColor = new THREE.Color(blade % 4 === 0 ? 0xb7aa70 : blade % 3 === 0 ? 0x91a359 : 0x9caf67);
+      const baseColor = new THREE.Color(blade % 4 === 0 ? 0xad9f5c : blade % 3 === 0 ? 0x789447 : 0x90a54e);
       // Three curved segments retain the fine arch at walking distance. Spend
       // geometry on continuous turf coverage rather than subpixel blade edges.
       for (let segment = 0; segment <= 3; segment++) {
@@ -64,6 +66,52 @@ export function plantVerges(scene: THREE.Scene, manifest: SceneManifest, ground?
     }
     return geometry;
   });
+  const materials = [material, material];
+  if (atlas) {
+    // Three crossed, vertically curved silhouettes replace one ribbon variant.
+    // UVs crop directly to each original tussock's roots: the lower transparent
+    // margin is not mapped above the ground, so no floating rectangular cards.
+    const positions: number[] = [], uvs: number[] = [], colors: number[] = [], indices: number[] = [];
+    const quadrants = [
+      { left: .02, right: .49, top: .03, root: .443, width: .35, height: .198 },
+      { left: .51, right: .99, top: .04, root: .443, width: .33, height: .212 },
+      { left: .02, right: .495, top: .535, root: .913, width: .36, height: .205 },
+    ];
+    quadrants.forEach((quad, card) => {
+      const angle = card * Math.PI / 3 + .13, dx = Math.cos(angle), dy = Math.sin(angle);
+      const start = positions.length / 3;
+      for (let row = 0; row <= 3; row++) {
+        const t = row / 3, bend = (.021 + card * .004) * t * t;
+        for (const side of [-1, 1]) {
+          positions.push(dx * side * quad.width / 2 - dy * bend,
+            dy * side * quad.width / 2 + dx * bend, quad.height * t);
+          // Atlas is a DataTexture with flipY=false: v=0 is the PNG's top row.
+          uvs.push(side < 0 ? quad.left : quad.right, quad.root + (quad.top - quad.root) * t);
+          const shade = .9 + .1 * t; colors.push(shade, shade, shade);
+        }
+        if (row < 3) {
+          const k = start + row * 2; indices.push(k, k + 1, k + 2, k + 1, k + 3, k + 2);
+        }
+      }
+    });
+    const cards = new THREE.BufferGeometry();
+    cards.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
+    cards.setAttribute("uv", new THREE.Float32BufferAttribute(uvs, 2));
+    cards.setAttribute("color", new THREE.Float32BufferAttribute(colors, 3));
+    cards.setIndex(indices); cards.computeVertexNormals();
+    const normals = cards.getAttribute("normal"), normal = new THREE.Vector3();
+    for (let i = 0; i < normals.count; i++) {
+      normal.set(normals.getX(i) * .12, normals.getY(i) * .12, 1).normalize();
+      normals.setXYZ(i, normal.x, normal.y, normal.z);
+    }
+    geometries[1].dispose(); geometries[1] = cards;
+    const clumps = new THREE.MeshStandardMaterial({ map: atlas, vertexColors: true,
+      side: THREE.DoubleSide, roughness: 1, alphaTest: .45, transparent: false });
+    clumps.name = "Arroyo original grass-card canopy";
+    clumps.onBeforeCompile = material.onBeforeCompile;
+    clumps.customProgramCacheKey = material.customProgramCacheKey;
+    materials[1] = clumps;
+  }
   const matrices: THREE.Matrix4[][] = geometries.map(() => []), dummy = new THREE.Object3D();
   function clearGround(x: number, y: number) {
     if (Math.abs(x) > manifest.halfSize - .5 || Math.abs(y) > manifest.halfSize - .5) return false;
@@ -80,7 +128,13 @@ export function plantVerges(scene: THREE.Scene, manifest: SceneManifest, ground?
     dummy.rotation.set(0, 0, random() * Math.PI * 2);
     const s = .60 + random() * .73;
     dummy.scale.set(s * (.7 + random() * .6), s, Math.min(1.16, s * (.7 + random() * .4)));
-    dummy.updateMatrix(); matrices[Math.floor(random() * geometries.length)].push(dummy.matrix.clone());
+    dummy.updateMatrix();
+    const variant = Math.floor(random() * geometries.length);
+    // The broad alpha cards need the same complete footprint clearance as the
+    // yard turf, including along roadside edges. Consume the same RNG samples
+    // first so the existing yard distribution remains stable with an atlas.
+    if (atlas && !clearYard(x, y)) return;
+    matrices[variant].push(dummy.matrix.clone());
   }
   for (const road of manifest.roads) for (let i = 1; i < road.points.length; i++) {
     const a = road.points[i - 1], b = road.points[i], length = Math.hypot(b[0] - a[0], b[1] - a[1]);
@@ -109,7 +163,7 @@ export function plantVerges(scene: THREE.Scene, manifest: SceneManifest, ground?
   // A few blades per tuft spread the same geometry budget over the whole lawn,
   // instead of spending most blades inside overlapping, isolated clumps.
   const yardCells = new Map<string, { matrices: THREE.Matrix4[][]; tones: THREE.Color[][] }>();
-  const maxYardTufts = 26000, maxYardTriangles = 780000;
+  const maxYardTufts = 26000, maxYardTriangles = 740000;
   let yardCount = 0, yardTriangles = 0;
   function clearYard(x: number, y: number) {
     if (!clearGround(x, y)) return false;
@@ -187,7 +241,7 @@ export function plantVerges(scene: THREE.Scene, manifest: SceneManifest, ground?
     if (!occupied.has(site)) occupied.set(site, []);
     occupied.get(site)!.push({ x, y }); candidates.push({ x, y, vigor, edge });
   }
-  const spacing = .20;
+  const spacing = .17;
   for (const house of manifest.houses) {
     const c = Math.cos(house.rotation), s = Math.sin(house.rotation);
     const scaleX = house.scale?.[0] || 1, scaleY = house.scale?.[1] || 1;
@@ -229,13 +283,13 @@ export function plantVerges(scene: THREE.Scene, manifest: SceneManifest, ground?
     dummy.position.set(x, y, manifest.groundZ - .006);
     dummy.rotation.set(0, 0, random() * Math.PI * 2);
     const width = .95 + random() * .4;
-    const height = dry ? .48 + random() * .28 : Math.min(1.16, .8 + vigor * .25 + random() * .12 + (edge ? .12 : 0));
+    const height = dry ? .48 + random() * .28 : Math.min(1.16, .98 + vigor * .1 + random() * .1 + (edge ? .06 : 0));
     dummy.scale.set(width, width * (.8 + random() * .3), height); dummy.updateMatrix();
     const key = `${Math.floor(x / 24)},${Math.floor(y / 24)}`;
     if (!yardCells.has(key)) yardCells.set(key, { matrices: geometries.map(() => []), tones: geometries.map(() => []) });
     const cell = yardCells.get(key)!;
     cell.matrices[variant].push(dummy.matrix.clone());
-    cell.tones[variant].push(new THREE.Color(dry ? 0xeadbb3 : vigor < .4 ? 0xe2dec1 : 0xd8e0bb));
+    cell.tones[variant].push(new THREE.Color(dry ? 0xe4d1a0 : vigor < .4 ? 0xcbd3a0 : 0xc5d7a0));
     yardCount++; yardTriangles += triangles;
   }
   if (soilPositions.length) {
@@ -255,14 +309,14 @@ export function plantVerges(scene: THREE.Scene, manifest: SceneManifest, ground?
   }
   for (const [key, cell] of yardCells) geometries.forEach((geometry, variant) => {
     if (!cell.matrices[variant].length) return;
-    const mesh = new THREE.InstancedMesh(geometry, material, cell.matrices[variant].length);
+    const mesh = new THREE.InstancedMesh(geometry, materials[variant], cell.matrices[variant].length);
     mesh.name = `Arroyo yard grass ${key} ${variant}`;
     mesh.userData.yardCell = key;
     cell.matrices[variant].forEach((matrix, i) => { mesh.setMatrixAt(i, matrix); mesh.setColorAt(i, cell.tones[variant][i]); });
     mesh.receiveShadow = true; mesh.castShadow = true; mesh.computeBoundingBox(); mesh.computeBoundingSphere(); scene.add(mesh);
   });
   geometries.forEach((geometry, variant) => {
-    const mesh = new THREE.InstancedMesh(geometry, material, matrices[variant].length);
+    const mesh = new THREE.InstancedMesh(geometry, materials[variant], matrices[variant].length);
     mesh.name = `Arroyo grass clumps ${variant}`;
     matrices[variant].forEach((matrix, i) => mesh.setMatrixAt(i, matrix));
     mesh.receiveShadow = true; mesh.computeBoundingSphere(); scene.add(mesh);

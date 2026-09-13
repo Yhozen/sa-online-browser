@@ -39,6 +39,32 @@ export function vergeGardenPlacements(manifest: SceneManifest): Placement[] {
   return result;
 }
 
+/** Connected low shrubs soften the fence edge while keeping doors and drives open. */
+export function frontageGardenPlacements(manifest: SceneManifest): Placement[] {
+  const result: Placement[] = [];
+  for (const [index, house] of manifest.houses.entries()) {
+    const c = Math.cos(house.rotation), s = Math.sin(house.rotation);
+    const sx = house.scale?.[0] ?? 1, sy = house.scale?.[1] ?? 1;
+    // Two loose drifts sit on the street side of the fence. The previous row
+    // was inside the lot, where the fence concealed nearly all of its volume.
+    for (let specimen = 0; specimen < 18; specimen++) {
+      const row = Math.floor(specimen / 6), along = specimen % 6;
+      const lx = row < 2 ? -9.6 + along * .79 + row * .26 : .15 + (along % 3) * 1.05;
+      const ly = -(row < 2 ? 13.7 + row * 1.03 : 14.3 + Math.floor(along / 3) * 1.12)
+        - .23 * Math.sin(index * 1.9 + specimen * 1.7);
+      const x = house.position[0] + lx * sx * c - ly * sy * s;
+      const y = house.position[1] + lx * sx * s + ly * sy * c;
+      const scale = .89 + ((index * 3 + specimen) % 4) * .05;
+      const spread = scale * 1.19;
+      if (!yardPlantFits(manifest, x, y, .65 * spread)) continue;
+      result.push({ asset: "garden-shrub", position: [x, y, manifest.groundZ + .01],
+        rotation: house.rotation + specimen * 2.399,
+        scale: [spread, spread, scale * (.93 + (specimen % 3) * .035)] });
+    }
+  }
+  return result;
+}
+
 /** Keep the entire decorative plant footprint outside paths and solid fixtures. */
 function yardPlantFits(manifest: SceneManifest, x: number, y: number, radius: number) {
   if (Math.abs(x) + radius >= manifest.halfSize || Math.abs(y) + radius >= manifest.halfSize) return false;

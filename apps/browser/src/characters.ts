@@ -23,6 +23,10 @@ export function createCharacter(variant = 0) {
       const replaced = list.map((m) => {
         if (m.name !== "outfit") return m;
         const c = (m as THREE.MeshStandardMaterial).clone();
+        // Three clones material values but drops shader callbacks. Retain the
+        // shared cloth detail and indirect light when giving each actor a tint.
+        c.onBeforeCompile = m.onBeforeCompile;
+        c.customProgramCacheKey = m.customProgramCacheKey;
         c.color.set(variant % 2 ? 0x8f4931 : 0x795139);
         outfit.push(c);
         return c;

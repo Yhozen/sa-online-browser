@@ -13,13 +13,17 @@
       "bytes": 1131330,
       "sha256": "3b54fbaba32d6281b19346e41a60fb88f2858888cc73327edef4a1fcd30d539b"
     },
+    "arroyo-grass-clumps.webp": {
+      "bytes": 1468482,
+      "sha256": "e8cbf331e24e0bfeb4904c9e767e92d166c1283f476f619d6f854236d4c3b70d"
+    },
     "arroyo-grass.webp": {
       "bytes": 2840886,
       "sha256": "08d34e0817d828d21aa74ff32b43b4400ff325d58c96408dd31004b248d400a0"
     },
     "arroyo-reflections.pmrem.gz": {
-      "bytes": 11177285,
-      "sha256": "1a17cc771f4e928fec70283851a286b8c65b5a782169b9604e834b613397dfb7"
+      "bytes": 11216349,
+      "sha256": "cdf4b001427fd4cded2023be7302e86799b177910a50d67be152e08297789205"
     },
     "arroyo-sky.webp": {
       "bytes": 1029670,
@@ -49,6 +53,10 @@
       "bytes": 216084,
       "sha256": "bd515240ae8f8dcb05d539a3c354a114e9aeb4d0c10ee682a7233a280f605e56"
     },
+    "garden-shrub.glb": {
+      "bytes": 102380,
+      "sha256": "08eef3cb1db02a4f55ba4b9721c88a2d3da9b9c2d98caf8c94f76de4bc95f9e4"
+    },
     "house-0.glb": {
       "bytes": 2214460,
       "sha256": "42cbcb9a02bbf1a550f28903b2b301ea05ee2de937d73b45ab411ab6d89e5aa0"
@@ -74,16 +82,16 @@
       "sha256": "34c2f0adc8180dc0df68dbec19d2e9af2162fcd0ffc2acdd0442bb93ea97abe3"
     },
     "neighbor.glb": {
-      "bytes": 6891620,
-      "sha256": "951eb4a4f5ce608533f09cd4cf23b384c6568f9c7d148226901fb3723db7c4c9"
+      "bytes": 6365356,
+      "sha256": "cf14bd6ff88bee0e4333d9a67eea1b1c53d67200efb72aade705ff677e9f70e7"
     },
     "neighborhood-atlas.png": {
       "bytes": 3529016,
       "sha256": "03157ab45abb63aaf697823c9e6a8d927ac1b062ca27fdf21fcf7a8bd0948269"
     },
     "palm.glb": {
-      "bytes": 1028776,
-      "sha256": "a223240b44469e2d730be38e561a5997609555158e4f94b3526171ca8474f130"
+      "bytes": 830960,
+      "sha256": "777457b436e1f8d5ca350fb30886e57461bac0718a914068fe7f09a3f3598060"
     },
     "pole.glb": {
       "bytes": 10416,

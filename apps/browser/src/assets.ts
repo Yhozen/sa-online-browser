@@ -6,12 +6,26 @@ import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
 import { clone } from "three/addons/utils/SkeletonUtils.js";
 import { surfaceTexture } from "./surface-textures";
 import { decodeReflection } from "./reflection-storage";
+import { installStreetBounce } from "./surface-lighting";
 export let environmentTexture: THREE.Texture | undefined;
 export let reflectionTexture: THREE.Texture | undefined;
 export const bakingReflections = new URLSearchParams(location.search).get("bake-reflections") === "1";
 const models = new Map<string, GLTF>();
 export const surfaceMaterials = new Map<string, THREE.MeshStandardMaterial>();
 export const assetStats = { bytes: 0, textureBytes: 0, files: 0 };
+const coupeSurfaces: Record<string, {
+  color?: number; roughness: number; metalness?: number;
+  specularIntensity?: number; envMapIntensity: number;
+}> = {
+  glass: { roughness: .13, specularIntensity: .25, envMapIntensity: .95 },
+  alloy: { color: 0xa1a8ac, roughness: .25, metalness: .85, envMapIntensity: .9 },
+  chrome: { color: 0x939c9e, roughness: .24, metalness: .9, envMapIntensity: .85 },
+  tail: { roughness: .18, metalness: .08, envMapIntensity: .7 },
+  lampglass: { roughness: .09, metalness: .1, envMapIntensity: .8 },
+};
+function coupeSurface(name: string) {
+  return name.startsWith("coupe-") ? coupeSurfaces[name.slice(6)] : undefined;
+}
 const names = [
   "house-0",
   "house-1",
@@ -20,6 +34,7 @@ const names = [
   "palm",
   "tree",
   "garden-low",
+  "garden-shrub",
   "fence",
   "fence-low",
   "mailbox",
@@ -78,6 +93,17 @@ export async function loadAssets(
         o.receiveShadow = true;
         const list = Array.isArray(o.material) ? o.material : [o.material];
         o.material = list.map((m) => {
+          // Car glazing and machined trim have their own response; sharing the
+          // original GLB names would also recolor household and street hardware.
+          if (name === "coupe" && coupeSurfaces[m.name]) m.name = `coupe-${m.name}`;
+          const carSurface = coupeSurface(m.name);
+          if (carSurface && m instanceof THREE.MeshStandardMaterial) {
+            m.roughness = carSurface.roughness;
+            if (carSurface.color !== undefined) m.color.set(carSurface.color);
+            if (carSurface.metalness !== undefined) m.metalness = carSurface.metalness;
+            if (carSurface.specularIntensity !== undefined && m instanceof THREE.MeshPhysicalMaterial)
+              m.specularIntensity = carSurface.specularIntensity;
+          }
           if (name === "lamp" && m.name === "ivory" && m instanceof THREE.MeshStandardMaterial) {
             // The luminaire lens is its own surface; ivory vehicle trim stays opaque.
             m.name = "lamp-lens";
@@ -93,8 +119,8 @@ export async function loadAssets(
               const physical = new THREE.MeshPhysicalMaterial();
               THREE.MeshStandardMaterial.prototype.copy.call(physical, m);
               physical.defines = { STANDARD: "", PHYSICAL: "" };
-              physical.clearcoat = 1; physical.clearcoatRoughness = .12; physical.envMapIntensity = 1.3;
-              physical.metalness = .45; physical.roughness = .22; physical.color.set(0x233d50);
+              physical.clearcoat = .55; physical.clearcoatRoughness = .22; physical.envMapIntensity = 1.05;
+              physical.metalness = .62; physical.roughness = .28; physical.color.set(0x163b61);
               canonical.set(m.name, physical); m.dispose();
             } else canonical.set(m.name, m);
           }
@@ -160,10 +186,17 @@ export async function loadAssets(
   // tile brings its mineral flecks down to asphalt aggregate scale.
   const asphaltInput = await textureInput("arroyo-asphalt.webp");
   const asphaltMaps = surfaceTexture(asphaltInput, -1, 1254);
+  // Dry binder and exposed mineral grains retain different roughness. Expand
+  // the aligned map's narrow range around its midrange, preserving albedo/scale.
+  const roadRoughness = asphaltMaps.roughnessMap.image.data!;
+  for (let i = 0; i < roadRoughness.length; i += 4) {
+    const value = Math.min(250, Math.max(160, 219 + (roadRoughness[i] - 219) * 2));
+    roadRoughness[i] = roadRoughness[i + 1] = roadRoughness[i + 2] = value;
+  }
   for (const texture of Object.values(asphaltMaps)) texture.repeat.setScalar(1);
   surfaceMaterials.set("asphalt", new THREE.MeshStandardMaterial({
-    name:"asphalt", ...asphaltMaps, color:0xb1b1aa, roughness:.88,
-    normalScale:new THREE.Vector2(.22, .22),
+    name:"asphalt", ...asphaltMaps, color:0xa9a9a5, roughness:.88,
+    normalScale:new THREE.Vector2(.40, .40),
   }));
   assetStats.textureBytes += 1254 * 1254 * 4 * 4 / 3 * 3;
   asphaltInput.close();
@@ -173,25 +206,33 @@ export async function loadAssets(
   // whole lots. Geometry and diffuse texture share the same dry/live palette.
   for (const texture of Object.values(grassMaps)) texture.repeat.setScalar(2);
   surfaceMaterials.set("grass", new THREE.MeshStandardMaterial({
-    name: "grass", ...grassMaps, color: 0xe6e1bf, roughness: 1,
+    name: "grass", ...grassMaps, color: 0xc9d29e, roughness: 1,
     normalScale: new THREE.Vector2(.55, .55),
   }));
   assetStats.textureBytes += 1024 * 1024 * 4 * 4 / 3 * 3;
   grassInput.close();
-  const leaves = await textureInput("arroyo-foliage.webp");
-  const leafCanvas = document.createElement("canvas");
-  leafCanvas.width = leaves.width; leafCanvas.height = leaves.height;
-  const leafContext = leafCanvas.getContext("2d", {willReadFrequently:true});
-  if (!leafContext) throw Error("Foliage texture preparation failed. Reload and retry.");
-  leafContext.drawImage(leaves, 0, 0);
-  const leafLevels = cutoutMipmaps({width:leaves.width, height:leaves.height,
-    data:new Uint8Array(leafContext.getImageData(0,0,leaves.width,leaves.height).data)});
-  const leafTexture = new THREE.DataTexture(leafLevels[0].data, leaves.width, leaves.height);
-  leafTexture.mipmaps = leafLevels; leafTexture.generateMipmaps = false;
-  leafTexture.minFilter = THREE.LinearMipmapLinearFilter; leafTexture.magFilter = THREE.LinearFilter;
-  leafTexture.colorSpace = THREE.SRGBColorSpace; leafTexture.needsUpdate = true; leafTexture.flipY = false;
-  assetStats.textureBytes += leaves.width * leaves.height * 4 * 4 / 3;
-  leaves.close();
+  async function cutoutTexture(file: string, size?: number) {
+    const input = await textureInput(file);
+    const canvas = document.createElement("canvas");
+    canvas.width = size ?? input.width; canvas.height = size ?? input.height;
+    const context = canvas.getContext("2d", {willReadFrequently:true});
+    if (!context) throw Error("Foliage texture preparation failed. Reload and retry.");
+    context.drawImage(input, 0, 0, canvas.width, canvas.height);
+    input.close();
+    const levels = cutoutMipmaps({width:canvas.width, height:canvas.height,
+      data:new Uint8Array(context.getImageData(0,0,canvas.width,canvas.height).data)});
+    const texture = new THREE.DataTexture(levels[0].data, canvas.width, canvas.height);
+    texture.mipmaps = levels; texture.generateMipmaps = false;
+    texture.minFilter = THREE.LinearMipmapLinearFilter; texture.magFilter = THREE.LinearFilter;
+    texture.colorSpace = THREE.SRGBColorSpace; texture.needsUpdate = true; texture.flipY = false;
+    assetStats.textureBytes += canvas.width * canvas.height * 4 * 4 / 3;
+    return texture;
+  }
+  const leafTexture = await cutoutTexture("arroyo-foliage.webp");
+  surfaceMaterials.set("grass-clump", new THREE.MeshStandardMaterial({
+    name: "grass-clump", map: await cutoutTexture("arroyo-grass-clumps.webp", 1024),
+    roughness: 1, alphaTest: .45, side: THREE.DoubleSide,
+  }));
   for (const name of ["foliage", "foliage-light"]) {
     const m = canonical.get(name);
     if (m instanceof THREE.MeshStandardMaterial) {
@@ -259,21 +300,24 @@ export function asset(name: string): THREE.Group {
 export function clips() {
   return models.get("neighbor")!.animations;
 }
-export function bindAssetEnvironment(texture: THREE.Texture, localProbe?: THREE.Texture) {
+export function bindAssetEnvironment(texture: THREE.Texture, localProbe?: THREE.Texture, streetBounce = false) {
   const seen = new Set<THREE.Material>();
   for (const model of models.values()) model.scene.traverse(object => {
     if (!(object instanceof THREE.Mesh)) return;
     for (const material of Array.isArray(object.material) ? object.material : [object.material]) {
       if (!(material instanceof THREE.MeshStandardMaterial) || seen.has(material)) continue;
       seen.add(material);
+      if (streetBounce) installStreetBounce(material);
       const leaf = material.name.startsWith("foliage") || material.name.startsWith("palm-frond");
-      if (!leaf && !["paint", "glass", "denim"].includes(material.name)) continue;
+      const carSurface = coupeSurface(material.name);
+      if (!leaf && !carSurface && !["paint", "glass", "denim"].includes(material.name)) continue;
       // Three uses scene.environmentIntensity when material.envMap is null.
       // Explicitly bind this shared PMREM to retain per-surface light response.
-      const local = localProbe && ["paint", "glass"].includes(material.name);
+      const local = localProbe && (carSurface || ["paint", "glass"].includes(material.name));
       material.envMap = local ? localProbe : texture;
       material.envMapRotation.x = local ? 0 : Math.PI / 2;
-      material.envMapIntensity = leaf ? .7 : material.name === "denim" ? .8 : material.name === "paint" ? 1.35 : .95;
+      material.envMapIntensity = carSurface?.envMapIntensity ??
+        (leaf ? .7 : material.name === "denim" ? .8 : material.name === "paint" ? 1.05 : .95);
       if (leaf) material.emissiveIntensity = .025;
       material.needsUpdate = true;
     }
@@ -337,7 +381,7 @@ export function instantiateStatic(
           batch.geometries.push(geometry);
           return;
         }
-        const cellSize = p.asset === "garden-low" ? 64 : 32;
+        const cellSize = p.asset === "garden-shrub" ? 128 : p.asset === "garden-low" ? 64 : 32;
         const key =
           o.geometry.uuid + ":" + Math.floor(p.position[0] / cellSize) + ":" + Math.floor(p.position[1] / cellSize) +
           JSON.stringify(

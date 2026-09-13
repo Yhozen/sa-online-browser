@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-09-13T03:45:35.977406+00:00",
+  "generatedAt": "2026-09-13T04:53:58.031860+00:00",
   "blenderVersion": "5.2.1 LTS",
   "blenderBuild": "9e2066aef7ef",
   "blenderExecutable": "/Applications/Blender.app/Contents/MacOS/Blender",
   "blenderExecutableSha256": "ea651e507c6b197df0e234bfa04e5ed43e7f4d498267a7df93fcb38f21928a5c",
   "recipe": "tools/assets/horizon.py",
-  "recipeSha256": "519db8d357827230a98898387d8aecbee9e6a9dc20b8d2747a8e1e018d3f7aea",
+  "recipeSha256": "bd52bd84da8b7d9c030e036180f299b8d28c08951b8174879bea1c62e4611071",
   "relief": "assets/horizon-relief.json",
-  "reliefSha256": "dd9cded94acdb2974d531e9b2d425e95cb2bfd52d6c9bbd4e7f3b2b47df6d7df",
-  "sourceSha256": "678fabc94fd2a8627dd988e0670861e59470d6ddb0e57ab62dcd370b269f3faa",
+  "reliefSha256": "cb41d5d00b0a4389f4f302b10f544400f30cd8bdf377a304546aab32b5dc8261",
+  "sourceSha256": "6f88acc8f791981569e047453b35ad191b345a9a15e21038a0e1d68ea90efb24",
   "triangles": 172800,
-  "notes": "Original authored connected watersheds. Accepted crest band, radial apron and three-mesh topology retained."
+  "notes": "Original connected weathered shoulders and branching rock folds, with a three-metre rounded crown transition bounded toward a 36-degree radial slope. Exact crown heights, radial apron, three meshes and indexed topology retained; all relief remains subtractive."
 }
