@@ -2,37 +2,45 @@
 
 ## Current native milestone — September 13
 
-Round twelve is integrated in `b49e186`: native Blender foliage and clothing,
-layered planting, continuous road weathering, and the packed authored terrain.
-The original 60 Hz simulation, protocol routing, collision and seat contracts
-remain. Native asset/terrain/material tests pass.
+Round thirteen integrates coordinated sunlight, terrain irradiance and native
+reflections on top of the original Blender assets and gameplay fixes in
+`b49e186`. The current scene is `7ef8f91ef0fd9fec`; source, assets and served
+module fingerprints are in the [native results](native-dream-results.md).
 
-The current isolated rendering audit passes on scene `6c1739ad64e66280`, with
-Standard and Low both measuring **120.5 FPS median** at full native DPR 2 in
+Standard and Low both measured **120.5 FPS median** at full native DPR 2 in
 2560×1440 and 3344×1882 buffers. Maximum logical texture storage is 315.72 MiB,
-downloads 46,575,188 B, geometry 4,985,512 triangles and 912 calls. All original budget
-ceilings remain. An opt-in guard (`9b340a7`) proves the separately owned reference
-page stays frozen during every measurement. The earlier competing-window result
-is preserved and not substituted for the isolated benchmark.
+downloads 46,810,131 B, geometry 4,921,215 triangles and 906 calls. Original
+budget ceilings remain. Three real quality-switch cycles restore static pixels
+exactly, with zero browser errors. The separately owned reference window remained
+frozen throughout the [current audit](native-rendering-round13-summary.json).
 
-The full current native motion regression also passes: no repeated local walking
-or driving presentation frames, no retained jump impulse on exit, and correct
-shared-driving resets. Remote movement still has measurable network variation.
-Both owned clients close and server sessions/workers return to zero. Exact source,
-asset and served-build identities are in the [native results](native-dream-results.md),
-[rendering summary](native-rendering-summary.json) and [motion evidence](native-motion/README.md).
+The prior round-twelve motion regression passes, including local walk/drive
+interpolation, jump/seat exits and shared-driving resets. A fresh final-source
+motion run remains pending. Remote movement retains measurable network variation.
 
-**The visual target remains open.** Last formal score: 5.0/10, Tier 1 on round eleven,
-not a review of round twelve. Compare the [current real capture](images/native-street-2026-09-13.png)
-with the [generated target](images/native-concept-2026-09-13.png).
+**The visual target remains open.** The fresh
+[round-thirteen review](art-review-round13-2026-09-13.md) scores 5.0/10, Tier 1.
+Road shade improved; crown separation and mountain illumination remain open.
+Compare the [current capture](images/native-street-round13-2026-09-13.png) with the
+[generated target](images/native-concept-2026-09-13.png).
 
 **The complete 15-scenario acceptance suite still needs a fresh pass.** The previous
 full run ended 14 passed / 1 failed on a yard-reset observation timeout, with correct
 positions in the saved browser and server samples. A stricter browser-local clock
 now starts at the actual reset keypress. The focused real yard soak passed 75
 rounds over 605.2 seconds, with all resets within 267.7 ms and zero reset-position
-error. All 150 movement agreement samples remained below 0.5 m. Full acceptance
-and both supervisor probes remain pending.
+error. All 150 movement agreement samples remained below 0.5 m. The fresh full run
+started September 13 at 11:30 UTC finished **14 passed / 1 failed**. Both ten-minute
+soaks passed: 81 neighborhood rounds and 75 yard rounds. All 78 reset witnesses
+passed, with at most 265.5 ms correction and zero reset-position error. The
+worker-crash/restart case failed when the browser connection closed before
+rejoining; cleanup obscured the original click error. The
+[failed-run record](native-acceptance-round12-failed.json) retains that result.
+An unchanged targeted rerun reproduced the failure: the transport disconnected
+first, followed by clean browser cleanup. Empty-page controls isolated idle
+transport failure; the host's [WebSocket keepalive](native-transport-heartbeat.json)
+then passed a 60-second quiet control and the unchanged recovery case. Full
+acceptance and both supervisor probes remain pending.
 
 ## Historical record — September 8
 

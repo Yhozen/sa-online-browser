@@ -57,7 +57,7 @@ test('published v4 terrain retains complete hashed native provenance',{
 test('retained v3 input regenerates the exact staged v4 candidate',()=>{
   const bytes=readFileSync(path.join(scratch,'assets/horizon-relief.json'));
   assert.deepEqual(bytes,readFileSync(path.join(root,'assets/horizon-relief.json')));
-  assert.equal(sha(bytes),'94e2c411dacb524e2ee90c4cf5bd312fbf0c7b3e4355b2ba8f11c6bacf1c9b56');
+  assert.equal(sha(bytes),'77162b3135c66940b85e65b86ea7b4b595d9021628dd4be86f976fcd5e630cea');
   assert.equal(bytes.length,859283);
   assert.ok(prepared.metrics.layers.every(layer=>!layer.lighting.clipped));
 });

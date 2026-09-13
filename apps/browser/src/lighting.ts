@@ -9,7 +9,7 @@ export function installAtmosphere(scene: THREE.Scene, renderer: THREE.WebGLRende
   const ambient = new THREE.HemisphereLight(0xb5cce6, 0x97805f, 1.55);
   // The game is Z-up; sky fill must come from above, including shaded facades.
   ambient.position.set(0, 0, 1);
-  const sun = new THREE.DirectionalLight(0xffd69a, 6.2);
+  const sun = new THREE.DirectionalLight(0xffd69a, 7.707888914160046);
   sun.castShadow = true;
   const shadowSize = Math.min(4096, renderer.capabilities.maxTextureSize);
   sun.shadow.mapSize.set(shadowSize, shadowSize);
@@ -26,7 +26,9 @@ export function installAtmosphere(scene: THREE.Scene, renderer: THREE.WebGLRende
   sun.shadow.map.depthTexture.magFilter = THREE.LinearFilter;
   sun.shadow.camera.updateProjectionMatrix();
   scene.add(ambient, sun, sun.target);
-  const offset = new THREE.Vector3(-58, 12, 47);
+  // Lower cross-street light keeps sunny gaps around the player while casting
+  // existing foliage across the turning circle. Horizontal irradiance is held.
+  const offset = new THREE.Vector3(-58, -12, 34.195516275285755);
   const environmentTargets: THREE.WebGLRenderTarget[] = [];
   let sky: THREE.Mesh<THREE.BoxGeometry, THREE.ShaderMaterial> | undefined;
   return {

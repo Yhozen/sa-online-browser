@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "change": "One coordinated physical sun direction and intensity across runtime, terrain irradiance and native static reflections",
+  "sun": {
+    "direction": [
+      -58,
+      -12,
+      34.195516275285755
+    ],
+    "color": 16766618,
+    "intensity": 7.707888914160046
+  },
+  "terrain": {
+    "path": "assets/horizon-relief.json",
+    "bytes": 859283,
+    "sha256": "77162b3135c66940b85e65b86ea7b4b595d9021628dd4be86f976fcd5e630cea"
+  },
+  "nativeTerrain": {
+    "path": "assets/source/horizon.blend",
+    "bytes": 6092078,
+    "sha256": "63f113ccb350b1016cef32477da669fed0da556209d655a990f6617ed2313e71"
+  },
+  "terrainProvenance": {
+    "path": "assets/source/horizon-build.json",
+    "bytes": 6949,
+    "sha256": "c38be61ada0783319c65c8373f8c54f08b95c85bb3d396c928adf5344a612d00"
+  },
+  "reflection": {
+    "path": "apps/browser/public/assets/arroyo-reflections.pmrem.gz",
+    "bytes": 11641551,
+    "sha256": "bf2a732e3daccbe21ca91811bcf41ad2d34f7a56824043d081931061d457ca31"
+  },
+  "reflectionProvenance": {
+    "path": "assets/source/reflection-bake.json",
+    "bytes": 9807,
+    "sha256": "5994b1e78ce05744a9dd9b1e6c9789d71678f3cc518ed2e407fb5d6d8555ea60"
+  },
+  "acceptedPreview": {
+    "path": ".dream-loop/coordinated-sun-azimuth/native-comparison.json",
+    "bytes": 4500856,
+    "sha256": "46e9afe17af28534bccb964c77604c1af70a67f4b6f90c2c8dfcdf17198d8655"
+  },
+  "qualityEvidence": "native-quality-cycle-round13.json",
+  "renderingEvidence": "native-rendering-round13-summary.json",
+  "visualReview": "art-review-round13-2026-09-13.md",
+  "tests": [
+    {
+      "command": "Docker node --test tests/terrain.test.mjs",
+      "passed": 9,
+      "failed": 0,
+      "log": {
+        "path": ".dream-loop/round13-terrain-tests.log",
+        "bytes": 1210,
+        "sha256": "a20cfc916a7fb0192b4a7989172e32e80be75433366f9115f3e08f0046b8df45"
+      }
+    },
+    {
+      "command": "Docker node --test tests/reflection.test.mjs",
+      "passed": 2,
+      "failed": 0,
+      "log": {
+        "path": ".dream-loop/round13-reflection-tests.log",
+        "bytes": 505,
+        "sha256": "4697c280611eebb5d0cca620efc7c5665ee60283e40a69eda2e88d4c367a4e21"
+      }
+    }
+  ],
+  "limitations": [
+    "Formal art score remains 5.0/10; road-shade directive landed, crown and mountain lighting remain open.",
+    "No geometry, layout, collision, quality resolution or gameplay changes in this integration.",
+    "Fresh complete acceptance still pending after the independently verified transport heartbeat correction."
+  ]
+}

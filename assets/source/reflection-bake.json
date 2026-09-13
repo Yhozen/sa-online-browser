@@ -1,24 +1,24 @@
 {
   "version": 1,
-  "generatedAt": "2026-09-13T10:40:09.878Z",
+  "generatedAt": "2026-09-13T12:36:44.761Z",
   "format": "PMR1: uint32-le magic,width,height; RGBA16F PMREM atlas; gzip",
   "width": 1536,
   "height": 2048,
-  "compressedBytes": 11406639,
+  "compressedBytes": 11641551,
   "uncompressedBytes": 25165836,
-  "sha256": "baaee4d62728808e5713ca4fc74fc674a69172c356e3cb0cbfa7bd9f9e6d3c9f",
-  "uncompressedSha256": "fdfe6f0abe1487df97eb6a5387cc38e6d62876a55fe5bf034e96cd5b0cd99c40",
+  "sha256": "bf2a732e3daccbe21ca91811bcf41ad2d34f7a56824043d081931061d457ca31",
+  "uncompressedSha256": "039a44f3a162f3246bbc82417be5d6a158b43781acc055396c88de1f4bf9d7b7",
   "browser": "Chrome/153.0.8010.37",
   "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
-  "peakRadiance": 3.8046875,
+  "peakRadiance": 7.484375,
   "scene": {
     "id": "neighborhood",
-    "revision": "12c83e2e2441b768"
+    "revision": "6c1739ad64e66280"
   },
   "inputSnapshot": {
-    "capturedAt": "2026-09-13T10:40:06.576Z",
-    "sceneSha256": "b88c3168e10fb26505b9eeea1ae0f07b203697ec79b84f18e17d75d1fa145603",
-    "inventorySha256": "37d41641fd4041538ff471ec84ffd617ef1246b8f7883829b1a88a790a0f4fc7"
+    "capturedAt": "2026-09-13T12:36:41.261Z",
+    "sceneSha256": "efd8b9aaea7ee4efc82dd53fa336ff35d3c1965d08c6dbc3a3775b4df940edd1",
+    "inventorySha256": "ac457ad1ee7ba9e570fccf171acbed48b266e677180685a2ea48bac59bda0a0d"
   },
   "sources": {
     "apps/browser/index.html": "5c7e3e0d86ebc6d6e88fb1514c0e592903af7ab85d4dadd5b13a2f43e2387e24",
@@ -29,7 +29,7 @@
     "apps/browser/src/graphics.ts": "7b61ef63871d3f3d1633c38dfd5341b5dfedc60b7346af366acf4b653867832c",
     "apps/browser/src/antialias.ts": "29aad63b1b86354605f740bd8ce7b76bc0784afa84bebaad7ddb7ce315924161",
     "apps/browser/src/assets.ts": "2f690c66ea6fba8fdeaa25e24181efedc1a78175ebe131a0b414a30334fb592c",
-    "apps/browser/src/lighting.ts": "a88d2532b54083df2b8177b6cdc8300164dedc93ad449e759157cf3437dee057",
+    "apps/browser/src/lighting.ts": "42a3c3e44e099658755b4d10061e48ee5e3b370d8a2abb7c86ffc2a5947f5731",
     "apps/browser/src/environment.ts": "cfb348a9da7007d29d432bde3ea4fc3a48a7e41dad83503d9d97e6f50dbd7798",
     "apps/browser/src/surface-textures.ts": "2309c51c318e786734dd90470cbfcb3bb83e67eef2691cf6e3dc5c7028edac56",
     "apps/browser/src/surface-pixels.ts": "327e2cc8c0971fc872b5459c65694c92cfb38a2e25182395470db28f5afdbabe",
@@ -38,7 +38,7 @@
     "apps/browser/src/reflection-storage.ts": "8b7f07a99248d1885e509aa3e916b87982ad33019348ae87fd04e09635c13720",
     "apps/browser/src/garden.ts": "7f830a04a2622d01d59367ca18c14bb876a8bc54d759a2c6d65293612d6b1d79",
     "apps/browser/src/horizon.ts": "42b93f9b283d936e31609094ee3a15c7a7480d2102405128720ee511597b0b7e",
-    "assets/horizon-relief.json": "94e2c411dacb524e2ee90c4cf5bd312fbf0c7b3e4355b2ba8f11c6bacf1c9b56",
+    "assets/horizon-relief.json": "77162b3135c66940b85e65b86ea7b4b595d9021628dd4be86f976fcd5e630cea",
     "apps/browser/src/road-detail.ts": "668e02a7ea48e45a5317679960efaa624f574322b68d8a290792f85ff3094805",
     "apps/browser/src/verges.ts": "c631fd92661b9b863525a1bfef409701b739e27dcf3be79e1b33461229232817",
     "apps/browser/src/ground-cover.ts": "8e5a7a64144227c24a5aa6c54ad735e07c7ee68b414602d39f21e0e88c757b89",
@@ -68,19 +68,19 @@
   "servedBuild": {
     "/": {
       "bytes": 449,
-      "sha256": "049ee04895ab56a9696d4c4abd40ac699b69014ac14cc328a6cb748bfdc936ea"
+      "sha256": "707e4f09d7f87b0b2ef70c0cd0fd7d19c0d39a982409ff0b82d906179b07b956"
+    },
+    "/assets/index-BY3NWJxq.js": {
+      "bytes": 577842,
+      "sha256": "ad198bc9d864f6a92ad5d0c7be6bad92cc33c52c942ec959102bfc5631073b6f"
     },
     "/assets/index-CLSF4nJg.css": {
       "bytes": 6991,
       "sha256": "0655f264cfc9ca400288720b93a106c022f381daa4c7ce52c88deb326995367a"
     },
-    "/assets/index-CwDjqzK3.js": {
-      "bytes": 577842,
-      "sha256": "63ad762b318c3018337edf9e3f670659ef4eb61e22b0adf25d35af3e4c7ce757"
-    },
-    "/assets/main-B6cZGs4C.js": {
-      "bytes": 1001087,
-      "sha256": "507908629ceba28a7194fa8c0eeb73695bcb44663b6bfe0e773a8886ad0ff2c5"
+    "/assets/main-BRewO_K2.js": {
+      "bytes": 1001118,
+      "sha256": "c86bd004f54b7e5368e9dc2c72354a4149409e4863d7b18f16b3be3f44e95379"
     }
   },
   "inputs": {

@@ -1,0 +1,30 @@
+5.0/10  
+Tier 1
+
+Prior-directive checklist:
+
+- **LANDED — Preserve the lamp opening and coarse composition.** The foreground lamp remains clear, and major objects retain the accepted framing and scale.
+- **PARTIAL — Distribute road shade.** The connected shadow between character and car remains effective, with somewhat more irregular edges. The upper cul-de-sac still forms a broad, nearly uninterrupted sunlit field. The requested additional separated shadow groups have not visibly landed.
+- **PARTIAL — Golden vegetation and lawn variation.** Ground vegetation has more tonal variation and some crown faces have warmer highlights. The dominant crown band still reads predominantly muted olive, with much weaker separation between golden illuminated faces and cool interiors than the concept. The central-left lawn retains a large, even open patch.
+- **PARTIAL — Terrain illumination structure.** Smaller silhouette breaks and ridges are visible, particularly at the right horizon. This improves the terrain shape. The exposed faces still read as broad ochre facets, without the interlocking darker gullies needed to establish convincing depth at full-frame size.
+- **PARTIAL — Layered planting and tree silhouettes.** **Palm leaflet separation has landed:** individual narrow, overlapping leaflets now replace the previous broad ribbons. Foreground ground cover is more articulated. The pale strip beneath distant crowns and sparse frontage planting remain conspicuous. The thick trunk around x=350 has not visibly narrowed or moved.
+- **PARTIAL — Road and sidewalk material variation.** Broad worn patches are now visible through the middle road and cul-de-sac, a meaningful improvement over round 11. Sidewalk variation remains dominated by lighting; dirty joints, irregular slab wear, and curb-edge aging remain weak.
+- **PARTIAL — Cloth and shoe structure.** The trousers now have more knee definition and shaped lower legs, and the shoes show clearer layered outlines. The knee treatment still resembles a transverse band more than gathered denim, while ankle compression and separate upper/sole materials remain limited.
+- **NOT DONE — Further car reflection and trim refinement.** There is no clear improvement in the rear-deck reflections, window structure, or recessed lamp/bumper construction. The previously accepted blue roof value remains intact.
+
+**Blocking: Tier 2 is not fully passed.** Round 12 makes visible asset and surface improvements, but these cannot lift the score beyond 5 while the whole-frame lighting gate remains open. The principal differences are spatial light/shade distribution and vegetation illumination, rather than insufficient tiny details.
+
+- **Rebuild the middle-road shade distribution.** Preserve the existing connected patch and utility-pole shadow. Add at least two separated groups of irregular branch/leaf shade farther into the central cul-de-sac, covering another approximately **8–12% of visible road area**, principally around **x=700–1280, y=270–365**. Retain sunlit openings approximately **15–40 pixels wide**. The current broad upper-road brightness should break into interleaved lit and shaded regions like the concept. Additional small changes confined to the existing middle patch will not clear this gap.
+- **Establish distinct illuminated crown faces.** Increase warm light on sun-facing parts of the main tree band approximately **10–15%**, while preserving cooler, darker interiors. At this resolution, each dominant crown should show several connected illuminated clusters approximately **20–60 pixels across**, rather than a nearly uniform olive mass sprinkled with tiny highlights. Reduce the palest central-left lawn areas approximately **10%** and break the large open patch into **50–130-pixel** olive/golden variations. Preserve accepted building, character, asphalt, and car exposure.
+- **Give mountain illumination readable depth.** Keep the improved smaller ridges and accepted skyline. Across each exposed broad face, establish approximately **3–5 interlocking ochre ridges and desaturated blue-gray gullies**, with about **twice the present light/dark separation**. Avoid uniformly bright triangular faces. This must register at the supplied full-frame size.
+
+Further directives, ordered by recoverable points:
+
+1. **Complete planting coverage and remove the oversized trunk mismatch.** Cover approximately **two-thirds of the pale band beneath distant crowns** with overlapping low bushes, varying their height about **30%**. Fill roughly **half the exposed frontage/fence strips**, especially beside the center and right houses. Reduce the visible width of the trunk near **x=350 by about 50%**, preserving the lamp opening. Keep the newly separated palm leaflets.
+2. **Make road wear belong to the surface.** Preserve the new broad mottling, but give selected worn patches irregular boundaries, restrained aggregate changes, and connected thin cracks. Add subtle dirty sidewalk joints and intermittent curb stains/chips; these should remain visible outside cast shadows. Do not enlarge the already strong foreground grain.
+3. **Refine the character’s new shaping.** Replace the strong transverse knee bands with **2–3 asymmetric compression folds per leg**, add localized ankle gathering, and distinguish shoe uppers from thinner soles with narrow contact shadows and different roughness. Preserve the improved shoe outlines and trouser volume.
+4. **Give the car coherent reflections and recessed trim.** Add broad sky/tree reflections across the rear deck and visible side, raising reflected side-panel midtones approximately **15–20%**. Separate window reflection from visible interior, and give lamps and bumper/exhaust recesses dark interiors with narrow illuminated rims. Preserve the roof exposure.
+
+The unchanged score is a lighting-gate cap, not a finding of no progress. Palm construction, terrain shape, road variation, and character shaping all visibly improve on round 11.
+
+Reviewed actual browser capture: `.dream-loop/quality-round12/0-standard.png`; SHA-256 `b3033da19966bdce37daaa4caac5f55d4933dba073cd75b55294b3a1e50a6ab8`; scene `6c1739ad64e66280`.
