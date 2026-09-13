@@ -4,9 +4,9 @@ A cloud-local browser multiplayer prototype: two players walk, chat, and drive a
 
 The browser renders and simulates locally. A Node WebSocket gateway starts one native C++ protocol worker per browser. All peer gameplay travels through the real upstream UDP server; the gateway does not broadcast gameplay between browsers.
 
-![Arroyo running in native Chrome on Apple M5 Pro](docs/images/native-street-2026-09-13.png)
+![Arroyo running in native Chrome on Apple M5 Pro](docs/images/native-street-round17-2026-09-13.png)
 
-The image above is an actual Standard-mode native Chrome capture from September 13. Movement presentation now interpolates the fixed 60 Hz simulation, and original assets can be rebuilt with native Blender on macOS. The [native results](docs/native-dream-results.md) distinguish measured gameplay and rendering from the unfinished visual target. The [current generated concept](docs/images/native-concept-2026-09-13.png) is a visual reference, not a game screenshot; [earlier neighborhood results](docs/neighborhood-results.md) remain historical.
+The image above shows the accepted round-seventeen build in native Chrome. Complete native motion and four isolated performance cases passed; the full 15-scenario acceptance remains pending. The latest formal art score is still 5.0/10, below the visual target. The [native results](docs/native-dream-results.md) retain exact build identities, the measured quality-cycle pixel differences and validation limits. Movement interpolates the fixed 60 Hz simulation, and original assets can be rebuilt with native Blender on macOS. The [generated concept](docs/images/native-concept-2026-09-13.png) is reference art, not a game screenshot; [earlier neighborhood results](docs/neighborhood-results.md) remain historical.
 
 ## Run in Docker
 

@@ -267,29 +267,31 @@
       }
     },
     "neighbor": {
-      "generatedAt": "2026-09-13T10:36:17.661Z",
+      "generatedAt": "2026-09-13T14:30:05.909Z",
       "blender": {
         "version": "5.2.1",
         "buildHash": "9e2066aef7ef",
-        "distribution": "native-macos",
+        "distribution": "explicit",
         "platform": "darwin",
         "architecture": "arm64",
         "executableSha256": "ea651e507c6b197df0e234bfa04e5ed43e7f4d498267a7df93fcb38f21928a5c"
       },
       "recipes": {
-        "tools/build-assets.mjs": "06f52507fbabf20831ccefb4698613a7d3f3b57dd6f1f504c6a8bf6917ee8449",
+        "tools/build-assets.mjs": "2d9120347c8d7bd23d47d9344a57063641b875c5e3dae63df98ba0f05838ee00",
         "tools/assets/build.py": "3eb0039ccbd34a3c3aec5e88aced09f34c8ac3677f9d777b97ece47daad9a53e",
         "tools/assets/environment-kit.py": "1fb49df90bba8637ec000f37464766c18bc22b969d7013776bd1c45ed3983f7c",
-        "tools/assets/heroes.py": "d2593504f492fd69b42687b24c5bf85d41af18056e2d9385c7175cbf94e2c630",
-        "tools/assets/garden-kit.py": "974d3add6e6f4ad5b9f52d681eeecb69dde28cb8b2a6d471365dcca4ddbf1c8e"
+        "tools/assets/heroes.py": "781b3f194f2d7dd21acd85ff00815ef9aa0aa760269841de9ef47ae62022a919",
+        "tools/assets/garden-kit.py": "974d3add6e6f4ad5b9f52d681eeecb69dde28cb8b2a6d471365dcca4ddbf1c8e",
+        "tools/assets/canopy-visibility.py": "925962dae8e588d6ea16ed200035ede81961faaefa015d49f26713e8aca73b1c",
+        "tools/assets/canopy-visibility.mjs": "f133547bc664fbf46a4b9aedaa83d9199695a1702247c59e0acb8c2cc9b4d352"
       },
       "glb": {
         "bytes": 6521848,
-        "sha256": "1cb95aa9ef86eb067d51e283eb03a11e9f85095aebe86a12fbfe097df5219d8f"
+        "sha256": "fe3aa34b83ff038774d06675ea3fa123c6532149cc8a0f26e1746d26350915be"
       },
       "blend": {
-        "bytes": 3524623,
-        "sha256": "e38f708552d2880592a29df50148c1cba20a2b18d4d3696eee07afc9234123d0"
+        "bytes": 3523249,
+        "sha256": "6444a8e347c5f0946823c92e0f9ff89cdffa33d52745fb37d78ff93404668643"
       }
     },
     "garden-shrub": {

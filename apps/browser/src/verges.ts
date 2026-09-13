@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import * as THREE from "three";
-import { groundCover } from "./ground-cover.ts";
+import { groundCover, groundCoverGLSL } from "./ground-cover.ts";
+import { plantMownAccess } from './mown-access.ts';
 import type { SceneManifest } from "../../../packages/shared/scene";
 
 /** Fine curved turf distributed across clear yards, with drier gaps and taller fence edges. */
@@ -12,6 +13,22 @@ export function plantVerges(scene: THREE.Scene, manifest: SceneManifest, ground?
   // Keep real shadow attenuation; broad diffuse response prevents backlit blades
   // from becoming black opaque slivers against the lit ground.
   material.onBeforeCompile = shader => {
+    // Ground and blades share the same metre-scale dry/live pigment shift.
+    shader.vertexShader = 'varying vec2 vTurfPigmentMetres;\n' + shader.vertexShader;
+    shader.vertexShader = shader.vertexShader.replace('#include <begin_vertex>', `#include <begin_vertex>
+      vec4 turfWorld = vec4(transformed, 1.);
+      #ifdef USE_INSTANCING
+        turfWorld = instanceMatrix * turfWorld;
+      #endif
+      vTurfPigmentMetres = (modelMatrix * turfWorld).xy;`);
+    shader.fragmentShader = 'varying vec2 vTurfPigmentMetres;\n' + groundCoverGLSL + shader.fragmentShader;
+    shader.fragmentShader = shader.fragmentShader.replace('#include <map_fragment>', `#include <map_fragment>
+      float dryRegion = smoothstep(.25,.70,groundCover(vTurfPigmentMetres));
+      vec3 groundPigment = mix(vec3(.44,.66,.38),vec3(.93,.87,.60),dryRegion);
+      vec3 originalPigment = mix(vec3(.66,.82,.56),vec3(1.08,1.,.78),dryRegion)
+        * mix(vec3(.95,1.,.95),vec3(.90,.92,.90),dryRegion);
+      diffuseColor.rgb *= groundPigment / originalPigment;
+    `);
     shader.fragmentShader = shader.fragmentShader.replace("#include <normal_fragment_begin>",
       THREE.ShaderChunk.normal_fragment_begin.replace("normal *= faceDirection;", `
         vec3 turfView = normalize(vViewPosition);
@@ -22,7 +39,7 @@ export function plantVerges(scene: THREE.Scene, manifest: SceneManifest, ground?
         "reflectedLight.directDiffuse += irradiance * BRDF_Lambert( material.diffuseContribution );",
         "reflectedLight.directDiffuse += saturate(dot(normalize(vNormal), directLight.direction) * .7 + .3) * directLight.color * BRDF_Lambert(material.diffuseContribution);"));
   };
-  material.customProgramCacheKey = () => "arroyo-two-sided-canopy-turf-v1";
+  material.customProgramCacheKey = () => "arroyo-two-sided-canopy-turf-pigment-v2";
   const geometries = Array.from({ length: 2 }, (_, variant) => {
     const positions: number[] = [], colors: number[] = [], indices: number[] = [];
     const count = 4 + variant * 2;
@@ -322,4 +339,5 @@ export function plantVerges(scene: THREE.Scene, manifest: SceneManifest, ground?
     matrices[variant].forEach((matrix, i) => mesh.setMatrixAt(i, matrix));
     mesh.receiveShadow = true; mesh.computeBoundingSphere(); scene.add(mesh);
   });
+  if (atlas) plantMownAccess(scene, manifest, geometries[0], materials[0]);
 }

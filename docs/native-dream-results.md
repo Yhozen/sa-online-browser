@@ -1,5 +1,109 @@
 # Native Dream-loop results
 
+The accepted **round-seventeen build** passed complete native motion and four
+isolated rendering cases. The full **15-scenario acceptance and both supervisor
+checks remain pending**. The latest formal [art review](art-review-round13-2026-09-13.md)
+is still judge thirteen's **5.0/10, Tier 1**; the visual target remains open.
+No new formal score or ready declaration is assigned.
+
+The tested scene is **`fc8deb6a7bbf6a35`**, served by `main-DrSvmP81.js`, SHA256
+`74b07ba647aeaacad338c14d62d7944e59821c4744ddfe35164f6f92e8ca0e2f`.
+The [integration record](native-integration-round17.json) retains exact tested
+sources, delivered assets, authoring and focused-check results. The final round
+eighteen terrain specimen was rejected after actual native inspection; it was
+not integrated into this build.
+
+## Current appearance and authoring
+
+![Actual native Standard gameplay](images/native-street-round17-2026-09-13.png)
+
+This is an actual Standard gameplay capture from a native 3344×1882 drawing buffer,
+captured directly at 1672×941 with CDP and copied without image editing. Its
+[metadata](images/native-street-round17-2026-09-13.json) and the
+[quality record](native-quality-cycle-round17.json) identify the image and source
+bracket. The [generated target](images/native-concept-2026-09-13.png) remains
+reference art.
+
+Native Blender 5.2.1 replaces the trouser's repeated transverse knee bands with
+localized asymmetric folds and refines the ankle/cream shoe boundary. The final
+6,521,848-byte character retains 121,590 triangles. Every vertex/skin attribute,
+material, inverse bind and animation stream matches the accepted preview; only
+triangle submission order differs in four existing primitives. Original outfit,
+body, rig and seat contracts remain. The prior oak, palm, road/curb, frontage
+planting and accepted terrain work is retained.
+
+The accepted olive lawn pigment uses the same world field on ground and turf.
+Short grass fills unpaved house approaches using existing geometry and material.
+An actual-footprint test removed eight tufts around a lamp base; all 9,285
+surviving matrix/color bytes remain exact. All grass totals **64 batches /
+714,924 triangles**, below the unchanged caps. The rebuilt static PMREM contains
+11,647,597 compressed bytes and has finite peak linear radiance 7.4765625.
+
+Three Standard → Low → Standard cycles completed without browser errors.
+**Strict pixel equality failed:** 30 of 35 static-region comparisons were exact;
+the five car-rear comparisons each differed at one pixel by one color level at
+the exhaust edge. No tolerance was substituted and no complete bitwise-equality
+claim is made. Quality and motion kept **107 source, 28 asset and 4 served-file
+identities** exact before and after their runs.
+
+Focused assets/character tests passed **6/6**, verges clearance/budget tests
+**5/5**, and typecheck passed. The initial reflection command had a filename typo
+and ran no tests; the corrected command passed **2/2**. Both outcomes are retained.
+
+## Current native rendering
+
+Chrome **153.0.8010.37**, **ANGLE Metal on Apple M5 Pro**, native DPR 2. The
+isolated audit completed at **14:39:59 UTC** on September 13, with five seconds
+warmup, twenty seconds idle and four seconds walking per fresh owned window.
+
+| Preset / CSS viewport | Native drawing buffer | Idle / walking median FPS | p95 idle / walking | Logical texture storage |
+| --- | --- | ---: | ---: | ---: |
+| Standard, 1280×720 | 2560×1440 | 120.48 / 120.48 | 9.1 / 9.0 ms | 266.00 MiB |
+| Low, 1280×720 | 2560×1440 | 120.48 / 120.48 | 9.0 / 9.1 ms | 119.34 MiB |
+| Standard, 1672×941 | 3344×1882 | 120.48 / 120.48 | 9.0 / 8.9 ms | 315.72 MiB |
+| Low, 1672×941 | 3344×1882 | 120.48 / 120.48 | 9.0 / 9.1 ms | 169.06 MiB |
+
+Maximum sampled scene download was **46,972,136 bytes**; measured encoded native
+network total was **46,985,679 bytes**. Maximum sampled geometry was
+**5,352,079 triangles / 954 calls**. All unchanged download, texture, triangle,
+draw-call and 60 FPS gates passed, with no browser errors or stalls over 50 ms.
+The selected disconnected reference target's frame count stayed **710,862**
+through every measured phase and it was left frozen. See the
+[rendering record](native-rendering-round17-summary.json).
+
+Logical texture storage excludes driver overhead and renderbuffers; maxima are
+sampled. These bounded hardware measurements do not promise constant 120 FPS on
+every route or device.
+
+## Current native motion and pending acceptance
+
+The **complete all-case motion process exited zero** on this exact build.
+Real UI/server checks covered walking, driving, steering, teleport/reset,
+jump/seat/exit, two-player replication and both car occupants. Both jump/seat/exit
+cases recorded zero uncommanded upward motion. Resetting the occupied moving car
+after 7.170 m of driving produced first corrections at 223.6/232.1 ms for driver
+and passenger; local body and car presentation errors were zero. Two-player
+motion still has network variation: two repeated remote positions in 280 frames
+and 24.25% speed variation, so zero remote stutter is not claimed.
+
+Both owned motion windows were independently confirmed absent, and health
+returned to zero sessions/workers. See the
+[complete motion record](native-motion-round17-summary.json). This bounded probe
+does not replace the pending full multiplayer suite.
+
+The historical full native run finished **14 passed / 1 failed**. The subsequent
+empty-page heartbeat control and unchanged worker-recovery case passed, but
+those focused results are not a full acceptance pass. A fresh unfiltered
+`verify:poc`, including both supervisor checks, is required after this final
+source/asset freeze. Earlier reset-observer controls and focused soak evidence
+remain in the [acceptance record](native-acceptance-environment.md).
+
+## Earlier round-fifteen milestone (historical)
+
+The following text preserves the earlier build, measurements and pending items.
+The round-seventeen results above supersede its current-status claims; its raw
+records and images remain unchanged.
+
 Round fifteen is a measured integration milestone, not final acceptance. The
 latest formal [art review](art-review-round13-2026-09-13.md), from round thirteen,
 remains **5.0/10, Tier 1**. Round fifteen's readiness review is **NOT READY**;
@@ -13,7 +117,7 @@ tree changes on base `fe6f25f`; that base commit alone does not contain the
 milestone. Exact tested sources and delivered assets are retained in the
 [rendering record](native-rendering-round15-summary.json).
 
-## Current appearance and authoring
+### Current appearance and authoring
 
 ![Actual native Standard gameplay](images/native-street-round15-2026-09-13.png)
 
@@ -73,7 +177,7 @@ opinion assigns no new score. Historical
 [round-fourteen rendering](native-rendering-round14-summary.json) and
 [round-fourteen quality](native-quality-cycle-round14.json) records remain intact.
 
-## Native rendering
+### Native rendering
 
 Chrome **153.0.8010.37**, **ANGLE Metal on Apple M5 Pro**, native DPR 2. Each fresh
 context used five seconds of warmup, twenty seconds idle and four seconds walking.
@@ -100,7 +204,7 @@ passed but fell to 61.35 FPS under additional reference-window rendering, remain
 preserved. The [current audit](native-rendering-round15-summary.json) records
 isolation and exact before/after source, asset and served identities.
 
-## Movement and multiplayer
+### Movement and multiplayer
 
 The [round-twelve native motion proof](native-motion/README.md) passes on the prior
 scene. The deterministic simulation and network movement code remain unchanged; a fresh final-source motion

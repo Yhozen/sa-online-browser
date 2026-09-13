@@ -191,7 +191,7 @@ const sourceFiles = [
   "apps/browser/src/horizon.ts",
   "apps/browser/src/road-detail.ts",
   "apps/browser/src/verges.ts",
-  "apps/browser/src/ground-cover.ts",
+  "apps/browser/src/mown-access.ts", "apps/browser/src/ground-cover.ts",
   "apps/browser/src/surface-weathering.ts",
   "apps/browser/src/garden.ts",
   "apps/browser/src/surface-textures.ts",

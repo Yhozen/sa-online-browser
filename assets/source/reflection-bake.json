@@ -1,24 +1,24 @@
 {
   "version": 1,
-  "generatedAt": "2026-09-13T13:43:45.344Z",
+  "generatedAt": "2026-09-13T14:33:28.664Z",
   "format": "PMR1: uint32-le magic,width,height; RGBA16F PMREM atlas; gzip",
   "width": 1536,
   "height": 2048,
-  "compressedBytes": 11647908,
+  "compressedBytes": 11647597,
   "uncompressedBytes": 25165836,
-  "sha256": "b16d8d30fea892da2b3925afb2b627527f70b7a123a726a02d284d5739df0dfe",
-  "uncompressedSha256": "9aead005a5c55bf8951cb6433828ec2951ef1df0d6a1ffbe10c81222c898aa42",
+  "sha256": "7fb519596f3825a101330cb12e0ae96423013005d59e9f10aa1c2c562af47504",
+  "uncompressedSha256": "01d04446afee3206ba87c3e70e1a8e3d63f45e447599e58209339cde717a5a6d",
   "browser": "Chrome/153.0.8010.37",
   "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
   "peakRadiance": 7.4765625,
   "scene": {
     "id": "neighborhood",
-    "revision": "e014ab59bac7c42e"
+    "revision": "5078e4d4a212a20e"
   },
   "inputSnapshot": {
-    "capturedAt": "2026-09-13T13:43:42.583Z",
-    "sceneSha256": "9a16356b19fc12594adaca1d5539f371de321ebde2560169ab4395d5a4520d8c",
-    "inventorySha256": "d68821afe481addd6977ab3c4c0ad494c5b6e55a782c78e2a5d35a0926fd4043"
+    "capturedAt": "2026-09-13T14:33:25.451Z",
+    "sceneSha256": "2749ad7a5202cba8d2a892ca27bd6961f4c958989e95893b453fa7f2dc546745",
+    "inventorySha256": "724336756fd8ff57355bb880123f65a39cb88cfac240ba514e72569bca151d86"
   },
   "sources": {
     "apps/browser/index.html": "5c7e3e0d86ebc6d6e88fb1514c0e592903af7ab85d4dadd5b13a2f43e2387e24",
@@ -28,7 +28,7 @@
     "apps/browser/src/main.ts": "655c8c6f8c8ef6fe50f6e4ff7d51649bee865423e227b463f9df113c7be9b472",
     "apps/browser/src/graphics.ts": "7b61ef63871d3f3d1633c38dfd5341b5dfedc60b7346af366acf4b653867832c",
     "apps/browser/src/antialias.ts": "29aad63b1b86354605f740bd8ce7b76bc0784afa84bebaad7ddb7ce315924161",
-    "apps/browser/src/assets.ts": "8e4d472017782e133c1abf8bd11fc3668a0373ad574d31fbfbfa1cf4884315ba",
+    "apps/browser/src/assets.ts": "a2f4aeecee9bd34f490bdc5902bd20f23be31eca43fa759499824a06596e9036",
     "apps/browser/src/lighting.ts": "267e4f6ee9b2cca0e3a282abbf8c9324693ba633ab292eb685daf7635fa71df7",
     "apps/browser/src/environment.ts": "cfb348a9da7007d29d432bde3ea4fc3a48a7e41dad83503d9d97e6f50dbd7798",
     "apps/browser/src/surface-textures.ts": "2309c51c318e786734dd90470cbfcb3bb83e67eef2691cf6e3dc5c7028edac56",
@@ -41,7 +41,8 @@
     "apps/browser/src/horizon.ts": "114aabbffcd15af17be77e578b7b47b73248a7c7dba8590540b88c79141a5fa2",
     "assets/horizon-relief.json": "a5d1351177c927700fcc381bf3a4c8b7698a025f21a7973798a79263e81ef922",
     "apps/browser/src/road-detail.ts": "cee37ba83270b3f77d1b050a697c458775f3adb9f5f47fa014ae196d642d2e0c",
-    "apps/browser/src/verges.ts": "c631fd92661b9b863525a1bfef409701b739e27dcf3be79e1b33461229232817",
+    "apps/browser/src/verges.ts": "39f357c5341a64a3bf503337a6c7215e99ff18c7a5d78c44a650238dd4ea4297",
+    "apps/browser/src/mown-access.ts": "bb2b5f90b4ca762fb3358e7944f4cff08769a8a87b5e12cef1a6b74692f901da",
     "apps/browser/src/ground-cover.ts": "8e5a7a64144227c24a5aa6c54ad735e07c7ee68b414602d39f21e0e88c757b89",
     "apps/browser/src/surface-weathering.ts": "fe7052a24c8987b77dfa97cf2e9c2654bbf0f4d604f9d27f695cf4d4168353ff",
     "apps/browser/src/warmup.ts": "2db7cbf9d34a1a13b65fe8b52cd8509360903d7084741b216be60e9cadad3406",
@@ -62,26 +63,26 @@
     "packages/shared/scenes/yard.json": "eafd501e8fef4ffa7df59050ec41059c4d86b53e510aa83e7479e936497ed5ac",
     "services/gateway/server.mjs": "c2e08a361dd313443790050bda4fb308c33bc38ade6e3a0aba5e9f7ff8e0f326",
     "tools/asset-inventory.mjs": "4d1016f0f8173daff518472121801494b0e5f37722894786660702902d179fcc",
-    "tools/bake-reflections-native.mjs": "b2246b9131735a0d635f1dbd1e053d655a0ad2a11a028520fb6bdfffc3cc03f6",
+    "tools/bake-reflections-native.mjs": "78bc69fa09b4d3162e4c9f7f1d63b468666bd7cf2742837d45a89b683549eafe",
     "package.json": "184b45dea4a55d0bbb5c32801804bcaf6fc199caeca30ce4b692a91a6b840f96",
     "package-lock.json": "b99e5c05368deae7d0cd82a86505d33671cc2275c0852eed3f08afbd0b07bd74"
   },
   "servedBuild": {
     "/": {
       "bytes": 449,
-      "sha256": "37ddbd074c311242bb3136695963bc7df55cd7f360004ed3bd592893bc3b04e7"
+      "sha256": "d1a8dc62acbf9c5e5cd4cbbf2b7c42eb8677ec3603046763568b6ec9d84788ac"
+    },
+    "/assets/index-ClF_w9Dl.js": {
+      "bytes": 577842,
+      "sha256": "378381b1b34372eb326c72706896c114ca8d45f33a3f781d46ada65dd930b908"
     },
     "/assets/index-CLSF4nJg.css": {
       "bytes": 6991,
       "sha256": "0655f264cfc9ca400288720b93a106c022f381daa4c7ce52c88deb326995367a"
     },
-    "/assets/index-Cy253HYl.js": {
-      "bytes": 577842,
-      "sha256": "818a2431e00f1191ee5444cdbf5937f3f00a363c4d780f446599a9250f0aa6e6"
-    },
-    "/assets/main-zC6pAPDJ.js": {
-      "bytes": 1006955,
-      "sha256": "3800c0733bec7cc47a1b6dd45b0ab82486be491097df292b7633922566232741"
+    "/assets/main-DrSvmP81.js": {
+      "bytes": 1009769,
+      "sha256": "74b07ba647aeaacad338c14d62d7944e59821c4744ddfe35164f6f92e8ca0e2f"
     }
   },
   "inputs": {
@@ -163,7 +164,7 @@
     },
     "neighbor.glb": {
       "bytes": 6521848,
-      "sha256": "1cb95aa9ef86eb067d51e283eb03a11e9f85095aebe86a12fbfe097df5219d8f"
+      "sha256": "fe3aa34b83ff038774d06675ea3fa123c6532149cc8a0f26e1746d26350915be"
     },
     "neighborhood-atlas.png": {
       "bytes": 3529016,

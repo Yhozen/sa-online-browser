@@ -1,0 +1,1446 @@
+{
+  "version": 1,
+  "milestone": "round17",
+  "recordedAt": "2026-09-13T14:44:44.658Z",
+  "sceneRevision": "fc8deb6a7bbf6a35",
+  "passed": true,
+  "processSession": "47994",
+  "processExitCode": 0,
+  "startedAt": "2026-09-13T14:37:36.651Z",
+  "finishedAt": "2026-09-13T14:39:59.364Z",
+  "browser": {
+    "protocolVersion": "1.3",
+    "product": "Chrome/153.0.8010.37",
+    "revision": "@b75a5a95ea1a1b55bdbfd6d9f42d47be7507fb8b",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+    "jsVersion": "15.3.76.10"
+  },
+  "systemInfo": {
+    "gpu": {
+      "devices": [
+        {
+          "vendorId": 4203,
+          "deviceId": 0,
+          "vendorString": "Google Inc. (Apple)",
+          "deviceString": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Version 26.6.2 (Build 25G83))",
+          "driverVendor": "Apple",
+          "driverVersion": "26.6.2"
+        }
+      ],
+      "auxAttributes": {
+        "amdSwitchable": false,
+        "canSupportThreadedTextureMailbox": false,
+        "directRenderingVersion": "",
+        "displayType": "ANGLE_METAL",
+        "glExtensions": "GL_AMD_performance_monitor GL_ANGLE_base_vertex_base_instance_shader_builtin GL_ANGLE_blob_cache GL_ANGLE_client_arrays GL_ANGLE_clip_cull_distance GL_ANGLE_compressed_texture_etc GL_ANGLE_depth_texture GL_ANGLE_framebuffer_blit GL_ANGLE_framebuffer_multisample GL_ANGLE_get_serialized_context_string GL_ANGLE_get_tex_level_parameter GL_ANGLE_instanced_arrays GL_ANGLE_memory_size GL_ANGLE_pack_reverse_row_order GL_ANGLE_polygon_mode GL_ANGLE_program_binary_readiness_query GL_ANGLE_program_cache_control GL_ANGLE_provoking_vertex GL_ANGLE_renderability_validation GL_ANGLE_request_extension GL_ANGLE_rgbx_internal_format GL_ANGLE_robust_client_memory GL_ANGLE_shader_pixel_local_storage GL_ANGLE_shader_pixel_local_storage_coherent GL_ANGLE_stencil_texturing GL_ANGLE_texture_compression_dxt3 GL_ANGLE_texture_compression_dxt5 GL_ANGLE_texture_multisample GL_ANGLE_translated_shader_source GL_APPLE_clip_distance GL_ARM_rgba8 GL_CHROMIUM_bind_generates_resource GL_CHROMIUM_bind_uniform_location GL_CHROMIUM_copy_texture GL_CHROMIUM_lose_context GL_EXT_base_instance GL_EXT_blend_func_extended GL_EXT_blend_minmax GL_EXT_clip_control GL_EXT_color_buffer_float GL_EXT_color_buffer_half_float GL_EXT_compressed_ETC1_RGB8_sub_texture GL_EXT_conservative_depth GL_EXT_debug_label GL_EXT_debug_marker GL_EXT_depth_clamp GL_EXT_discard_framebuffer GL_EXT_disjoint_timer_query GL_EXT_draw_buffers GL_EXT_draw_buffers_indexed GL_EXT_draw_elements_base_vertex GL_EXT_float_blend GL_EXT_frag_depth GL_EXT_instanced_arrays GL_EXT_map_buffer_range GL_EXT_multisampled_render_to_texture GL_EXT_occlusion_query_boolean GL_EXT_polygon_offset_clamp GL_EXT_pvrtc_sRGB GL_EXT_read_format_bgra GL_EXT_render_snorm GL_EXT_robustness GL_EXT_sRGB GL_EXT_shader_texture_lod GL_EXT_texture_compression_bptc GL_EXT_texture_compression_dxt1 GL_EXT_texture_compression_rgtc GL_EXT_texture_compression_s3tc_srgb GL_EXT_texture_filter_anisotropic GL_EXT_texture_format_BGRA8888 GL_EXT_texture_mirror_clamp_to_edge GL_EXT_texture_norm16 GL_EXT_texture_rg GL_EXT_texture_sRGB_R8 GL_EXT_texture_sRGB_RG8 GL_EXT_texture_shadow_lod GL_EXT_texture_storage GL_IMG_texture_compression_pvrtc GL_KHR_debug GL_KHR_parallel_shader_compile GL_KHR_robustness GL_KHR_texture_compression_astc_hdr GL_KHR_texture_compression_astc_ldr GL_KHR_texture_compression_astc_sliced_3d GL_MESA_framebuffer_flip_y GL_NV_fence GL_NV_framebuffer_blit GL_NV_pixel_buffer_object GL_NV_shader_noperspective_interpolation GL_OES_EGL_image GL_OES_EGL_sync GL_OES_compressed_ETC1_RGB8_texture GL_OES_depth24 GL_OES_depth32 GL_OES_depth_texture GL_OES_draw_buffers_indexed GL_OES_draw_elements_base_vertex GL_OES_element_index_uint GL_OES_fbo_render_mipmap GL_OES_get_program_binary GL_OES_mapbuffer GL_OES_packed_depth_stencil GL_OES_required_internalformat GL_OES_rgb8_rgba8 GL_OES_sample_variables GL_OES_shader_multisample_interpolation GL_OES_standard_derivatives GL_OES_surfaceless_context GL_OES_texture_3D GL_OES_texture_float GL_OES_texture_float_linear GL_OES_texture_half_float GL_OES_texture_half_float_linear GL_OES_texture_npot GL_OES_texture_stencil8 GL_OES_vertex_array_object GL_QCOM_render_shared_exponent ",
+        "glImplementationParts": "(gl=egl-angle,angle=metal)",
+        "glRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Version 26.6.2 (Build 25G83))",
+        "glResetNotificationStrategy": 33362,
+        "glVendor": "Google Inc. (Apple)",
+        "glVersion": "OpenGL ES 3.0 (ANGLE 2.1.28650 git hash: fca5efdfeff5)",
+        "glWsExtensions": "",
+        "glWsVendor": "",
+        "glWsVersion": "",
+        "inProcessGpu": false,
+        "initializationTime": 0.035548,
+        "isAsan": false,
+        "isClangCoverage": false,
+        "jpegDecodeAcceleratorSupported": false,
+        "maxMsaaSamples": "8",
+        "optimus": false,
+        "passthroughCmdDecoder": true,
+        "pixelShaderVersion": "3.00",
+        "processCrashCount": 0,
+        "sandboxed": true,
+        "skiaBackendType": "GraphiteDawnMetal",
+        "subpixelFontRendering": true,
+        "targetCpuBits": 64,
+        "vertexShaderVersion": "3.00",
+        "visibilityCallbackCallCount": 0
+      },
+      "featureStatus": {
+        "2d_canvas": "enabled",
+        "direct_rendering_display_compositor": "disabled_off_ok",
+        "gpu_compositing": "enabled",
+        "multiple_raster_threads": "enabled_on",
+        "opengl": "enabled_on",
+        "rasterization": "enabled",
+        "raw_draw": "disabled_off_ok",
+        "skia_graphite": "enabled_on",
+        "trees_in_viz": "disabled_off",
+        "video_decode": "enabled",
+        "video_encode": "enabled",
+        "webgl": "enabled",
+        "webgpu": "enabled",
+        "webnn": "disabled_off"
+      },
+      "driverBugWorkarounds": [
+        "disable_2d_canvas_auto_flush",
+        "enable_webgl_timer_query_extensions",
+        "disabled_extension_GL_KHR_blend_equation_advanced",
+        "disabled_extension_GL_KHR_blend_equation_advanced_coherent"
+      ],
+      "videoDecoding": [],
+      "videoEncoding": []
+    },
+    "modelName": "Mac",
+    "modelVersion": "17.8",
+    "commandLine": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome --remote-debugging-port=9333 --user-data-dir=/tmp/sa-online-dream-chrome --disable-backgrounding-occluded-windows --disable-renderer-backgrounding --disable-background-timer-throttling --disable-features=CalculateNativeWinOcclusion --no-first-run --no-default-browser-check --window-size=1400,900 --flag-switches-begin --flag-switches-end http://127.0.0.1:3000"
+  },
+  "protocol": {
+    "warmupMs": 5000,
+    "idleMs": 20000,
+    "walkingMs": 4000,
+    "expectedDPR": 2,
+    "expectedRenderer": "Apple M5 Pro",
+    "metadataIntervalMs": 1000,
+    "timing": "Independent requestAnimationFrame timestamps; game frame history is neither read for metrics nor changed",
+    "cache": "Separate new incognito context per case; target HTTP cache disabled",
+    "memory": "Logical WebGL texture storage only, excluding driver overhead and renderbuffers",
+    "maxima": "Maximum of sparse metadata observations, not an instrumented maximum over every frame",
+    "textureBudget": "The existing 320 MiB reference ceiling is reported unchanged; these DPR-2 views may exceed it",
+    "referenceIsolation": {
+      "enabled": true,
+      "targetId": "37D9DDC1B1728B3F58602FBC3B3FBD38",
+      "method": "Freeze the explicitly selected disconnected game page before each warmup; require unchanged frame count after idle and walking"
+    }
+  },
+  "budgets": {
+    "downloadBytes": 48000000,
+    "triangles": 6000000,
+    "drawCalls": 1000,
+    "textureStorageBytes": 335544320,
+    "targetMedianFPS": 60
+  },
+  "cases": [
+    {
+      "name": "standard-1280x720-dpr2",
+      "preset": "standard",
+      "viewport": [
+        1280,
+        720
+      ],
+      "targetId": "84D7CA5F562A0B27FF1ECDAF32E42641",
+      "renderer": {
+        "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+        "vendor": "Google Inc. (Apple)",
+        "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+      },
+      "idle": {
+        "durationMs": 20008.4,
+        "frameIntervals": 2401,
+        "medianFPS": 120.48192771085394,
+        "averageFPS": 119.99960016792946,
+        "p95FrameMs": 9.100000000000364,
+        "p99FrameMs": 9.30000000000291,
+        "maxFrameMs": 9.400000000001455,
+        "stallsOver50Ms": 0,
+        "maxSampledTriangles": 5352079,
+        "maxSampledCalls": 954,
+        "maxSampledDownloadBytes": 46972136,
+        "maxSampledTextureStorageBytes": 278916564,
+        "nativeResolutionThroughoutObservedSamples": true
+      },
+      "walking": {
+        "durationMs": 4008.199999999997,
+        "frameIntervals": 481,
+        "medianFPS": 120.48192771085394,
+        "averageFPS": 120.0039918167757,
+        "p95FrameMs": 9,
+        "p99FrameMs": 9.200000000004366,
+        "maxFrameMs": 9.30000000000291,
+        "stallsOver50Ms": 0,
+        "maxSampledTriangles": 5352079,
+        "maxSampledCalls": 954,
+        "maxSampledDownloadBytes": 46972136,
+        "maxSampledTextureStorageBytes": 278916564,
+        "nativeResolutionThroughoutObservedSamples": true,
+        "distanceMetres": 20.083333333333318
+      },
+      "networkEncodedDataLength": 46985679,
+      "budgetResults": {
+        "downloads": true,
+        "triangles": true,
+        "drawCalls": true,
+        "existing320MiBTextureReference": true,
+        "target60FPS": true,
+        "browserErrors": true
+      },
+      "referenceIsolation": {
+        "targetId": "37D9DDC1B1728B3F58602FBC3B3FBD38",
+        "beforeWarmup": {
+          "url": "http://127.0.0.1:3000/",
+          "origin": "http://127.0.0.1:3000",
+          "timeOrigin": 1789291368936.5,
+          "frameCount": 710862,
+          "spawned": false,
+          "playerId": null,
+          "status": "Disconnected: Scene mismatch. Reload this page to load the server neighborhood.",
+          "connected": "false",
+          "playing": false
+        },
+        "afterIdle": {
+          "url": "http://127.0.0.1:3000/",
+          "origin": "http://127.0.0.1:3000",
+          "timeOrigin": 1789291368936.5,
+          "frameCount": 710862,
+          "spawned": false,
+          "playerId": null,
+          "status": "Disconnected: Scene mismatch. Reload this page to load the server neighborhood.",
+          "connected": "false",
+          "playing": false,
+          "unchanged": true
+        },
+        "afterWalking": {
+          "url": "http://127.0.0.1:3000/",
+          "origin": "http://127.0.0.1:3000",
+          "timeOrigin": 1789291368936.5,
+          "frameCount": 710862,
+          "spawned": false,
+          "playerId": null,
+          "status": "Disconnected: Scene mismatch. Reload this page to load the server neighborhood.",
+          "connected": "false",
+          "playing": false,
+          "unchanged": true
+        }
+      },
+      "errors": []
+    },
+    {
+      "name": "low-1280x720-dpr2",
+      "preset": "low",
+      "viewport": [
+        1280,
+        720
+      ],
+      "targetId": "91A578F002B8F269F7751730311064C5",
+      "renderer": {
+        "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+        "vendor": "Google Inc. (Apple)",
+        "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+      },
+      "idle": {
+        "durationMs": 20000.1,
+        "frameIntervals": 2400,
+        "medianFPS": 120.48192771082753,
+        "averageFPS": 119.99940000299999,
+        "p95FrameMs": 9,
+        "p99FrameMs": 9.299999999999272,
+        "maxFrameMs": 9.400000000001455,
+        "stallsOver50Ms": 0,
+        "maxSampledTriangles": 1720990,
+        "maxSampledCalls": 281,
+        "maxSampledDownloadBytes": 46972136,
+        "maxSampledTextureStorageBytes": 125133476,
+        "nativeResolutionThroughoutObservedSamples": true
+      },
+      "walking": {
+        "durationMs": 4000.899999999998,
+        "frameIntervals": 480,
+        "medianFPS": 120.48192771080113,
+        "averageFPS": 119.9730060736335,
+        "p95FrameMs": 9.099999999998545,
+        "p99FrameMs": 9.299999999999272,
+        "maxFrameMs": 9.30000000000291,
+        "stallsOver50Ms": 0,
+        "maxSampledTriangles": 1720990,
+        "maxSampledCalls": 281,
+        "maxSampledDownloadBytes": 46972136,
+        "maxSampledTextureStorageBytes": 125133476,
+        "nativeResolutionThroughoutObservedSamples": true,
+        "distanceMetres": 19.999999999999986
+      },
+      "networkEncodedDataLength": 46985679,
+      "budgetResults": {
+        "downloads": true,
+        "triangles": true,
+        "drawCalls": true,
+        "existing320MiBTextureReference": true,
+        "target60FPS": true,
+        "browserErrors": true
+      },
+      "referenceIsolation": {
+        "targetId": "37D9DDC1B1728B3F58602FBC3B3FBD38",
+        "beforeWarmup": {
+          "url": "http://127.0.0.1:3000/",
+          "origin": "http://127.0.0.1:3000",
+          "timeOrigin": 1789291368936.5,
+          "frameCount": 710862,
+          "spawned": false,
+          "playerId": null,
+          "status": "Disconnected: Scene mismatch. Reload this page to load the server neighborhood.",
+          "connected": "false",
+          "playing": false
+        },
+        "afterIdle": {
+          "url": "http://127.0.0.1:3000/",
+          "origin": "http://127.0.0.1:3000",
+          "timeOrigin": 1789291368936.5,
+          "frameCount": 710862,
+          "spawned": false,
+          "playerId": null,
+          "status": "Disconnected: Scene mismatch. Reload this page to load the server neighborhood.",
+          "connected": "false",
+          "playing": false,
+          "unchanged": true
+        },
+        "afterWalking": {
+          "url": "http://127.0.0.1:3000/",
+          "origin": "http://127.0.0.1:3000",
+          "timeOrigin": 1789291368936.5,
+          "frameCount": 710862,
+          "spawned": false,
+          "playerId": null,
+          "status": "Disconnected: Scene mismatch. Reload this page to load the server neighborhood.",
+          "connected": "false",
+          "playing": false,
+          "unchanged": true
+        }
+      },
+      "errors": []
+    },
+    {
+      "name": "standard-1672x941-dpr2",
+      "preset": "standard",
+      "viewport": [
+        1672,
+        941
+      ],
+      "targetId": "BCF2E56F2FA691EBF98538662FFD707B",
+      "renderer": {
+        "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+        "vendor": "Google Inc. (Apple)",
+        "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+      },
+      "idle": {
+        "durationMs": 20000,
+        "frameIntervals": 2400,
+        "medianFPS": 120.48192771082753,
+        "averageFPS": 120,
+        "p95FrameMs": 9,
+        "p99FrameMs": 9.299999999999272,
+        "maxFrameMs": 9.400000000001455,
+        "stallsOver50Ms": 0,
+        "maxSampledTriangles": 5352079,
+        "maxSampledCalls": 954,
+        "maxSampledDownloadBytes": 46972136,
+        "maxSampledTextureStorageBytes": 331056724,
+        "nativeResolutionThroughoutObservedSamples": true
+      },
+      "walking": {
+        "durationMs": 4008.399999999998,
+        "frameIntervals": 481,
+        "medianFPS": 120.48192771085394,
+        "averageFPS": 119.99800419119855,
+        "p95FrameMs": 8.900000000001455,
+        "p99FrameMs": 9.299999999999272,
+        "maxFrameMs": 9.30000000000291,
+        "stallsOver50Ms": 0,
+        "maxSampledTriangles": 5352079,
+        "maxSampledCalls": 954,
+        "maxSampledDownloadBytes": 46972136,
+        "maxSampledTextureStorageBytes": 331056724,
+        "nativeResolutionThroughoutObservedSamples": true,
+        "distanceMetres": 20.083333333333318
+      },
+      "networkEncodedDataLength": 46985679,
+      "budgetResults": {
+        "downloads": true,
+        "triangles": true,
+        "drawCalls": true,
+        "existing320MiBTextureReference": true,
+        "target60FPS": true,
+        "browserErrors": true
+      },
+      "referenceIsolation": {
+        "targetId": "37D9DDC1B1728B3F58602FBC3B3FBD38",
+        "beforeWarmup": {
+          "url": "http://127.0.0.1:3000/",
+          "origin": "http://127.0.0.1:3000",
+          "timeOrigin": 1789291368936.5,
+          "frameCount": 710862,
+          "spawned": false,
+          "playerId": null,
+          "status": "Disconnected: Scene mismatch. Reload this page to load the server neighborhood.",
+          "connected": "false",
+          "playing": false
+        },
+        "afterIdle": {
+          "url": "http://127.0.0.1:3000/",
+          "origin": "http://127.0.0.1:3000",
+          "timeOrigin": 1789291368936.5,
+          "frameCount": 710862,
+          "spawned": false,
+          "playerId": null,
+          "status": "Disconnected: Scene mismatch. Reload this page to load the server neighborhood.",
+          "connected": "false",
+          "playing": false,
+          "unchanged": true
+        },
+        "afterWalking": {
+          "url": "http://127.0.0.1:3000/",
+          "origin": "http://127.0.0.1:3000",
+          "timeOrigin": 1789291368936.5,
+          "frameCount": 710862,
+          "spawned": false,
+          "playerId": null,
+          "status": "Disconnected: Scene mismatch. Reload this page to load the server neighborhood.",
+          "connected": "false",
+          "playing": false,
+          "unchanged": true
+        }
+      },
+      "errors": []
+    },
+    {
+      "name": "low-1672x941-dpr2",
+      "preset": "low",
+      "viewport": [
+        1672,
+        941
+      ],
+      "targetId": "056016C1504626114673B40CB4079F67",
+      "renderer": {
+        "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+        "vendor": "Google Inc. (Apple)",
+        "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+      },
+      "idle": {
+        "durationMs": 20000,
+        "frameIntervals": 2400,
+        "medianFPS": 120.48192771085394,
+        "averageFPS": 120,
+        "p95FrameMs": 9,
+        "p99FrameMs": 9.299999999999272,
+        "maxFrameMs": 9.400000000001455,
+        "stallsOver50Ms": 0,
+        "maxSampledTriangles": 1720990,
+        "maxSampledCalls": 281,
+        "maxSampledDownloadBytes": 46972136,
+        "maxSampledTextureStorageBytes": 177273636,
+        "nativeResolutionThroughoutObservedSamples": true
+      },
+      "walking": {
+        "durationMs": 4000.5,
+        "frameIntervals": 480,
+        "medianFPS": 120.48192771085394,
+        "averageFPS": 119.98500187476566,
+        "p95FrameMs": 9.10000000000582,
+        "p99FrameMs": 9.30000000000291,
+        "maxFrameMs": 9.400000000001455,
+        "stallsOver50Ms": 0,
+        "maxSampledTriangles": 1720990,
+        "maxSampledCalls": 281,
+        "maxSampledDownloadBytes": 46972136,
+        "maxSampledTextureStorageBytes": 177273636,
+        "nativeResolutionThroughoutObservedSamples": true,
+        "distanceMetres": 19.999999999999986
+      },
+      "networkEncodedDataLength": 46985679,
+      "budgetResults": {
+        "downloads": true,
+        "triangles": true,
+        "drawCalls": true,
+        "existing320MiBTextureReference": true,
+        "target60FPS": true,
+        "browserErrors": true
+      },
+      "referenceIsolation": {
+        "targetId": "37D9DDC1B1728B3F58602FBC3B3FBD38",
+        "beforeWarmup": {
+          "url": "http://127.0.0.1:3000/",
+          "origin": "http://127.0.0.1:3000",
+          "timeOrigin": 1789291368936.5,
+          "frameCount": 710862,
+          "spawned": false,
+          "playerId": null,
+          "status": "Disconnected: Scene mismatch. Reload this page to load the server neighborhood.",
+          "connected": "false",
+          "playing": false
+        },
+        "afterIdle": {
+          "url": "http://127.0.0.1:3000/",
+          "origin": "http://127.0.0.1:3000",
+          "timeOrigin": 1789291368936.5,
+          "frameCount": 710862,
+          "spawned": false,
+          "playerId": null,
+          "status": "Disconnected: Scene mismatch. Reload this page to load the server neighborhood.",
+          "connected": "false",
+          "playing": false,
+          "unchanged": true
+        },
+        "afterWalking": {
+          "url": "http://127.0.0.1:3000/",
+          "origin": "http://127.0.0.1:3000",
+          "timeOrigin": 1789291368936.5,
+          "frameCount": 710862,
+          "spawned": false,
+          "playerId": null,
+          "status": "Disconnected: Scene mismatch. Reload this page to load the server neighborhood.",
+          "connected": "false",
+          "playing": false,
+          "unchanged": true
+        }
+      },
+      "errors": []
+    }
+  ],
+  "inputsUnchanged": true,
+  "localInputs": {
+    "sources": {
+      "apps/browser/index.html": {
+        "bytes": 354,
+        "sha256": "5c7e3e0d86ebc6d6e88fb1514c0e592903af7ab85d4dadd5b13a2f43e2387e24",
+        "modifiedAt": "2026-09-09T00:53:11.698Z"
+      },
+      "apps/browser/src/antialias.ts": {
+        "bytes": 3929,
+        "sha256": "29aad63b1b86354605f740bd8ce7b76bc0784afa84bebaad7ddb7ce315924161",
+        "modifiedAt": "2026-09-13T05:22:41.463Z"
+      },
+      "apps/browser/src/assets.ts": {
+        "bytes": 22324,
+        "sha256": "a2f4aeecee9bd34f490bdc5902bd20f23be31eca43fa759499824a06596e9036",
+        "modifiedAt": "2026-09-13T14:29:52.796Z"
+      },
+      "apps/browser/src/bootstrap.ts": {
+        "bytes": 1347,
+        "sha256": "d512c6fc9eaf612fc44cc93013b113ed233eabb17fe08ef560fad6af0fb3b98f",
+        "modifiedAt": "2026-09-09T00:53:11.811Z"
+      },
+      "apps/browser/src/camera.ts": {
+        "bytes": 3133,
+        "sha256": "ab610c86911ff9f33ae3a91a5cb7cf2f16f4528028bc8abe0eff055a635c9ed6",
+        "modifiedAt": "2026-09-09T00:53:11.811Z"
+      },
+      "apps/browser/src/canopy-lighting.ts": {
+        "bytes": 2673,
+        "sha256": "ccfb0a9640512b8287eb7aa2fb3ff0ea962f9a215325d354bd8bb9f66b99f35d",
+        "modifiedAt": "2026-09-13T13:26:13.868Z"
+      },
+      "apps/browser/src/character-animation.ts": {
+        "bytes": 1170,
+        "sha256": "0782bb10ef3fedfe9744937687dd63566e32abafae70d75e1420c4a62922e8bb",
+        "modifiedAt": "2026-09-09T00:53:11.811Z"
+      },
+      "apps/browser/src/characters.ts": {
+        "bytes": 3315,
+        "sha256": "92f0aea16b7e509bc9ed6f47ab298ae0f88b7ca2f74eafc447be560d1a99021b",
+        "modifiedAt": "2026-09-13T05:34:26.383Z"
+      },
+      "apps/browser/src/collision.ts": {
+        "bytes": 3548,
+        "sha256": "bc98b1275031f6b3de5d753bc572f1ce2f77fa5d8d7b54e5b7bb5c65749cd110",
+        "modifiedAt": "2026-09-09T00:53:11.812Z"
+      },
+      "apps/browser/src/environment.ts": {
+        "bytes": 11770,
+        "sha256": "cfb348a9da7007d29d432bde3ea4fc3a48a7e41dad83503d9d97e6f50dbd7798",
+        "modifiedAt": "2026-09-13T10:33:04.550Z"
+      },
+      "apps/browser/src/foliage-mips.ts": {
+        "bytes": 3825,
+        "sha256": "bf7fe1414777bf98dc331fcf323a747dd6a1d20e1df857cde5e5ad47a98cb15c",
+        "modifiedAt": "2026-09-09T00:53:11.812Z"
+      },
+      "apps/browser/src/garden.ts": {
+        "bytes": 8021,
+        "sha256": "dad060ffb85efecc4bf833281c13982137245452102253540e90fc98d9bec44f",
+        "modifiedAt": "2026-09-13T13:30:39.563Z"
+      },
+      "apps/browser/src/gateway.ts": {
+        "bytes": 1329,
+        "sha256": "c62dd850b002cfb8fe762d28deaa663d0f8e643c75b9fe9e16ef60c3c2db8a97",
+        "modifiedAt": "2026-09-13T03:01:12.501Z"
+      },
+      "apps/browser/src/graphics.ts": {
+        "bytes": 3711,
+        "sha256": "7b61ef63871d3f3d1633c38dfd5341b5dfedc60b7346af366acf4b653867832c",
+        "modifiedAt": "2026-09-13T10:33:04.571Z"
+      },
+      "apps/browser/src/ground-cover.ts": {
+        "bytes": 1428,
+        "sha256": "8e5a7a64144227c24a5aa6c54ad735e07c7ee68b414602d39f21e0e88c757b89",
+        "modifiedAt": "2026-09-13T09:04:04.868Z"
+      },
+      "apps/browser/src/horizon.ts": {
+        "bytes": 9515,
+        "sha256": "114aabbffcd15af17be77e578b7b47b73248a7c7dba8590540b88c79141a5fa2",
+        "modifiedAt": "2026-09-13T13:04:24.579Z"
+      },
+      "apps/browser/src/hud.ts": {
+        "bytes": 6229,
+        "sha256": "af1dee461a169484731193bf2f5d123aa70dd8473311323dc670ce1564409b9f",
+        "modifiedAt": "2026-09-09T00:53:11.813Z"
+      },
+      "apps/browser/src/interpolated-pose.ts": {
+        "bytes": 2338,
+        "sha256": "5b647e17329d22245dbf9115e6df2037c4dfbf98734a16c3d49642d304d828c4",
+        "modifiedAt": "2026-09-13T03:11:01.757Z"
+      },
+      "apps/browser/src/lighting.ts": {
+        "bytes": 6601,
+        "sha256": "267e4f6ee9b2cca0e3a282abbf8c9324693ba633ab292eb685daf7635fa71df7",
+        "modifiedAt": "2026-09-13T13:04:24.578Z"
+      },
+      "apps/browser/src/main.ts": {
+        "bytes": 34432,
+        "sha256": "655c8c6f8c8ef6fe50f6e4ff7d51649bee865423e227b463f9df113c7be9b472",
+        "modifiedAt": "2026-09-13T13:04:24.578Z"
+      },
+      "apps/browser/src/mown-access.ts": {
+        "bytes": 4836,
+        "sha256": "bb2b5f90b4ca762fb3358e7944f4cff08769a8a87b5e12cef1a6b74692f901da",
+        "modifiedAt": "2026-09-13T14:31:46.714Z"
+      },
+      "apps/browser/src/reflection-storage.ts": {
+        "bytes": 3292,
+        "sha256": "8b7f07a99248d1885e509aa3e916b87982ad33019348ae87fd04e09635c13720",
+        "modifiedAt": "2026-09-09T00:53:11.813Z"
+      },
+      "apps/browser/src/road-detail.ts": {
+        "bytes": 10339,
+        "sha256": "cee37ba83270b3f77d1b050a697c458775f3adb9f5f47fa014ae196d642d2e0c",
+        "modifiedAt": "2026-09-13T13:30:13.351Z"
+      },
+      "apps/browser/src/shadows.ts": {
+        "bytes": 877,
+        "sha256": "5201573101a62ae060534d77123c496f03b8b07617a1da5109341603b86c7be0",
+        "modifiedAt": "2026-09-09T00:53:11.814Z"
+      },
+      "apps/browser/src/simulation-clock.ts": {
+        "bytes": 1312,
+        "sha256": "4db0b03b6155b649c2d95c814ce8d117516bb4030cce17c02e423580636e6c60",
+        "modifiedAt": "2026-09-13T03:11:01.560Z"
+      },
+      "apps/browser/src/snapshot-pose.ts": {
+        "bytes": 5074,
+        "sha256": "bf2dbc7f268b8d097639723414315986e02d0e190cbabb332eec09b0d62c60c8",
+        "modifiedAt": "2026-09-13T03:26:30.217Z"
+      },
+      "apps/browser/src/surface-lighting.ts": {
+        "bytes": 1293,
+        "sha256": "a01bfef9ccd0a7685a18f0ef355dae70ab2d537c5252c8075c811d34fc58992f",
+        "modifiedAt": "2026-09-13T05:18:48.634Z"
+      },
+      "apps/browser/src/surface-pixels.ts": {
+        "bytes": 2021,
+        "sha256": "327e2cc8c0971fc872b5459c65694c92cfb38a2e25182395470db28f5afdbabe",
+        "modifiedAt": "2026-09-13T05:01:54.695Z"
+      },
+      "apps/browser/src/surface-textures.ts": {
+        "bytes": 1500,
+        "sha256": "2309c51c318e786734dd90470cbfcb3bb83e67eef2691cf6e3dc5c7028edac56",
+        "modifiedAt": "2026-09-13T03:28:40.453Z"
+      },
+      "apps/browser/src/surface-weathering.ts": {
+        "bytes": 2610,
+        "sha256": "fe7052a24c8987b77dfa97cf2e9c2654bbf0f4d604f9d27f695cf4d4168353ff",
+        "modifiedAt": "2026-09-13T10:33:04.576Z"
+      },
+      "apps/browser/src/verges.ts": {
+        "bytes": 21221,
+        "sha256": "39f357c5341a64a3bf503337a6c7215e99ff18c7a5d78c44a650238dd4ea4297",
+        "modifiedAt": "2026-09-13T14:29:52.797Z"
+      },
+      "apps/browser/src/warmup.ts": {
+        "bytes": 1791,
+        "sha256": "2db7cbf9d34a1a13b65fe8b52cd8509360903d7084741b216be60e9cadad3406",
+        "modifiedAt": "2026-09-13T03:26:41.663Z"
+      },
+      "apps/browser/vite.config.ts": {
+        "bytes": 302,
+        "sha256": "ae1154c94371aa892f4b8d3087e2c64029fdd1358125a50ebfbc238769bac079",
+        "modifiedAt": "2026-09-09T00:53:11.815Z"
+      },
+      "assets/horizon-relief.json": {
+        "bytes": 859283,
+        "sha256": "a5d1351177c927700fcc381bf3a4c8b7698a025f21a7973798a79263e81ef922",
+        "modifiedAt": "2026-09-13T13:41:47.201Z"
+      },
+      "assets/source/arroyo-sky-generation.json": {
+        "bytes": 12588,
+        "sha256": "8a0c1dc2ff1465680341d7d268d06fae17c24feb534f17c0febce4351496e20d",
+        "modifiedAt": "2026-09-13T04:13:23.397Z"
+      },
+      "assets/source/asphalt-authoring.json": {
+        "bytes": 3620,
+        "sha256": "fdc6d8ad958f5d0c95115f6336b572949f91767178dde548fd4e224cc393e753",
+        "modifiedAt": "2026-09-13T04:04:18.996Z"
+      },
+      "assets/source/asset-build.json": {
+        "bytes": 25113,
+        "sha256": "6a3b11bfbfec7477091e3e39bf1a29f78114f93ce52cbda72a56de7d5fb55203",
+        "modifiedAt": "2026-09-13T14:30:05.947Z"
+      },
+      "assets/source/bin.blend": {
+        "bytes": 112394,
+        "sha256": "2b4a634fc5045555ffcef1ca1414dba83f01affc7d4b955c46e797b27358e6ec",
+        "modifiedAt": "2026-09-09T00:53:11.825Z"
+      },
+      "assets/source/canopy-base/base.json": {
+        "bytes": 6150,
+        "sha256": "47748da221dbe45aa2fd11893fe95ec0c2eddaa31f1f6d0b7f690c335c3f2b06",
+        "modifiedAt": "2026-09-13T13:40:07.548Z"
+      },
+      "assets/source/canopy-base/parents/roadside-oak-before-trunk-taper.blend": {
+        "bytes": 431030,
+        "sha256": "8125d8bfb1e070578fdc76ab60c48d23ea0b900a47e112851850a5ac0bcda048",
+        "modifiedAt": "2026-09-13T13:40:07.543Z"
+      },
+      "assets/source/canopy-base/parents/roadside-oak-before-trunk-taper.json": {
+        "bytes": 1676,
+        "sha256": "7e29b3dca296ac88cd116de3797afda11107546b9b6f28979ed0529afa41cc21",
+        "modifiedAt": "2026-09-13T13:40:07.544Z"
+      },
+      "assets/source/canopy-base/provenance/roadside-trunk-taper/native-authoring.json": {
+        "bytes": 4404,
+        "sha256": "9562128f867f3d10861ee24e91273b8a68534f02a7546b37da8b4c46d770ab49",
+        "modifiedAt": "2026-09-13T13:40:07.545Z"
+      },
+      "assets/source/canopy-base/provenance/roadside-trunk-taper/packing-transport.mjs": {
+        "bytes": 8224,
+        "sha256": "18f75be884221e4a155a7b15cbbfa3ebd8ed6e483b5b7a4c250eea5b05161623",
+        "modifiedAt": "2026-09-13T13:40:07.544Z"
+      },
+      "assets/source/canopy-base/provenance/roadside-trunk-taper/packing-verification.json": {
+        "bytes": 1572,
+        "sha256": "e34736ee045ce51792f57a8b4a07ae1d8d0ad6f5b83dd2c4564a1f6a85b6d1aa",
+        "modifiedAt": "2026-09-13T13:40:07.545Z"
+      },
+      "assets/source/canopy-base/roadside-oak.blend": {
+        "bytes": 408758,
+        "sha256": "d9ad319d747e3c859a33e6a2e60d7ab08969a7d09e8b7cc5de21baf7d17c6511",
+        "modifiedAt": "2026-09-13T13:40:07.546Z"
+      },
+      "assets/source/canopy-base/tree.blend": {
+        "bytes": 430669,
+        "sha256": "1707626df2a5c36fab64eaaf026be4159295e5ada88a9474231e707a24af5647",
+        "modifiedAt": "2026-09-13T13:26:13.909Z"
+      },
+      "assets/source/canopy/roadside-oak.json": {
+        "bytes": 8221,
+        "sha256": "df305a77ed944552bcf2bfafb7e3660674918a189f37d02a17c6d43b5eb48b11",
+        "modifiedAt": "2026-09-13T13:41:47.150Z"
+      },
+      "assets/source/canopy/tree.json": {
+        "bytes": 5958,
+        "sha256": "045376a4cf8c5089cbaafc6bb6f99ea3904042e5037a94439145237b864256cc",
+        "modifiedAt": "2026-09-13T13:41:47.147Z"
+      },
+      "assets/source/coupe.blend": {
+        "bytes": 1297069,
+        "sha256": "79830d5818050044b47a96d8289d649a92875c918ee16ace0e9788d9a2674d0c",
+        "modifiedAt": "2026-09-13T13:05:09.864Z"
+      },
+      "assets/source/fence-low.blend": {
+        "bytes": 104161,
+        "sha256": "27854c3467c6cac185d87f56a6656ff8c1ce7f87924c301eea915eccb79d0f23",
+        "modifiedAt": "2026-09-09T00:53:11.829Z"
+      },
+      "assets/source/fence.blend": {
+        "bytes": 112560,
+        "sha256": "a9c7649626947fd8f6fd45f6140fed1e8240f14e83533f72e544812c7ff28313",
+        "modifiedAt": "2026-09-09T00:53:11.830Z"
+      },
+      "assets/source/garden-low.blend": {
+        "bytes": 208742,
+        "sha256": "c3e22d04a276aa0c987a4218d04f2bc6ba90a5f3f4d30ac3e12f701c1e151fc5",
+        "modifiedAt": "2026-09-13T03:12:00.100Z"
+      },
+      "assets/source/garden-shrub.blend": {
+        "bytes": 170297,
+        "sha256": "56e76b1110a5bc5627fa43502225a932cc6391d33d2cd75034a124c09f7e1df6",
+        "modifiedAt": "2026-09-13T04:55:22.422Z"
+      },
+      "assets/source/grass-clump-generation.json": {
+        "bytes": 2821,
+        "sha256": "8e9de3c70440e5a8ebfff06b45e0c9a51a136d8e7baddde45db86944988e8ed2",
+        "modifiedAt": "2026-09-13T05:41:20.498Z"
+      },
+      "assets/source/horizon-build.json": {
+        "bytes": 7269,
+        "sha256": "fa58fe0d6f779d31b08ca037fbeeba30910f2437bd146da759f0c52a2c6dc6a7",
+        "modifiedAt": "2026-09-13T13:41:47.203Z"
+      },
+      "assets/source/horizon-envelope-v3-build.json": {
+        "bytes": 1233,
+        "sha256": "be46cd9215f7fc49559c7eb39c6194b2e6d3eb7bc97b80c20c282979f58e8612",
+        "modifiedAt": "2026-09-13T10:32:44.975Z"
+      },
+      "assets/source/horizon-envelope-v3.blend": {
+        "bytes": 3967327,
+        "sha256": "6d5f38fd94408bf478ebd5e867aece47f637a11097a431311b862dc8c941c03d",
+        "modifiedAt": "2026-09-13T10:32:44.974Z"
+      },
+      "assets/source/horizon-envelope-v3.json": {
+        "bytes": 2284878,
+        "sha256": "42b9fd6aba7e4e7e9416d33722b6661f3deb09ce34baccdc410a3812c0bae557",
+        "modifiedAt": "2026-09-13T10:32:44.972Z"
+      },
+      "assets/source/horizon-lighting.json": {
+        "bytes": 506,
+        "sha256": "c3092455f8ad174a1c3c93e9d5618006b52dec57d87094c759544e2a07b03909",
+        "modifiedAt": "2026-09-13T12:34:13.368Z"
+      },
+      "assets/source/horizon.blend": {
+        "bytes": 6091979,
+        "sha256": "1e41f355dd92f5de372cfc2e8a022fb1345caa1f921ee5767c7e8dd454c35982",
+        "modifiedAt": "2026-09-13T13:41:47.203Z"
+      },
+      "assets/source/house-0.blend": {
+        "bytes": 1111631,
+        "sha256": "f11a96e1129e3640e57646e8defb41c5c215adcd7c6dec62db0b1d80ccc93318",
+        "modifiedAt": "2026-09-09T00:53:11.832Z"
+      },
+      "assets/source/house-1.blend": {
+        "bytes": 1034000,
+        "sha256": "6c84ce0d2c1a56aae9b423f8194bd7039d1bcaee1eb50e2be78359017e6da93a",
+        "modifiedAt": "2026-09-09T00:53:11.834Z"
+      },
+      "assets/source/house-2.blend": {
+        "bytes": 953931,
+        "sha256": "7175d54294b048da0b3fdeefa6ac1a946559c9e97845e287cf53991d03d35365",
+        "modifiedAt": "2026-09-09T00:53:11.837Z"
+      },
+      "assets/source/house-3.blend": {
+        "bytes": 1148152,
+        "sha256": "7140939eb1dda2e0122b9025988ba5c42c6f5074a8916b385023bcda13cf9bcd",
+        "modifiedAt": "2026-09-09T00:53:11.840Z"
+      },
+      "assets/source/lamp.blend": {
+        "bytes": 107171,
+        "sha256": "6397be0c71304abb7b2935568556adcc4cd8d605903543014d494a8fd1a0d8ca",
+        "modifiedAt": "2026-09-09T00:53:11.840Z"
+      },
+      "assets/source/mailbox.blend": {
+        "bytes": 106372,
+        "sha256": "c68cf903eec89224775c71396eba894febdad601e8b5a16507fe010f4b0cbfa8",
+        "modifiedAt": "2026-09-09T00:53:11.840Z"
+      },
+      "assets/source/neighbor-shoe-refinement.json": {
+        "bytes": 8826,
+        "sha256": "5f24a944609656614446de79fa505804baf76f3f2060012e140b3b107236a5b8",
+        "modifiedAt": "2026-09-13T05:31:57.188Z"
+      },
+      "assets/source/neighbor.blend": {
+        "bytes": 3523249,
+        "sha256": "6444a8e347c5f0946823c92e0f9ff89cdffa33d52745fb37d78ff93404668643",
+        "modifiedAt": "2026-09-13T14:30:05.927Z"
+      },
+      "assets/source/palm.blend": {
+        "bytes": 652973,
+        "sha256": "5533b4769540eaf6d3746752e5a2ef779d77c70463d19a2144f5b8f330e14f35",
+        "modifiedAt": "2026-09-13T10:36:17.718Z"
+      },
+      "assets/source/pole.blend": {
+        "bytes": 105452,
+        "sha256": "777ec4ee990233b5ba17f2d8b86eb70551ee2cfcd1d2cdd7bcacfd4a7d300836",
+        "modifiedAt": "2026-09-09T00:53:11.854Z"
+      },
+      "assets/source/reflection-bake.json": {
+        "bytes": 10026,
+        "sha256": "0ae75278ae1510fd26ac1db060d8c8356edfdac8079113833c979f6b9f3c7dd7",
+        "modifiedAt": "2026-09-13T14:33:28.678Z"
+      },
+      "assets/source/roadside-oak.blend": {
+        "bytes": 476173,
+        "sha256": "0f53697d841607fb3b39a611e5482b4d2ae549678e27705823dc577ef1294413",
+        "modifiedAt": "2026-09-13T13:41:47.149Z"
+      },
+      "assets/source/texture-encodings.json": {
+        "bytes": 83826,
+        "sha256": "089effcb94c0d6949e1f2cf168bb194dbd69f70002f9431e44795f07c1f06008",
+        "modifiedAt": "2026-09-13T04:14:50.332Z"
+      },
+      "assets/source/tree.blend": {
+        "bytes": 474676,
+        "sha256": "201eb6324a35f578be3ac75f977f89bd375c8f52eb9614c379e88c72de9a4549",
+        "modifiedAt": "2026-09-13T13:41:47.146Z"
+      },
+      "package-lock.json": {
+        "bytes": 32130,
+        "sha256": "b99e5c05368deae7d0cd82a86505d33671cc2275c0852eed3f08afbd0b07bd74",
+        "modifiedAt": "2026-09-09T00:53:11.902Z"
+      },
+      "package.json": {
+        "bytes": 1047,
+        "sha256": "184b45dea4a55d0bbb5c32801804bcaf6fc199caeca30ce4b692a91a6b840f96",
+        "modifiedAt": "2026-09-13T10:32:44.929Z"
+      },
+      "packages/shared/protocol.ts": {
+        "bytes": 1288,
+        "sha256": "63056480786a5caf48b42fcef1d59427a7525b3eff7c4136e49b86f88758ccde",
+        "modifiedAt": "2026-09-09T00:53:11.902Z"
+      },
+      "packages/shared/scene.mjs": {
+        "bytes": 733,
+        "sha256": "bf854bf1c671d16b9ac3ec47a08b02bfbd78b32a545bdb2d39ce814d621c5cd4",
+        "modifiedAt": "2026-09-09T00:53:11.902Z"
+      },
+      "packages/shared/scene.ts": {
+        "bytes": 833,
+        "sha256": "1a3a1fd90813248ba8ad85ce22254e5e7ae1b8c0d05e2b4c6876df4833064c5b",
+        "modifiedAt": "2026-09-09T00:53:11.902Z"
+      },
+      "packages/shared/scenes/neighborhood.json": {
+        "bytes": 31236,
+        "sha256": "a396b576a26d665224ef38c643d9308866f886babab999baa767f9946db8422d",
+        "modifiedAt": "2026-09-13T09:17:03.965Z"
+      },
+      "packages/shared/scenes/yard.json": {
+        "bytes": 1239,
+        "sha256": "eafd501e8fef4ffa7df59050ec41059c4d86b53e510aa83e7479e936497ed5ac",
+        "modifiedAt": "2026-09-13T09:17:03.964Z"
+      },
+      "tools/assets/horizon-bake.mjs": {
+        "bytes": 29894,
+        "sha256": "1b17a1c9943944373dcab38e799038c8e226e41b10b40292d8bb8aed538ae79d",
+        "modifiedAt": "2026-09-13T13:28:47.563Z"
+      },
+      "tools/assets/horizon-envelope-v3.py": {
+        "bytes": 15606,
+        "sha256": "9c738fa74fec6a155a838ecacde64ce37b6d52fae557164c66b85baf40e125cd",
+        "modifiedAt": "2026-09-13T10:32:44.971Z"
+      },
+      "tools/assets/horizon-save.py": {
+        "bytes": 6958,
+        "sha256": "ae6bc76103272672d807b5c10fb7163d79f4565e8a1cb79f08a6a49c6c0acf68",
+        "modifiedAt": "2026-09-13T10:32:44.971Z"
+      },
+      "tools/assets/horizon.py": {
+        "bytes": 1570,
+        "sha256": "6a4fb64c39bcd3579355e5a9c8f463b62e6733be7234cf044604c3ec44e86ef9",
+        "modifiedAt": "2026-09-13T10:32:44.929Z"
+      },
+      "tools/build-assets.mjs": {
+        "bytes": 13558,
+        "sha256": "2d9120347c8d7bd23d47d9344a57063641b875c5e3dae63df98ba0f05838ee00",
+        "modifiedAt": "2026-09-13T13:31:32.704Z"
+      },
+      "tools/verify-native-rendering.mjs": {
+        "bytes": 31582,
+        "sha256": "6627c4af331e3f1efb1986542057e216b553b781e29ced946fb0327ecb36c7fd",
+        "modifiedAt": "2026-09-13T10:49:32.799Z"
+      }
+    },
+    "inventorySha256": "596ee921a093d1a5b690e7f53c046b550427d20ae37b5fa36111934ad2fa15b7",
+    "assets": {
+      "arroyo-asphalt.webp": {
+        "bytes": 2644378,
+        "sha256": "12e88d94e7ce73ac8a94d351109650da262ca20f838a355cce415c4bf2a6a16a",
+        "matchesLocalFile": true
+      },
+      "arroyo-details.webp": {
+        "bytes": 2357446,
+        "sha256": "6e52afeee96d9f897e3cb8b253bcacdae66bed31e4c02e3a534700b246d71a95",
+        "matchesLocalFile": true
+      },
+      "arroyo-foliage.webp": {
+        "bytes": 1131330,
+        "sha256": "3b54fbaba32d6281b19346e41a60fb88f2858888cc73327edef4a1fcd30d539b",
+        "matchesLocalFile": true
+      },
+      "arroyo-grass-clumps.webp": {
+        "bytes": 1468482,
+        "sha256": "e8cbf331e24e0bfeb4904c9e767e92d166c1283f476f619d6f854236d4c3b70d",
+        "matchesLocalFile": true
+      },
+      "arroyo-grass.webp": {
+        "bytes": 2840886,
+        "sha256": "08d34e0817d828d21aa74ff32b43b4400ff325d58c96408dd31004b248d400a0",
+        "matchesLocalFile": true
+      },
+      "arroyo-reflections.pmrem.gz": {
+        "bytes": 11647597,
+        "sha256": "7fb519596f3825a101330cb12e0ae96423013005d59e9f10aa1c2c562af47504",
+        "matchesLocalFile": true
+      },
+      "arroyo-sky.webp": {
+        "bytes": 1029670,
+        "sha256": "a4b66bd9f4ba837201bb517499df4b06fef2ae08ed7850ee35a57e9b6ddff0eb",
+        "matchesLocalFile": true
+      },
+      "arroyo-surfaces.webp": {
+        "bytes": 2304636,
+        "sha256": "3d841a80edf8e956769e039747d38ef9837f985a2f3a9683a2515ad4fac4b09d",
+        "matchesLocalFile": true
+      },
+      "bin.glb": {
+        "bytes": 26804,
+        "sha256": "086ed48597d16096bfc08c320a17be1f8f44a186d1bf849853c66c57284c7e19",
+        "matchesLocalFile": true
+      },
+      "coupe.glb": {
+        "bytes": 2761200,
+        "sha256": "b15774812b3664a5906100f3ee9c25629f209c19806d6fb8e4c632d5be2a4790",
+        "matchesLocalFile": true
+      },
+      "fence-low.glb": {
+        "bytes": 9696,
+        "sha256": "79e4c3e03e5ace29a6b2e15eb70b7c90d2d026a80fa417cb936bc9b74f392ec5",
+        "matchesLocalFile": true
+      },
+      "fence.glb": {
+        "bytes": 47904,
+        "sha256": "b2c7c7b0bb8e44fe74c5744c96361ada3a18acee106306ed3a04beac94e070a4",
+        "matchesLocalFile": true
+      },
+      "garden-low.glb": {
+        "bytes": 216084,
+        "sha256": "bd515240ae8f8dcb05d539a3c354a114e9aeb4d0c10ee682a7233a280f605e56",
+        "matchesLocalFile": true
+      },
+      "garden-shrub.glb": {
+        "bytes": 102380,
+        "sha256": "08eef3cb1db02a4f55ba4b9721c88a2d3da9b9c2d98caf8c94f76de4bc95f9e4",
+        "matchesLocalFile": true
+      },
+      "house-0.glb": {
+        "bytes": 2214460,
+        "sha256": "42cbcb9a02bbf1a550f28903b2b301ea05ee2de937d73b45ab411ab6d89e5aa0",
+        "matchesLocalFile": true
+      },
+      "house-1.glb": {
+        "bytes": 2068448,
+        "sha256": "fef0a57b04cbf48fb0dd70ffd8844959a5e070a8ee840cb5f31d2e8ee46cf200",
+        "matchesLocalFile": true
+      },
+      "house-2.glb": {
+        "bytes": 1835200,
+        "sha256": "2fde094bc5882189e67d689eedbdd48e51be16008bc6c3ac4004bde3f9478a0b",
+        "matchesLocalFile": true
+      },
+      "house-3.glb": {
+        "bytes": 2314040,
+        "sha256": "f7722e73d6471e5431a10a9a47e65827093fe77be88af7e3abccc2d26ea2e6a2",
+        "matchesLocalFile": true
+      },
+      "lamp.glb": {
+        "bytes": 15624,
+        "sha256": "1beb6ea081641fa80292c01b697895c4c45f29936d84628fd29fd9c2eaaf9b18",
+        "matchesLocalFile": true
+      },
+      "mailbox.glb": {
+        "bytes": 12356,
+        "sha256": "34c2f0adc8180dc0df68dbec19d2e9af2162fcd0ffc2acdd0442bb93ea97abe3",
+        "matchesLocalFile": true
+      },
+      "neighbor.glb": {
+        "bytes": 6521848,
+        "sha256": "fe3aa34b83ff038774d06675ea3fa123c6532149cc8a0f26e1746d26350915be",
+        "matchesLocalFile": true
+      },
+      "neighborhood-atlas.png": {
+        "bytes": 3529016,
+        "sha256": "03157ab45abb63aaf697823c9e6a8d927ac1b062ca27fdf21fcf7a8bd0948269",
+        "matchesLocalFile": true
+      },
+      "palm.glb": {
+        "bytes": 881160,
+        "sha256": "83e001d52a835436bf62bc39c361e229b83dd025f1ba8aa8ef09a41d6461233d",
+        "matchesLocalFile": true
+      },
+      "pole.glb": {
+        "bytes": 10416,
+        "sha256": "4a0fea05e8451630f0030e999b284cd50bd3ba6e0d237fb416043c6b549227c0",
+        "matchesLocalFile": true
+      },
+      "roadside-oak.glb": {
+        "bytes": 726552,
+        "sha256": "cf70689b2314e8d480a9fa50c5de8c9f46a53665f04286858db382206a102ef3",
+        "matchesLocalFile": true
+      },
+      "roadside-oak.glb.gz": {
+        "bytes": 449731,
+        "sha256": "3c99cbea1e4316b020733616fb5ef7f2d9e53322983e0adf4fc89431feefdb7e",
+        "matchesLocalFile": true
+      },
+      "tree.glb": {
+        "bytes": 726496,
+        "sha256": "15ac566413627cf0221e0d2b765b69f7b4f901b2202b117c84b616bba7dcdb6f",
+        "matchesLocalFile": true
+      },
+      "tree.glb.gz": {
+        "bytes": 448792,
+        "sha256": "3fc8c0a6d034ceb65a77755670c1e6367e624d4d80719e721102586a28c0b770",
+        "matchesLocalFile": true
+      }
+    }
+  },
+  "servedInputs": {
+    "build": {
+      "/": {
+        "bytes": 449,
+        "sha256": "d1a8dc62acbf9c5e5cd4cbbf2b7c42eb8677ec3603046763568b6ec9d84788ac",
+        "lastModified": null,
+        "etag": null,
+        "matchesLocalDist": null,
+        "localDistModifiedAt": null,
+        "localDistStatus": "Not present on host; build may reside in the fixture container"
+      },
+      "/assets/index-CLSF4nJg.css": {
+        "bytes": 6991,
+        "sha256": "0655f264cfc9ca400288720b93a106c022f381daa4c7ce52c88deb326995367a",
+        "lastModified": null,
+        "etag": null,
+        "matchesLocalDist": null,
+        "localDistModifiedAt": null,
+        "localDistStatus": "Not present on host; build may reside in the fixture container"
+      },
+      "/assets/index-ClF_w9Dl.js": {
+        "bytes": 577842,
+        "sha256": "378381b1b34372eb326c72706896c114ca8d45f33a3f781d46ada65dd930b908",
+        "lastModified": null,
+        "etag": null,
+        "matchesLocalDist": null,
+        "localDistModifiedAt": null,
+        "localDistStatus": "Not present on host; build may reside in the fixture container"
+      },
+      "/assets/main-DrSvmP81.js": {
+        "bytes": 1009769,
+        "sha256": "74b07ba647aeaacad338c14d62d7944e59821c4744ddfe35164f6f92e8ca0e2f",
+        "lastModified": null,
+        "etag": null,
+        "matchesLocalDist": null,
+        "localDistModifiedAt": null,
+        "localDistStatus": "Not present on host; build may reside in the fixture container"
+      }
+    },
+    "assets": {
+      "arroyo-asphalt.webp": {
+        "bytes": 2644378,
+        "sha256": "12e88d94e7ce73ac8a94d351109650da262ca20f838a355cce415c4bf2a6a16a",
+        "lastModified": null,
+        "etag": null
+      },
+      "arroyo-details.webp": {
+        "bytes": 2357446,
+        "sha256": "6e52afeee96d9f897e3cb8b253bcacdae66bed31e4c02e3a534700b246d71a95",
+        "lastModified": null,
+        "etag": null
+      },
+      "arroyo-foliage.webp": {
+        "bytes": 1131330,
+        "sha256": "3b54fbaba32d6281b19346e41a60fb88f2858888cc73327edef4a1fcd30d539b",
+        "lastModified": null,
+        "etag": null
+      },
+      "arroyo-grass-clumps.webp": {
+        "bytes": 1468482,
+        "sha256": "e8cbf331e24e0bfeb4904c9e767e92d166c1283f476f619d6f854236d4c3b70d",
+        "lastModified": null,
+        "etag": null
+      },
+      "arroyo-grass.webp": {
+        "bytes": 2840886,
+        "sha256": "08d34e0817d828d21aa74ff32b43b4400ff325d58c96408dd31004b248d400a0",
+        "lastModified": null,
+        "etag": null
+      },
+      "arroyo-reflections.pmrem.gz": {
+        "bytes": 11647597,
+        "sha256": "7fb519596f3825a101330cb12e0ae96423013005d59e9f10aa1c2c562af47504",
+        "lastModified": null,
+        "etag": null
+      },
+      "arroyo-sky.webp": {
+        "bytes": 1029670,
+        "sha256": "a4b66bd9f4ba837201bb517499df4b06fef2ae08ed7850ee35a57e9b6ddff0eb",
+        "lastModified": null,
+        "etag": null
+      },
+      "arroyo-surfaces.webp": {
+        "bytes": 2304636,
+        "sha256": "3d841a80edf8e956769e039747d38ef9837f985a2f3a9683a2515ad4fac4b09d",
+        "lastModified": null,
+        "etag": null
+      },
+      "bin.glb": {
+        "bytes": 26804,
+        "sha256": "086ed48597d16096bfc08c320a17be1f8f44a186d1bf849853c66c57284c7e19",
+        "lastModified": null,
+        "etag": null
+      },
+      "coupe.glb": {
+        "bytes": 2761200,
+        "sha256": "b15774812b3664a5906100f3ee9c25629f209c19806d6fb8e4c632d5be2a4790",
+        "lastModified": null,
+        "etag": null
+      },
+      "fence-low.glb": {
+        "bytes": 9696,
+        "sha256": "79e4c3e03e5ace29a6b2e15eb70b7c90d2d026a80fa417cb936bc9b74f392ec5",
+        "lastModified": null,
+        "etag": null
+      },
+      "fence.glb": {
+        "bytes": 47904,
+        "sha256": "b2c7c7b0bb8e44fe74c5744c96361ada3a18acee106306ed3a04beac94e070a4",
+        "lastModified": null,
+        "etag": null
+      },
+      "garden-low.glb": {
+        "bytes": 216084,
+        "sha256": "bd515240ae8f8dcb05d539a3c354a114e9aeb4d0c10ee682a7233a280f605e56",
+        "lastModified": null,
+        "etag": null
+      },
+      "garden-shrub.glb": {
+        "bytes": 102380,
+        "sha256": "08eef3cb1db02a4f55ba4b9721c88a2d3da9b9c2d98caf8c94f76de4bc95f9e4",
+        "lastModified": null,
+        "etag": null
+      },
+      "house-0.glb": {
+        "bytes": 2214460,
+        "sha256": "42cbcb9a02bbf1a550f28903b2b301ea05ee2de937d73b45ab411ab6d89e5aa0",
+        "lastModified": null,
+        "etag": null
+      },
+      "house-1.glb": {
+        "bytes": 2068448,
+        "sha256": "fef0a57b04cbf48fb0dd70ffd8844959a5e070a8ee840cb5f31d2e8ee46cf200",
+        "lastModified": null,
+        "etag": null
+      },
+      "house-2.glb": {
+        "bytes": 1835200,
+        "sha256": "2fde094bc5882189e67d689eedbdd48e51be16008bc6c3ac4004bde3f9478a0b",
+        "lastModified": null,
+        "etag": null
+      },
+      "house-3.glb": {
+        "bytes": 2314040,
+        "sha256": "f7722e73d6471e5431a10a9a47e65827093fe77be88af7e3abccc2d26ea2e6a2",
+        "lastModified": null,
+        "etag": null
+      },
+      "lamp.glb": {
+        "bytes": 15624,
+        "sha256": "1beb6ea081641fa80292c01b697895c4c45f29936d84628fd29fd9c2eaaf9b18",
+        "lastModified": null,
+        "etag": null
+      },
+      "mailbox.glb": {
+        "bytes": 12356,
+        "sha256": "34c2f0adc8180dc0df68dbec19d2e9af2162fcd0ffc2acdd0442bb93ea97abe3",
+        "lastModified": null,
+        "etag": null
+      },
+      "neighbor.glb": {
+        "bytes": 6521848,
+        "sha256": "fe3aa34b83ff038774d06675ea3fa123c6532149cc8a0f26e1746d26350915be",
+        "lastModified": null,
+        "etag": null
+      },
+      "neighborhood-atlas.png": {
+        "bytes": 3529016,
+        "sha256": "03157ab45abb63aaf697823c9e6a8d927ac1b062ca27fdf21fcf7a8bd0948269",
+        "lastModified": null,
+        "etag": null
+      },
+      "palm.glb": {
+        "bytes": 881160,
+        "sha256": "83e001d52a835436bf62bc39c361e229b83dd025f1ba8aa8ef09a41d6461233d",
+        "lastModified": null,
+        "etag": null
+      },
+      "pole.glb": {
+        "bytes": 10416,
+        "sha256": "4a0fea05e8451630f0030e999b284cd50bd3ba6e0d237fb416043c6b549227c0",
+        "lastModified": null,
+        "etag": null
+      },
+      "roadside-oak.glb": {
+        "bytes": 726552,
+        "sha256": "cf70689b2314e8d480a9fa50c5de8c9f46a53665f04286858db382206a102ef3",
+        "lastModified": null,
+        "etag": null
+      },
+      "roadside-oak.glb.gz": {
+        "bytes": 449731,
+        "sha256": "3c99cbea1e4316b020733616fb5ef7f2d9e53322983e0adf4fc89431feefdb7e",
+        "lastModified": null,
+        "etag": null
+      },
+      "tree.glb": {
+        "bytes": 726496,
+        "sha256": "15ac566413627cf0221e0d2b765b69f7b4f901b2202b117c84b616bba7dcdb6f",
+        "lastModified": null,
+        "etag": null
+      },
+      "tree.glb.gz": {
+        "bytes": 448792,
+        "sha256": "3fc8c0a6d034ceb65a77755670c1e6367e624d4d80719e721102586a28c0b770",
+        "lastModified": null,
+        "etag": null
+      }
+    },
+    "scene": {
+      "bytes": 16316,
+      "sha256": "94aafd9f47317e642935ce30be657d23c24bf29fa7f37df6854f8be0e60ffce7",
+      "lastModified": null,
+      "etag": null,
+      "id": "neighborhood",
+      "revision": "fc8deb6a7bbf6a35",
+      "assets": {
+        "version": 1,
+        "files": {
+          "arroyo-asphalt.webp": {
+            "bytes": 2644378,
+            "sha256": "12e88d94e7ce73ac8a94d351109650da262ca20f838a355cce415c4bf2a6a16a"
+          },
+          "arroyo-details.webp": {
+            "bytes": 2357446,
+            "sha256": "6e52afeee96d9f897e3cb8b253bcacdae66bed31e4c02e3a534700b246d71a95"
+          },
+          "arroyo-foliage.webp": {
+            "bytes": 1131330,
+            "sha256": "3b54fbaba32d6281b19346e41a60fb88f2858888cc73327edef4a1fcd30d539b"
+          },
+          "arroyo-grass-clumps.webp": {
+            "bytes": 1468482,
+            "sha256": "e8cbf331e24e0bfeb4904c9e767e92d166c1283f476f619d6f854236d4c3b70d"
+          },
+          "arroyo-grass.webp": {
+            "bytes": 2840886,
+            "sha256": "08d34e0817d828d21aa74ff32b43b4400ff325d58c96408dd31004b248d400a0"
+          },
+          "arroyo-reflections.pmrem.gz": {
+            "bytes": 11647597,
+            "sha256": "7fb519596f3825a101330cb12e0ae96423013005d59e9f10aa1c2c562af47504"
+          },
+          "arroyo-sky.webp": {
+            "bytes": 1029670,
+            "sha256": "a4b66bd9f4ba837201bb517499df4b06fef2ae08ed7850ee35a57e9b6ddff0eb"
+          },
+          "arroyo-surfaces.webp": {
+            "bytes": 2304636,
+            "sha256": "3d841a80edf8e956769e039747d38ef9837f985a2f3a9683a2515ad4fac4b09d"
+          },
+          "bin.glb": {
+            "bytes": 26804,
+            "sha256": "086ed48597d16096bfc08c320a17be1f8f44a186d1bf849853c66c57284c7e19"
+          },
+          "coupe.glb": {
+            "bytes": 2761200,
+            "sha256": "b15774812b3664a5906100f3ee9c25629f209c19806d6fb8e4c632d5be2a4790"
+          },
+          "fence-low.glb": {
+            "bytes": 9696,
+            "sha256": "79e4c3e03e5ace29a6b2e15eb70b7c90d2d026a80fa417cb936bc9b74f392ec5"
+          },
+          "fence.glb": {
+            "bytes": 47904,
+            "sha256": "b2c7c7b0bb8e44fe74c5744c96361ada3a18acee106306ed3a04beac94e070a4"
+          },
+          "garden-low.glb": {
+            "bytes": 216084,
+            "sha256": "bd515240ae8f8dcb05d539a3c354a114e9aeb4d0c10ee682a7233a280f605e56"
+          },
+          "garden-shrub.glb": {
+            "bytes": 102380,
+            "sha256": "08eef3cb1db02a4f55ba4b9721c88a2d3da9b9c2d98caf8c94f76de4bc95f9e4"
+          },
+          "house-0.glb": {
+            "bytes": 2214460,
+            "sha256": "42cbcb9a02bbf1a550f28903b2b301ea05ee2de937d73b45ab411ab6d89e5aa0"
+          },
+          "house-1.glb": {
+            "bytes": 2068448,
+            "sha256": "fef0a57b04cbf48fb0dd70ffd8844959a5e070a8ee840cb5f31d2e8ee46cf200"
+          },
+          "house-2.glb": {
+            "bytes": 1835200,
+            "sha256": "2fde094bc5882189e67d689eedbdd48e51be16008bc6c3ac4004bde3f9478a0b"
+          },
+          "house-3.glb": {
+            "bytes": 2314040,
+            "sha256": "f7722e73d6471e5431a10a9a47e65827093fe77be88af7e3abccc2d26ea2e6a2"
+          },
+          "lamp.glb": {
+            "bytes": 15624,
+            "sha256": "1beb6ea081641fa80292c01b697895c4c45f29936d84628fd29fd9c2eaaf9b18"
+          },
+          "mailbox.glb": {
+            "bytes": 12356,
+            "sha256": "34c2f0adc8180dc0df68dbec19d2e9af2162fcd0ffc2acdd0442bb93ea97abe3"
+          },
+          "neighbor.glb": {
+            "bytes": 6521848,
+            "sha256": "fe3aa34b83ff038774d06675ea3fa123c6532149cc8a0f26e1746d26350915be"
+          },
+          "neighborhood-atlas.png": {
+            "bytes": 3529016,
+            "sha256": "03157ab45abb63aaf697823c9e6a8d927ac1b062ca27fdf21fcf7a8bd0948269"
+          },
+          "palm.glb": {
+            "bytes": 881160,
+            "sha256": "83e001d52a835436bf62bc39c361e229b83dd025f1ba8aa8ef09a41d6461233d"
+          },
+          "pole.glb": {
+            "bytes": 10416,
+            "sha256": "4a0fea05e8451630f0030e999b284cd50bd3ba6e0d237fb416043c6b549227c0"
+          },
+          "roadside-oak.glb": {
+            "bytes": 726552,
+            "sha256": "cf70689b2314e8d480a9fa50c5de8c9f46a53665f04286858db382206a102ef3"
+          },
+          "roadside-oak.glb.gz": {
+            "bytes": 449731,
+            "sha256": "3c99cbea1e4316b020733616fb5ef7f2d9e53322983e0adf4fc89431feefdb7e"
+          },
+          "tree.glb": {
+            "bytes": 726496,
+            "sha256": "15ac566413627cf0221e0d2b765b69f7b4f901b2202b117c84b616bba7dcdb6f"
+          },
+          "tree.glb.gz": {
+            "bytes": 448792,
+            "sha256": "3fc8c0a6d034ceb65a77755670c1e6367e624d4d80719e721102586a28c0b770"
+          }
+        }
+      }
+    }
+  },
+  "referenceInitial": {
+    "url": "http://127.0.0.1:3000/",
+    "origin": "http://127.0.0.1:3000",
+    "timeOrigin": 1789291368936.5,
+    "frameCount": 710862,
+    "spawned": false,
+    "playerId": null,
+    "status": "Disconnected: Scene mismatch. Reload this page to load the server neighborhood.",
+    "connected": "false",
+    "playing": false
+  },
+  "referenceFinalFrozen": {
+    "url": "http://127.0.0.1:3000/",
+    "origin": "http://127.0.0.1:3000",
+    "timeOrigin": 1789291368936.5,
+    "frameCount": 710862,
+    "spawned": false,
+    "playerId": null,
+    "status": "Disconnected: Scene mismatch. Reload this page to load the server neighborhood.",
+    "connected": "false",
+    "playing": false
+  },
+  "rawEvidence": [
+    {
+      "path": ".dream-loop/native-render-audit/round-17-isolated/verification.json",
+      "bytes": 780209,
+      "sha256": "5f7e85693758d26018ead5439e82b4e9edeba9c182eee56deb9d90e8139ae555"
+    },
+    {
+      "path": ".dream-loop/round17-native-rendering.log",
+      "bytes": 1740,
+      "sha256": "1906bccd1b80ccc827629b3d751c117c0fa4f1eb9e2844bfebaf00088d965e4c"
+    }
+  ],
+  "limitations": [
+    "Four short hardware-specific native idle/walk cases; not a universal or full-route FPS guarantee.",
+    "Logical texture accounting excludes driver overhead and renderbuffers; metadata maxima are sampled.",
+    "The full gameplay acceptance remains a separate pending gate."
+  ]
+}

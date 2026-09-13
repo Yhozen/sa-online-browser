@@ -31,7 +31,7 @@ const sourceFiles = [
   'apps/browser/src/garden.ts', 'apps/browser/src/horizon.ts',
   'assets/horizon-relief.json',
   'apps/browser/src/road-detail.ts', 'apps/browser/src/verges.ts',
-  'apps/browser/src/ground-cover.ts',
+  'apps/browser/src/mown-access.ts', 'apps/browser/src/ground-cover.ts',
   'apps/browser/src/surface-weathering.ts',
   'apps/browser/src/warmup.ts', 'apps/browser/src/characters.ts',
   'apps/browser/src/character-animation.ts', 'apps/browser/src/shadows.ts',

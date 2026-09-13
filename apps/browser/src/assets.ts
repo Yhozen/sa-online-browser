@@ -232,11 +232,10 @@ export async function loadAssets(
       ${groundCoverGLSL}\n${shader.fragmentShader}`
       .replace("#include <map_fragment>", `#include <map_fragment>
         float dryRegion = smoothstep(.25,.70,groundCover(vGrassMetres));
-        diffuseColor.rgb *= mix(vec3(.66,.82,.56),vec3(1.08,1.,.78),dryRegion)
-          * mix(vec3(.95,1.,.95),vec3(.90,.92,.90),dryRegion);
+        diffuseColor.rgb *= mix(vec3(.44,.66,.38),vec3(.93,.87,.60),dryRegion);
       `);
   };
-  groundGrass.customProgramCacheKey = () => "arroyo-live-dry-grass-regions-v2";
+  groundGrass.customProgramCacheKey = () => "arroyo-live-dry-grass-regions-v3";
   surfaceMaterials.set("grass", groundGrass);
   assetStats.textureBytes += 1024 * 1024 * 4 * 4 / 3 * 3;
   grassInput.close();

@@ -22,8 +22,8 @@
       "sha256": "08d34e0817d828d21aa74ff32b43b4400ff325d58c96408dd31004b248d400a0"
     },
     "arroyo-reflections.pmrem.gz": {
-      "bytes": 11647908,
-      "sha256": "b16d8d30fea892da2b3925afb2b627527f70b7a123a726a02d284d5739df0dfe"
+      "bytes": 11647597,
+      "sha256": "7fb519596f3825a101330cb12e0ae96423013005d59e9f10aa1c2c562af47504"
     },
     "arroyo-sky.webp": {
       "bytes": 1029670,
@@ -83,7 +83,7 @@
     },
     "neighbor.glb": {
       "bytes": 6521848,
-      "sha256": "1cb95aa9ef86eb067d51e283eb03a11e9f85095aebe86a12fbfe097df5219d8f"
+      "sha256": "fe3aa34b83ff038774d06675ea3fa123c6532149cc8a0f26e1746d26350915be"
     },
     "neighborhood-atlas.png": {
       "bytes": 3529016,

@@ -821,9 +821,10 @@ def connected_sneaker(x,side):
             y=.035+sn*(.195 if sn>=0 else .160)
             points.append(Vector((x+.100*cs*scale,.035+(y-.035)*scale,z)))
         rings.append(points);ring_materials.append(mat)
-    # Rounded tread, cream midsole and a recessed welt have separate contours.
+    # Original support points remain exact. An 8 mm cream wall ends at a
+    # 2.5 mm recessed welt; real occlusion separates it from the leather upper.
     for scale,z,mat in [(.92,.015,2),(.98,.019,2),(1,.024,2),
-                        (1,.028,0),(1,.039,0),(.985,.042,0),(.940,.046,1)]:
+                        (1,.028,0),(1,.036,0),(.985,.039,0),(.946,.0415,1)]:
         ring(scale,z,mat)
     upper_start=len(rings)
     upper_steps=[0,.15,.32,.50,.65,.70,.75,.86,.95,1]
@@ -831,20 +832,20 @@ def connected_sneaker(x,side):
         points=[]
         for i in range(sides):
             a=i*math.tau/sides;sn=math.sin(a);cs=math.cos(a)
-            foot=Vector((x+.0940*cs,.035+sn*(.195 if sn>=0 else .160)*.940,.048))
+            foot=Vector((x+.0940*cs,.035+sn*(.195 if sn>=0 else .160)*.940,.0435))
             collar=Vector((x+.088*cs,.012+.092*sn,
                 .139+.04546409702301025*max(0,sn)**2))
             # The toe rolls into a domed vamp; the heel cup climbs continuously.
             yblend=t*t*(3-2*t);p=foot.lerp(collar,yblend)
-            p.z=.048+(collar.z-.048)*t
+            p.z=.0435+(collar.z-.0435)*t
             if sn>0:p.z-=.027*sn*math.sin(math.pi*t)
             # The lower heel cup tapers to the last. A narrow concave counter
             # junction beneath the collar is actual geometry, not a dark stripe.
             rear=max(0,-sn)**1.5
-            cup=.115*math.sin(math.pi*t)*rear
-            junction=.045*math.exp(-((t-.72)/.047)**2)*rear
+            cup=.155*math.sin(math.pi*t)*rear
+            junction=.065*math.exp(-((t-.72)/.060)**2)*rear
             p.x=x+(p.x-x)*(1-cup-junction)
-            p.y+=rear*(.007*math.sin(math.pi*t)+.0045*math.exp(-((t-.72)/.047)**2))
+            p.y+=rear*(.010*math.sin(math.pi*t)+.0055*math.exp(-((t-.72)/.060)**2))
             points.append(p)
         rings.append(points);ring_materials.append(3)
     # The padded rim rolls inward into a dark lining; no floating collar ring.
@@ -914,12 +915,7 @@ def connected_sneaker(x,side):
         points=[upper_point(y,-.44,.003),upper_point(y+.008,0,.003),upper_point(y,.44,.003)]
         sewn_ribbon('flat cotton shoe lace',points,.0045,white,.0015)
 
-denim_legs={}
-for sign,side in [(-1,'L'),(1,'R')]:
-    x=sign*.15;ax=sign*.245
-    leg_profile=[(.118,x,.018,.074,.068),(.16,x,.012,.079,.074),(.245,x,-.003,.078,.082),
-      (.36,x,-.018,.083,.087),(.455,x,.013,.094,.097),(.49,x,.018,.100,.103),
-      (.59,x,-.003,.106,.109),(.735,x*.92,-.004,.104,.104),(.87,x*.84,-.002,.100,.099)]
+def original_denim_bind_surface(leg_profile,x,sign):
     leg_rings=[]
     for j in range(len(leg_profile)-1):
         a,b=leg_profile[j:j+2]
@@ -930,7 +926,7 @@ for sign,side in [(-1,'L'),(1,'R')]:
             t=k/steps;z,cx,cy,w,d=[a[n]*(1-t)+b[n]*t for n in range(5)]
             leg_rings.append(((cx,cy,z),w,d))
     a=leg_profile[-1];leg_rings.append(((a[1],a[2],a[0]),a[3],a[4]))
-    leg=ring_mesh('shaped denim leg',leg_rings,denim,sides=36)
+    leg=ring_mesh('denim seam bind reference',leg_rings,denim,sides=36)
     # Each dart has an oblique compressed valley and adjacent gathered lip.
     # Angular windows prevent full circumferential rings; offsets differ by leg.
     darts=[(.474+sign*.009,-math.pi/2,.96,sign*.25,.013,.014),
@@ -953,6 +949,54 @@ for sign,side in [(-1,'L'),(1,'R')]:
         fade=min(1,max(0,(v.co.z-.133)/.020))*min(1,max(0,(.585-v.co.z)/.035))
         radial=Vector((v.co.x-center.x,v.co.y-center.y,0)).normalized()
         v.co+=radial*(fold*fade)
+    return leg
+
+denim_legs={}
+denim_seam_bind_heights={}
+for sign,side in [(-1,'L'),(1,'R')]:
+    x=sign*.15;ax=sign*.245
+    leg_profile=[(.118,x,.018,.074,.068),(.16,x,.012,.079,.074),(.245,x,-.003,.078,.082),
+      (.36,x,-.018,.083,.087),(.455,x,.013,.094,.097),(.49,x,.018,.100,.103),
+      (.59,x,-.003,.106,.109),(.735,x*.92,-.004,.104,.104),(.87,x*.84,-.002,.100,.099)]
+    leg_rings=[]
+    for j in range(len(leg_profile)-1):
+        a,b=leg_profile[j:j+2]
+        # Put axial samples at the compressed ankle and knee; the straight
+        # upper thigh keeps its original vertices and binding envelope.
+        steps={1:14,3:12,4:9,5:10}.get(j,7)
+        for k in range(steps):
+            t=k/steps;z,cx,cy,w,d=[a[n]*(1-t)+b[n]*t for n in range(5)]
+            # A C1 cloth envelope removes the transverse shading hinges of the
+            # old straight section interpolation. Keep every original Z sample,
+            # so the lower-leg weights and all upper-thigh geometry stay exact.
+            if j<=5:cx,cy,w,d=smooth_section(leg_profile,z)
+            leg_rings.append(((cx,cy,z),w,d))
+    a=leg_profile[-1];leg_rings.append(((a[1],a[2],a[0]),a[3],a[4]))
+    leg=ring_mesh('shaped denim leg',leg_rings,denim,sides=36)
+    # Three deliberately unequal knee folds: two compressed behind the knee
+    # and one short front/outer dart. Their curved centers and compact angular
+    # support prevent the repeated full-width transverse bands. Two gathers
+    # collect the lower fabric immediately above each unchanged cuff.
+    darts=[(.450+sign*.014,-math.pi/2+sign*.27,.79,sign*.58,.0085,.014),
+           (.503-sign*.011,-math.pi/2-sign*.43,.64,-sign*.37,.0065,.017),
+           (.490+sign*.009,math.pi/2+sign*.30,.72,sign*.43,.0070,.017),
+           (.175+sign*.009,-math.pi/2+sign*.28,.92,sign*.48,.0110,.010),
+           (.211-sign*.010,math.pi/2-sign*.49,.78,-sign*.39,.0085,.013)]
+    for i,v in enumerate(leg.data.vertices):
+        center=Vector(leg_rings[i//36][0]);angle=math.atan2(v.co.y-center.y,v.co.x-center.x)
+        fold=0
+        for height,azimuth,spread,slope,depth,width in darts:
+            da=math.atan2(math.sin(angle-azimuth),math.cos(angle-azimuth))
+            around=max(0,1-(da/spread)**2)**2
+            across=v.co.x-x
+            z=v.co.z-height-slope*across-.010*math.sin(da*1.7)
+            fold+=around*depth*(-math.exp(-(z/width)**2)+.68*math.exp(-((z-width*1.35)/(width*1.22))**2))
+        # One long tension plane down the calf connects the compression sites;
+        # it never creates another horizontal ripple or changes the hem.
+        fold-=.0025*max(0,math.sin(angle+sign*.55))**2*math.exp(-((v.co.z-.32)/.10)**2)
+        fade=min(1,max(0,(v.co.z-.133)/.020))*min(1,max(0,(.585-v.co.z)/.035))
+        radial=Vector((v.co.x-center.x,v.co.y-center.y,0)).normalized()
+        v.co+=radial*(fold*fade)
     cloth_uv(leg,'leg',x)
     denim_legs[side]=leg
     parts.append((leg,f'thigh{side}'))
@@ -968,7 +1012,26 @@ for sign,side in [(-1,'L'),(1,'R')]:
             hit,normal,_,_=leg_surface.find_nearest(a.lerp(b,k/count))
             seam.append(hit+normal*.0014)
     hit,normal,_,_=leg_surface.find_nearest(controls[-1]);seam.append(hit+normal*.0014)
-    part(tube('denim outer seam',seam,.0016,stitch,5),f'thigh{side}')
+    # A fitted seam may shift a fraction of a millimetre vertically. Bind
+    # it at the original rest heights instead of silently changing skin weights.
+    bind_leg=original_denim_bind_surface(leg_profile,x,sign)
+    bind_surface=BVHTree.FromPolygons([v.co for v in bind_leg.data.vertices],
+        [tuple(p.vertices) for p in bind_leg.data.polygons],all_triangles=False)
+    bind_seam=[]
+    for a,b in zip(controls,controls[1:]):
+        count=max(1,math.ceil((b-a).length/.014))
+        for k in range(count):
+            hit,normal,_,_=bind_surface.find_nearest(a.lerp(b,k/count))
+            bind_seam.append(hit+normal*.0014)
+    hit,normal,_,_=bind_surface.find_nearest(controls[-1]);bind_seam.append(hit+normal*.0014)
+    bind_thread=tube('denim seam weight reference',bind_seam,.0016,stitch,5)
+    seam_object=part(tube('denim outer seam',seam,.0016,stitch,5),f'thigh{side}')
+    assert len(bind_thread.data.vertices)==len(seam_object.data.vertices)
+    denim_seam_bind_heights[seam_object]=[v.co.z for v in bind_thread.data.vertices]
+    for reference in [bind_leg,bind_thread]:
+        data=reference.data;bpy.data.objects.remove(reference,do_unlink=True)
+        bpy.data.meshes.remove(data)
+
     part(tube('jean cuff',[(x+math.cos(i*math.tau/24)*.077,.014+math.sin(i*math.tau/24)*.071,.14) for i in range(24)],.008,denim,8,True),f'shin{side}')
     connected_sneaker(x,side)
     # Relaxed full shirt sleeve, rolled back just above the wrist. Curved
@@ -1222,7 +1285,8 @@ for o,bone in parts:
     if o.name.startswith('shaped denim leg') or o.name.startswith('denim outer seam'):
         side=bone[-1];shin=o.vertex_groups.new(name=f'shin{side}')
         for v in o.data.vertices:
-            t=max(0,min(1,(v.co.z-.41)/.15))
+            bind_z=denim_seam_bind_heights[o][v.index] if o in denim_seam_bind_heights else v.co.z
+            t=max(0,min(1,(bind_z-.41)/.15))
             g.add([v.index],t,'REPLACE');shin.add([v.index],1-t,'REPLACE')
     if o.name=='continuous overshirt' or o.name.startswith(cloth_details):
         for name in ['hips','armL','armR','forearmL','forearmR']:o.vertex_groups.new(name=name)

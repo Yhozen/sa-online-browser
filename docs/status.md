@@ -1,6 +1,48 @@
 # Project status and continuation
 
-## Current native milestone — September 13
+## Current native milestone — September 13, round seventeen
+
+The accepted build is **`fc8deb6a7bbf6a35`**, served by `main-DrSvmP81.js`.
+Round seventeen adds localized native trouser folds, refined ankle/shoe boundaries,
+olive lawn pigment and short walkable turf on unpaved house approaches. An
+actual-footprint test caught a lamp overlap: eight tufts were removed while all
+9,285 surviving placement/color bytes stayed exact. The final terrain study was
+rejected after native inspection and was not integrated. See the
+[integration record](native-integration-round17.json) and
+[current native capture](images/native-street-round17-2026-09-13.png).
+
+The **complete native motion probe passed**, with both owned windows confirmed
+absent afterward and zero server sessions/workers. The four isolated native
+rendering cases also passed: **120.48 median FPS**, p95 at most **9.1 ms**, and
+no stalls above 50 ms. Maximum logical texture storage was **315.72 MiB**;
+measured encoded download was **46,985,679 bytes**. Maximum sampled geometry was
+**5,352,079 triangles / 954 calls**. These remain bounded hardware measurements;
+see the [motion](native-motion-round17-summary.json) and
+[rendering](native-rendering-round17-summary.json) records.
+
+Three Standard → Low → Standard cycles completed without browser errors.
+**Strict pixel equality failed:** 30 of 35 measured region comparisons were
+exact; each remaining car-rear comparison changed one pixel by one color level
+at the exhaust edge. No tolerance was substituted. Quality and motion preserved
+all **107 source, 28 asset and 4 served-resource identities**. See the
+[quality record](native-quality-cycle-round17.json).
+
+Focused assets/character tests passed **6/6**, verges clearance/budget tests
+**5/5**, and typecheck passed. A reflection-test filename typo ran no tests and
+exited one; the corrected command passed **2/2**. The integration record preserves
+both outcomes.
+
+**The full 15-scenario acceptance and both supervisor checks remain pending.**
+The historical 14/15 failed full run and the later focused heartbeat/lifecycle
+pass are separate evidence, not a full-suite pass. **The visual target remains
+open:** the latest formal [review](art-review-round13-2026-09-13.md) is still
+judge thirteen's **5.0/10, Tier 1**. No new formal score or ready declaration is
+assigned to this build.
+
+## Earlier native milestone — round fifteen
+
+The following paragraphs retain the earlier round-fifteen measurements and
+pending items; the round-seventeen record above supersedes its current status.
 
 Round fifteen integrates native oak diffuse accessibility, a narrower roadside
 trunk, connected terrain gullies, sparse road/curb wear and redistributed frontage

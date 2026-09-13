@@ -1,0 +1,258 @@
+{
+  "version": 1,
+  "milestone": "round17",
+  "recordedAt": "2026-09-13T14:44:44.658Z",
+  "sceneRevision": "fc8deb6a7bbf6a35",
+  "passed": true,
+  "processSession": "20848",
+  "process": {
+    "complete": true,
+    "startedAt": "2026-09-13T14:35:48.046Z",
+    "command": [
+      "node",
+      "tools/verify-motion.mjs"
+    ],
+    "motionCase": "all",
+    "finishedAt": "2026-09-13T14:36:31.858Z",
+    "exitCode": 0,
+    "signal": null,
+    "sceneRevision": "fc8deb6a7bbf6a35",
+    "owned": [
+      "E12C0355BA11D28E2A5DB59E6AE7557B",
+      "8AC960B44E1D81E8708CDFBC604B1EB7"
+    ],
+    "inputsUnchanged": true,
+    "health": {
+      "ok": true,
+      "sessions": 0,
+      "workers": 0
+    }
+  },
+  "nativeViewport": {
+    "width": 1280,
+    "height": 720,
+    "dpr": 2
+  },
+  "renderSize": [
+    2560,
+    1440
+  ],
+  "chrome": "Chrome/153.0.8010.37",
+  "errors": [],
+  "jumpSeatExit": [
+    {
+      "mode": "driver",
+      "seatedDistance": 3.28694862987817,
+      "minimumBarrierGap": 11.14708018858849,
+      "maximumUncommandedHeight": 0,
+      "maximumUpwardVelocity": 0
+    },
+    {
+      "mode": "passenger",
+      "seatedDistance": 0,
+      "minimumBarrierGap": 14.790000000000001,
+      "maximumUncommandedHeight": 0,
+      "maximumUpwardVelocity": 0
+    }
+  ],
+  "walking": {
+    "frames": 322,
+    "medianFPS": 120.48192771082753,
+    "p95FrameMs": 9.100000000000364,
+    "zeroRenderFrames": 0,
+    "zeroSimulationFrames": 161,
+    "meanRenderSpeed": 5.000000000000024,
+    "speedVariationPercent": 1.415873726754483e-12,
+    "maximumSimulationLag": 0.07383333342273879,
+    "totalDistance": 13.415000000000033
+  },
+  "driving": {
+    "frames": 203,
+    "medianFPS": 120.48192771085394,
+    "p95FrameMs": 8.900000000001455,
+    "zeroRenderFrames": 0,
+    "zeroSimulationFrames": 102,
+    "meanRenderSpeed": 8.068366989115793,
+    "speedVariationPercent": 38.14277821284125,
+    "maximumSimulationLag": 0.1315271116279817,
+    "totalDistance": 13.650135302309094
+  },
+  "steeringRadians": 1.1452099687279753,
+  "teleport": {
+    "correctedSamples": 582,
+    "firstCorrected": {
+      "t": 14371.2,
+      "raw": [
+        -4,
+        -4,
+        10
+      ],
+      "render": [
+        -4,
+        -4,
+        10
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "mode": "onFoot",
+      "alpha": 0.11399999928478792,
+      "spawned": true,
+      "correction": 5,
+      "preset": "low",
+      "renderSize": [
+        2560,
+        1440
+      ],
+      "dpr": 2,
+      "viewport": [
+        1280,
+        720
+      ]
+    }
+  },
+  "twoPlayer": {
+    "local": {
+      "frames": 279,
+      "medianFPS": 119.04761904759843,
+      "p95FrameMs": 16.700000000000728,
+      "zeroRenderFrames": 0,
+      "zeroSimulationFrames": 119,
+      "meanRenderSpeed": 4.999999999999993,
+      "speedVariationPercent": 1.46952938866396e-12,
+      "maximumSimulationLag": 0.10749999999999948,
+      "totalDistance": 13.333999999999975
+    },
+    "remote": {
+      "frames": 280,
+      "medianFPS": 119.04761904761776,
+      "p95FrameMs": 16.699999999999818,
+      "zeroRenderFrames": 2,
+      "zeroSimulationFrames": 200,
+      "meanRenderSpeed": 5.022266370423779,
+      "speedVariationPercent": 24.25246994762753,
+      "maximumSimulationLag": 0.4919983276426124,
+      "totalDistance": 13.47619193662578
+    }
+  },
+  "networkAgreementMetres": 4.324858712135561e-07,
+  "occupants": {
+    "driver": {
+      "frames": 170,
+      "medianFPS": 119.04761904759843,
+      "p95FrameMs": 17.100000000002183,
+      "zeroRenderFrames": 0,
+      "zeroSimulationFrames": 68,
+      "meanRenderSpeed": 8.048404060449252,
+      "speedVariationPercent": 38.72012380895401,
+      "maximumSimulationLag": 0.21495157337969317,
+      "totalDistance": 13.56142761563623
+    },
+    "passenger": {
+      "frames": 170,
+      "medianFPS": 119.04761904759843,
+      "p95FrameMs": 16.899999999999636,
+      "zeroRenderFrames": 0,
+      "zeroSimulationFrames": 118,
+      "meanRenderSpeed": 7.3444177064905904,
+      "speedVariationPercent": 46.518432845396994,
+      "maximumSimulationLag": 1.1302048548559611,
+      "totalDistance": 12.378731824590929
+    }
+  },
+  "movingReset": {
+    "drivenDistance": 7.170401609983041,
+    "steeredRadians": 0.9294016543865884,
+    "replicationWaitMs": 0,
+    "passengerPresentationLag": 0.6937398714677244,
+    "results": [
+      {
+        "label": "driver",
+        "frames": 525,
+        "firstCorrectionAfterRequestMs": 223.599853515625,
+        "maximumSelfPresentationError": 0,
+        "maximumCarPresentationError": 0,
+        "maximumPeerPresentationError": 1.7763568394002505e-15,
+        "peerAgreementMs": 33.400146484375,
+        "observedSettledMs": 4625.300048828125
+      },
+      {
+        "label": "passenger",
+        "frames": 526,
+        "firstCorrectionAfterRequestMs": 232.10009765625,
+        "maximumSelfPresentationError": 0,
+        "maximumCarPresentationError": 0,
+        "maximumPeerPresentationError": 1.7763568394002505e-15,
+        "peerAgreementMs": 16.800048828125,
+        "observedSettledMs": 4616.699951171875
+      }
+    ],
+    "interpretation": "Both driver and passenger received the actual moving-vehicle reset. This motion probe is distinct from the browser-clock reset observer used by full acceptance."
+  },
+  "resetSynchronizationCount": 7,
+  "inputs": {
+    "sourceCount": 107,
+    "assetCount": 28,
+    "servedCount": 4,
+    "allExact": true,
+    "before": {
+      "path": ".dream-loop/motion-final-round17/inputs-before.json",
+      "bytes": 21331,
+      "sha256": "589f43c0e2f0fdce419285567e0a8dcb24c4e6f50eb7742b7edde2ffc3cd20d8"
+    },
+    "after": {
+      "path": ".dream-loop/motion-final-round17/inputs-after.json",
+      "bytes": 21331,
+      "sha256": "271a2c89955c3dd97de4f62c4d634c9ea3dcd43dd4cd7d82b5210db0b896eb3c"
+    }
+  },
+  "cleanup": {
+    "at": "2026-09-13T14:36:32.070Z",
+    "owned": [
+      "E12C0355BA11D28E2A5DB59E6AE7557B",
+      "8AC960B44E1D81E8708CDFBC604B1EB7"
+    ],
+    "allOwnedTargetsAbsent": true,
+    "health": {
+      "ok": true,
+      "sessions": 0,
+      "workers": 0
+    },
+    "inputsUnchanged": true
+  },
+  "rawEvidence": [
+    {
+      "path": ".dream-loop/motion-final-round17/verification.json",
+      "bytes": 5412744,
+      "sha256": "d919eb33ab9037bb804c00975b7c610055c9ef4a58393a385ff787a79b073a0d"
+    },
+    {
+      "path": ".dream-loop/motion-final-round17/complete.json",
+      "bytes": 464,
+      "sha256": "aa081d4eda1df4927d6b20a313abfe8a1fa4a3750b48e883ec2797319d5be285"
+    },
+    {
+      "path": ".dream-loop/motion-final-round17/process.json",
+      "bytes": 210,
+      "sha256": "0e3d3ab93fa86e430c04461597fa23e8670c1375901f9be43d1ff1a9f5a803c3"
+    },
+    {
+      "path": ".dream-loop/motion-final-round17/cleanup.json",
+      "bytes": 267,
+      "sha256": "2a94ff7612e34d129959762f29b0dc080a90d9d68b2d08d095e9e2152dc5751a"
+    },
+    {
+      "path": ".dream-loop/round17-final-motion-wrapper.log",
+      "bytes": 1484,
+      "sha256": "169eaeb47cdefa6f14b02958309c3aa52e238041bac340840d04ded3bb8aa56d"
+    }
+  ],
+  "limitations": [
+    "The complete all-case native motion process exited zero; no filtered case is represented as a full motion pass.",
+    "This does not replace the full 15-scenario acceptance and supervisor checks.",
+    "Frame statistics belong to this bounded motion probe; the separate native rendering audit is the performance evidence."
+  ]
+}

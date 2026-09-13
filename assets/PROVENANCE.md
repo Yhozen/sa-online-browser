@@ -19,7 +19,7 @@ All new vegetation geometry remains original repository-authored work. `tools/as
 
 ## Native dream-loop continuation (2026-09-13 UTC)
 
-The following current records supersede the intermediate September 13 counts and material settings retained later in this document. Current native Blender 5.2.1 entries are oak, palm, neighbor, `garden-low` and `garden-shrub`; untouched houses, coupe and other props retain their accepted pinned Blender 4.5.13 provenance. `source/asset-build.json` and the per-asset records are authoritative for generator and output identities. Native authoring checks, generated art references and actual browser evidence remain distinct.
+The round-seventeen record below supersedes intermediate September 13 counts and material settings. `source/asset-build.json` and the per-asset records are authoritative for each model's native runtime, generator and output identities; selective builds preserve untouched exports. Native authoring checks, generated art references and actual browser evidence remain distinct.
 
 `reference/arroyo-dream-2026-09-13.png` is the built-in image-generation edit of the starting live street capture, used as the new visual target. The prompt retained the exact camera, neighborhood layout, car, character and HUD while targeting realistic warm afternoon lighting, connected oak crowns, feathered palms, planted lawns, automotive reflections and cloth. This generated image is never labeled as gameplay evidence.
 
@@ -29,7 +29,43 @@ The six surface, detail, foliage, sky, asphalt and lawn WebP inputs recorded in 
 
 The current asphalt is an original built-in image edit with quieter fissures and warm mineral aggregate, retained byte-for-byte at `textures/arroyo-asphalt.png`. `source/asphalt-authoring.json` records its exact prompt and generation identity. Runtime samples it across four metres and derives aligned surface maps. The current sky is an original four-edit refinement with fuller warm-white clouds, a midpoint horizon and open blue at the panorama wrap. `source/arroyo-sky-generation.json` and `source/arroyo-sky-prompts.txt` retain every exact prompt, input and generated-output identity. Its opposite cloud-band edges differ by at most 4/255 mean RGB in the measured 29–33° band; this is a closely matched wrap, not a claim of mathematically identical edges.
 
-### Current structural refinement (September 13, round twelve)
+### Current accepted build — September 13, round seventeen
+
+The accepted scene is `fc8deb6a7bbf6a35`. Exact authoring, delivered assets and
+browser evidence are recorded in the [round-seventeen integration](../docs/native-integration-round17.json).
+Later terrain and leaf-lighting studies were not adopted; older dated descriptions
+below retain their original measurements and do not override the current ledgers.
+
+Native Blender 5.2.1 rebuilt only `neighbor` for this round. The editable
+`source/neighbor.blend` is 3,523,249 bytes, SHA256
+`6444a8e347c5f0946823c92e0f9ff89cdffa33d52745fb37d78ff93404668643`.
+The 6,521,848-byte GLB has SHA256
+`fe3aa34b83ff038774d06675ea3fa123c6532149cc8a0f26e1746d26350915be`,
+with 121,590 triangles and 14 material primitives. Local asymmetric knee and ankle
+compression replaces transverse bands; the existing cream shoe/sole boundaries
+are refined. Every vertex and skin attribute, bone/inverse-bind value, material
+and four animation key streams matches the accepted native preview. The final
+export changes only triangle submission order in rubber, lip, iris and hair;
+all oriented triangles and multiplicities remain exact. File-byte identity is
+not claimed. `source/asset-build.json` retains native executable and recipe hashes.
+
+Lawn pigment now uses the same live/dry world field on ground and existing grass.
+The new short access turf reuses the original ribbon geometry/material, adds no
+texture, and stays below six centimetres. Actual exported fixture checks removed
+eight lamp-adjacent tufts; all 9,285 survivors retain exact preview matrix/color
+bytes. All grass totals 64 batches and 714,924 triangles. The original pavement,
+collision fixture, tall-plant exclusions and authored bitmap inputs remain.
+
+The native static PMREM bake is 11,647,597 compressed bytes, SHA256
+`7fb519596f3825a101330cb12e0ae96423013005d59e9f10aa1c2c562af47504`,
+with finite peak linear radiance 7.4765625. `source/reflection-bake.json` records
+the unchanged source/asset bracket and zero-player/zero-worker capture. Complete
+native motion and four isolated performance cases pass; full 15-scenario
+acceptance is pending and the formal art target remains open. The quality cycles
+completed, but strict pixel equality failed at five one-pixel, one-level car-edge
+comparisons; this is not reported as a bitwise restoration pass.
+
+### Earlier structural refinement (September 13, round twelve)
 
 Native Blender 5.2.1 rebuilt `tree`, `roadside-oak`, `palm` and `neighbor` through
 the normal selective pipeline. Current hashes, source BLEND identities and native
