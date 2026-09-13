@@ -97,7 +97,7 @@ async function snapshotServedBuild() {
     const localFile = path.join(root, 'apps/browser/dist', file === '/' ? 'index.html' : file.replace(/^\//, ''));
     if (existsSync(path.join(root, 'apps/browser/dist')) && hash(readFileSync(localFile)) !== files[file].sha256)
       throw Error('The served browser bundle differs from local dist: ' + file);
-    for (const match of bytes.toString('utf8').matchAll(/["']((?:\/assets\/|\.\/)[^"']+\.(?:js|css))["']/g)) {
+    for (const match of bytes.toString('utf8').matchAll(/["'\x60]((?:\/assets\/|\.\/)[^"'\x60]+\.(?:js|css))["'\x60]/g)) {
       const dependency = new URL(match[1], new URL(file, gameURL)).pathname;
       if (!files[dependency]) pending.push(dependency);
     }

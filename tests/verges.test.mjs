@@ -45,14 +45,14 @@ test('actual yard grass and soil geometry stays low and clear of travel surfaces
   const scene=new THREE.Scene(),ground=new THREE.MeshStandardMaterial({map:new THREE.Texture()});
   plantVerges(scene,fixture,ground);scene.updateMatrixWorld(true);
   const exclusions=rectangles(fixture),world=new THREE.Matrix4(),instance=new THREE.Matrix4();
-  let vertices=0,clumps=0,soilTriangles=0,minRoadClearance=Infinity,maxHeight=-Infinity;
+  let vertices=0,clumps=0,grassTriangles=0,soilTriangles=0,minRoadClearance=Infinity,maxHeight=-Infinity;
   for(const mesh of scene.children){
     if(!mesh.name.startsWith('Arroyo yard grass')&&mesh.name!=='Arroyo original soil transitions')continue;
     const g=mesh.geometry,p=g.attributes.position,n=g.attributes.normal;
     assert.equal(n.count,p.count);
     for(let i=0;i<n.count;i++)assert.ok(Number.isFinite(n.getX(i)+n.getY(i)+n.getZ(i))&&Math.abs(Math.hypot(n.getX(i),n.getY(i),n.getZ(i))-1)<1e-5);
     const count=mesh.isInstancedMesh?mesh.count:1;assert.ok(Number.isSafeInteger(count)&&count>0);
-    if(mesh.isInstancedMesh)clumps+=count;
+    if(mesh.isInstancedMesh){clumps+=count;grassTriangles+=count*g.index.count/3;}
     else{assert.equal(mesh.material.map,ground.map,'soil must reuse the existing original map');assert.equal(g.attributes.color.itemSize,4);assert.ok(mesh.material.transparent&&!mesh.material.depthWrite);}
     for(let i=0;i<count;i++){
       if(mesh.isInstancedMesh){mesh.getMatrixAt(i,instance);world.multiplyMatrices(mesh.matrixWorld,instance);}else world.copy(mesh.matrixWorld);
@@ -79,8 +79,37 @@ test('actual yard grass and soil geometry stays low and clear of travel surfaces
       }
     }
   }
-  assert.ok(vertices>10000&&clumps>=5000&&clumps<=8000&&soilTriangles>100,'substantial actual geometry must be inspected');
+  assert.ok(vertices>10000&&clumps>=16000&&clumps<=26000&&soilTriangles>100,'substantial actual geometry must be inspected');
+  assert.ok(grassTriangles<=780000,'wider turf coverage must stay inside the curved-blade triangle budget');
   assert.ok(maxHeight>.15&&minRoadClearance>.05,'preserve physically visible clumps with a measured sidewalk gap');
+});
+test('fine turf covers the lawns without increasing grass draw calls or removing blade curvature',()=>{
+  const scene=new THREE.Scene();plantVerges(scene,fixture);scene.updateMatrixWorld(true);
+  const grass=scene.children.filter(mesh=>mesh.isInstancedMesh);
+  const yard=grass.filter(mesh=>mesh.name.startsWith('Arroyo yard grass'));
+  const occupied=new Set(),materials=new Set(),matrix=new THREE.Matrix4();
+  let triangles=0;
+  for(const mesh of grass){
+    materials.add(mesh.material);triangles+=mesh.count*mesh.geometry.index.count/3;
+    const blades=mesh.geometry.attributes.position.count/8;
+    assert.ok(blades>=4&&blades<=6,'tufts must spread a few blades instead of recreating dense islands');
+    assert.equal(mesh.geometry.index.count,blades*3*6,'each blade retains three curved ribbon segments');
+    const normals=mesh.geometry.attributes.normal;
+    for(let i=0;i<normals.count;i++)assert.ok(normals.getZ(i)>.95,'thin turf retains an upward canopy lighting field');
+  }
+  for(const mesh of yard){
+    const bounds=mesh.boundingBox.getSize(new THREE.Vector3());
+    assert.ok(bounds.x<24.65&&bounds.y<24.65,'grass batches retain tight 24 m spatial culling');
+    for(let i=0;i<mesh.count;i++){
+      mesh.getMatrixAt(i,matrix);
+      occupied.add(`${Math.floor(matrix.elements[12]/.25)},${Math.floor(matrix.elements[13]/.25)}`);
+    }
+  }
+  // The previous islands occupied 3,540 quarter-metre cells on this fixture.
+  // This independent world-space count requires at least three times that area.
+  assert.ok(occupied.size>=10620,'continuous planting must reach substantially more lawn area');
+  assert.equal(materials.size,1,'all turf must share one material pass');
+  assert.ok(grass.length<=87&&triangles<=800000,'wider planting must fit the previous mesh and triangle envelope');
 });
 test('yard planting can build without global browser assets or an optional grass texture',()=>{
   const scene=new THREE.Scene();plantVerges(scene,fixture);

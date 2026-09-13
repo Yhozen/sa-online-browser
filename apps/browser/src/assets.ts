@@ -78,6 +78,11 @@ export async function loadAssets(
         o.receiveShadow = true;
         const list = Array.isArray(o.material) ? o.material : [o.material];
         o.material = list.map((m) => {
+          if (name === "lamp" && m.name === "ivory" && m instanceof THREE.MeshStandardMaterial) {
+            // The luminaire lens is its own surface; ivory vehicle trim stays opaque.
+            m.name = "lamp-lens";
+            m.color.set(0xffdf9e); m.emissive.set(0xffbf65); m.emissiveIntensity = 1.4;
+          }
           if (m.name.startsWith("foliage") || m.name.startsWith("palm-frond")) m.side = THREE.DoubleSide;
           if (m.name === "ivory" && m instanceof THREE.MeshStandardMaterial) m.color.set(0xe3dfcf);
           if (m.name === "chrome" && m instanceof THREE.MeshStandardMaterial) {
@@ -151,11 +156,11 @@ export async function loadAssets(
     }
     bitmap.close();
   }
-  // The original 12m road study is displayed over 9.6m to bring aggregate and
-  // fissures toward street scale while retaining its connected repair structure.
+  // The revised original road study uses fine, quiet fissures. A four-metre
+  // tile brings its mineral flecks down to asphalt aggregate scale.
   const asphaltInput = await textureInput("arroyo-asphalt.webp");
   const asphaltMaps = surfaceTexture(asphaltInput, -1, 1254);
-  for (const texture of Object.values(asphaltMaps)) texture.repeat.setScalar(1 / 2.4);
+  for (const texture of Object.values(asphaltMaps)) texture.repeat.setScalar(1);
   surfaceMaterials.set("asphalt", new THREE.MeshStandardMaterial({
     name:"asphalt", ...asphaltMaps, color:0xb1b1aa, roughness:.88,
     normalScale:new THREE.Vector2(.22, .22),

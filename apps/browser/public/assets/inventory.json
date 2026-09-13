@@ -2,8 +2,8 @@
   "version": 1,
   "files": {
     "arroyo-asphalt.webp": {
-      "bytes": 2441298,
-      "sha256": "e9c682d9633836d3a940cba0f9a682e01219b683a20d3a904430c8936be041f9"
+      "bytes": 2644378,
+      "sha256": "12e88d94e7ce73ac8a94d351109650da262ca20f838a355cce415c4bf2a6a16a"
     },
     "arroyo-details.webp": {
       "bytes": 2357446,
@@ -18,12 +18,12 @@
       "sha256": "08d34e0817d828d21aa74ff32b43b4400ff325d58c96408dd31004b248d400a0"
     },
     "arroyo-reflections.pmrem.gz": {
-      "bytes": 11293459,
-      "sha256": "6e07a654e7349b8a565996858f0ae131fc7c530fdd9d42a8db972c9ba2c7d0f7"
+      "bytes": 11177285,
+      "sha256": "1a17cc771f4e928fec70283851a286b8c65b5a782169b9604e834b613397dfb7"
     },
     "arroyo-sky.webp": {
-      "bytes": 966462,
-      "sha256": "399fb9ab300be70fe658095aa51f6dee6fe674929e8d43bd6846c3169a84c4e3"
+      "bytes": 1029670,
+      "sha256": "a4b66bd9f4ba837201bb517499df4b06fef2ae08ed7850ee35a57e9b6ddff0eb"
     },
     "arroyo-surfaces.webp": {
       "bytes": 2304636,

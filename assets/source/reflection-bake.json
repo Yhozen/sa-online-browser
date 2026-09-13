@@ -1,24 +1,24 @@
 {
   "version": 1,
-  "generatedAt": "2026-09-13T03:52:26.580Z",
+  "generatedAt": "2026-09-13T04:22:45.000Z",
   "format": "PMR1: uint32-le magic,width,height; RGBA16F PMREM atlas; gzip",
   "width": 1536,
   "height": 2048,
-  "compressedBytes": 11293459,
+  "compressedBytes": 11177285,
   "uncompressedBytes": 25165836,
-  "sha256": "6e07a654e7349b8a565996858f0ae131fc7c530fdd9d42a8db972c9ba2c7d0f7",
-  "uncompressedSha256": "163d5500dfadf9dc8df5c0c3795badb4cbf3a5ccbd15038778a0463719b62383",
+  "sha256": "1a17cc771f4e928fec70283851a286b8c65b5a782169b9604e834b613397dfb7",
+  "uncompressedSha256": "aa2a8255d0415a1d71f370e85df68f4a79715c4e0ca933efb224d44443967889",
   "browser": "Chrome/153.0.8010.37",
   "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
-  "peakRadiance": 1.2177734375,
+  "peakRadiance": 3.76171875,
   "scene": {
     "id": "neighborhood",
-    "revision": "191c642c4ed53deb"
+    "revision": "b09254eed9c7c3e8"
   },
   "inputSnapshot": {
-    "capturedAt": "2026-09-13T03:52:23.438Z",
-    "sceneSha256": "090619452b7b4e5b9f8afaf61f0c1e6ded9afd0d2df640b596e4946cf792412c",
-    "inventorySha256": "4090b75babf4834c4279c7d057a24fc61fbccf503f826b83176afe28477a3d20"
+    "capturedAt": "2026-09-13T04:22:41.845Z",
+    "sceneSha256": "13c2b9d04c3d97e15406fa5d2dea002752c640ecefb446ae9668e2c202a80b31",
+    "inventorySha256": "fcb3db76ebf8335697e1d582ee7ac04a9564dfab34a555f6d47f540e00aedf96"
   },
   "sources": {
     "apps/browser/index.html": "5c7e3e0d86ebc6d6e88fb1514c0e592903af7ab85d4dadd5b13a2f43e2387e24",
@@ -28,18 +28,18 @@
     "apps/browser/src/main.ts": "a9263b57d32640e8dc73012982105ae05f4258f44fdb5adf97420bb96167a2f3",
     "apps/browser/src/graphics.ts": "22b713f3ab445dd4a8effb2160c631515b1e65a14d7ad97731e4db8ca615b297",
     "apps/browser/src/antialias.ts": "4b431578258f5e4c822f07b3003b58f9f802767a99f86a300cdf8f8a5392f602",
-    "apps/browser/src/assets.ts": "7523b7403a15944fdac7b4e25fd695d86b22ce7c12cc331ff2bd2356c8ca2b3f",
-    "apps/browser/src/lighting.ts": "650d0ff0dae9282f6f2c7bc9d040b15dfce6c6267b346299062b86d16e3d4015",
+    "apps/browser/src/assets.ts": "4f1f54ff0a94f327eb8e4f2de77aa7e9fd52a60696b22f2633b54007c95f514d",
+    "apps/browser/src/lighting.ts": "5247cd5d35eca7090a9c26cf85caa199313fa77289c271b034685b7004d6721f",
     "apps/browser/src/environment.ts": "26fcae1c3985888cd6f936d50f08873163d9d7ded837ba936eeae054182ea823",
     "apps/browser/src/surface-textures.ts": "2309c51c318e786734dd90470cbfcb3bb83e67eef2691cf6e3dc5c7028edac56",
     "apps/browser/src/surface-pixels.ts": "562df4dededa3093e9cd4b64b1006becf5707b8fbd3f2bcba3c6cd397242a24e",
     "apps/browser/src/foliage-mips.ts": "bf7fe1414777bf98dc331fcf323a747dd6a1d20e1df857cde5e5ad47a98cb15c",
     "apps/browser/src/reflection-storage.ts": "8b7f07a99248d1885e509aa3e916b87982ad33019348ae87fd04e09635c13720",
     "apps/browser/src/garden.ts": "d378e0a70835d4f6698284050f120ab452ba9d4e293acf3baecc06eecf66bceb",
-    "apps/browser/src/horizon.ts": "660f2dd0fd99d9094f4311747afe1ece4ed94144cff6c424abe174bf6a4787d5",
+    "apps/browser/src/horizon.ts": "fbb5d78893ba19a1cbd20261c793229c9ff0e6b4177ff584ff886184dbc24684",
     "assets/horizon-relief.json": "dd9cded94acdb2974d531e9b2d425e95cb2bfd52d6c9bbd4e7f3b2b47df6d7df",
     "apps/browser/src/road-detail.ts": "c86c9dc38d2b45274475a9eb7509a27be259d72da48da9ded30157e3ff491592",
-    "apps/browser/src/verges.ts": "f24a6832328d0dbec5b60ed36e21551df4a47f6b94b3690042b7c1eeb13e556d",
+    "apps/browser/src/verges.ts": "86c7df7168ec11c2fd8b704f745e29a289f7dd72258163de3e5dad831661c3bc",
     "apps/browser/src/warmup.ts": "2db7cbf9d34a1a13b65fe8b52cd8509360903d7084741b216be60e9cadad3406",
     "apps/browser/src/characters.ts": "0362d915cd15692bb7259140836d6a90fff610f73735357e0121e497e4432c96",
     "apps/browser/src/character-animation.ts": "0782bb10ef3fedfe9744937687dd63566e32abafae70d75e1420c4a62922e8bb",
@@ -58,28 +58,32 @@
     "packages/shared/scenes/yard.json": "eafd501e8fef4ffa7df59050ec41059c4d86b53e510aa83e7479e936497ed5ac",
     "services/gateway/server.mjs": "c2e08a361dd313443790050bda4fb308c33bc38ade6e3a0aba5e9f7ff8e0f326",
     "tools/asset-inventory.mjs": "b0e3c59ae80648d9fe8f528a1e5a4548a6cfad7148f7958b43f3014d3e9bc577",
-    "tools/bake-reflections-native.mjs": "ea7f0c39e44c80c8ba9b4e739279f79b7e5af707df74796470bec5f7d7263ce3",
+    "tools/bake-reflections-native.mjs": "eb523d06c277ea2a444ba06dfc8e5dc65f4972ad14a8345391abe1ef41aa31d1",
     "package.json": "1f2d46278fb3f0ae6ee93d9b70b8b337486515cc36ce2de8b3663616686d7f90",
     "package-lock.json": "b99e5c05368deae7d0cd82a86505d33671cc2275c0852eed3f08afbd0b07bd74"
   },
   "servedBuild": {
     "/": {
       "bytes": 449,
-      "sha256": "71a89ebd6097f7ae763f1e0a96c9a160f89525ee84b3eb7407caaf4030be6eb2"
+      "sha256": "a9123801edc7c787455d9325001cce9407c6d937b49a9781f91d6f55d3ac537a"
+    },
+    "/assets/index-BJkAPRSj.js": {
+      "bytes": 578444,
+      "sha256": "a864102ad9250171c582f53cdc4ccc9ac5e5f3368cda6047ec60bcaf2ff3e66d"
     },
     "/assets/index-CLSF4nJg.css": {
       "bytes": 6991,
       "sha256": "0655f264cfc9ca400288720b93a106c022f381daa4c7ce52c88deb326995367a"
     },
-    "/assets/index-D98NSiR-.js": {
-      "bytes": 578444,
-      "sha256": "0ceb71f0f01d1d3c03732ff818d5a94a47e6114930a885376f79890547b50520"
+    "/assets/main-C-6HtUXz.js": {
+      "bytes": 1108785,
+      "sha256": "1c9adfa45fac74b18529e80eb0cf0c5f5cc68148cfe9236599a19db2e933db65"
     }
   },
   "inputs": {
     "arroyo-asphalt.webp": {
-      "bytes": 2441298,
-      "sha256": "e9c682d9633836d3a940cba0f9a682e01219b683a20d3a904430c8936be041f9"
+      "bytes": 2644378,
+      "sha256": "12e88d94e7ce73ac8a94d351109650da262ca20f838a355cce415c4bf2a6a16a"
     },
     "arroyo-details.webp": {
       "bytes": 2357446,
@@ -94,8 +98,8 @@
       "sha256": "08d34e0817d828d21aa74ff32b43b4400ff325d58c96408dd31004b248d400a0"
     },
     "arroyo-sky.webp": {
-      "bytes": 966462,
-      "sha256": "399fb9ab300be70fe658095aa51f6dee6fe674929e8d43bd6846c3169a84c4e3"
+      "bytes": 1029670,
+      "sha256": "a4b66bd9f4ba837201bb517499df4b06fef2ae08ed7850ee35a57e9b6ddff0eb"
     },
     "arroyo-surfaces.webp": {
       "bytes": 2304636,

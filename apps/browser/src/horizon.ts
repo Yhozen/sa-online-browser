@@ -15,7 +15,7 @@ function noise(x: number, y: number) {
 
 /** Eroded ridge networks beyond the closed, level playable fixture. */
 export function buildHorizon(scene: THREE.Scene, groundZ: number) {
-  const dry = new THREE.Color(0xa58b65), rock = new THREE.Color(0xcab18a), scrub = new THREE.Color(0x535b3c);
+  const dry = new THREE.Color(0xbda174), rock = new THREE.Color(0xdec6a0), scrub = new THREE.Color(0x535b3c);
   for (let layer = 0; layer < 3; layer++) {
     const { segments, rings } = sculpt, geology = sculpt.layers[layer];
     const acceptedHeights: number[] = [];
@@ -91,14 +91,14 @@ export function buildHorizon(scene: THREE.Scene, groundZ: number) {
     // the real normal/sun lighting, without baking a dark fake shadow mask.
     // This static ridge material keeps contrast broad; grain stays in maps.
     const normals = geometry.getAttribute("normal"), colorAttribute = geometry.getAttribute("color");
-    const sunward = new THREE.Vector3(-48, -35, 0).normalize();
+    const sunward = new THREE.Vector3(-58, 12, 0).normalize();
     for (let k = 0; k < normals.count; k++) {
       const aspect = THREE.MathUtils.clamp((normals.getX(k) * sunward.x + normals.getY(k) * sunward.y) * 2.5, -1, 1);
       const warm = Math.max(0, aspect), cool = Math.max(0, -aspect);
       colorAttribute.setXYZ(k,
-        colorAttribute.getX(k) * (1 + .12 * warm - .09 * cool),
-        colorAttribute.getY(k) * (1 + .04 * warm - .025 * cool),
-        colorAttribute.getZ(k) * (1 - .025 * warm + .065 * cool));
+        colorAttribute.getX(k) * (1 + .16 * warm - .27 * cool),
+        colorAttribute.getY(k) * (1 + .06 * warm - .13 * cool),
+        colorAttribute.getZ(k) * (1 - .04 * warm + .14 * cool));
     }
     const grass = surfaceMaterials.get("grass"), concrete = surfaceMaterials.get("concrete");
     const material = new THREE.MeshStandardMaterial({ color: 0xf1e9d9, vertexColors: true, roughness: 1,
@@ -142,12 +142,12 @@ export function buildHorizon(scene: THREE.Scene, groundZ: number) {
     // rather than placing small shrubs entirely behind its opaque face.
     for (let along = -99; along < 105; along += 9.5 + random() * 3.5) {
       const [x, y] = point(side, along, 91.2 + random() * .55);
-      const width = 2.15 + random() * .6, height = 1.15 + random() * .22;
+      const width = 2.15 + random() * .6, height = .95 + random() * .65;
       const upperRootDepth = height * 4.15 - .7;
       placements.push({ asset: "tree", position: [x, y, groundZ - upperRootDepth],
         rotation: random() * Math.PI * 2, scale: [width, width * (.92 + random() * .13), height] });
       const [bx, by] = point(side, along + 3.2 + random() * 1.5, 92.2 + random() * .8);
-      const lowerWidth = 2.1 + random() * .65, lowerHeight = .88 + random() * .18;
+      const lowerWidth = 2.1 + random() * .65, lowerHeight = .68 + random() * .55;
       placements.push({ asset: "tree", position: [bx, by, groundZ - lowerHeight * 4.15 - .25],
         rotation: random() * Math.PI * 2, scale: [lowerWidth, lowerWidth * (.95 + random() * .12), lowerHeight] });
     }

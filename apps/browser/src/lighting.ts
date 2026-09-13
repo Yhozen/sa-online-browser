@@ -5,8 +5,10 @@ import { encodeReflection } from "./reflection-storage";
 
 /** One sun, physical sky reflections, and a stable shadow volume around the player. */
 export function installAtmosphere(scene: THREE.Scene, renderer: THREE.WebGLRenderer) {
-  const ambient = new THREE.HemisphereLight(0xc6ddef, 0x938469, .85);
-  const sun = new THREE.DirectionalLight(0xffdfa7, 4.8);
+  const ambient = new THREE.HemisphereLight(0xb5cce6, 0x97805f, .9);
+  // The game is Z-up; sky fill must come from above, including shaded facades.
+  ambient.position.set(0, 0, 1);
+  const sun = new THREE.DirectionalLight(0xffd69a, 6.2);
   sun.castShadow = true;
   sun.shadow.mapSize.set(4096, 4096);
   Object.assign(sun.shadow.camera, { left: -128, right: 128, top: 128, bottom: -128, near: 1, far: 320 });
@@ -14,7 +16,7 @@ export function installAtmosphere(scene: THREE.Scene, renderer: THREE.WebGLRende
   sun.shadow.bias = -0.00008;
   sun.shadow.radius = 2;
   scene.add(ambient, sun, sun.target);
-  const offset = new THREE.Vector3(-55, -32, 48);
+  const offset = new THREE.Vector3(-58, 12, 47);
   const environmentTargets: THREE.WebGLRenderTarget[] = [];
   return {
     sun, offset,
@@ -27,7 +29,7 @@ export function installAtmosphere(scene: THREE.Scene, renderer: THREE.WebGLRende
       const target = generator.fromEquirectangular(environmentTexture);
       environmentTargets.push(target);
       scene.environment = target.texture;
-      scene.environmentIntensity = 0.4;
+      scene.environmentIntensity = 0.34;
       scene.background = environmentTexture;
       scene.backgroundIntensity = 0.85;
       scene.backgroundRotation.x = Math.PI / 2;

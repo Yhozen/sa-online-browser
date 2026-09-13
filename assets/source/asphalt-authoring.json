@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "acceptedAt": "2026-09-13T04:04:18.989Z",
+  "asset": "assets/textures/arroyo-asphalt.png",
+  "kind": "built-in-image-generation-edit",
+  "tool": "image_gen.imagegen",
+  "imagegenConversationId": "01a098c2-e65c-7d81-93a5-a8037c3dadd2",
+  "imagegenExecutionId": "exec-79f42e2a-2212-4914-933c-4db44580c3e2",
+  "generatedOriginalPath": "/Users/gabrielperez/.codex/generated_images/01a098c2-e65c-7d81-93a5-a8037c3dadd2/exec-79f42e2a-2212-4914-933c-4db44580c3e2.png",
+  "generatedOriginalSha256": "0be2dc384ad378e0c24967065dd9224e2ba6ddfd8350fce2eea6055eea284ff4",
+  "copiedByteForByte": true,
+  "width": 1254,
+  "height": 1254,
+  "editTarget": {
+    "path": "assets/textures/arroyo-asphalt.png",
+    "sha256BeforeEdit": "df6aa654341074cff7d9b324f115a00ab91a5eaa46afe4daaf723374ab87c87f",
+    "viewedBeforeEdit": true,
+    "referencedImagePaths": [
+      "/Users/gabrielperez/Documents/sa-online-browser/assets/textures/arroyo-asphalt.png"
+    ]
+  },
+  "exactPrompt": "Use case: precise-object-edit.\nAsset type: production game PBR asphalt base-color/albedo texture.\nInput image: the supplied arroyo-asphalt.png is the edit target, an original square overhead asphalt tile representing approximately 12 meters of road. Edit this source material, not a rendered street scene.\n\nPrimary request: Correct the dominant surface scale while preserving its weathered gray-brown asphalt identity, overall medium brightness, restrained neutral-to-warm color balance, orthographic top-down view, square composition, and seamless repeat across all four edges. Retain believable road wear, but reduce the large dark looping crack network's contrast by approximately 50 percent. Interrupt and soften many long connections so large closed polygon loops no longer dominate the material. Remaining cracks should be sparse, shallow-looking, irregular and subordinate to the road's grain, with no new large cracks.\n\nMake the aggregate approximately 2–3 times finer than the source's visible grains: dense, irregular, nonuniform fine gritty mineral aggregate embedded in aged asphalt, with occasional tiny warm ochre/beige mineral flecks. Include subtle softly blended patches of worn binder and exposed aggregate, avoiding obvious repeated patches or centered features. The primary impression must be granular asphalt rather than cracked plates, generic noise, repeated dots, or pale concrete.\n\nLighting/invariants: This is neutral evenly illuminated diffuse albedo only. Preserve comparable average brightness to the source. No directional lighting, cast shadows, contact shadows, highlights, specular reflections, baked ambient occlusion, gradients, vignetting, or brightening the entire image. No road markings, potholes, stones lying on top, vegetation, debris, text, logos or objects. Fill the entire square with one continuous asphalt material. Keep the material tileable without a frame or border. Return only the edited square texture.",
+  "intendedAuthoredWorldSpanMeters": 12,
+  "runtimeWorldSpanMetersSelectedByIntegrator": 4,
+  "runtimeMappingNote": "Integrator selected a 4 m world tile instead of the previous 9.6 m, making feature scale 2.4 times smaller in the live material; this verifier does not modify runtime source.",
+  "averageBrightness": {
+    "measurement": "Rec.709 coefficients applied to raw 8-bit sRGB channel values, not linear luminance",
+    "before": 116.24097641766183,
+    "after": 115.63300504514754,
+    "percentChange": -0.5230267253862331
+  },
+  "licensingNote": "Original repository image edited with the built-in generator; no external asset or external image API used."
+}
