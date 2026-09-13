@@ -2,6 +2,8 @@
 // Native Chrome performance audit. Owns only newly created contexts/windows.
 // Run after the served build and asset inventory are final, with other audits idle:
 //   node tools/verify-native-rendering.mjs
+// Optionally freeze one explicitly caller-selected, disconnected game page:
+//   POC_NATIVE_REFERENCE_TARGET=<existing-target-id> node tools/verify-native-rendering.mjs
 // Pure rAF timestamps are independent of the game's frame history. The immutable
 // __poc getter is expensive, so observation happens no more than once per second.
 import assert from 'node:assert/strict';
@@ -15,6 +17,10 @@ import { visualBudgets } from './visual-budgets.mjs';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const debugURL = process.env.POC_CHROME_DEBUG || process.env.POC_CHROME_DEBUG_URL || 'http://127.0.0.1:9333';
 const gameURL = process.env.POC_URL || 'http://127.0.0.1:3000';
+const referenceTargetId = process.env.POC_NATIVE_REFERENCE_TARGET;
+if (referenceTargetId !== undefined)
+  assert.ok(referenceTargetId.length > 0 && referenceTargetId.trim() === referenceTargetId,
+    'POC_NATIVE_REFERENCE_TARGET must be an explicit nonempty target ID');
 const dir = path.resolve(root, process.env.POC_NATIVE_RENDER_ARTIFACTS || '.dream-loop/native-render-audit');
 const cases = [1280, 1672].flatMap(width => ['standard', 'low'].map(preset => ({
   width, height: width === 1280 ? 720 : 941, preset,
@@ -31,6 +37,7 @@ mkdirSync(dir, { recursive: true });
 
 function localInputs() {
   const files = ['apps/browser/index.html', 'apps/browser/vite.config.ts', 'assets/horizon-relief.json', 'package.json', 'package-lock.json',
+    'tools/verify-native-rendering.mjs',
     'tools/build-assets.mjs', 'tools/assets/horizon.py', 'tools/assets/horizon-envelope-v3.py',
     'tools/assets/horizon-bake.mjs', 'tools/assets/horizon-save.py'];
   for (const directory of ['apps/browser/src', 'packages/shared', 'assets/source']) {
@@ -130,6 +137,56 @@ async function connect(address) {
     },
     close() { socket.close(); },
   };
+}
+
+async function openReferenceGuard(targetId) {
+  // Exact caller selection only: no title matching, fallback discovery, focus,
+  // navigation, context ownership or target closure is allowed for this page.
+  const pages = await (await fetch(`${debugURL}/json/list`)).json();
+  const target = pages.find(entry => entry.id === targetId);
+  assert.ok(target && target.type === 'page', 'Selected reference target must be an existing page');
+  assert.equal(new URL(target.url).origin, new URL(gameURL).origin, 'Reference target must be at the game origin');
+  const cdp = await connect(target.webSocketDebuggerUrl);
+  const read = async () => {
+    const state = await cdp.evaluate(`(() => {
+      const s = window.__poc;
+      return { url: location.href, origin: location.origin, timeOrigin: performance.timeOrigin,
+        frameCount: s?.graphics?.frameCount, spawned: s?.self?.spawned,
+        playerId: s?.self?.id, status: s?.status,
+        connected: document.querySelector('#connection')?.dataset.connected,
+        playing: document.body.classList.contains('playing') };
+    })()`);
+    assert.equal(state?.origin, new URL(gameURL).origin, 'Reference page navigated away from the game origin');
+    assert.ok(Number.isFinite(state.frameCount) && Number.isFinite(state.timeOrigin), 'Reference page must expose a finite game frame counter');
+    assert.equal(state.spawned, false, 'A joined reference player must not be frozen');
+    assert.equal(state.playerId, null, 'An active reference session must not be frozen');
+    assert.notEqual(state.connected, 'true', 'A connected reference page must not be frozen');
+    assert.equal(state.playing, false, 'A playing reference page must not be frozen');
+    assert.notEqual(state.status, 'Connecting…', 'A joining reference page must not be frozen');
+    return state;
+  };
+  try {
+    const initial = await read();
+    const readSamePage = async () => {
+      const state = await read();
+      assert.equal(state.timeOrigin, initial.timeOrigin, 'Reference document changed during the audit');
+      return state;
+    };
+    return {
+      targetId, initial,
+      async freeze() {
+        await readSamePage();
+        await cdp.send('Page.setWebLifecycleState', { state: 'frozen' });
+        return await readSamePage();
+      },
+      async check(proof, label) {
+        const after = await readSamePage();
+        proof[label] = { ...after, unchanged: after.frameCount === proof.beforeWarmup.frameCount };
+        assert.equal(after.frameCount, proof.beforeWarmup.frameCount, 'Reference page rendered during the audited warmup/measurement');
+      },
+      close() { cdp.close(); },
+    };
+  } catch (error) { cdp.close(); throw error; }
 }
 
 // Runs before the app; observes the real admission-ready UI without repeatedly
@@ -234,12 +291,16 @@ const records = {
     memory: 'Logical WebGL texture storage only, excluding driver overhead and renderbuffers',
     maxima: 'Maximum of sparse metadata observations, not an instrumented maximum over every frame',
     textureBudget: 'The existing 320 MiB reference ceiling is reported unchanged; these DPR-2 views may exceed it',
+    referenceIsolation: referenceTargetId === undefined ? { enabled: false } : {
+      enabled: true, targetId: referenceTargetId,
+      method: 'Freeze the explicitly selected disconnected game page before each warmup; require unchanged frame count after idle and walking',
+    },
   },
   budgets: { downloadBytes: visualBudgets.sceneDownloadBytes, triangles: visualBudgets.renderedTriangles,
     drawCalls: visualBudgets.drawCalls, textureStorageBytes: visualBudgets.textureStorageBytes, targetMedianFPS: 60 },
   cases: [], errors: [],
 };
-let browser;
+let browser, referenceGuard;
 const owned = [];
 const save = () => writeFileSync(path.join(dir, 'verification.json'), JSON.stringify(records, null, 2));
 
@@ -330,6 +391,10 @@ async function runCase(test) {
       assert.ok(Date.now() < spawnDeadline, 'Player did not spawn');
     }
     await cdp.evaluate('document.querySelector("#viewport canvas").focus()');
+    if (referenceGuard) {
+      record.referenceIsolation = { targetId: referenceGuard.targetId, beforeWarmup: await referenceGuard.freeze() };
+      save();
+    }
     await sleep(warmupMs);
     async function phase(label, durationMs, walking = false) {
       const before = await cdp.evaluate('window.__nativeAuditReadMetadata()'); verifyMetadata(before, test);
@@ -360,11 +425,13 @@ async function runCase(test) {
       return after;
     }
     const afterIdle = await phase('idle', idleMs);
+    if (referenceGuard) await referenceGuard.check(record.referenceIsolation, 'afterIdle');
     // A short real walk down the spawn street uses regular input only. Avoid
     // walking if another server controller put this new player into a vehicle.
     if (afterIdle.self.mode === 'onFoot' && Math.abs(afterIdle.self.position[0]) < 12 && Math.abs(afterIdle.self.position[1]) < 35) {
       await sleep(1000);
       await phase('walking', walkingMs, true);
+      if (referenceGuard) await referenceGuard.check(record.referenceIsolation, 'afterWalking');
       assert.ok(record.walking.distanceMetres > 1, 'Real walking input must move the player');
     } else record.walking = { skipped: true, reason: 'New player was outside the safe spawn street or was not on foot', self: afterIdle.self };
     const screenshot = await cdp.send('Page.captureScreenshot', { format: 'png', fromSurface: true }, 180000);
@@ -395,6 +462,10 @@ try {
   browser = await connect(version.webSocketDebuggerUrl);
   records.browserVersion = await browser.send('Browser.getVersion');
   records.systemInfo = await browser.send('SystemInfo.getInfo').catch(error => ({ unavailable: error.message }));
+  if (referenceTargetId !== undefined) {
+    referenceGuard = await openReferenceGuard(referenceTargetId);
+    records.referenceInitial = referenceGuard.initial; save();
+  }
   for (const test of cases) await runCase(test);
   records.localAfter = localInputs(); records.servedAfter = await servedInputs();
   assert.deepEqual(records.localAfter, records.localBefore, 'Local source or assets changed during the audit');
@@ -409,5 +480,14 @@ try {
   records.errors.push({ error: error.stack || String(error) }); process.exitCode = 1; console.error(error);
 } finally {
   for (const target of owned) await closeOwned(target);
+  // Closing an owned window can reactivate the reference. Freeze it after all
+  // owned windows have gone, and detach only this guard's CDP connection.
+  if (referenceGuard) {
+    try { records.referenceFinalFrozen = await referenceGuard.freeze(); }
+    catch (error) {
+      records.errors.push({ referenceCleanup: error.stack || String(error) });
+      records.complete = false; records.allTargets60FPS = false; process.exitCode = 1;
+    } finally { referenceGuard.close(); }
+  }
   browser?.close(); save();
 }
