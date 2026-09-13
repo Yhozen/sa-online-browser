@@ -8,6 +8,11 @@ The browser renders and simulates locally. A Node WebSocket gateway starts one n
 
 The image above shows the accepted round-seventeen build in native Chrome. Complete native motion and four isolated performance cases passed; the full 15-scenario acceptance remains pending. The latest formal art score is still 5.0/10, below the visual target. The [native results](docs/native-dream-results.md) retain exact build identities, the measured quality-cycle pixel differences and validation limits. Movement interpolates the fixed 60 Hz simulation, and original assets can be rebuilt with native Blender on macOS. The [generated concept](docs/images/native-concept-2026-09-13.png) is reference art, not a game screenshot; [earlier neighborhood results](docs/neighborhood-results.md) remain historical.
 
+The first final-source acceptance attempt stopped at two source checks before
+browser tests. Their [validation repair](docs/native-validation-repair-round17.json)
+preserves the failed run and leaves the measured runtime unchanged; a fresh full
+acceptance run is still required.
+
 ## Run in Docker
 
 Docker keeps the compiler, CMake, Python, the pinned open.mp fixture and the

@@ -65,6 +65,16 @@ acceptance is pending and the formal art target remains open. The quality cycles
 completed, but strict pixel equality failed at five one-pixel, one-level car-edge
 comparisons; this is not reported as a bitwise restoration pass.
 
+A subsequent [validation repair](../docs/native-validation-repair-round17.json)
+saved the same terrain through native Blender 5.2.1 to refresh its dependency
+ledger. Current `source/horizon.blend` is 6,091,983 bytes, SHA256
+`b690196eb1f261e7caf71950cdcfc522d2360d52f5f490056ee10682b8206d2e`;
+`source/horizon-build.json` identifies it. Runtime terrain fields, lighting,
+delivered inventory and reflections are unchanged. Earlier measurement records
+retain the exact authoring hash captured at their run time. Focused terrain
+checks pass 9/9; the separately repaired accepted-taper test passes 4/4. The
+failed pre-browser acceptance attempt remains failed, and a full rerun is pending.
+
 ### Earlier structural refinement (September 13, round twelve)
 
 Native Blender 5.2.1 rebuilt `tree`, `roadside-oak`, `palm` and `neighbor` through

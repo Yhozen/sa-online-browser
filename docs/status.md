@@ -39,6 +39,15 @@ open:** the latest formal [review](art-review-round13-2026-09-13.md) is still
 judge thirteen's **5.0/10, Tier 1**. No new formal score or ready declaration is
 assigned to this build.
 
+The first final-source attempt on clean `439b916` exited one before browser
+tests: 65/67 source checks passed. The obsolete untapered-oak equality was
+replaced with checks of the accepted 55% trunk taper; a proper native terrain
+save refreshed its stale dependency ledger. Focused oak and terrain checks now
+pass **4/4 and 9/9**. Runtime and delivered assets are unchanged, so the motion
+and performance measurements above still describe this build; their original
+captured authoring hashes remain intact. The [repair record](native-validation-repair-round17.json)
+preserves the failure separately. A fresh full run is still required.
+
 ## Earlier native milestone — round fifteen
 
 The following paragraphs retain the earlier round-fifteen measurements and

@@ -98,6 +98,15 @@ those focused results are not a full acceptance pass. A fresh unfiltered
 source/asset freeze. Earlier reset-observer controls and focused soak evidence
 remain in the [acceptance record](native-acceptance-environment.md).
 
+The first final-source attempt on clean `439b916` failed before browser tests
+with **65/67 source checks**. Its raw failure remains preserved. The
+[validation repair](native-validation-repair-round17.json) corrects an obsolete
+untapered-oak equality and refreshes the native terrain dependency ledger;
+focused checks pass **4/4 oak and 9/9 terrain**. No runtime, shader, delivered
+asset or reflection changed. The motion and performance evidence therefore
+still describes the same runtime, while its original captured native-BLEND
+hashes remain historical and are not rewritten. Full acceptance remains pending.
+
 ## Earlier round-fifteen milestone (historical)
 
 The following text preserves the earlier build, measurements and pending items.
