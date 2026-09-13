@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-/** Preserve the original wrapped relief/roughness bytes without per-pixel objects. */
+/** Derive wrapped relief/roughness without per-pixel objects; normals use image-flipped V. */
 export function deriveSurfacePixels(source: Uint8Array | Uint8ClampedArray, size: number) {
   if (!Number.isInteger(size) || size < 1 || source.length !== size * size * 4)
     throw Error("Invalid surface image dimensions.");
@@ -17,8 +17,10 @@ export function deriveSurfacePixels(source: Uint8Array | Uint8ClampedArray, size
       const up = above + column, down = below + column;
       const dx = ((source[left] + source[left + 1] + source[left + 2]) / 765 -
         (source[right] + source[right + 1] + source[right + 2]) / 765) * 2;
-      const dy = ((source[up] + source[up + 1] + source[up + 2]) / 765 -
-        (source[down] + source[down + 1] + source[down + 2]) / 765) * 2;
+      // flipY aligns the maps with the canvas: +V points toward the image
+      // above. A raised +V neighbor must tilt the surface normal toward -V.
+      const dy = ((source[down] + source[down + 1] + source[down + 2]) / 765 -
+        (source[up] + source[up + 1] + source[up + 2]) / 765) * 2;
       // Match Vector3.normalize's arithmetic order exactly. Math.hypot or
       // Float32 intermediates can round a component across a byte boundary.
       const inverseLength = 1 / Math.sqrt(dx * dx + dy * dy + 1);
