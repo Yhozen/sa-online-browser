@@ -456,6 +456,7 @@ function handle(m: ServerMessage) {
       self.seat = m.seat ?? 0;
       self.mode = self.seat === 0 ? "driver" : "passenger";
       speed = 0;
+      jumpSpeed = 0;
       const v = vehicles.get(self.vehicleId);
       if (v) {
         self.position = [...v.position];
@@ -481,6 +482,7 @@ function handle(m: ServerMessage) {
       self.seat = 0;
       self.velocity = [0, 0, 0];
       speed = 0;
+      jumpSpeed = 0;
       resetLocalPresentation();
       keys.clear();
       break;

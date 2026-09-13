@@ -60,6 +60,36 @@ Actual UI/server commands also verified:
 These FPS figures do not describe Standard. Standard performance is evaluated
 separately with the finished visual scene.
 
+## Jumping into and exiting a vehicle
+
+A separate native Chrome 153.0.8010.37 regression reproduced a retained jump
+impulse: press Space, enter with E while rising, drive 3.287m, release movement,
+remain seated for 1.5 seconds, then exit with F. The old build launched the player
+**0.728m upward at 4.55m/s without another jump input**. The initial jump was
+observed at 5.55m/s before the seat request.
+
+The seat and exit handlers now clear the old jump impulse. The rebuilt game
+passed the same driver sequence and a stationary passenger sequence using G:
+both produced **0m unwanted height and 0m/s upward velocity** during the 1.5-second
+post-exit trace, then remained in the idle animation. Actual server seat/exit RPCs
+and increasing control revisions were required; no separate position correction
+could mask the result. Space remained released, both exits stayed in bounds and
+outside the car cabin, and the minimum scene-obstacle clearances after subtracting
+the player radius were 13.565m for the driver and 17.565m for the passenger.
+No browser exceptions occurred. The test retained a native 2560×1440 drawing
+buffer at 1280×720 CSS pixels and DPR 2.
+
+Run this bounded regression with:
+
+```sh
+POC_MOTION_CASE=jump-seat-exit POC_MOTION_ARTIFACTS=.dream-loop/motion-jump-after node tools/verify-motion.mjs
+```
+
+The default full motion probe also includes these two cases. The intentionally
+failing baseline trace is `.dream-loop/motion-jump-before/verification.json`;
+the passing fixed trace is `.dream-loop/motion-jump-after/verification.json`.
+Both are ignored working evidence. Each run closed only its owned browser window.
+
 ## Reproduction and automated checks
 
 Run the game development server and native Chrome with remote debugging port
