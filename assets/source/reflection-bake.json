@@ -1,24 +1,24 @@
 {
   "version": 1,
-  "generatedAt": "2026-09-13T06:16:15.027Z",
+  "generatedAt": "2026-09-13T06:26:54.628Z",
   "format": "PMR1: uint32-le magic,width,height; RGBA16F PMREM atlas; gzip",
   "width": 1536,
   "height": 2048,
-  "compressedBytes": 11286469,
+  "compressedBytes": 11285036,
   "uncompressedBytes": 25165836,
-  "sha256": "b93e2d64a6e462593a59f8f60650d4cf6079c18d4feb1b525d7b78ab792d3601",
-  "uncompressedSha256": "c650bfdcf0b0712cbf6e729d9b74b9026aae577e4cde5cbe6a99da85cd54cfc0",
+  "sha256": "588d808d87d0d77e86b0cc98cca5ddbb130772d8a733b13060fd506f305c4797",
+  "uncompressedSha256": "f6d0dd4538c0ded59555049f3b03e66ef1ae83500ff9f7877af5e7f6e9a4e570",
   "browser": "Chrome/153.0.8010.37",
   "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
   "peakRadiance": 3.8046875,
   "scene": {
     "id": "neighborhood",
-    "revision": "ce5210f63f72d1a0"
+    "revision": "086c81b26d005af5"
   },
   "inputSnapshot": {
-    "capturedAt": "2026-09-13T06:16:10.566Z",
-    "sceneSha256": "f35ee9f5f9d7f9c310678245010c390e692eae67e3054ac6ed71b3f1a6134f82",
-    "inventorySha256": "94185db86a660f8bcc2e3a0da9451e3ae9972a492c5c066151c659a89dbb5908"
+    "capturedAt": "2026-09-13T06:26:50.508Z",
+    "sceneSha256": "b1fc30f6031fe394cb29c57dffa6b784f5e5c38f6c7c348cd2f258207b7453db",
+    "inventorySha256": "941abd5e2032b59185ae23a308622081bb104db1147421ef6425c1dd518e30c1"
   },
   "sources": {
     "apps/browser/index.html": "5c7e3e0d86ebc6d6e88fb1514c0e592903af7ab85d4dadd5b13a2f43e2387e24",
@@ -55,7 +55,7 @@
     "packages/shared/protocol.ts": "63056480786a5caf48b42fcef1d59427a7525b3eff7c4136e49b86f88758ccde",
     "packages/shared/scene.ts": "1a3a1fd90813248ba8ad85ce22254e5e7ae1b8c0d05e2b4c6876df4833064c5b",
     "packages/shared/scene.mjs": "bf854bf1c671d16b9ac3ec47a08b02bfbd78b32a545bdb2d39ce814d621c5cd4",
-    "packages/shared/scenes/neighborhood.json": "6c66e68a579eb29a693f8ba773b61285daf5a41294a8d96ef09df8d455238992",
+    "packages/shared/scenes/neighborhood.json": "94655c56f18483620c46926f86f2b46d7d8970826dc97fe82095dd4fbb3d9dd2",
     "packages/shared/scenes/yard.json": "eafd501e8fef4ffa7df59050ec41059c4d86b53e510aa83e7479e936497ed5ac",
     "services/gateway/server.mjs": "c2e08a361dd313443790050bda4fb308c33bc38ade6e3a0aba5e9f7ff8e0f326",
     "tools/asset-inventory.mjs": "b0e3c59ae80648d9fe8f528a1e5a4548a6cfad7148f7958b43f3014d3e9bc577",

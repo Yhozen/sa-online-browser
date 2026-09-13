@@ -79,7 +79,7 @@ const lots = [
 // matching authoritative collider and the model/instance count stays unchanged.
 const streetOaks = new Map([
   [1, [-13.5, 5.7]],
-  [2, [-12.5, 22]],
+  [2, [-16.5, 23.5]],
   [3, [-19.5, 30]],
 ]);
 for (let i = 0; i < lots.length; i++) {

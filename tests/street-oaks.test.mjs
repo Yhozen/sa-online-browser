@@ -69,3 +69,35 @@ test('street oaks cast onto the road while physical trunks and crowns clear trav
     assert.ok(onRoad.length > 100, `${id}: actual foliage must project onto the street under the fixed sun`);
   }
 });
+
+test('the middle oak leaves the actual foreground lamp head visible from the spawn camera', async () => {
+  const scene = JSON.parse(readFileSync('packages/shared/scenes/neighborhood.json', 'utf8'));
+  const barrier = scene.barriers.find(b => b.id === 'tree-2');
+  const placement = scene.props.find(p => p.asset === 'tree' && p.position[0] === barrier.position[0] && p.position[1] === barrier.position[1]);
+  const lamp = scene.props.find(p => p.asset === 'lamp' && p.position[0] < 0 && p.position[1] === 22);
+  assert.ok(placement && lamp, 'the tree and landmark must both be present');
+  const bytes = readFileSync('apps/browser/public/assets/tree.glb');
+  const gltf = await new GLTFLoader().parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '');
+  gltf.scene.rotation.x = Math.PI / 2;
+  gltf.scene.traverse(object => {
+    if (object.isMesh) object.material.side = THREE.DoubleSide;
+  });
+  const oak = new THREE.Group(); oak.add(gltf.scene);
+  oak.position.set(...placement.position); oak.rotation.z = placement.rotation;
+  oak.scale.set(...(placement.scale ?? [1, 1, 1])); oak.updateMatrixWorld(true);
+  const lampMatrix = new THREE.Matrix4().compose(new THREE.Vector3(...lamp.position),
+    new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 0, 1), lamp.rotation), new THREE.Vector3(...(lamp.scale ?? [1, 1, 1])));
+  // These samples come from the exported housing and lens, rather than a
+  // guessed image rectangle. Conservatively treat leaf cards as fully opaque.
+  const head = (await vertices('lamp', name => ['chrome', 'ivory'].includes(name))).map(p => p.applyMatrix4(lampMatrix));
+  assert.ok(head.length > 20, 'sample the actual lamp surfaces');
+  head.push(new THREE.Box3().setFromPoints(head).getCenter(new THREE.Vector3()));
+  const target = new THREE.Vector3(...scene.spawns[0]).add(new THREE.Vector3(0, 0, .75));
+  const eye = target.add(new THREE.Vector3(0, -6 * Math.cos(.25), 6 * Math.sin(.25)));
+  const ray = new THREE.Raycaster();
+  for (const sample of head) {
+    const direction = sample.clone().sub(eye);
+    ray.set(eye, direction.clone().normalize()); ray.far = direction.length() - .01;
+    assert.equal(ray.intersectObject(oak, true).length, 0, 'oak occludes the foreground lamp head');
+  }
+});
