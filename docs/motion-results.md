@@ -90,6 +90,42 @@ failing baseline trace is `.dream-loop/motion-jump-before/verification.json`;
 the passing fixed trace is `.dream-loop/motion-jump-after/verification.json`.
 Both are ignored working evidence. Each run closed only its owned browser window.
 
+## Shared driving reset regression
+
+The native probe also includes a bounded two-client reset case. Normal E/G input
+seats both players, then W and steering populate the passenger's remote vehicle
+buffer. W remains held across a real `/reset`. Five-second display-frame traces
+record both local bodies, remote occupants, the car, authority counters and the
+camera. Assertions require immediate body/car cuts at received corrections,
+stationary fixture positions, cleared stale input, idle occupants, two-way peer
+agreement within 0.5m and corrected replication within one second, a camera
+outside scene solids, and unchanged native resolution. Camera settling is allowed.
+
+```sh
+POC_MOTION_CASE=moving-reset POC_MOTION_ARTIFACTS=.dream-loop/motion-moving-reset node tools/verify-motion.mjs
+```
+
+The default full probe includes this case using its existing two owned windows.
+The native Chrome run passed on scene `b09254eed9c7c3e8`: the driver traveled
+7.170m and steered 0.942 radians before reset. Both clients recorded 601 display
+frames. Position corrections arrived approximately 205ms after the request;
+maximum local body and car presentation errors were exactly 0m, and remote body
+error was below 0.000000000000002m. Remote correction agreement took 16.8ms from
+the driver's view and 42.4ms from the passenger's view. Both then remained at
+their reset positions for over 4.65 seconds despite the unreleased old throttle.
+Native 2560×1440 resolution, server-authority checks, idle animations, camera
+clearance and empty browser-error logs all passed. Evidence is
+`.dream-loop/motion-moving-reset/verification.json`.
+
+An earlier unattended attempt took roughly a minute per admission and failed
+the remote-motion precondition before requesting reset: local driving advanced
+while the passenger still held stationary network state. That failed trace is
+preserved in `.dream-loop/motion-moving-reset-pre-wake/verification.json`.
+After waking the idle host display and foregrounding only the owned admission
+windows, readiness returned to 1.784/1.764 seconds and the strict regression
+passed. This establishes a successful retry, not a controlled attribution of the
+earlier delay to one factor. Both attempts closed their owned windows.
+
 ## Reproduction and automated checks
 
 Run the game development server and native Chrome with remote debugging port
