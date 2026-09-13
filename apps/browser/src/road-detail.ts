@@ -40,7 +40,7 @@ export function roadDetail(scene: THREE.Scene, manifest: SceneManifest) {
     footprints.push({ x, y, radius });
     // Low-frequency faded binder and lightly warm aggregate, not dark crack decals.
     // The outer ring is exactly the base material; the texture phase never jumps.
-    const faded = i % 2 === 0, amount = .08 + random() * .14;
+    const faded = i % 2 === 0, amount = .18 + random() * .30;
     const tint = faded ? [1 + amount * .85, 1 + amount, 1 + amount * 1.08]
       : [1 - amount, 1 - amount * .92, 1 - amount * .8];
     const base = positions.length / 3;
@@ -82,7 +82,7 @@ export function roadDetail(scene: THREE.Scene, manifest: SceneManifest) {
     for (let t = 1.5; t < length; t += 1.5) for (const side of [-1, 1]) {
       const x = a[0] + (b[0] - a[0]) * t / length + (vertical ? side * (road.width / 2 + 1.25) : 0);
       const y = a[1] + (b[1] - a[1]) * t / length + (vertical ? 0 : side * (road.width / 2 + 1.25));
-      const base = dirtPositions.length / 3, stain = .15 + random() * .14, width = .07 + random() * .07;
+      const base = dirtPositions.length / 3, stain = .18 + random() * .16, width = .18 + random() * .20;
       for (const band of [-1, -.4, 0, .4, 1]) for (const end of [-1, 1]) {
         const across = end * 1.2, along = band * width * (end < 0 ? .78 : 1.15);
         const px = x + (vertical ? across : along), py = y + (vertical ? along : across);

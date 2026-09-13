@@ -74,6 +74,14 @@ const lots = [
   [28, -19, 0],
   [29, -72, Math.PI],
 ];
+// Existing west-side oaks sit on open lawn between access paths. Their actual
+// crowns cast across the street under the fixed sun; each trunk keeps its
+// matching authoritative collider and the model/instance count stays unchanged.
+const streetOaks = new Map([
+  [1, [-13.5, 5.7]],
+  [2, [-12.5, 22]],
+  [3, [-19.5, 30]],
+]);
 for (let i = 0; i < lots.length; i++) {
   const [x, y, rotation] = lots[i],
     variant = i % 4;
@@ -118,7 +126,8 @@ for (let i = 0; i < lots.length; i++) {
     ["palm", -8, -7],
     ["tree", 8, 8],
   ]) {
-    const p = point(u, v);
+    const streetOak = asset === "tree" && streetOaks.get(i);
+    const p = streetOak ? [...streetOak, 9] : point(u, v);
     n.props.push({ asset, position: p, rotation: 0 });
     if (asset === "palm" || asset === "tree")
       barrier(`${asset}-${i}`, p[0], p[1], 0.7, 0.7, 8);

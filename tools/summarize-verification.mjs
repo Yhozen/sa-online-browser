@@ -159,6 +159,8 @@ const sourceFiles = [
   "assets/source/asset-build.json",
   "tests/assets.test.mjs", "tests/verges.test.mjs",
   "tests/garden.test.mjs", "tests/asset-pipeline.test.mjs",
+  "tests/terrain.test.mjs",
+  "tests/street-oaks.test.mjs",
   "tools/visual-budgets.mjs",
   "packages/shared/scenes/neighborhood.json",
   "apps/browser/public/assets/inventory.json",

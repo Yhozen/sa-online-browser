@@ -155,46 +155,15 @@ export function buildHorizon(scene: THREE.Scene, groundZ: number) {
   const terrain: THREE.BufferGeometry[] = [];
   for (let layer = 0; layer < 3; layer++) {
     const { segments, rings } = sculpt, geology = sculpt.layers[layer];
-    const acceptedHeights: number[] = [];
     const vertices: number[] = [], colors: number[] = [], uv: number[] = [], mix: number[] = [], indices: number[] = [];
     for (let j = 0; j <= rings; j++) for (let i = 0; i <= segments; i++) {
-      // Preserve the skyline's angular size and crest distance, but give each
-      // ridge a narrower physical apron. Broad low dunes could not catch a
-      // directional sun; steeper valley walls reveal separate lit/shaded faces.
+      // Blender exports the complete sculpt, including connected cuts across
+      // the visible upper faces. Keep its geometry authoritative at runtime.
       const width = 90 + layer * 50;
       const a = i / segments * Math.PI * 2, r = 250 + layer * 125 - width * .47 + j / rings * width;
-      const t = j / rings, x = Math.cos(a) * r, y = Math.sin(a) * r;
-      // Preserve the broad accepted skyline, then shape individual watersheds beneath it.
-      const broad = (34 + layer * 13 + 22 * Math.sin(a * 3 + layer) + 15 * Math.sin(a * 7 + 1.2)) * .45;
-      const crest = .47 + (noise(Math.cos(a) * 4 + layer, Math.sin(a) * 4) - .5) * .15;
-      const slope = Math.max(0, 1 - Math.abs((t - crest) / (t < crest ? crest : 1 - crest)));
-      const profile = Math.pow(Math.sin(slope * Math.PI / 2), 1.15);
-      // Meandering drainage cuts converge toward the lower apron; their shoulders form spurs.
-      const basin = a * 13 + noise(x / 62, y / 62) * .73 + t * .22;
-      const channel = Math.abs(fract(basin) - .5);
-      const gully = Math.exp(-channel * channel * (36 + 110 * t));
-      const tributary = Math.abs(fract(basin * 2.07 + noise(x / 28, y / 28) * .45) - .5);
-      const rill = Math.exp(-tributary * tributary * 140);
-      const shoulder = Math.pow(Math.min(1, channel * 2), .55);
-      const coarse = noise(x / 11, y / 11), fine = noise(x / 3.1, y / 3.1);
-      const ridgeBreak = (coarse - .5) * 3.4 + (fine - .5) * 1.0;
-      // Broad rounded ridge shoulders retain drainage detail on their flanks;
-      // suppress channel relief at the crest so it cannot form isolated conic peaks.
-      const erosionMask = Math.pow(profile, .7) * (1 - .8 * Math.pow(slope, 6));
-      // Broad weathered outcrops descend into connected vegetated washes. The
-      // relief is only a subtractive flank cut: the accepted crest and apron
-      // stay fixed, while a few 20–50m rock shoulders replace uniform pillows.
-      const watershed = noise(x / 47 + 9.2, y / 47 - 3.1);
-      const flankCut = THREE.MathUtils.smoothstep(watershed, .33, .71) * 1.65 *
-        Math.sin(slope * Math.PI) ** 2 * profile * (1 - THREE.MathUtils.smoothstep(slope, .55, .78));
-      const accepted = Math.max(-3, broad * profile + (shoulder * 2.8 - gully * 3 - rill * 1.4 + ridgeBreak * .55) * erosionMask - 6);
-      // Native Blender authored this subtractive relief beside the accepted
-      // crown: connected washes, planar spurs and exposed bedrock shoulders.
-      // It preserves the existing three batched meshes and playable boundary.
+      const x = Math.cos(a) * r, y = Math.sin(a) * r;
       const sample = j * (segments + 1) + i;
-      const z = Math.max(-3, accepted - flankCut - geology.relief[sample]);
-      acceptedHeights.push(groundZ + accepted * .84);
-      vertices.push(x, y, groundZ + z * .84);
+      vertices.push(x, y, groundZ + geology.elevation[sample]);
       uv.push(x / 8, y / 8);
       const stony = geology.mineral[sample] / 255;
       const vegetation = geology.vegetation[sample] / 255;
@@ -208,23 +177,24 @@ export function buildHorizon(scene: THREE.Scene, groundZ: number) {
         indices.push(k, k + segments + 1, k + 1, k + 1, k + segments + 1, k + segments + 2);
       }
     }
-    // Preserve the exact crown line, including unusually low saddles. The
-    // native sculpt eases into these points with rounded, slope-limited
-    // shoulders, so they cannot stand alone beside a full-depth relief cut.
-    for (let i = 0; i <= segments; i++) {
-      let crown = i;
-      for (let j = 1; j <= rings; j++) {
-        const k = j * (segments + 1) + i;
-        if (acceptedHeights[k] > acceptedHeights[crown]) crown = k;
-      }
-      vertices[crown * 3 + 2] = acceptedHeights[crown];
-    }
     const geometry = new THREE.BufferGeometry();
     geometry.setAttribute("position", new THREE.Float32BufferAttribute(vertices, 3));
     geometry.setAttribute("color", new THREE.Float32BufferAttribute(colors, 3));
     geometry.setAttribute("uv", new THREE.Float32BufferAttribute(uv, 2));
     geometry.setAttribute("terrainMix", new THREE.Float32BufferAttribute(mix, 2));
     geometry.setIndex(indices); geometry.computeVertexNormals();
+    // UVs retain separate angular endpoints, but the closed sculpt is one
+    // continuous surface. Share its two half-neighborhood shading normals so
+    // the authoring seam cannot reappear as a hard lighting edge.
+    const seamNormal = new THREE.Vector3(), otherNormal = new THREE.Vector3();
+    const terrainNormals = geometry.getAttribute("normal");
+    for (let j = 0; j <= rings; j++) {
+      const first = j * (segments + 1), last = first + segments;
+      seamNormal.fromBufferAttribute(terrainNormals, first)
+        .add(otherNormal.fromBufferAttribute(terrainNormals, last)).normalize();
+      terrainNormals.setXYZ(first, seamNormal.x, seamNormal.y, seamNormal.z);
+      terrainNormals.setXYZ(last, seamNormal.x, seamNormal.y, seamNormal.z);
+    }
     terrain.push(geometry);
     // Mineral hue follows the actual newly sculpted planes. Cool, sheltered
     // folds expose darker stone; sunward shoulders retain ochre. The overall
@@ -268,7 +238,7 @@ export function buildHorizon(scene: THREE.Scene, groundZ: number) {
           // ground haze through the neighborhood; sky/background stay untouched.
           .replace("#include <fog_fragment>", THREE.ShaderChunk.fog_fragment.replace("fogColor, fogFactor", "fogColor, fogFactor * .7"));
       };
-      material.customProgramCacheKey = () => "arroyo-watershed-terrain-v4";
+      material.customProgramCacheKey = () => "arroyo-watershed-terrain-v5";
     }
     const mesh = new THREE.Mesh(geometry, material); mesh.name = `Arroyo eroded ridge ${layer}`;
     mesh.receiveShadow = true; scene.add(mesh);
@@ -284,19 +254,19 @@ export function buildHorizon(scene: THREE.Scene, groundZ: number) {
   for (let side = 0; side < 4; side++) {
     // Tree foliage occupies local Z≈4.15–8.46m and ±4m horizontally. Derive
     // buried-root heights from those actual bounds: upper leaves span 0.7–9.7m,
-    // lower leaves span −0.25–5.6m. Both tiers extend across the wall's inner ±89m
+    // lower leaves span −0.25–7.3m. Both tiers extend across the wall's inner ±89m
     // face, while every root stays outside ±90m. This masks the full 4m wall,
     // rather than placing small shrubs entirely behind its opaque face.
     for (let along = -99; along < 105; along += 9.5 + random() * 3.5) {
-      const [x, y] = point(side, along, 91.2 + random() * .55);
+      const [x, y] = point(side, along, 90.15 + random() * .55);
       // Keep the existing instance count, but restore individual upright
       // crowns instead of stretching every tree into a low horizontal strip.
       const width = 1.68 + random() * .44, height = 1.12 + random() * .96;
       const upperRootDepth = height * 4.15 - .7;
       placements.push({ asset: "tree", position: [x, y, groundZ - upperRootDepth],
         rotation: random() * Math.PI * 2, scale: [width, width * (.92 + random() * .13), height] });
-      const [bx, by] = point(side, along + 3.2 + random() * 1.5, 92.2 + random() * .8);
-      const lowerWidth = 1.95 + random() * .55, lowerHeight = .85 + random() * .5;
+      const [bx, by] = point(side, along + 3.2 + random() * 1.5, 90.25 + random() * .65);
+      const lowerWidth = 1.95 + random() * .55, lowerHeight = 1.35 + random() * .40;
       placements.push({ asset: "tree", position: [bx, by, groundZ - lowerHeight * 4.15 - .25],
         rotation: random() * Math.PI * 2, scale: [lowerWidth, lowerWidth * (.95 + random() * .12), lowerHeight] });
     }

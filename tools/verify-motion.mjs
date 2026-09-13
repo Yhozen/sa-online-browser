@@ -104,12 +104,39 @@ async function newPlayer(name) {
     await evaluate(`document.querySelector('#chat-input').value=${JSON.stringify(text)};document.querySelector('#chat-form').requestSubmit()`);
   };
   const snapshot = () => evaluate('window.__poc');
-  const reset = async () => {
-    const headings = (await snapshot()).received.selfHeading || 0;
+  const reset = async (observer = null) => {
+    const before = await snapshot(), witnessBefore = observer && await observer.snapshot();
+    const evidence = { targetId, observerId: witnessBefore?.self.id ?? null, before,
+      witnessBefore, startedAt: Date.now() };
+    (records.resetSynchronization ||= []).push(evidence);
     await command('/reset');
-    // FinishReset emits a fresh heading correction after every player has sent
-    // on-foot state. The previous parked position alone can pass too early.
-    await wait(`(window.__poc.received.selfHeading||0)>${headings} && window.__poc.self.mode==='onFoot' && Math.abs(window.__poc.vehicles[0].position[1]-6)<.1`);
+    // Reset RPCs prove the local correction, but not that a corrected on-foot
+    // packet has reached the upstream server's distance check for /drive.
+    await wait(`(window.__poc.received.selfHeading||0)>${before.received.selfHeading || 0} &&
+      (window.__poc.received.selfPosition||0)>${before.received.selfPosition || 0} &&
+      window.__poc.self.mode==='onFoot' && Math.abs(window.__poc.vehicles[0].position[1]-6)<.1`);
+    evidence.corrected = await snapshot();
+    if (observer) {
+      await observer.wait(`(window.__poc.received.selfHeading||0)>${witnessBefore.received.selfHeading || 0} &&
+        (window.__poc.received.selfPosition||0)>${witnessBefore.received.selfPosition || 0} &&
+        window.__poc.self.mode==='onFoot'`, 10000);
+      evidence.witnessCorrected = await observer.snapshot();
+      // The second real client can witness upstream acceptance. Require another
+      // playerState after its correction; a cached pre-reset peer cannot pass.
+      const peerAgrees = (peerId, position, previousUpdates) => `(()=>{
+        const s=window.__poc,p=s.peers.find(p=>p.id===${peerId});
+        return (s.received.playerState||0)>${previousUpdates} && p?.mode==='onFoot' &&
+          Math.hypot(...p.position.map((x,i)=>x-${JSON.stringify(position)}[i]))<.001;
+      })()`;
+      await Promise.all([
+        observer.wait(peerAgrees(before.self.id, evidence.corrected.self.position,
+          evidence.witnessCorrected.received.playerState || 0), 10000),
+        wait(peerAgrees(witnessBefore.self.id, evidence.witnessCorrected.self.position,
+          evidence.corrected.received.playerState || 0), 10000),
+      ]);
+      evidence.agreement = await Promise.all([snapshot(), observer.snapshot()]);
+    }
+    evidence.elapsedMs = Date.now() - evidence.startedAt;
   };
   const sample = (milliseconds, peerId = null) => evaluate(`new Promise((resolve,reject)=>{
     const rows=[], started=performance.now(), timeout=setTimeout(()=>reject(Error('rAF sampling timeout')),${milliseconds + 15000});
@@ -289,7 +316,7 @@ async function verifyMovingReset(driver, passenger) {
   assert.ok(response.ok, 'reset probe needs the actual served scene manifest');
   const manifest = await response.json();
   const previousPassenger = await passenger.snapshot();
-  await driver.reset();
+  await driver.reset(passenger);
   await passenger.wait(`(window.__poc.received.selfHeading||0)>${previousPassenger.received.selfHeading || 0} && window.__poc.self.mode==='onFoot'`, 10000);
   const ready = await Promise.all([driver.snapshot(), passenger.snapshot()]);
   const evidence = records.movingReset = {sceneRevision:manifest.revision,ready,driverRows:[],passengerRows:[]};
@@ -495,7 +522,7 @@ try {
     const [localState, remoteState] = await Promise.all([a.snapshot(), b.snapshot()]);
     records.networkAgreement = distance(localState.self.position, remoteState.peers.find(peer => peer.id === aid).position);
     assert.ok(records.networkAgreement < .5, 'remote state must agree after real network replication');
-    await a.reset();
+    await a.reset(b);
     await a.command('/drive');
     await a.wait('window.__poc.self.mode==="driver"');
     await b.command('/passenger');

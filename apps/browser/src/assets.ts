@@ -205,10 +205,29 @@ export async function loadAssets(
   // A two-metre turf study, sampled at metre scale rather than stretched over
   // whole lots. Geometry and diffuse texture share the same dry/live palette.
   for (const texture of Object.values(grassMaps)) texture.repeat.setScalar(2);
-  surfaceMaterials.set("grass", new THREE.MeshStandardMaterial({
+  const groundGrass = new THREE.MeshStandardMaterial({
     name: "grass", ...grassMaps, color: 0xc9d29e, roughness: 1,
     normalScale: new THREE.Vector2(.55, .55),
-  }));
+  });
+  // Metre-scale dry/live pigment regions modulate the original grass image.
+  // World coordinates keep their boundaries continuous across the ground.
+  groundGrass.onBeforeCompile = shader => {
+    shader.vertexShader = `varying vec2 vGrassMetres;\n${shader.vertexShader}`
+      .replace("#include <begin_vertex>", "#include <begin_vertex>\nvGrassMetres = (modelMatrix * vec4(transformed, 1.)).xy;");
+    shader.fragmentShader = `varying vec2 vGrassMetres;
+      float turfHash(vec2 p) { return fract(sin(dot(p, vec2(127.1,311.7))) * 43758.5453); }
+      float turfCover(vec2 p) {
+        vec2 i=floor(p),f=fract(p); f=f*f*(3.-2.*f);
+        return mix(mix(turfHash(i),turfHash(i+vec2(1.,0.)),f.x),
+          mix(turfHash(i+vec2(0.,1.)),turfHash(i+vec2(1.,1.)),f.x),f.y);
+      }\n${shader.fragmentShader}`
+      .replace("#include <map_fragment>", `#include <map_fragment>
+        float cover = turfCover(vGrassMetres*.18) * .72 + turfCover(vGrassMetres*.43+vec2(3.,7.))*.28;
+        diffuseColor.rgb *= mix(vec3(.66,.82,.56),vec3(1.08,1.,.78),smoothstep(.25,.70,cover));
+      `);
+  };
+  groundGrass.customProgramCacheKey = () => "arroyo-live-dry-grass-regions-v1";
+  surfaceMaterials.set("grass", groundGrass);
   assetStats.textureBytes += 1024 * 1024 * 4 * 4 / 3 * 3;
   grassInput.close();
   async function cutoutTexture(file: string, size?: number) {
@@ -263,9 +282,10 @@ export async function loadAssets(
         shader.fragmentShader = shader.fragmentShader.replace("#include <lights_physical_pars_fragment>",
           THREE.ShaderChunk.lights_physical_pars_fragment.replace(
             "reflectedLight.directDiffuse += irradiance * BRDF_Lambert( material.diffuseContribution );",
-            `reflectedLight.directDiffuse += saturate(dot(${name.startsWith("foliage") ? "normalize(vNormal)" : "geometryNormal"}, directLight.direction) * 0.75 + 0.25) * directLight.color * BRDF_Lambert(material.diffuseContribution);`));
+            `reflectedLight.directDiffuse += saturate(dot(${name.startsWith("foliage") ? "normalize(vNormal)" : "geometryNormal"}, directLight.direction) * 0.75 + 0.25) * directLight.color * BRDF_Lambert(material.diffuseContribution)
+              ${name.startsWith("foliage") ? "* mix(vec3(1.),vec3(1.32,1.16,.91),smoothstep(.05,.85,dot(normalize(vNormal),directLight.direction)))" : ""};`));
       };
-      material.customProgramCacheKey = () => `arroyo-thin-leaf-diffuse-v4-${name.startsWith("foliage") ? "canopy" : "palm"}`;
+      material.customProgramCacheKey = () => `arroyo-thin-leaf-diffuse-v5-${name.startsWith("foliage") ? "canopy" : "palm"}`;
       material.needsUpdate = true;
     }
     if (name === "glass") { material.envMapIntensity = 1.4; material.roughness = .24; if(material instanceof THREE.MeshPhysicalMaterial)material.specularIntensity=.12; }

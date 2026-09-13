@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-"""Original Blender watershed sculpt; exports compact relief for the existing ridge mesh.
+"""Original Blender watershed sculpt; exports authoritative terrain elevations.
 
 Run: /Applications/Blender.app/Contents/MacOS/Blender --background --python tools/assets/horizon.py
 The scene is editable authoring source, not a game screenshot or a new collision surface.
@@ -141,6 +141,72 @@ for layer in range(3):
                 mineral[k]=round(clamp(.46+upper*.39-valley*.19+tributary*.06)*255)
                 vegetation[k]=round(clamp((valley*.31+tributary*.10)*smooth(.10,.65,distance)+.025)*255)
             vertices[k]=(vertices[k][0],vertices[k][1],9+max(-3,accepted[k]-flanks[k]-relief[k])*.84)
+    # The accepted surface above is the envelope, not the finished sculpt.
+    # Weathering crosses the upper visible shoulders and crown itself. This
+    # removes the previously protected roof while every new point stays inside
+    # the old surface. The 24-30 metre watersheds have connected 4-8 metre cuts;
+    # tributaries divide upslope and converge into a common lower wash.
+    crown_cuts=[]
+    watershed_count=(64,88,104)[layer]
+    for i in range(SEGMENTS+1):
+        crown=max(range(RINGS+1), key=lambda j: accepted[j*(SEGMENTS+1)+i])
+        a=i/SEGMENTS*math.tau
+        for j in range(RINGS+1):
+            k=j*(SEGMENTS+1)+i
+            metres=abs(j-crown)*width/RINGS
+            distance=abs(j-crown)/(crown if j<crown else RINGS-crown)
+            side=-1 if j<crown else 1
+            # Meandering trunk: paired forks feed it toward the lower apron.
+            phase=a/math.tau*watershed_count+.62*math.sin(a*9+layer)+.22*math.sin(a*21-1.2)
+            phase+=side*(.58*math.sin(a*5+layer)+.24)*smooth(0,14,metres)
+            cross=fract(phase+.5)-.5
+            trunk=math.exp(-(cross/(.135+.045*smooth(0,16,metres)))**2)
+            separation=.31*(1-smooth(0,12,metres))
+            forks=math.exp(-(min(abs(cross-separation),abs(cross+separation))/.085)**2)
+            apron=1-smooth(.72,.99,distance)
+            # A crown wash is shallow and smooth, then deepens within nine
+            # metres, where the final camera can actually see its plane walls.
+            amplitude=.5+6.9*smooth(1,9,metres)
+            trunk_cut=amplitude*trunk
+            branch_cut=3.0*smooth(0,3.5,metres)*forks*(1-smooth(10,18,metres))
+            extra=min(8,trunk_cut+branch_cut)*apron
+            old=vertices[k][2]
+            new=max(9-3*.84,old-extra)
+            cut=old-new
+            relief[k]=round(relief[k]+cut/.84,6)
+            vertices[k]=(vertices[k][0],vertices[k][1],new)
+            mineral[k]=round(clamp(mineral[k]/255+.16*trunk-.07*forks)*255)
+            vegetation[k]=round(clamp(vegetation[k]/255+trunk*.08*smooth(.12,.72,distance))*255)
+            if j==crown: crown_cuts.append(cut)
+    # Close the duplicate 0/2-pi angular samples. The inherited base noise
+    # was not periodic and left a radial crack through otherwise connected
+    # terrain. Join to the lower endpoint, then fade this subtractive wash over
+    # just four angular cells on either side (three degrees each way).
+    # Everything outside this narrow strip remains byte-for-byte unchanged.
+    seam_columns=4
+    seam_maximum_cut=0.0
+    for j in range(RINGS+1):
+        first=j*(SEGMENTS+1); last=first+SEGMENTS
+        seam_z=min(vertices[first][2],vertices[last][2])
+        seam_mineral=(mineral[first]+mineral[last])/2
+        seam_vegetation=(vegetation[first]+vegetation[last])/2
+        for offset in range(seam_columns+1):
+            retain=smooth(0,seam_columns,offset)
+            for i in (offset,SEGMENTS-offset):
+                k=first+i
+                old=vertices[k][2]
+                joined=min(old,seam_z+(old-seam_z)*retain)
+                seam_maximum_cut=max(seam_maximum_cut,old-joined)
+                vertices[k]=(vertices[k][0],vertices[k][1],joined)
+                mineral[k]=round(seam_mineral+(mineral[k]-seam_mineral)*retain)
+                vegetation[k]=round(seam_vegetation+(vegetation[k]-seam_vegetation)*retain)
+    # The seam is an explicit repair of the inherited open boundary; keep its
+    # deeper local crown lowering distinct from the <=0.5m authored crown cuts.
+    final_crown_cuts=[]
+    for i in range(SEGMENTS+1):
+        crown=max(range(RINGS+1),key=lambda j: accepted[j*(SEGMENTS+1)+i])
+        k=crown*(SEGMENTS+1)+i
+        final_crown_cuts.append(9+accepted[k]*.84-vertices[k][2])
     mesh=bpy.data.meshes.new(f'Watershed mesh {layer}');mesh.from_pydata(vertices,[],faces);mesh.update()
     obj=bpy.data.objects.new(f'Arroyo authored watershed {layer}',mesh);bpy.context.collection.objects.link(obj)
     colors=mesh.color_attributes.new(name='Geological cover',type='FLOAT_COLOR',domain='POINT')
@@ -153,9 +219,13 @@ for layer in range(3):
     material.node_tree.links.new(attr.outputs['Color'],nodes.get('Principled BSDF').inputs['Base Color'])
     nodes.get('Principled BSDF').inputs['Roughness'].default_value=1
     obj.data.materials.append(material)
-    layers.append({'relief':relief,'mineral':mineral,'vegetation':vegetation,'lockedVertices':locked})
+    layers.append({'elevation':[float(vertex.co.z)-9 for vertex in mesh.vertices],
+                   'mineral':mineral,'vegetation':vegetation,'lockedVertices':0,
+                   'watershedCount':watershed_count,'maximumCrownCut':max(final_crown_cuts),
+                   'maximumAuthoredCrownCutBeforeSeamRepair':max(crown_cuts),
+                   'seamBlendColumns':seam_columns,'maximumSeamRepairCut':seam_maximum_cut})
 
-OUT.write_text(json.dumps({'version':2,'segments':SEGMENTS,'rings':RINGS,'layers':layers},separators=(',',':'))+'\n')
+OUT.write_text(json.dumps({'version':3,'segments':SEGMENTS,'rings':RINGS,'layers':layers},separators=(',',':'))+'\n')
 SOURCE.mkdir(parents=True, exist_ok=True)
 bpy.ops.wm.save_as_mainfile(filepath=str(SOURCE/'horizon.blend'),compress=True)
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
@@ -166,6 +236,6 @@ sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
     'recipe':'tools/assets/horizon.py','recipeSha256':sha(pathlib.Path(__file__)),
     'relief':'assets/horizon-relief.json','reliefSha256':sha(OUT),
     'sourceSha256':sha(SOURCE/'horizon.blend'),'triangles':len(faces)*3,
-    'notes':'Original connected weathered shoulders and branching rock folds, with a three-metre rounded crown transition bounded toward a 36-degree radial slope. Exact crown heights, radial apron, three meshes and indexed topology retained; all relief remains subtractive.'
+    'notes':'Original connected 24-30 metre watersheds with 4-8 metre trunk cuts and tributaries sculpted through visible upper faces. Smooth authored crown cuts up to 0.5 metres replace the protected roof. The inherited angular seam is closed with a subtractive lower-envelope wash blended across four columns on each side; its local crown lowering is reported separately. No vertex rises above the previous surface. Three meshes, XY coordinates, radial footprint and topology retained. Exported elevations are authoritative Blender mesh coordinates relative to ground Z=9.'
 },indent=2)+'\n')
 print('HORIZON_EXPORT',json.dumps({'bytes':OUT.stat().st_size,'triangles':len(faces)*3,'lockedVertices':[x['lockedVertices'] for x in layers]}))
