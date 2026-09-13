@@ -157,3 +157,69 @@ measurements and artifact hashes. The raw run is archived under
 This is a filtered diagnostic, not final acceptance. A fresh complete
 `verify:poc` run, including all fifteen browser scenarios and supervisor checks,
 remains required before declaring acceptance complete.
+
+## September 13 full run and connection diagnostic
+
+The unfiltered round-twelve run completed at 12:16 UTC: **14 passed, one failed,
+zero skipped**. Both active soaks passed: the neighborhood completed 81 rounds
+over 605,520 ms, and the yard completed 75 rounds over 602,801 ms. The normal
+yard scenario and soak together retained 78 passing reset witnesses, with a
+maximum correction of 265.5 ms and zero reset-position error. All reconnect,
+resident-tab, graphics and gameplay-edge scenarios passed. Supervisor checks
+did not run because the browser suite failed. The
+[failed-run record](native-acceptance-round12-failed.json) identifies the source,
+results, two worker evidence groups and archived artifacts.
+
+The worker-crash/restart scenario lost its browser connection before the rejoin
+click. The intentionally killed worker disconnected upstream within 15.037
+seconds, inside the unchanged 45-second requirement. Cleanup called tracing on
+the closed connection and reused the original click Error object, obscuring its
+origin. This failure is distinct from the earlier reset observation timeout.
+
+An unchanged targeted rerun reproduced the error with passive native lifecycle
+logging and persistent raw traces. The WebSocket closed abnormally with code
+1006 at 12:18:29.993 UTC; page/browser cleanup followed, and Chrome exited cleanly
+at 12:18:30.053. That ordering establishes transport loss before browser cleanup
+in the reproduction. It does not establish the initiating network cause or
+retroactively turn either failed run into a pass.
+
+## Native transport heartbeat
+
+An isolated control reproduced the connection loss without loading the game.
+A fresh `about:blank` page disconnected after **13.25 seconds** of protocol
+silence. A second fresh page stayed connected during **24 seconds** of read-only
+evaluations every three seconds, then disconnected **17.34 seconds** after those
+requests stopped. Both native sockets reported code 1006 before page cleanup
+and normal Chrome process exits. This establishes idle-traffic dependence on
+the current native transport path; the exact network component responsible
+remains unidentified.
+
+The optional [acceptance host](../tools/acceptance-browser-server.mjs) now sends
+an empty WebSocket ping every five seconds through a small
+[heartbeat helper](../tools/acceptance-browser-heartbeat.mjs). The pinned peer
+automatically replies with pong. These control frames issue no page or gameplay
+commands. The helper clears its unreferenced timer on socket close, error,
+non-open state or failed write; it adds no missing-pong timeout, retry or
+termination policy. Origin rejection, the owned-target focus adapter, browser
+cleanup and the default local Linux browser path remain unchanged.
+
+All four [heartbeat controls](../tests/acceptance-browser-heartbeat.test.mjs)
+passed, including a real WebSocket ping/pong exchange and timer/listener cleanup.
+The patched native host then kept an untouched empty page connected for a full
+**60 seconds**, recording **12 pong replies**, before intentional client cleanup
+and Chrome exit code 0. The real worker-crash/restart case subsequently passed
+unchanged at 12:29 UTC: duplicate admission rejection, worker death, independent
+upstream disconnect, rejoin, unavailable server, restart and final rejoin all
+completed. Its 45-second disconnect requirement and every other assertion remain
+unchanged. The complete targeted run took **84.27 seconds**, retained all three
+trace archives and three WebM recordings, and recorded zero browser errors,
+page crashes or abnormal 1006 closures.
+
+The compact [heartbeat proof](native-transport-heartbeat.json) includes the
+native and Docker unit results. Its input
+and archive hashes link the failed reproduction, idle controls, quiet heartbeat
+control and unchanged passing case. Raw successful evidence is preserved in
+`diagnostic/heartbeat-host/unchanged-case-pass` beneath that same failure stage.
+The full failed runs remain failed. This targeted pass does not replace the
+required fresh unfiltered `verify:poc` run with all fifteen browser scenarios
+and supervisor checks after the final source freeze.

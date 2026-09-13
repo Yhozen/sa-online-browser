@@ -161,6 +161,8 @@ const sourceFiles = [
   "tests/browser/graphics.spec.mjs",
   "tools/browser-options.mjs",
   "tools/acceptance-browser-server.mjs",
+  "tools/acceptance-browser-heartbeat.mjs",
+  "tests/acceptance-browser-heartbeat.test.mjs",
   "tools/open-browser.mjs",
   "playwright.config.mjs",
   "tools/dev.mjs",

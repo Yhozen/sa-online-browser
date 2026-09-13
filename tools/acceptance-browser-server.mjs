@@ -2,6 +2,7 @@
 // Native browser host for a container running the pinned acceptance tests.
 import { createRequire } from "node:module";
 import { dirname, join } from "node:path";
+import { keepAcceptanceTransportAlive } from "./acceptance-browser-heartbeat.mjs";
 
 const require = createRequire(import.meta.url);
 const packagePath = require.resolve("playwright-core/package.json");
@@ -13,6 +14,12 @@ if (!Number.isInteger(port) || port < 1024 || port > 65535)
   throw Error("POC_BROWSER_PORT must be an unprivileged TCP port.");
 const path = "/sa-online-acceptance";
 const server = new PlaywrightServer({ mode: "default", path, maxConnections: 4 });
+const originalConnection = server._wsServer._delegate.onConnection;
+server._wsServer._delegate.onConnection = (request, url, socket, id) => {
+  const connection = originalConnection(request, url, socket, id);
+  keepAcceptanceTransportAlive(socket);
+  return connection;
+};
 const originalUpgrade = server._wsServer._delegate.onUpgrade;
 server._wsServer._delegate.onUpgrade = (request, socket) => request.headers.origin
   ? { error: `HTTP/${request.httpVersion} 403 Forbidden\r\n\r\n` }
