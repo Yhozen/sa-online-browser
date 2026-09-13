@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "sun": {
+    "direction": [
+      -58,
+      12,
+      47
+    ],
+    "color": 16766618,
+    "intensity": 6.2
+  },
+  "sky": {
+    "color": 11914470,
+    "groundColor": 9928799,
+    "intensity": 1.55
+  },
+  "environmentDiffuse": 0.34,
+  "ambientBounce": [
+    0.12,
+    0.1,
+    0.07
+  ],
+  "note": "Static diffuse irradiance inputs for the fixed neighborhood fixture, verified against lighting.ts before each bake. No extra runtime light is introduced."
+}

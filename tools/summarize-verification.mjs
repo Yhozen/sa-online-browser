@@ -11,6 +11,7 @@ const results = read("results.json"),
   soak = read("soak.json"),
   observations = read("server-observations.json"),
   agreements = read("position-agreements.json"),
+  resetAgreements = read("reset-agreements.json"),
   errors = read("browser-errors.json");
 const supervisor = read("supervisor.json");
 if (
@@ -49,6 +50,35 @@ function visit(suite) {
 for (const suite of results.suites) visit(suite);
 if (cases.length !== 15 || cases.some((x) => x.status !== "expected"))
   throw new Error("All yard, graphics and neighborhood scenarios must pass.");
+const soakTitle = cases.find(x => x.title.startsWith("soak:"))?.title;
+const resultStart = Date.parse(results.stats.startTime), resultEnd = resultStart + results.stats.duration;
+const resetDistance = position => Array.isArray(position) && position.length === 3 && position.every(Number.isFinite)
+  ? Math.hypot(position[0], position[1] - 6, position[2] - 10) : Infinity;
+if (!Array.isArray(resetAgreements) || !Number.isInteger(soak.rounds) || soak.rounds < 1 ||
+  resetAgreements.length !== soak.rounds + 3 ||
+  resetAgreements.filter(x => x.scenario === soakTitle).length !== soak.rounds ||
+  new Set(resetAgreements.map(x => x.token)).size !== resetAgreements.length ||
+  resetAgreements.some(check => {
+    const b = check.browser, s = b?.last;
+    const reset = observations[check.serverResetIndex], vehicle = observations[check.serverVehicleIndex];
+    return check.error || check.cleanupError || typeof check.token !== "string" || !check.token.startsWith("__acceptance_reset_") ||
+      !(check.requestedAt >= resultStart && check.retrievedAt >= check.requestedAt && check.retrievedAt <= resultEnd) ||
+      check.serverDeadlineMs !== 1000 ||
+      !Number.isInteger(check.serverResetIndex) || !Number.isInteger(check.serverVehicleIndex) ||
+      check.serverResetIndex < 0 || check.serverVehicleIndex <= check.serverResetIndex ||
+      reset?.event !== "reset" || vehicle?.event !== "vehicle" ||
+      observations.slice(0, check.serverResetIndex).filter(x => x.event === "reset").length !== check.priorResetCount ||
+      JSON.stringify(reset) !== JSON.stringify(check.serverReset) || JSON.stringify(vehicle) !== JSON.stringify(check.serverVehicle) ||
+      !(check.serverDistance < 0.5) || check.serverDistance !== resetDistance([vehicle.x, vehicle.y, vehicle.z]) ||
+      b?.passed !== true || b.reason !== "fresh-correction-within-deadline" || b.limitMs !== 1000 || b.tolerance !== 0.5 ||
+      !Number.isFinite(b.startedAt) || !Number.isFinite(b.epoch) || !Number.isInteger(b.playerId) || !Number.isInteger(b.vehicleId) ||
+      !Number.isFinite(b.elapsedMs) || b.elapsedMs < 0 || b.elapsedMs > 1000 ||
+      !Number.isInteger(b.sampleCount) || b.sampleCount < 1 ||
+      s?.elapsedMs !== b.elapsedMs || s.mode !== "onFoot" || s.fresh !== true ||
+      !(s.distance < 0.5) || s.distance !== resetDistance(s.vehiclePosition) ||
+      ["selfPosition", "selfHeading", "vehicleState"].some(name =>
+        !Number.isInteger(b.baseline?.[name]) || !Number.isInteger(s.counters?.[name]) || s.counters[name] <= b.baseline[name]);
+  })) throw new Error("Every reset requires fresh server evidence and browser-local command convergence within 1000 ms and 0.5 m.");
 const remoteBrowser = acceptanceConnectOptions() ? read("browser-environment.json") : undefined;
 if (remoteBrowser && (
   remoteBrowser.transport !== "remote-playwright-loopback" ||
@@ -124,6 +154,10 @@ const sourceFiles = [
   "test-server/poc.pwn",
   "test-server/arena.json",
   "tests/browser/poc.spec.mjs",
+  "tests/browser/reset-observer.mjs",
+  "tests/reset-observer.test.mjs",
+  "tools/verify.mjs",
+  "tools/summarize-verification.mjs",
   "tests/browser/graphics.spec.mjs",
   "tools/browser-options.mjs",
   "tools/acceptance-browser-server.mjs",
@@ -156,6 +190,7 @@ const sourceFiles = [
   "apps/browser/src/road-detail.ts",
   "apps/browser/src/verges.ts",
   "apps/browser/src/ground-cover.ts",
+  "apps/browser/src/surface-weathering.ts",
   "apps/browser/src/garden.ts",
   "apps/browser/src/surface-textures.ts",
   "apps/browser/src/surface-pixels.ts",
@@ -165,6 +200,9 @@ const sourceFiles = [
   "tools/assets/heroes.py",
   "tools/assets/garden-kit.py",
   "tools/assets/horizon.py",
+  "tools/assets/horizon-envelope-v3.py", "tools/assets/horizon-bake.mjs", "tools/assets/horizon-save.py",
+  "assets/source/horizon-envelope-v3.json", "assets/source/horizon-envelope-v3.blend",
+  "assets/source/horizon-envelope-v3-build.json", "assets/source/horizon-lighting.json", "assets/source/horizon-build.json",
   "assets/horizon-relief.json",
   "assets/source/asset-build.json",
   "tests/assets.test.mjs", "tests/verges.test.mjs",
@@ -246,6 +284,16 @@ const summary = {
     requiredDistance: 0.5,
     deadlineMs: 1000,
   },
+  resetChecks: {
+    count: resetAgreements.length,
+    clock: "browser performance.now from actual trusted reset Enter; immutable verdict retrieved afterward",
+    maxElapsedMs: Math.max(...resetAgreements.map(x => x.browser.elapsedMs)),
+    maxBrowserDistance: Math.max(...resetAgreements.map(x => x.browser.last.distance)),
+    maxServerDistance: Math.max(...resetAgreements.map(x => x.serverDistance)),
+    requiredDistance: 0.5,
+    deadlineMs: 1000,
+    freshness: "same epoch/player/vehicle; fresh selfPosition/selfHeading and generic vehicleState counters; independent fresh server reset/car sample",
+  },
   uncaughtBrowserErrors: errors.flatMap((x) => x.errors),
   testedSourceSha256: Object.fromEntries(
     sourceFiles.map((file) => [file, hash(file)]),
@@ -256,6 +304,7 @@ const summary = {
     ...(remoteBrowser ? ["browser-environment.json"] : []),
     "server-observations.json",
     "position-agreements.json",
+    "reset-agreements.json",
     "browser-errors.json",
     "soak.json",
     "walking-chat.png",

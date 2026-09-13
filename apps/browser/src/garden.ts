@@ -47,11 +47,17 @@ export function frontageGardenPlacements(manifest: SceneManifest): Placement[] {
     const sx = house.scale?.[0] ?? 1, sy = house.scale?.[1] ?? 1;
     // Two loose drifts sit on the street side of the fence. The previous row
     // was inside the lot, where the fence concealed nearly all of its volume.
-    for (let specimen = 0; specimen < 18; specimen++) {
+    for (let specimen = 0; specimen < 36; specimen++) {
       const row = Math.floor(specimen / 6), along = specimen % 6;
-      const lx = row < 2 ? -9.6 + along * .79 + row * .26 : .15 + (along % 3) * 1.05;
-      const ly = -(row < 2 ? 13.7 + row * 1.03 : 14.3 + Math.floor(along / 3) * 1.12)
+      let lx = row < 2 ? -9.6 + along * .79 + row * .26 : .15 + (along % 3) * 1.05;
+      let ly = -(row < 2 ? 13.7 + row * 1.03 : 14.3 + Math.floor(along / 3) * 1.12)
         - .23 * Math.sin(index * 1.9 + specimen * 1.7);
+      if (specimen >= 18) {
+        const drift = Math.floor((specimen - 18) / 6), along = (specimen - 18) % 6;
+        lx = drift === 0 ? -10.8 + along * .70 : drift === 1 ? -9.6 + along * .71 : .1 + (along % 3) * .6;
+        ly = drift === 0 ? -16.3 : drift === 1 ? -18.1 : -16.5 - Math.floor(along / 3) * 1.08;
+        ly += .18 * Math.sin(index * 1.9 + specimen * 1.7);
+      }
       const x = house.position[0] + lx * sx * c - ly * sy * s;
       const y = house.position[1] + lx * sx * s + ly * sy * c;
       const scale = .89 + ((index * 3 + specimen) % 4) * .05;

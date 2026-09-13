@@ -30,7 +30,9 @@ for (const address of [debugURL, gameURL]) {
 mkdirSync(dir, { recursive: true });
 
 function localInputs() {
-  const files = ['apps/browser/index.html', 'apps/browser/vite.config.ts', 'assets/horizon-relief.json', 'package.json', 'package-lock.json'];
+  const files = ['apps/browser/index.html', 'apps/browser/vite.config.ts', 'assets/horizon-relief.json', 'package.json', 'package-lock.json',
+    'tools/build-assets.mjs', 'tools/assets/horizon.py', 'tools/assets/horizon-envelope-v3.py',
+    'tools/assets/horizon-bake.mjs', 'tools/assets/horizon-save.py'];
   for (const directory of ['apps/browser/src', 'packages/shared', 'assets/source']) {
     for (const entry of readdirSync(path.join(root, directory), { recursive: true, withFileTypes: true })) {
       if (entry.isFile() && /\.(?:ts|mjs|json|blend)$/.test(entry.name))

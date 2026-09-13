@@ -1,0 +1,14 @@
+{
+  "generatedAt": "2026-09-13T06:08:43.432656+00:00",
+  "blenderVersion": "5.2.1 LTS",
+  "blenderBuild": "9e2066aef7ef",
+  "blenderExecutable": "/Applications/Blender.app/Contents/MacOS/Blender",
+  "blenderExecutableSha256": "ea651e507c6b197df0e234bfa04e5ed43e7f4d498267a7df93fcb38f21928a5c",
+  "recipe": "tools/assets/horizon.py",
+  "recipeSha256": "9c738fa74fec6a155a838ecacde64ce37b6d52fae557164c66b85baf40e125cd",
+  "relief": "assets/horizon-relief.json",
+  "reliefSha256": "42b9fd6aba7e4e7e9416d33722b6661f3deb09ce34baccdc410a3812c0bae557",
+  "sourceSha256": "6d5f38fd94408bf478ebd5e867aece47f637a11097a431311b862dc8c941c03d",
+  "triangles": 172800,
+  "notes": "Original connected 24-30 metre watersheds with 4-8 metre trunk cuts and tributaries sculpted through visible upper faces. Smooth authored crown cuts up to 0.5 metres replace the protected roof. The inherited angular seam is closed with a subtractive lower-envelope wash blended across four columns on each side; its local crown lowering is reported separately. No vertex rises above the previous surface. Three meshes, XY coordinates, radial footprint and topology retained. Exported elevations are authoritative Blender mesh coordinates relative to ground Z=9."
+}

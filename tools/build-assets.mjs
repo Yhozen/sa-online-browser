@@ -9,6 +9,7 @@ import { spawnSync } from "node:child_process";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
+import { prepareHorizon, completeHorizonProvenance } from "./assets/horizon-bake.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const pinnedVersion = "4.5.13";
@@ -36,6 +37,8 @@ function run(command, args, options = {}) {
 const { values } = parseArgs({ options: {
   blender: { type: "string" },
   models: { type: "string" },
+  terrain: { type: "boolean", default: false },
+  "terrain-only": { type: "boolean", default: false },
   "output-root": { type: "string" },
   "skip-reflections": { type: "boolean", default: false },
   help: { type: "boolean", short: "h" },
@@ -49,6 +52,9 @@ if (values.help) {
     "                       Linux x64 defaults to checksum-pinned Blender " + pinnedVersion + ".",
     "  --models NAMES       Comma-separated models; dependencies may be constructed,",
     "                       but only selected final exports are replaced.",
+    "  --terrain           Include terrain with a selective --models build.",
+    "  --terrain-only      Bake terrain and exact native source, without model exports.",
+    "                       Full builds include terrain; selective builds preserve it.",
     "  --output-root PATH   Write selected exports to a separate folder tree.",
     "                       Requires --skip-reflections.",
     "  --skip-reflections   Rebuild models/textures/inventory without the browser bake.",
@@ -59,7 +65,9 @@ if (values.help) {
   ].join("\n"));
   process.exit(0);
 }
-const selected = values.models !== undefined ? [...new Set(values.models.split(",").map(name => name.trim()))] : models;
+if (values["terrain-only"] && values.models !== undefined) throw Error("--terrain-only and --models are mutually exclusive.");
+const terrain = values["terrain-only"] || values.terrain || values.models === undefined;
+const selected = values["terrain-only"] ? [] : values.models !== undefined ? [...new Set(values.models.split(",").map(name => name.trim()))] : models;
 if (selected.some(name => !models.includes(name)))
   throw Error("Unknown model selection. Available models: " + models.join(", ") + ".");
 const outputRoot = values["output-root"] ? path.resolve(values["output-root"]) : root;
@@ -105,7 +113,8 @@ const generator = {
   architecture: process.arch,
   executableSha256: executable.sha256,
 };
-console.log("Building " + selected.length + " models with Blender " + version + " (" + distribution + ", " + process.arch + ").");
+const products = selected.length ? selected.length + " models" + (terrain ? " and terrain" : "") : "terrain";
+console.log("Building " + products + " with Blender " + version + " (" + distribution + ", " + process.arch + ").");
 
 // Export into scratch space first. A Blender/API failure leaves all committed
 // meshes and editable sources intact; publish only a complete successful run.
@@ -113,9 +122,21 @@ mkdirSync(path.join(root, ".runtime"), { recursive: true });
 const staging = mkdtempSync(path.join(root, ".runtime/asset-build-"));
 try {
   const inputs = Object.fromEntries(recipes.map(file => [file, identify(path.join(root, file)).sha256]));
-  run(binary, ["--background", "--factory-startup", "--python-exit-code", "1", "--python",
+  if (selected.length) run(binary, ["--background", "--factory-startup", "--python-exit-code", "1", "--python",
     path.join(root, "tools/assets/build.py"), "--", "--output-root", staging,
     "--models", selected.join(","), "--blender-version", version]);
+  const terrainProducts = ["assets/horizon-relief.json", "assets/source/horizon.blend", "assets/source/horizon-build.json"];
+  if (terrain) {
+    const prepared = prepareHorizon({ outputRoot: staging });
+    run(binary, ["--background", "--factory-startup", "--python-exit-code", "1", "--python",
+      path.join(root, "tools/assets/horizon-save.py"), "--", "--output-root", staging, "--blender-version", version]);
+    // Reject any source/material edits while native authoring was running.
+    for (const entry of [...Object.values(prepared.inputs), ...Object.values(prepared.dependencies)])
+      if (identify(path.join(root, entry.path)).sha256 !== entry.sha256)
+        throw Error("Terrain input changed during generation: " + entry.path);
+    completeHorizonProvenance(staging, generator);
+    for (const file of terrainProducts) identify(path.join(staging, file));
+  }
   const output = path.join(outputRoot, "apps/browser/public/assets");
   const source = path.join(outputRoot, "assets/source");
   const recordPath = path.join(source, "asset-build.json");
@@ -143,20 +164,26 @@ try {
     if (compressedModels.has(name)) copyFileSync(path.join(staging, "apps/browser/public/assets", name + ".glb.gz"), path.join(output, name + ".glb.gz"));
     copyFileSync(path.join(staging, "assets/source", name + ".blend"), path.join(source, name + ".blend"));
   }
-  copyFileSync(path.join(root, "assets/textures/neighborhood-atlas.png"), path.join(output, "neighborhood-atlas.png"));
-  // Original imagegen PNGs remain editable inputs. Committed lossless encodings
-  // need no encoder dependency at build time and retain the same texel data.
-  for (const name of ["surfaces", "details", "foliage", "sky", "asphalt", "grass", "grass-clumps"]) {
-    copyFileSync(path.join(root, `assets/textures/arroyo-${name}.webp`), path.join(output, `arroyo-${name}.webp`));
-    rmSync(path.join(output, `arroyo-${name}.png`), { force: true });
+  if (selected.length) {
+    copyFileSync(path.join(root, "assets/textures/neighborhood-atlas.png"), path.join(output, "neighborhood-atlas.png"));
+    // Original imagegen PNGs remain editable inputs. Committed lossless encodings
+    // need no encoder dependency at build time and retain the same texel data.
+    for (const name of ["surfaces", "details", "foliage", "sky", "asphalt", "grass", "grass-clumps"]) {
+      copyFileSync(path.join(root, `assets/textures/arroyo-${name}.webp`), path.join(output, `arroyo-${name}.webp`));
+      rmSync(path.join(output, `arroyo-${name}.png`), { force: true });
+    }
+    writeFileSync(recordPath, JSON.stringify(record, null, 2) + "\n");
+    run(process.execPath, ["tools/asset-inventory.mjs", output]);
   }
-  writeFileSync(recordPath, JSON.stringify(record, null, 2) + "\n");
-  run(process.execPath, ["tools/asset-inventory.mjs", output]);
+  if (terrain) for (const file of terrainProducts) {
+    mkdirSync(path.dirname(path.join(outputRoot, file)), { recursive: true });
+    copyFileSync(path.join(staging, file), path.join(outputRoot, file));
+  }
 } finally {
   rmSync(staging, { recursive: true, force: true });
 }
 if (values["skip-reflections"]) {
-  console.log("Models, textures, provenance and inventory rebuilt. Reflection bake skipped; refresh it after final scene changes, then restart the gateway.");
+  console.log("Rebuilt " + products + " and their provenance. Reflection bake skipped; refresh it after final scene changes, then restart the gateway.");
 } else {
   // Capture static scene lighting once; normal setup consumes the committed cache.
   run(process.execPath, ["tools/bake-reflections.mjs"]);

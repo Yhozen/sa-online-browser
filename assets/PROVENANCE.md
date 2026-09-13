@@ -29,7 +29,59 @@ The six surface, detail, foliage, sky, asphalt and lawn WebP inputs recorded in 
 
 The current asphalt is an original built-in image edit with quieter fissures and warm mineral aggregate, retained byte-for-byte at `textures/arroyo-asphalt.png`. `source/asphalt-authoring.json` records its exact prompt and generation identity. Runtime samples it across four metres and derives aligned surface maps. The current sky is an original four-edit refinement with fuller warm-white clouds, a midpoint horizon and open blue at the panorama wrap. `source/arroyo-sky-generation.json` and `source/arroyo-sky-prompts.txt` retain every exact prompt, input and generated-output identity. Its opposite cloud-band edges differ by at most 4/255 mean RGB in the measured 29–33° band; this is a closely matched wrap, not a claim of mathematically identical edges.
 
-### Latest street refinement (September 13, 09:12 UTC build)
+### Current structural refinement (September 13, round twelve)
+
+Native Blender 5.2.1 rebuilt `tree`, `roadside-oak`, `palm` and `neighbor` through
+the normal selective pipeline. Current hashes, source BLEND identities and native
+executable/recipe identities are in `source/asset-build.json`. Both oaks now have
+8,536 triangles and 630 attached leaf sprays; all 3,496 wood triangles and their
+attributes remain exact. More exposed outer sprays and locally curved lobe
+normals create crown openings and separate illuminated faces. Their two lossless
+gzip deliveries total 766,351 bytes. Existing tree placements and colliders remain.
+
+The palm has 24 fronds, 1,104 individual drooping/twisted pinnae and 13,431 triangles.
+It replaces the former sunlight-axis leaf deformation with natural blade torsion;
+wood and rachises are preserved, while the highest blade is 1.98 cm lower. The
+selected fuller variant is 881,160 bytes, SHA256
+`83e001d52a835436bf62bc39c361e229b83dd025f1ba8aa8ef09a41d6461233d`.
+The native comparison accepted its separated pinnae after rejecting a sparse
+narrower variant. This is an art decision, not a claim that the visual target passed.
+
+The neighbor now has 121,590 triangles and occupies 6,521,848 bytes. Localized
+trouser compression, a recessed heel counter, thinner sole/welt and padded collar
+retain the original foot support and seated fit. All vertex attributes, eleven
+bone transforms, inverse binds and four animation streams match the reviewed
+prototype exactly; a few existing triangles have different index ordering in the
+native export, with identical oriented triangle sets. New shoes are closed
+manifolds. No rig, animation, collision or seat-anchor contract changes.
+
+Terrain v4 retains three draws, 172,800 triangles and all 218 perimeter placements.
+`source/horizon-envelope-v3.*` preserves its prior authored envelope and recipe
+provenance. `tools/assets/horizon-bake.mjs` remeshes connected gullies and bakes one
+fixed diffuse-irradiance field, packed with explicit little-endian coordinates.
+`tools/assets/horizon-save.py` saves the exact decoded runtime Float32 mesh to
+`source/horizon.blend`; complete native provenance is recorded in
+`source/horizon-build.json`. The 859,283-byte packed runtime data has SHA256
+`94e2c411dacb524e2ee90c4cf5bd312fbf0c7b3e4355b2ba8f11c6bacf1c9b56`.
+The Basic material applies that irradiance once in either quality preset, retaining
+original grass/concrete maps and fog. It adds no texture or runtime light.
+The envelope remesh changes the reference skyline by at most 3.10 pixels; exact
+silhouette identity is not claimed.
+
+Broad asphalt and concrete pigment variation uses vertex colors on ten existing
+horizontal surfaces. Two isolated material clones preserve the original curb
+material and restore Standard exactly after Low. Existing sidewalk joint geometry
+and colors remain byte-exact. Fifty-seven additional low frontage shrubs bring
+that count to 141; the 30 masonry-bed and 27 verge plants and all earlier transforms
+remain. Original authored surface images and the grass color field are retained.
+
+The latest reflection cache and actual browser build identities are recorded in
+`source/reflection-bake.json`. Native geometry/CPU checks passed; final rendered
+performance, multiplayer acceptance and independent art review are documented
+separately in `docs/native-dream-results.md`. The older dated descriptions below
+are historical and are superseded by this section and current ledgers.
+
+### Earlier street refinement (September 13, 09:12 UTC build)
 
 The native Blender pipeline now also builds `roadside-oak`: a mature specimen with
 one continuous 3 m growth deformation above the unchanged 2.1 m low trunk.

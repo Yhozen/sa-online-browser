@@ -42,7 +42,7 @@ def leafcard(name,center,width,length,angle,tilt,mat):
  return o
 
 
-def attached_leaf_spray(root,direction,length,roll,mat,canopy=None,spread=1.0,minimum_z=None):
+def attached_leaf_spray(root,direction,length,roll,mat,canopy=None,spread=1.0,minimum_z=None,maximum_z=None):
  """Anchor the atlas's lower-left stem to the actual twig, not a random card center.
  The image's main bough runs diagonally UV (0,0)→(1,1). Align that diagonal with
  the growing branch so every leaf group has a visible botanical attachment.
@@ -73,6 +73,12 @@ def attached_leaf_spray(root,direction,length,roll,mat,canopy=None,spread=1.0,mi
    # and botanical connection instead of clipping a flat underside into leaves.
    scale=(root.z-minimum_z)/(root.z-lowest)
    assert 0<scale<=1, 'oak spray stem must remain above pedestrian clearance'
+   verts=[root+(v-root)*scale for v in verts]
+ if maximum_z is not None:
+  highest=max(v.z for v in verts)
+  if highest>maximum_z:
+   scale=(maximum_z-root.z)/(highest-root.z)
+   assert 0<scale<=1, 'terminal stem must stay inside oak height envelope'
    verts=[root+(v-root)*scale for v in verts]
  o=mesh('leaf-card attached oak spray',verts,[(j*3+i,j*3+i+1,(j+1)*3+i+1,(j+1)*3+i) for j in range(2) for i in range(2)],mat)
  uv=o.data.uv_layers.new(name='UVMap')
@@ -130,7 +136,7 @@ def sculpt_canopy_normals():
     local_delta=position-lobe_center
     local=Vector((local_delta.x/lobe_radius.x**2,local_delta.y/lobe_radius.y**2,local_delta.z/lobe_radius.z**2))
     local=local.normalized() if local.length_squared>1e-8 else radial
-    blended=(radial*.78+local*.15+real*.07).normalized()
+    blended=(radial*.28+local*.60+real*.12).normalized()
     normals.append((world_to_local_normal @ blended).normalized())
    polygon.use_smooth=True
   o.data.normals_split_custom_set(normals);o.data.update();count+=len(normals)
@@ -488,19 +494,22 @@ def detailed_palm():
     t=(j+.20*math.sin(i*3.1+j*1.7)+sign*.26)/25;f=t*12;k=min(11,int(f));root=points[k].lerp(points[k+1],f-k)
     leaf_length=1.12*(.12+1.00*math.sin(t*math.pi)**.76)*(.88+.13*math.sin(i*1.7+j*.71))
     tip=root+side*(sign*leaf_length)+direction*(.18+.35*t)+Vector((0,0,-.20-.27*t))
+    # Older pinnae drape independently below their attached rachis. Varied
+    # terminal drop breaks the equal-height comb without moving their roots.
+    drop=(.08 if age==2 else .18 if age==1 else .28)*(.65+.35*math.sin(i*1.9+j*.73)**2)
+    tip.z-=drop*math.sin(t*math.pi)**.6
     # A longitudinal fold catches a narrow highlight; tapered ends and downward
     # curling tips leave clean feathers at distance without alpha edge artefacts.
     bladeverts=[root];original=[root]
     for q in [.32,.72]:
      center=root.lerp(tip,q)+Vector((0,0,.15*math.sin(q*math.pi)))
-     # Twist a wider folded cross-section along the neighborhood's incident
-     # sunlight. This is actual hanging leaf geometry: moving its edges along
-     # the light ray retains their ground projection while widening the camera
-     # silhouette. Every root, tip and raised midrib stays on its existing arch.
-     width=.6*(.0105+.052*math.sin(t*math.pi))*math.sin(math.pi*q)**.70
-     sun_axis=Vector((-58,12,47)).normalized()
-     tilt=math.copysign(2.5+.25*math.sin(i*1.9+j*.8),direction.dot(sun_axis))
-     across=direction*width+sun_axis*(width*tilt)
+     # Widen only the physical pinna cross-section by 30%; retain its
+     # existing attachment, natural torsion, droop and raised midrib.
+     width=1.30*.6*(.0105+.052*math.sin(t*math.pi))*math.sin(math.pi*q)**.70
+     # Natural pinna torsion replaces the former light-axis shear. The rolled
+     # blade keeps unequal angles exposing gaps between neighbors.
+     twist=sign*(.30+.55*math.sin(i*1.31+j*.91+q*1.7))
+     across=(direction*math.cos(twist)+Vector((0,0,1))*math.sin(twist))*width
      bladeverts.extend([center-across,center+Vector((0,0,.031*math.sin(q*math.pi))),center+across])
      original.extend([center-direction*width,center+Vector((0,0,.031*math.sin(q*math.pi))),center+direction*width])
     bladeverts.append(tip)
@@ -508,8 +517,8 @@ def detailed_palm():
     blade=mesh('folded tapered palm leaflet',bladeverts,[(0,1,2),(0,2,3),(1,4,5,2),(2,5,6,3),(4,7,5),(5,7,6)],palmgreen if (i+j)%7 else palmlight)
     leaflet_shapes.append((blade,original))
     for face in blade.data.polygons:face.use_smooth=True
- # Retain the established crown bounds. Shorten only an edge's new displacement
- # along the same light ray; never clip one coordinate and change its shadow.
+ # Keep each twisted edge inside the untwisted draped crown envelope.
+ # Shorten its displacement as a whole, preserving the blade cross-section.
  minimum=[min(v[k] for v in accepted_crown) for k in range(3)]
  maximum=[max(v[k] for v in accepted_crown) for k in range(3)]
  for blade,original in leaflet_shapes:
@@ -576,10 +585,10 @@ def detailed_oak(name='tree'):
    tip=center+Vector((axis.x*rx*.69,axis.y*ry*.69,axis.z*rz*.67))
    mid=forkroot.lerp(tip,.53)+Vector((0,0,.065))
    woody_curve('oak leaf-bearing bough',[forkroot,mid,tip],.031+.004*(leader%3))
-   for spray in range(8):
-    # Start foliage farther inside each connected lobe. Overlapping inner and
-    # outer shoots hide the scaffold core without adding opaque filler shells.
-    t=.16+.115*spray
+   for spray in range(7):
+    # Reallocate buried inner sprays onto the actual outer boughs, retaining
+    # unequal overlapping terminal lobes separated by real sun/view gaps.
+    t=.32+.11*spray
     anchor=forkroot.lerp(mid,t*2) if t<.5 else mid.lerp(tip,(t-.5)*2)
     # Opposed side shoots avoid coincident cards while the final shoot follows
     # the botanical branch end. Deep roll differences retain canopy density from
@@ -587,8 +596,8 @@ def detailed_oak(name='tree'):
     orbit=a+(.55 if spray%2 else -.55)*(1-.07*spray)
     pitch=math.asin(elevation)+.27*math.sin(spray*2.12+b)
     growing=Vector((math.cos(orbit)*math.cos(pitch),math.sin(orbit)*math.cos(pitch),math.sin(pitch)))
-    length=.96+.105*((spray+leader+b)%4)
-    attached_leaf_spray(anchor,growing,length,(spray%3-1)*1.04+.27*math.sin(b+leader),leaf2 if (b+leader+spray)%6==0 else leaf,(tuple(center),(rx*1.60,ry*1.60,rz*1.60)),spread=1.40,minimum_z=4.11+.035*(b%3))
+    length=.95+.09*((spray+leader+b)%4)
+    attached_leaf_spray(anchor,growing,length,(spray%3-1)*1.04+.27*math.sin(b+leader),leaf2 if (b+leader+spray)%6==0 else leaf,(tuple(center),(rx*1.60,ry*1.60,rz*1.60)),spread=1.24,minimum_z=4.11+.035*(b%3),maximum_z=8.3965)
  # Canonical crown bounds stay around 4.1–8.4m; local-volume shading is blended
  # into the common outward field so all copies retain a coherent lit shoulder.
  sculpt_canopy_normals()

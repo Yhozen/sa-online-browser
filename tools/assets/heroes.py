@@ -530,6 +530,12 @@ for o in list(bpy.context.scene.objects):
 materials={m.name:m for m in bpy.data.materials}
 skin=materials['skin'];shirt=materials['outfit'];denim=materials['denim'];hair=materials['hair'];white=materials['ivory'];chrome=materials['chrome'];dark=materials['rubber']
 sole=material('shoe-sole',(.135,.14,.13),.92)
+# Match the runtime ivory's e3dfcf sRGB palette exactly, with a separate leather
+# response. Sharing ivory would also change cotton laces and eye highlights.
+def srgb_linear(v):
+    c=v/255
+    return c/12.92 if c<=.04045 else ((c+.055)/1.055)**2.4
+shoe_leather=material('shoe-leather',tuple(srgb_linear(v) for v in (227,223,207)),.55)
 stitch=material('clothing-stitch',(.095,.11,.093),.96)
 lip=material('lip',(.26,.12,.082),.82)
 eyebrown=material('iris',(.085,.052,.028),.6)
@@ -763,26 +769,33 @@ def connected_sneaker(x,side):
             points.append(Vector((x+.100*cs*scale,.035+(y-.035)*scale,z)))
         rings.append(points);ring_materials.append(mat)
     # Rounded tread, cream midsole and a recessed welt have separate contours.
-    for scale,z,mat in [(.92,.015,1),(.98,.019,1),(1,.026,1),
-                        (1,.030,0),(1,.045,0),(.985,.050,0),(.955,.054,1)]:
+    for scale,z,mat in [(.92,.015,2),(.98,.019,2),(1,.024,2),
+                        (1,.028,0),(1,.039,0),(.985,.042,0),(.940,.046,1)]:
         ring(scale,z,mat)
-    for t in [0,.18,.38,.60,.79,.92,1]:
+    upper_start=len(rings)
+    upper_steps=[0,.15,.32,.50,.65,.70,.75,.86,.95,1]
+    for t in upper_steps:
         points=[]
         for i in range(sides):
             a=i*math.tau/sides;sn=math.sin(a);cs=math.cos(a)
-            foot=Vector((x+.0955*cs,.035+sn*(.195 if sn>=0 else .160)*.955,.056))
+            foot=Vector((x+.0940*cs,.035+sn*(.195 if sn>=0 else .160)*.940,.048))
             collar=Vector((x+.088*cs,.012+.092*sn,
                 .139+.04546409702301025*max(0,sn)**2))
             # The toe rolls into a domed vamp; the heel cup climbs continuously.
             yblend=t*t*(3-2*t);p=foot.lerp(collar,yblend)
-            p.z=.056+(collar.z-.056)*t
+            p.z=.048+(collar.z-.048)*t
             if sn>0:p.z-=.027*sn*math.sin(math.pi*t)
-            # Small inward heel shaping avoids the old flat white end plate.
-            p.x=x+(p.x-x)*(1-.055*math.sin(math.pi*t)*max(0,-sn))
+            # The lower heel cup tapers to the last. A narrow concave counter
+            # junction beneath the collar is actual geometry, not a dark stripe.
+            rear=max(0,-sn)**1.5
+            cup=.115*math.sin(math.pi*t)*rear
+            junction=.045*math.exp(-((t-.72)/.047)**2)*rear
+            p.x=x+(p.x-x)*(1-cup-junction)
+            p.y+=rear*(.007*math.sin(math.pi*t)+.0045*math.exp(-((t-.72)/.047)**2))
             points.append(p)
-        rings.append(points);ring_materials.append(0)
+        rings.append(points);ring_materials.append(3)
     # The padded rim rolls inward into a dark lining; no floating collar ring.
-    for radius,depth,zdrop,mat in [(.085,.088,.0015,0),(.079,.081,.005,1),
+    for radius,depth,zdrop,mat in [(.089,.093,.0007,3),(.081,.085,.005,1),
                                   (.078,.080,.028,2),(.060,.061,.055,2)]:
         points=[]
         for i in range(sides):
@@ -799,7 +812,7 @@ def connected_sneaker(x,side):
     faces.append(tuple(reversed(range(sides))));bands.append(1)
     faces.append(tuple((len(rings)-1)*sides+i for i in range(sides)));bands.append(2)
     shoe=part(smooth(mesh('rounded connected sneaker with inset collar',vertices,faces,white)),f'shin{side}')
-    shoe.data.materials.append(sole);shoe.data.materials.append(dark)
+    shoe.data.materials.append(sole);shoe.data.materials.append(dark);shoe.data.materials.append(shoe_leather)
     for face,band in zip(shoe.data.polygons,bands):face.material_index=band
     from mathutils.bvhtree import BVHTree
     surface=BVHTree.FromPolygons([v.co for v in shoe.data.vertices],
@@ -836,7 +849,7 @@ def connected_sneaker(x,side):
         return ribbon
     for sign in [-1,1]:
         # Curved quarter-panel seam rises from the heel cup into the vamp.
-        path=[rings[10][(i if sign>0 else sides//2-i)%sides] for i in range(-9,8)]
+        path=[rings[upper_start+upper_steps.index(.50)][(i if sign>0 else sides//2-i)%sides] for i in range(-9,8)]
         sewn_ribbon('curved leather quarter seam',path,.0015,stitch)
         path=[upper_point(y,sign*f) for y,f in [(.110,.54),(.130,.56),(.149,.58),(.168,.56)]]
         sewn_ribbon('stitched leather eyestay',path,.0012,stitch)
@@ -857,27 +870,52 @@ for sign,side in [(-1,'L'),(1,'R')]:
     leg_rings=[]
     for j in range(len(leg_profile)-1):
         a,b=leg_profile[j:j+2]
-        for k in range(7):
-            t=k/7;z,cx,cy,w,d=[a[n]*(1-t)+b[n]*t for n in range(5)]
+        # Put axial samples at the compressed ankle and knee; the straight
+        # upper thigh keeps its original vertices and binding envelope.
+        steps={1:14,3:12,4:9,5:10}.get(j,7)
+        for k in range(steps):
+            t=k/steps;z,cx,cy,w,d=[a[n]*(1-t)+b[n]*t for n in range(5)]
             leg_rings.append(((cx,cy,z),w,d))
     a=leg_profile[-1];leg_rings.append(((a[1],a[2],a[0]),a[3],a[4]))
     leg=ring_mesh('shaped denim leg',leg_rings,denim,sides=36)
-    for v in leg.data.vertices:
-        angle=math.atan2(v.co.y,v.co.x-x);front=max(0,math.sin(angle));back=max(0,-math.sin(angle))
-        fold=.006*front*math.exp(-((v.co.z-(.49+sign*.19*(v.co.x-x)))/.017)**2)
-        fold-=.004*front*math.exp(-((v.co.z-(.458-sign*.12*(v.co.x-x)))/.013)**2)
-        fold+=.005*back*math.sin(v.co.z*111+angle)*math.exp(-((v.co.z-.445)/.048)**2)
-        fold+=.004*math.sin(v.co.z*122+angle*2)*math.exp(-((v.co.z-.17)/.050)**2)
-        # Asymmetric compressed valleys break the knee and hem cylinders.
-        fold-=.007*back*math.exp(-((v.co.z-(.474+sign*.011+sign*.18*(v.co.x-x)))/.015)**2)
-        fold-=.006*(.35+.65*back)*math.exp(-((v.co.z-(.194+sign*.009+sign*.24*(v.co.x-x)))/.010)**2)
-        fold-=.005*(.3+.7*front)*math.exp(-((v.co.z-(.154-sign*.007-sign*.18*(v.co.x-x)))/.009)**2)
-        v.co.x+=(v.co.x-x)*fold/.09;v.co.y+=math.sin(angle)*fold
+    # Each dart has an oblique compressed valley and adjacent gathered lip.
+    # Angular windows prevent full circumferential rings; offsets differ by leg.
+    darts=[(.474+sign*.009,-math.pi/2,.96,sign*.25,.013,.014),
+           (.503-sign*.008,math.pi/2,.82,-sign*.19,.010,.017),
+           (.177+sign*.010,-math.pi/2+sign*.48,1.02,sign*.35,.012,.012),
+           (.214-sign*.009,math.pi/2-sign*.52,.92,-sign*.30,.011,.013),
+           (.247+sign*.005,-math.pi/2-sign*.40,.72,sign*.23,.008,.014)]
+    for i,v in enumerate(leg.data.vertices):
+        center=Vector(leg_rings[i//36][0]);angle=math.atan2(v.co.y-center.y,v.co.x-center.x)
+        fold=0
+        for height,azimuth,spread,slope,depth,width in darts:
+            da=math.atan2(math.sin(angle-azimuth),math.cos(angle-azimuth))
+            around=math.exp(-(da/spread)**4)
+            z=v.co.z-height-slope*(v.co.x-x)
+            fold+=around*depth*(-math.exp(-(z/width)**2)+.72*math.exp(-((z-width*1.40)/(width*1.18))**2))
+        # One broad calf tension plane connects the two compression regions.
+        fold-=.004*max(0,math.sin(angle+sign*.55))**2*math.exp(-((v.co.z-.33)/.065)**2)
+        # Preserve the exact hem and upper thigh instead of extending folds
+        # into the shoe opening or seat contact region.
+        fade=min(1,max(0,(v.co.z-.133)/.020))*min(1,max(0,(.585-v.co.z)/.035))
+        radial=Vector((v.co.x-center.x,v.co.y-center.y,0)).normalized()
+        v.co+=radial*(fold*fade)
     cloth_uv(leg,'leg',x)
     denim_legs[side]=leg
     parts.append((leg,f'thigh{side}'))
     # Long side seam and restrained hem folds retain the relaxed jean silhouette.
-    part(tube('denim outer seam',[(x+sign*.076,.013,.15),(x+sign*.083,-.010,.35),(x+sign*.096,.011,.48),(x+sign*.114,-.010,.83)],.0021,stitch,5),f'thigh{side}')
+    from mathutils.bvhtree import BVHTree
+    leg_surface=BVHTree.FromPolygons([v.co for v in leg.data.vertices],
+        [tuple(p.vertices) for p in leg.data.polygons],all_triangles=False)
+    seam=[]
+    controls=[Vector(p) for p in [(x+sign*.076,.013,.15),(x+sign*.083,-.010,.35),(x+sign*.096,.011,.48),(x+sign*.114,-.010,.83)]]
+    for a,b in zip(controls,controls[1:]):
+        count=max(1,math.ceil((b-a).length/.014))
+        for k in range(count):
+            hit,normal,_,_=leg_surface.find_nearest(a.lerp(b,k/count))
+            seam.append(hit+normal*.0014)
+    hit,normal,_,_=leg_surface.find_nearest(controls[-1]);seam.append(hit+normal*.0014)
+    part(tube('denim outer seam',seam,.0016,stitch,5),f'thigh{side}')
     part(tube('jean cuff',[(x+math.cos(i*math.tau/24)*.077,.014+math.sin(i*math.tau/24)*.071,.14) for i in range(24)],.008,denim,8,True),f'shin{side}')
     connected_sneaker(x,side)
     # Relaxed full shirt sleeve, rolled back just above the wrist. Curved

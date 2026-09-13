@@ -36,13 +36,13 @@ test('native mature oak retains connected real geometry, low trunk and pedestria
       for(const v of p.filter(v=>v.z<=2.1))maximumLowWoodDifference=Math.max(maximumLowWoodDifference,Math.sqrt(low.reduce((d,b)=>Math.min(d,b.distanceToSquared(v)),Infinity)));
     }
   }
-  assert.equal(triangles,9256);assert.ok(minimumArea>1e-6);assert.ok(maximumLowWoodDifference<1e-6);
+  assert.equal(triangles,8536);assert.ok(minimumArea>1e-6);assert.ok(maximumLowWoodDifference<1e-6);
   assert.ok(leafBounds.min.z>=4.1 && leafBounds.max.z<=11.4 && leafBounds.max.z-leafBounds.min.z>4.2);
   // Leaf roots and their actual nearest woody surfaces must still connect.
   const woodyTriangles=[];for(const m of meshes(mature).filter(m=>m.material.name==='wood')){const p=vertices(m),idx=m.geometry.index;for(let i=0;i<idx.count;i+=3)woodyTriangles.push(new T.Triangle(...[0,1,2].map(k=>p[idx.getX(i+k)])));}
   const scratch=new T.Vector3();let anchors=0,maximumAttachmentGap=0;
   for(const m of meshes(mature).filter(m=>m.material.name.startsWith('foliage'))){const p=vertices(m),uv=m.geometry.attributes.uv;for(let i=0;i<p.length;i++)if(Math.abs(uv.getX(i))<1e-7&&Math.abs(uv.getY(i)-1)<1e-7){anchors++;maximumAttachmentGap=Math.max(maximumAttachmentGap,Math.sqrt(woodyTriangles.reduce((d,t)=>Math.min(d,t.closestPointToPoint(p[i],scratch).distanceToSquared(p[i])),Infinity)));}}
-  assert.equal(anchors,720);assert.ok(maximumAttachmentGap<.04);
+  assert.equal(anchors,630);assert.ok(maximumAttachmentGap<.04);
   output.geometry={triangles,minimumArea,maximumLowWoodDifference,leafBounds,woodBounds,anchors,maximumAttachmentGap};
 });
 

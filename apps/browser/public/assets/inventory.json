@@ -22,8 +22,8 @@
       "sha256": "08d34e0817d828d21aa74ff32b43b4400ff325d58c96408dd31004b248d400a0"
     },
     "arroyo-reflections.pmrem.gz": {
-      "bytes": 11332340,
-      "sha256": "61b37b24beab121b8b01a29bf26a02132609dddf2a50c347bf596256fe993c5d"
+      "bytes": 11406639,
+      "sha256": "baaee4d62728808e5713ca4fc74fc674a69172c356e3cb0cbfa7bd9f9e6d3c9f"
     },
     "arroyo-sky.webp": {
       "bytes": 1029670,
@@ -82,36 +82,36 @@
       "sha256": "34c2f0adc8180dc0df68dbec19d2e9af2162fcd0ffc2acdd0442bb93ea97abe3"
     },
     "neighbor.glb": {
-      "bytes": 6365356,
-      "sha256": "cf14bd6ff88bee0e4333d9a67eea1b1c53d67200efb72aade705ff677e9f70e7"
+      "bytes": 6521848,
+      "sha256": "1cb95aa9ef86eb067d51e283eb03a11e9f85095aebe86a12fbfe097df5219d8f"
     },
     "neighborhood-atlas.png": {
       "bytes": 3529016,
       "sha256": "03157ab45abb63aaf697823c9e6a8d927ac1b062ca27fdf21fcf7a8bd0948269"
     },
     "palm.glb": {
-      "bytes": 830960,
-      "sha256": "777457b436e1f8d5ca350fb30886e57461bac0718a914068fe7f09a3f3598060"
+      "bytes": 881160,
+      "sha256": "83e001d52a835436bf62bc39c361e229b83dd025f1ba8aa8ef09a41d6461233d"
     },
     "pole.glb": {
       "bytes": 10416,
       "sha256": "4a0fea05e8451630f0030e999b284cd50bd3ba6e0d237fb416043c6b549227c0"
     },
     "roadside-oak.glb": {
-      "bytes": 672964,
-      "sha256": "45877fa170478212222df2590702fb9c9a9e2126122b2ecda96ff721fd19a01a"
+      "bytes": 651132,
+      "sha256": "e34fd145e45d23567816a5d44dfa2bd8d02ae7af57b25080dcc8fb7ea511199a"
     },
     "roadside-oak.glb.gz": {
-      "bytes": 408477,
-      "sha256": "455cc769c6c496940e9368ca5987fa3400dc3f57e26d99b0a3a3a21199c89c36"
+      "bytes": 383478,
+      "sha256": "76591ea210f6d9ee37078f5515b1d5fea4536c45cb5c48a3baca5774809e2e85"
     },
     "tree.glb": {
-      "bytes": 672908,
-      "sha256": "4e4dc0b9a2ee0535126f0e7ad1631a809facacbab83d09ae5bf1131f6e89c41e"
+      "bytes": 651080,
+      "sha256": "1587be859a79d45c3418fc442b9d0f47ded1d7b4efd8d1858c074139673f11b4"
     },
     "tree.glb.gz": {
-      "bytes": 407840,
-      "sha256": "e4f763eb911ba86f739d18754d72d758350e577370b26ee6e3628b7db549dc68"
+      "bytes": 382873,
+      "sha256": "0ce7b7bb8329eef22a8fc8cf1575421a9856682a92bda70382b72184addf1b2e"
     }
   }
 }

@@ -15,6 +15,7 @@ run(process.execPath, [
   "tests/scene.test.mjs",
   "tests/simulation-clock.test.mjs",
   "tests/snapshot-pose.test.mjs",
+  "tests/reset-observer.test.mjs",
   "tests/reflection.test.mjs",
   "tests/foliage-mips.test.mjs",
   "tests/surface-pixels.test.mjs",
