@@ -1,42 +1,31 @@
-# SPDX-License-Identifier: GPL-3.0-or-later
+# fly.toml app configuration file generated for sa-online-browser on 2026-09-20T15:07:39Z
 #
-# The gateway, the native protocol workers and the unchanged open.mp fixture,
-# as one always-on machine. Fly.io is one worked example of a container host;
-# see DEPLOYMENT.md for what any host has to provide.
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
-# Exactly one machine. Every browser player has to be admitted to the same
-# fixture, and the fixture is a process inside this container, so a second
-# machine would be a second, separate world.
 
-app = "sa-online-browser-gateway"
-primary_region = "iad"
+app = 'sa-online-browser'
+primary_region = 'ewr'
 
 [build]
-  dockerfile = "Dockerfile"
-  build-target = "server"
+  dockerfile = 'Dockerfile'
+  build-target = 'server'
 
 [env]
-  POC_HOST = "0.0.0.0"
-  POC_SCENE = "neighborhood"
-  # The deployed client's origin, so the gateway accepts its WebSocket upgrade
-  # and its /scene request. Set it to your Vercel domain, for example:
-  #   fly secrets set POC_ALLOWED_ORIGINS=https://your-project.vercel.app
-  # Leave it unset and only a same-origin client can connect.
+  POC_HOST = '0.0.0.0'
+  POC_SCENE = 'neighborhood'
 
 [http_service]
   internal_port = 3000
   force_https = true
-  # A suspended machine drops every session and loses the fixture's state.
   auto_stop_machines = 'off'
   auto_start_machines = false
   min_machines_running = 1
 
   [http_service.concurrency]
-    type = "connections"
+    type = 'connections'
     hard_limit = 8
     soft_limit = 8
 
-# The fixture runs i386 code under QEMU and each player adds a worker process.
 [[vm]]
-  size = "shared-cpu-2x"
-  memory = "2gb"
+  size = 'shared-cpu-2x'
+  memory = '2gb'
