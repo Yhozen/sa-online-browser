@@ -1,5 +1,13 @@
 # Project status and continuation
 
+## Active game-feature milestone — September 20
+
+The user reports 120 FPS on their real computer and explicitly excludes FPS optimization. `origin/main` was pulled to `50963d1` before work. The [working-game plan](working-game-plan.md) adds a server-scored Arroyo Loop activity, original gathering-area assets, spatial audio and vehicle feedback while retaining full native resolution. Work is in progress; do not treat earlier acceptance results as verification of this new revision.
+
+Four original Blender assets and sixteen deterministic sound assets are committed. The unchanged open.mp server has passed native checkpoint/crew/lifecycle tests; browser driving and live visual checks are underway. Initial live inspection exposed start-line rendering and distant sign lettering defects, which are being investigated before final art review. The download ceiling rises explicitly from 48 to 52 MB for 2.28 MB of modeled props and 1.69 MB of sounds; triangle, draw-call, texture and native-resolution requirements remain unchanged.
+
+The minimum active work window began 17:37:45 UTC and ends no earlier than 20:37:45 UTC. Conventional milestone commits and continued verification are authorized. Unrelated `skills-lock.json` edits are preserved.
+
 ## Active visual milestone — September 8
 
 The Dream-loop visual implementation is integrated and pushed through `d8f0210`; see the [accepted plan](visual-upgrade-plan.md) and [current visual results](visual-upgrade-results.md). Original detailed Blender assets, physical image inputs, cached neighborhood reflections, native-resolution antialiasing/contact shading, an SA-inspired HUD and live entry screen are implemented. Standard is the new-install default; saved Low remains respected. Eight independent art reviews retain all three shape gates; latest driving/pedestrian/street scores are **5.0/5.0/5.0**, below the requested 8. Connected foliage/yard lighting and coherent car reflections remain explicit visual work.

@@ -27,6 +27,10 @@ const names = [
   "lamp",
   "coupe",
   "neighbor",
+  "activity-board",
+  "activity-pylon",
+  "activity-bench",
+  "activity-planter",
 ];
 export async function loadAssets(
   progress: (text: string) => void,

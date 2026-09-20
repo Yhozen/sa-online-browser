@@ -78,13 +78,31 @@ def main():
     print('Runtime ready. Launch: python3 tools/run-server.py', flush=True)
 
 
-def prepare_scene():
+def prepare_scene(server_dir=None):
     scene = os.environ.get('POC_SCENE', 'neighborhood')
     if scene not in ('yard', 'neighborhood'): raise ValueError('Invalid POC_SCENE')
     arena = json.loads((ROOT / f'packages/shared/scenes/{scene}.json').read_text())
-    generated = ROOT / '.runtime/Server/gamemodes/arena.inc'
+    server = Path(server_dir).resolve() if server_dir else RUNTIME / 'Server'
+    generated = server / 'gamemodes/arena.inc'
     spawns = arena['spawns']
     vehicle = arena['vehicle']
+    challenge = arena.get('challenge')
+    points = challenge['checkpoints'] if challenge else [vehicle['position']]
+    start = challenge['start'] if challenge else vehicle['position']
+    challenge_constants = [
+        f'#define POC_CHALLENGE_ENABLED {1 if challenge else 0}',
+        f'#define POC_RACE_COUNT {len(points)}',
+        f'#define POC_RACE_RADIUS ({challenge["radius"] if challenge else 4.5:.3f})',
+        f'#define POC_RACE_START_X ({start[0]:.3f})',
+        f'#define POC_RACE_START_Y ({start[1]:.3f})',
+        f'#define POC_RACE_START_Z ({start[2]:.3f})',
+        f'#define POC_RACE_START_RADIUS ({challenge["startRadius"] if challenge else 3:.3f})',
+        f'#define POC_RACE_COUNTDOWN_MS {challenge["countdownMs"] if challenge else 3000}',
+        f'#define POC_RACE_MAX_MS {challenge["maxMs"] if challenge else 180000}',
+        'new const Float:POC_RACE_POINTS[POC_RACE_COUNT][3] = {',
+        ',\n'.join('    {' + ', '.join(f'{v:.3f}' for v in point) + '}' for point in points),
+        '};',
+    ]
     generated.write_text('\n'.join([
         f'#define POC_SPAWN_X0 ({spawns[0][0]:.1f})',
         f'#define POC_SPAWN_X1 ({spawns[1][0]:.1f})',
@@ -97,8 +115,7 @@ def prepare_scene():
         f'#define POC_CAR_Y ({vehicle["position"][1]:.1f})',
         f'#define POC_CAR_Z ({vehicle["position"][2]:.1f})',
         f'#define POC_CAR_HEADING ({vehicle["heading"]:.1f})',
-    ]) + '\n')
-    server = RUNTIME / 'Server'
+    ] + challenge_constants) + '\n')
     shutil.copy2(ROOT / 'test-server/poc.pwn', server / 'gamemodes/poc.pwn')
     subprocess.run(loader_command(server / 'qawno/pawncc') + [
         'gamemodes/poc.pwn', '-iqawno/include', '-igamemodes', '-ogamemodes/poc.amx', '-d3', '-;+', '-(+'], cwd=server, check=True)

@@ -17,7 +17,7 @@ The server owns countdown, run generation, checkpoint order, elapsed time, compl
 
 ## Course and lifecycle
 
-Start at the existing vehicle reset `[0,6,10]`, facing north. Ordered checkpoints are `[0,12]`, `[30,12]`, `[58,12]`, `[58,-18]`, `[58,-48]`, `[28,-48]`, `[0,-48]`, `[0,-18]`, `[0,6]`, all at Z=10 with 4.5-unit radii. These follow the existing manifest roads. Countdown movement cancels the attempt, preventing a head start. Leaving the driver seat, reset, disconnect, timeout or server restart ends the active run honestly; the UI never invents a finish. Scores are session records and disappear with a server restart.
+Start at the existing vehicle reset `[0,6,10]`, facing north. Ordered checkpoints are `[0,12]`, `[30,12]`, `[58,12]`, `[58,-18]`, `[58,-48]`, `[28,-48]`, `[0,-48]`, `[0,-18]`, `[0,6]`, all at Z=10 with 4.5-unit radii. Starting requires the car to be within three units of its reset point. These follow the existing manifest roads. Countdown movement cancels the attempt, preventing a head start. Leaving the driver seat, reset, disconnect, timeout or server restart ends the active run honestly; the UI never invents a finish. Scores are session records and disappear with a server restart.
 
 The scene manifest is authoritative for course coordinates and asset placements. The runtime recipe generates Pawn constants from it. New scene/inventory hashes invalidate stale browsers before joining. Ordinary setup consumes committed exports and sound assets; Blender/image services are authoring dependencies only.
 

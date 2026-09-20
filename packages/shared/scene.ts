@@ -12,6 +12,16 @@ export interface Barrier {
   position: Vec3;
   size: Vec3;
 }
+export interface DrivingChallenge {
+  id: string;
+  name: string;
+  start: Vec3;
+  startRadius: number;
+  countdownMs: number;
+  maxMs: number;
+  radius: number;
+  checkpoints: Vec3[];
+}
 export interface SceneManifest {
   assets?: {
     version: number;
@@ -31,4 +41,5 @@ export interface SceneManifest {
   roads: { points: [number, number][]; width: number }[];
   culdesac?: { center: [number, number]; radius: number };
   route: [number, number][];
+  challenge?: DrivingChallenge;
 }

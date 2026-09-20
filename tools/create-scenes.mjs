@@ -24,6 +24,17 @@ const n = {
   ],
   teleport: [-4, -4, 10],
   vehicle: { model: 411, position: [0, 6, 10], heading: 0 },
+  challenge: {
+    id: "arroyo-loop",
+    name: "Arroyo Loop",
+    start: [0, 6, 10],
+    startRadius: 3,
+    countdownMs: 3000,
+    maxMs: 180000,
+    radius: 4.5,
+    checkpoints: [[0, 12, 10], [30, 12, 10], [58, 12, 10], [58, -18, 10],
+      [58, -48, 10], [28, -48, 10], [0, -48, 10], [0, -18, 10], [0, 6, 10]],
+  },
   barriers: [],
   houses: [],
   props: [],
@@ -141,6 +152,25 @@ for (const x of [22, 50])
     n.props.push({ asset: "palm", position: [x, y, 9], rotation: 0 });
     barrier(`palm-street-${x}-${y}`, x, y, 0.7, 0.7, 8);
   }
+// A community meet-up beside the junction. Every solid prop has an envelope
+// in the same manifest used by browser collision and fixture course generation.
+for (const [id, asset, x, y, rotation, width, depth, height] of [
+  ["activity-board", "activity-board", 14, 22, 0, 2.8, .52, 2.64],
+  ["activity-bench-a", "activity-bench", 18, 22, 0, 2.06, .80, .93],
+  ["activity-planter-a", "activity-planter", 21, 22, 0, 1.42, 1.42, 1.58],
+  ["activity-bench-b", "activity-bench", 21, 26, -Math.PI/2, .80, 2.06, .93],
+  ["activity-planter-b", "activity-planter", 16, 26, 0, 1.42, 1.42, 1.58],
+]) {
+  n.props.push({ id, asset, position: [x, y, n.groundZ], rotation });
+  barrier(id, x, y, width, depth, height);
+}
+// Pylons frame the course without narrowing the usable driving lane.
+for (const [i, point] of [[-6.9, 4], [6.9, 4], [30, 18.9], [64.9, -18],
+  [28, -54.9], [-6.9, -18]].entries()) {
+  const id = `activity-pylon-${i}`;
+  n.props.push({ id, asset: "activity-pylon", position: [...point, n.groundZ], rotation: i * .27 });
+  barrier(id, point[0], point[1], .90, .90, 1.065);
+}
 for (const scene of [yard, n])
   writeFileSync(
     `packages/shared/scenes/${scene.id}.json`,

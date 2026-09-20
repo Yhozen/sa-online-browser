@@ -44,6 +44,7 @@ run(binary, [
   "--python",
   "tools/assets/build.py",
 ]);
+run(binary, ["--background", "--python-exit-code", "1", "--python", "tools/assets/activity-kit.py"]);
 copyFileSync(
   "assets/textures/neighborhood-atlas.png",
   "apps/browser/public/assets/neighborhood-atlas.png",
