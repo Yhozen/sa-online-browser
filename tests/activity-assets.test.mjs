@@ -1,0 +1,87 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
+import test from "node:test";
+import * as THREE from "three";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+
+const assets = [
+  ["activity-board", [2.8, .52, 2.6395]],
+  ["activity-pylon", [.66, .66, 1.065]],
+  ["activity-bench", [2.06, .755647, .924275]],
+  ["activity-planter", [1.381354, 1.344052, 1.575012]],
+];
+
+async function load(name) {
+  const bytes = readFileSync(new URL(`../apps/browser/public/assets/${name}.glb`, import.meta.url));
+  const gltf = await new GLTFLoader().parseAsync(
+    bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), "",
+  );
+  const normalized = new THREE.Group();
+  gltf.scene.rotation.x = Math.PI / 2;
+  normalized.add(gltf.scene);
+  normalized.updateMatrixWorld(true);
+  return normalized;
+}
+
+test("activity assets preserve meter-scale collision envelopes and ground contact", async () => {
+  for (const [name, expected] of assets) {
+    const scene = await load(name);
+    const bounds = new THREE.Box3().setFromObject(scene, true);
+    const size = bounds.getSize(new THREE.Vector3());
+    for (const [i, value] of size.toArray().entries()) {
+      assert.ok(Math.abs(value - expected[i]) < .003, `${name} axis ${i}: ${value} vs ${expected[i]}`);
+    }
+    assert.ok(Math.abs(bounds.min.z) < .001, `${name} must meet ground at its origin, got ${bounds.min.z}`);
+  }
+});
+
+test("activity GLBs have finite geometry, normals, UVs and neutral uncorrupted baked colors", async () => {
+  for (const [name] of assets) {
+    const scene = await load(name);
+    let primitives = 0;
+    scene.traverse((mesh) => {
+      if (!(mesh instanceof THREE.Mesh)) return;
+      primitives++;
+      const geometry = mesh.geometry;
+      const positions = geometry.getAttribute("position");
+      for (const key of ["position", "normal", "uv", "color"]) {
+        const attribute = geometry.getAttribute(key);
+        assert.ok(attribute, `${name}/${mesh.name} missing ${key}`);
+        assert.equal(attribute.count, positions.count, `${name}/${mesh.name} ${key} count`);
+        for (let i = 0; i < attribute.count; i++) {
+          const values = [attribute.getX(i), attribute.getY(i)];
+          if (attribute.itemSize >= 3) values.push(attribute.getZ(i));
+          assert.ok(values.every(Number.isFinite), `${name}/${mesh.name} ${key} has nonfinite data`);
+          if (key === "color") {
+            // A stale Blender UV RNA handle previously wrote signed world UVs
+            // into COLOR_0, giving green/magenta faces. Check actual exported data.
+            assert.ok(values.every((value) => value >= .68 && value <= 1.001), `${name}/${mesh.name} color ${values}`);
+            assert.ok(Math.max(...values) - Math.min(...values) < .035, `${name}/${mesh.name} unexpected baked color tint`);
+          }
+          if (key === "normal") {
+            assert.ok(Math.abs(Math.hypot(...values) - 1) < .003, `${name}/${mesh.name} nonunit normal`);
+          }
+        }
+      }
+    });
+    assert.ok(primitives > 0 && primitives <= 8, `${name} should share its material geometry, got ${primitives} primitives`);
+  }
+});
+
+test("activity planter is hollow concrete with recessed soil and solid succulent leaves", async () => {
+  const scene = await load("activity-planter");
+  const concrete = [];
+  const leafMaterials = new Set();
+  scene.traverse((mesh) => {
+    if (!(mesh instanceof THREE.Mesh)) return;
+    const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
+    if (materials.some((material) => material.name === "concrete")) concrete.push(mesh);
+    for (const material of materials) if (material.name.startsWith("activity-agave")) leafMaterials.add(material.name);
+  });
+  assert.deepEqual([...leafMaterials].sort(), ["activity-agave", "activity-agave-edge"]);
+  const center = new THREE.Raycaster(new THREE.Vector3(0, 0, 2), new THREE.Vector3(0, 0, -1)).intersectObjects(concrete);
+  const rim = new THREE.Raycaster(new THREE.Vector3(.615, 0, 2), new THREE.Vector3(0, 0, -1)).intersectObjects(concrete);
+  assert.ok(center.length && center[0].point.z < .17, "planter center must expose the hollow, not a concrete lid");
+  assert.ok(rim.length && rim[0].point.z > .66, "raised rounded rim must surround the opening");
+});
