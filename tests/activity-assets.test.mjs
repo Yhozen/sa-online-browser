@@ -85,3 +85,15 @@ test("activity planter is hollow concrete with recessed soil and solid succulent
   assert.ok(center.length && center[0].point.z < .17, "planter center must expose the hollow, not a concrete lid");
   assert.ok(rim.length && rim[0].point.z > .66, "raised rounded rim must surround the opening");
 });
+
+test("club sign enamel lettering clears its panel for street-distance depth precision", async () => {
+  const scene = await load("activity-board");
+  // Ray through the left leg of the first A, away from hardware/frame outlines.
+  const ray = new THREE.Raycaster(new THREE.Vector3(-.744, -1, 1.975), new THREE.Vector3(0, 1, 0));
+  const hits = ray.intersectObject(scene, true);
+  const ink = hits.find(hit => hit.object.material.name === "activity-cream");
+  const face = hits.find(hit => hit.object.material.name === "activity-green");
+  assert.ok(ink && face, "ray must intersect both the original lettering and its enamel panel");
+  assert.ok(face.point.y - ink.point.y > .006, "printed geometry must not return to sub-millimeter depth fighting");
+  assert.ok(face.point.y - ink.point.y < .01, "lettering should remain shallow, without hovering far from the sign");
+});

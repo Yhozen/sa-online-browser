@@ -252,10 +252,13 @@ def build_activity_kit():
         box("Weather cap",(0,-.065,2.602),(2.80,.32,.075),steel,.025)
         box("Weather cap drip edge",(0,-.227,2.581),(2.76,.024,.07),zinc,.008)
         box("Orange club stripe",(0,-.104,2.286),(2.53,.006,.19),orange,.002)
-        lettering("ARROYO",0,-.0983,1.820,.31,cream,.11,.27)
-        lettering("MOTOR CLUB",0,-.1078,2.245,.085,cream,.10,.35)
-        lettering("TIME TRIAL",0,-.0983,1.590,.14,cream,.085,.23)
-        lettering("NEIGHBORHOOD LOOP",0,-.0983,1.340,.084,cream,.075,.21)
+        # Raised enamel lettering needs 6.5mm separation from its sign face to
+        # remain depth-stable from the opposite street with the game's .1–900m
+        # camera range. Sub-millimeter coplanar print breaks into specks at 30m.
+        lettering("ARROYO",0,-.104,1.820,.31,cream,.11,.27)
+        lettering("MOTOR CLUB",0,-.1135,2.245,.085,cream,.10,.35)
+        lettering("TIME TRIAL",0,-.104,1.590,.14,cream,.085,.23)
+        lettering("NEIGHBORHOOD LOOP",0,-.104,1.340,.084,cream,.075,.21)
         for x in [-1.21,1.21]:
             for z in [1.27,2.39]:bolt("Sign face bolt",(x,-.119,z),radius=.014)
         # Tiny staggered paint abrasion and rust below the real fastening points.
@@ -267,7 +270,7 @@ def build_activity_kit():
             box("Bolt oxidation trail",(x+.002,-.122,1.229),(.012,.001,.045),rust,.002)
         # Short rear stiffeners make a convincing object from behind as well.
         for z in [1.31,2.32]:box("Rear hem reinforcement",(0,.050,z),(2.47,.065,.038),steel,.008)
-        lettering("ARROYO",0,.0353,1.64,.15,cream,.10,rear=True)
+        lettering("ARROYO",0,.041,1.64,.15,cream,.10,rear=True)
 
     def pylon():
         start()
