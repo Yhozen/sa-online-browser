@@ -47,3 +47,46 @@ Dependency versions, source commit, upstream URLs, and SHA256 values are in
 metadata over HTTPS. Package copyright/license files are retained in each
 extracted package's `usr/share/doc` directory. See the root third-party notices
 for source and license links. Runtime downloads/build products remain ignored.
+
+
+## Server-scored Arroyo Loop
+
+The neighborhood manifest supplies the ordered checkpoint positions, start area,
+checkpoint radius, three-second countdown, and three-minute maximum run time.
+`tools/setup-runtime.py` generates the same constants into `arena.inc`. Yard has
+the challenge disabled and emits no activity messages or checkpoints during its
+existing walking/driving regression flow.
+
+The reserved driver can start `/race` while inside the start area. A reserved
+passenger must already be in the car; the crew is captured when the countdown
+begins. Moving more than 0.75 world units before the countdown ends cancels the
+attempt. After green, only the captured driver in the reserved car may advance
+one ordered checkpoint at a time. open.mp invokes `OnPlayerEnterRaceCheckpoint`
+from the received player state; Pawn independently checks the current point and
+seat before awarding progress. Missing a point leaves it active. Passengers and
+spectators see the same standard checkpoint RPC but cannot advance the score.
+
+Pawn owns generation, phase, countdown, elapsed time, current checkpoint, finish,
+and a sorted top-five leaderboard for this server session. A finish requires every
+point in order and publishes one score for the captured crew. `/scores` shows the
+current leaderboard; `/cancel` is restricted to the active crew. Start requests
+while a run is active, on foot, resetting, or away from the start are rejected.
+Finishing preserves the result until a new run. `/reset` restores the fixture but
+preserves session scores; restarting the server clears the session leaderboard.
+
+Driver/passenger exit, disconnect, changed crew/seat reservation, a participant's
+`/teleport`, `/reset`, explicit crew cancellation, and run timeout cancel an active
+attempt and clear every displayed checkpoint. A new player receives the current
+activity state and scores on spawn. A spectator cannot cancel another crew's run.
+Browser movement remains client simulated: this demonstrates server-owned scoring
+and ordering, not anti-cheat validation of the driven trajectory.
+
+Structured notices travel from Pawn through reliable standard `ClientMessage`
+RPCs, never via gateway peer broadcast. See `native/README.md` for the bounded
+versioned wire format. Numeric cancellation reasons in independent `POC` logs are
+0 none, 1 driver exit, 2 passenger exit, 3 driver disconnect, 4 passenger disconnect,
+5 reset, 6 crew cancellation, 7 countdown movement, 8 timeout, 9 teleport, and
+10 crew/seat change. Numeric phases are 0 idle, 1 countdown, 2 running, 3 finished,
+and 4 cancelled. Additional observations are `challenge`, `challengeRejected`,
+`challengeCheckpoint` (one-based completed point), `challengeFinished` for every
+completed run, and `challengeScore` when that result enters the top five.
