@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import * as THREE from "three";
 import { CharacterAnimation } from "./character-animation";
+import { VehiclePresentation, type VehiclePresentationInput } from "./vehicle-presentation";
 import { contactShadow } from "./shadows";
 import { disposeQualityMaterial } from "./graphics";
 import { asset, clips } from "./assets";
@@ -12,6 +13,7 @@ const actors = new WeakMap<
     outfit: THREE.Material[];
   }
 >();
+const cars = new WeakMap<THREE.Group, VehiclePresentation>();
 export function createCharacter(variant = 0) {
   const group = asset("neighbor");
   group.add(contactShadow(1.3, 1.3));
@@ -62,6 +64,8 @@ export function placeCharacter(group: THREE.Group, state: PlayerState, groundZ: 
   shadow.position.z = groundZ + 0.02 - group.position.z;
 }
 export function disposeActor(group: THREE.Group) {
+  cars.get(group)?.dispose();
+  cars.delete(group);
   const a = actors.get(group);
   if (a) {
     group.traverse((o) => {
@@ -74,15 +78,10 @@ export function disposeActor(group: THREE.Group) {
 }
 export function createCar() {
   const group = asset("coupe");
+  cars.set(group, new VehiclePresentation(group, disposeQualityMaterial));
   group.add(contactShadow(3, 5.5));
   return group;
 }
-export function animateCar(group: THREE.Group, velocity: number[], dt: number) {
-  const distance = Math.hypot(velocity[0], velocity[1]) * dt;
-  group.traverse((o) => {
-    // glTF converts the authored Blender axle to local Z. Only complete
-    // assemblies rotate; wheel-well liners are fixed parts of the body.
-    if (/^wheel_(left|right)_\d+$/.test(o.name))
-      o.rotateZ(distance / 0.41);
-  });
+export function animateCar(group: THREE.Group, velocity: number[], dt: number, input?: VehiclePresentationInput) {
+  cars.get(group)?.advance(velocity, dt, input);
 }
