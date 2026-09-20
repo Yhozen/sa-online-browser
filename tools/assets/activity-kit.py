@@ -17,6 +17,9 @@ import pathlib
 import random
 import sys
 import json
+import struct
+import zlib
+import html
 from mathutils import Vector, noise
 
 
@@ -77,6 +80,11 @@ def build_activity_kit():
     def start():
         bpy.ops.object.select_all(action="SELECT")
         bpy.ops.object.delete(use_global=False)
+        # Keep the packed sign input in its own editable source only; orphaned
+        # material nodes must not copy it into every later .blend in this build.
+        for image in list(bpy.data.images):
+            if image.name.startswith("Original Arroyo enamel face"):
+                bpy.data.images.remove(image)
 
     def attach(obj, name, mat):
         obj.name = name
@@ -153,7 +161,7 @@ def build_activity_kit():
     # Original lettering: no bundled/downloaded font. Coordinates are 0..1 in
     # height, 0..0.62 in width; every path is a deliberately authored glyph.
     glyphs = {
-        "A": [[(0,0),(.27,1),(.35,1),(.62,0)], [(.15,.40),(.47,.40)]],
+        "A": [[(0,0),(.23,1),(.39,1),(.62,0)], [(.10,.40),(.52,.40)]],
         "B": [[(0,0),(0,1),(.43,1),(.62,.84),(.62,.66),(.43,.52),(0,.52)],
               [(.43,.52),(.62,.34),(.62,.17),(.43,0),(0,0)]],
         "C": [[(.62,.88),(.48,1),(.15,1),(0,.83),(0,.17),(.15,0),(.48,0),(.62,.12)]],
@@ -257,7 +265,7 @@ def build_activity_kit():
         # camera range. Sub-millimeter coplanar print breaks into specks at 30m.
         lettering("ARROYO",0,-.104,1.820,.31,cream,.11,.27)
         lettering("MOTOR CLUB",0,-.1135,2.245,.085,cream,.10,.35)
-        lettering("TIME TRIAL",0,-.104,1.590,.14,cream,.085,.23)
+        lettering("TIME TRIAL",0,-.104,1.560,.17,cream,.11,.23)
         lettering("NEIGHBORHOOD LOOP",0,-.104,1.340,.084,cream,.075,.21)
         for x in [-1.21,1.21]:
             for z in [1.27,2.39]:bolt("Sign face bolt",(x,-.119,z),radius=.014)
@@ -395,6 +403,93 @@ def build_activity_kit():
             angle=i*math.tau/8
             tube("Dry old agave tip",[(math.cos(angle)*.12,math.sin(angle)*.12,.63),(math.cos(angle)*.40,math.sin(angle)*.40,.68),(math.cos(angle)*.52,math.sin(angle)*.52,.62)],.008,wood,5)
 
+    def bake_sign_face():
+        """Rasterize our own editable glyph polygons onto one enamel surface.
+
+        Thin geometry acquired shadow/depth artifacts in live street views even
+        after a millimeter-offset fix. A color texture has no separate depth or
+        shadow silhouette, and mipmaps preserve its lettering at long distance.
+        This rasterizer uses authored vector polygons, not a font or image model.
+        """
+        width,height=1024,512
+        supersample=2
+        mask=bytearray(width*height*supersample*supersample)
+        x0,z0=-1.33,1.14
+        sx,sz=width/2.66,height/1.38
+        original=[]
+        svg=[]
+        def srgb(value):
+            return round(255*(12.92*value if value<=.0031308 else 1.055*value**(1/2.4)-.055))
+        green_rgb=tuple(srgb(c) for c in green.diffuse_color[:3])
+        cream_rgb=tuple(srgb(c) for c in cream.diffuse_color[:3])
+        orange_rgb=tuple(srgb(c) for c in orange.diffuse_color[:3])
+        def rgb_hex(rgb):return "#"+"".join(f"{c:02x}" for c in rgb)
+        for obj in bpy.context.scene.objects:
+            if not obj.name.startswith("Original lettering"):continue
+            original.append(obj)
+            points=[obj.matrix_world @ vertex.co for vertex in obj.data.vertices]
+            if min(point.y for point in points)>=0:continue
+            svg.append(f'<g aria-label="{html.escape(obj.name.split(" — ")[-1],quote=True)}">')
+            for face in obj.data.polygons:
+                polygon=[((points[i].x-x0)*sx*supersample,(points[i].z-z0)*sz*supersample) for i in face.vertices]
+                svg.append('<polygon points="'+" ".join(f'{x/supersample:.3f},{height-y/supersample:.3f}' for x,y in polygon)+'"/>')
+                min_x=max(0,math.floor(min(p[0] for p in polygon)))
+                max_x=min(width*supersample-1,math.ceil(max(p[0] for p in polygon)))
+                min_y=max(0,math.floor(min(p[1] for p in polygon)))
+                max_y=min(height*supersample-1,math.ceil(max(p[1] for p in polygon)))
+                edges=list(zip(polygon,polygon[1:]+polygon[:1]))
+                for y in range(min_y,max_y+1):
+                    for x in range(min_x,max_x+1):
+                        cross=[(b[0]-a[0])*(y+.5-a[1])-(b[1]-a[1])*(x+.5-a[0]) for a,b in edges]
+                        if all(value>=-1e-7 for value in cross) or all(value<=1e-7 for value in cross):
+                            mask[y*width*supersample+x]=255
+            svg.append('</g>')
+        texture_path=root/"assets/textures/arroyo-club-sign.png"
+        source_svg=root/"assets/source/activity-sign.svg"
+        stripe_x=( -1.265-x0)*sx
+        stripe_y=height-(2.381-z0)*sz
+        source_svg.write_text(f'<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="512" viewBox="0 0 1024 512">\n<!-- Original authored geometry; GPL-3.0-or-later. No font data. -->\n<rect width="1024" height="512" fill="{rgb_hex(green_rgb)}"/>\n<rect x="{stripe_x:.3f}" y="{stripe_y:.3f}" width="{2.53*sx:.3f}" height="{.19*sz:.3f}" fill="{rgb_hex(orange_rgb)}"/>\n<g fill="{rgb_hex(cream_rgb)}">\n'+"\n".join(svg)+'\n</g>\n</svg>\n')
+        pixels=bytearray(width*height*4)
+        for y in range(height):
+            z=z0+(y+.5)/sz
+            for x in range(width):
+                world_x=x0+(x+.5)/sx
+                base=orange_rgb if abs(world_x)<1.265 and 2.191<z<2.381 else green_rgb
+                # Restrained enamel mottling, much quieter than the letters.
+                grain=((x*73856093 ^ y*19349663)%9-4)*.004
+                coverage=sum(mask[(y*2+dy)*width*2+x*2+dx] for dy in range(2) for dx in range(2))/1020
+                offset=((height-1-y)*width+x)*4
+                for channel in range(3):
+                    pixels[offset+channel]=max(0,min(255,round(base[channel]*(.985+grain)*(1-coverage)+cream_rgb[channel]*coverage)))
+                pixels[offset+3]=255
+        def chunk(kind,data):return struct.pack('!I',len(data))+kind+data+struct.pack('!I',zlib.crc32(kind+data)&0xffffffff)
+        rows=b''.join(b'\0'+pixels[y*width*4:(y+1)*width*4] for y in range(height))
+        texture_path.write_bytes(b'\x89PNG\r\n\x1a\n'+chunk(b'IHDR',struct.pack('!2I5B',width,height,8,6,0,0,0))+chunk(b'sRGB',b'\0')+chunk(b'IDAT',zlib.compress(rows,9))+chunk(b'IEND',b''))
+        image=bpy.data.images.load(str(texture_path),check_existing=False)
+        image.name="Original Arroyo enamel face"
+        image.pack()
+        image.use_fake_user=True
+        return image,original
+
+    def flatten_sign_face(image,original):
+        for obj in original:
+            bpy.data.objects.remove(obj,do_unlink=True)
+        stripe=bpy.data.objects.get("Orange club stripe")
+        if stripe:bpy.data.objects.remove(stripe,do_unlink=True)
+        panel=bpy.data.objects.get("Enamel face panel")
+        mat=material("activity-sign-face",(1,1,1),.73,.10)
+        texture=mat.node_tree.nodes.new("ShaderNodeTexImage")
+        texture.image=image
+        multiply=next(node for node in mat.node_tree.nodes if node.bl_idname=="ShaderNodeMix")
+        mat.node_tree.links.new(texture.outputs["Color"],multiply.inputs[6])
+        panel.data.materials.clear()
+        panel.data.materials.append(mat)
+        uv=panel.data.uv_layers.active
+        for face in panel.data.polygons:
+            for loop in face.loop_indices:
+                point=panel.matrix_world @ panel.data.vertices[panel.data.loops[loop].vertex_index].co
+                uv.data[loop].uv=((point.x+1.33)/2.66,(point.z-1.14)/1.38) if face.normal.y<-.5 else (.02,.02)
+
     def finish(name):
         bpy.context.view_layer.update()
         editable_components=sum(1 for obj in bpy.context.scene.objects if obj.type=="MESH")
@@ -427,8 +522,10 @@ def build_activity_kit():
                     color.data[loop].color=(shade,shade*.991,shade*.974,1)
         # Editable sources retain every individually named component and original
         # glyph mesh. Export material-merges happen in memory after saving source.
+        face_bake=bake_sign_face() if name=="activity-board" else None
         bpy.ops.object.select_all(action="SELECT")
         bpy.ops.wm.save_as_mainfile(filepath=str(source/(name+".blend")),compress=True)
+        if face_bake:flatten_sign_face(*face_bake)
         groups={}
         for obj in bpy.context.scene.objects:
             if obj.type=="MESH":groups.setdefault(tuple(obj.data.materials),[]).append(obj)
@@ -443,6 +540,7 @@ def build_activity_kit():
             group[0].data.name=name+" / "+group[0].name
         bpy.ops.object.select_all(action="SELECT")
         bpy.ops.export_scene.gltf(filepath=str(output/(name+".glb")),export_format="GLB",export_materials="EXPORT",export_yup=True,export_animations=False)
+        if face_bake:face_bake[0].use_fake_user=False
         bpy.context.view_layer.update()
         points=[obj.matrix_world @ Vector(corner) for obj in bpy.context.scene.objects if obj.type=="MESH" for corner in obj.bound_box]
         lo=[min(p[i] for p in points) for i in range(3)]

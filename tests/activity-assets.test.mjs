@@ -14,7 +14,15 @@ const assets = [
 
 async function load(name) {
   const bytes = readFileSync(new URL(`../apps/browser/public/assets/${name}.glb`, import.meta.url));
-  const gltf = await new GLTFLoader().parseAsync(
+  const loader = new GLTFLoader();
+  // Node has no browser image decoder. Geometry tests preserve texture/material
+  // identity with a placeholder; the embedded PNG itself is validated below and
+  // the actual image is exercised by the live Chromium capture.
+  loader.register(() => ({
+    name: "activity-test-texture-loader",
+    loadTexture() { return Promise.resolve(new THREE.Texture({ width: 1024, height: 512 })); },
+  }));
+  const gltf = await loader.parseAsync(
     bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), "",
   );
   const normalized = new THREE.Group();
@@ -86,14 +94,29 @@ test("activity planter is hollow concrete with recessed soil and solid succulent
   assert.ok(rim.length && rim[0].point.z > .66, "raised rounded rim must surround the opening");
 });
 
-test("club sign enamel lettering clears its panel for street-distance depth precision", async () => {
+test("club sign bakes original readable lettering into one UV-mapped enamel face", async () => {
+  const bytes = readFileSync(new URL("../apps/browser/public/assets/activity-board.glb", import.meta.url));
+  const jsonLength = bytes.readUInt32LE(12);
+  const gltf = JSON.parse(bytes.subarray(20, 20 + jsonLength).toString());
+  const face = gltf.materials.find(material => material.name === "activity-sign-face");
+  const texture = gltf.textures[face.pbrMetallicRoughness.baseColorTexture.index];
+  const image = gltf.images[texture.source];
+  assert.equal(image.mimeType, "image/png");
+  assert.ok(image.bufferView !== undefined, "face texture must be embedded in checksummed GLB");
+  const view = gltf.bufferViews[image.bufferView];
+  const start = 28 + jsonLength + (view.byteOffset ?? 0);
+  const embedded = bytes.subarray(start, start + view.byteLength);
+  const input = readFileSync(new URL("../assets/textures/arroyo-club-sign.png", import.meta.url));
+  assert.deepEqual(embedded, input, "runtime embeds the exact committed original paint input");
+  assert.equal(input.readUInt32BE(16), 1024);
+  assert.equal(input.readUInt32BE(20), 512);
+  const vector = readFileSync(new URL("../assets/source/activity-sign.svg", import.meta.url), "utf8");
+  assert.ok(vector.includes('aria-label="ARROYO"') && vector.includes('aria-label="TIME TRIAL"'));
+  assert.ok(!vector.includes("<text"), "original glyph polygons must not depend on an external font");
   const scene = await load("activity-board");
   // Ray through the left leg of the first A, away from hardware/frame outlines.
   const ray = new THREE.Raycaster(new THREE.Vector3(-.744, -1, 1.975), new THREE.Vector3(0, 1, 0));
   const hits = ray.intersectObject(scene, true);
-  const ink = hits.find(hit => hit.object.material.name === "activity-cream");
-  const face = hits.find(hit => hit.object.material.name === "activity-green");
-  assert.ok(ink && face, "ray must intersect both the original lettering and its enamel panel");
-  assert.ok(face.point.y - ink.point.y > .006, "printed geometry must not return to sub-millimeter depth fighting");
-  assert.ok(face.point.y - ink.point.y < .01, "lettering should remain shallow, without hovering far from the sign");
+  assert.equal(hits[0].object.material.name, "activity-sign-face", "no floating glyph geometry may remain above the face");
+  assert.ok(hits[0].uv.x > 0 && hits[0].uv.x < 1 && hits[0].uv.y > 0 && hits[0].uv.y < 1);
 });
