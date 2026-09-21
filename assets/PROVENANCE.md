@@ -29,7 +29,7 @@ The six surface, detail, foliage, sky, asphalt and lawn WebP inputs recorded in 
 
 The current asphalt is an original built-in image edit with quieter fissures and warm mineral aggregate, retained byte-for-byte at `textures/arroyo-asphalt.png`. `source/asphalt-authoring.json` records its exact prompt and generation identity. Runtime samples it across four metres and derives aligned surface maps. The current sky is an original four-edit refinement with fuller warm-white clouds, a midpoint horizon and open blue at the panorama wrap. `source/arroyo-sky-generation.json` and `source/arroyo-sky-prompts.txt` retain every exact prompt, input and generated-output identity. Its opposite cloud-band edges differ by at most 4/255 mean RGB in the measured 29–33° band; this is a closely matched wrap, not a claim of mathematically identical edges.
 
-### Current accepted build — September 13, round seventeen
+### Accepted build before the game-feature merge — September 13, round seventeen
 
 The accepted scene is `fc8deb6a7bbf6a35`. Exact authoring, delivered assets and
 browser evidence are recorded in the [round-seventeen integration](../docs/native-integration-round17.json).
@@ -68,7 +68,7 @@ comparisons; this is not reported as a bitwise restoration pass.
 
 A subsequent [validation repair](../docs/native-validation-repair-round17.json)
 saved the same terrain through native Blender 5.2.1 to refresh its dependency
-ledger. Current `source/horizon.blend` is 6,091,983 bytes, SHA256
+ledger. At that milestone, `source/horizon.blend` was 6,091,983 bytes, SHA256
 `b690196eb1f261e7caf71950cdcfc522d2360d52f5f490056ee10682b8206d2e`;
 `source/horizon-build.json` identifies it. Runtime terrain fields, lighting,
 delivered inventory and reflections are unchanged. Earlier measurement records
@@ -76,6 +76,15 @@ retain the exact authoring hash captured at their run time. Focused terrain
 checks pass 9/9; the separately repaired accepted-taper test passes 4/4. The
 failed pre-browser acceptance attempt remains failed; the corrected full run
 subsequently passed on `2a6ffde`, without changing the measured runtime.
+
+The September 20 game-feature merge preserves these delivered assets and adds
+the four props documented in [activity provenance](activity-PROVENANCE.md).
+The merged builder supports their separate exporter with native selection,
+staging and provenance. All four passed the geometry checks after an isolated
+Blender 5.2.1 rebuild. A fresh native terrain save updates
+`source/horizon-build.json` for the merged builder and asset loader; the runtime
+terrain remains byte-identical. Earlier browser acceptance remains evidence of
+the dated build above, not of the new feature merge.
 
 ### Earlier structural refinement (September 13, round twelve)
 

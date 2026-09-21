@@ -1,6 +1,17 @@
 # Project status and continuation
 
-## Current native milestone — September 13, round seventeen
+## Active game-feature milestone — September 20
+
+The user reports 120 FPS on their real computer and explicitly excludes FPS optimization. `origin/main` was pulled to `50963d1` before work. The [working-game plan](working-game-plan.md) adds a server-scored Arroyo Loop activity, original gathering-area assets, spatial audio and vehicle feedback while retaining full native resolution. Work is in progress; do not treat earlier acceptance results as verification of this new revision.
+
+Four original Blender assets and sixteen deterministic sound assets are committed. The unchanged open.mp server has passed native checkpoint/crew/lifecycle tests; browser driving and live visual checks are underway. Initial live inspection exposed start-line rendering and distant sign lettering defects, which are being investigated before final art review. The download ceiling rises explicitly from 48 to 52 MB for 2.28 MB of modeled props and 1.69 MB of sounds; triangle, draw-call, texture and native-resolution requirements remain unchanged.
+
+The minimum active work window began 17:37:45 UTC and ends no earlier than 20:37:45 UTC. Conventional milestone commits and continued verification are authorized. Unrelated `skills-lock.json` edits are preserved.
+
+## Earlier native milestone — September 13, round seventeen
+
+The following results describe the September 13 build before the game-feature
+merge. They do not verify the incoming September 20 changes.
 
 The accepted build is **`fc8deb6a7bbf6a35`**, served by `main-DrSvmP81.js`.
 Round seventeen adds localized native trouser folds, refined ankle/shoe boundaries,
@@ -110,7 +121,7 @@ reset controls and focused 75-round yard soak also remain historical evidence.
 
 Everything below preserves the earlier cloud implementation, measurements and
 continuation notes. Its “final” results and pending items refer to that dated
-revision; the September 13 status above describes the current native milestone.
+revision; the September 13 section above preserves the subsequent native milestone.
 
 ### Visual milestone — September 8
 

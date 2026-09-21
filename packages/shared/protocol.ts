@@ -59,4 +59,35 @@ export interface ServerMessage {
     model?: number;
     onFootRate?: number;
     inCarRate?: number;
+    keys?: number;
+}
+
+/** Fixture activity state received through unchanged open.mp ClientMessage RPCs. */
+export interface ChallengeState {
+    version: 1;
+    generation: number;
+    phase: 'idle' | 'countdown' | 'running' | 'finished' | 'cancelled';
+    driverId: number;
+    passengerId: number;
+    vehicleId: number;
+    checkpointIndex: number;
+    checkpointCount: number;
+    elapsedMs: number;
+    countdownMs: number;
+    bestMs: number;
+    serverTick: number;
+    reason: 'none' | 'driver_exit' | 'passenger_exit' | 'driver_disconnect' | 'passenger_disconnect' | 'reset' | 'cancelled' | 'left_start' | 'timeout' | 'teleport' | 'seat_change';
+}
+export interface RaceCheckpoint {
+    checkpointType: number;
+    position: Vec3;
+    nextPosition: Vec3;
+    radius: number;
+}
+export interface ChallengeScore {
+    generation: number;
+    rank: number;
+    timeMs: number;
+    driverName: string;
+    passengerName: string;
 }

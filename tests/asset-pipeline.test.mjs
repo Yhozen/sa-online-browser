@@ -26,6 +26,7 @@ function fixture(t, mode = "ok") {
     'const stage = args[args.indexOf("--output-root") + 1];',
     'fs.writeFileSync(path.join(__dirname, "stage.txt"), stage);',
     'const models = args[args.indexOf("--models") + 1].split(",");',
+    'fs.appendFileSync(path.join(__dirname, "calls.jsonl"), JSON.stringify({script:process.argv[process.argv.indexOf("--python")+1],models})+"\\n");',
     'if (process.argv.some(arg => arg.endsWith("canopy-visibility.py"))) {',
     '  const crypto=require("node:crypto"),hash=b=>crypto.createHash("sha256").update(b).digest("hex");',
     '  const raw=process.env.CANOPY_TEST_SOURCE || "assets/source/canopy",out=path.join(stage,"assets/source/canopy");fs.mkdirSync(out,{recursive:true});',
@@ -73,6 +74,21 @@ test("explicit native builds publish selected models with exact generator and ou
   }
   const inventory = JSON.parse(readFileSync(path.join(f.output, "apps/browser/public/assets/inventory.json"), "utf8"));
   assert.equal(inventory.files["bin.glb"].sha256, record.models.bin.glb.sha256);
+});
+
+test("mixed native builds route activity models to their own staged exporter", t => {
+  const f = fixture(t);
+  const result = f.run("--models", "mailbox,activity-board,activity-board");
+  assert.equal(result.status, 0, result.stderr);
+  const calls = readFileSync(path.join(f.scratch, "calls.jsonl"), "utf8").trim().split("\n").map(JSON.parse);
+  assert.deepEqual(calls.map(call => [path.basename(call.script), call.models]), [
+    ["build.py", ["mailbox"]], ["activity-kit.py", ["activity-board"]],
+  ]);
+  const directory = path.join(f.output, "apps/browser/public/assets");
+  assert.deepEqual(readdirSync(directory).filter(name => name.endsWith(".glb")).sort(), ["activity-board.glb", "mailbox.glb"]);
+  const record = JSON.parse(readFileSync(path.join(f.output, "assets/source/asset-build.json")));
+  assert.equal(record.models["activity-board"].recipes["tools/assets/activity-kit.py"], digest(readFileSync("tools/assets/activity-kit.py")));
+  assert.equal(record.models["activity-board"].glb.sha256, digest(readFileSync(path.join(directory, "activity-board.glb"))));
 });
 
 test("oak delivery compression preserves exact authored models and both inventory hashes", t => {

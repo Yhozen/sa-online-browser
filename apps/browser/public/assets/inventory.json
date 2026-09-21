@@ -1,6 +1,22 @@
 {
   "version": 1,
   "files": {
+    "activity-bench.glb": {
+      "bytes": 568616,
+      "sha256": "99e703e531d62a174112bd7ab04f3b02842fb2b73435175bdaeaef052d72cf87"
+    },
+    "activity-board.glb": {
+      "bytes": 594652,
+      "sha256": "7cba8596be1cc44eb6af1265403878d9a626772df1a294e5d454d5715791c7a7"
+    },
+    "activity-planter.glb": {
+      "bytes": 606140,
+      "sha256": "080214bad529c1f1fa20ca956f68f03484f981c77a2ed7d1172b7682e69c6da0"
+    },
+    "activity-pylon.glb": {
+      "bytes": 508548,
+      "sha256": "2991005d7fd0a58e19ace1755cdbd16762bf7ecd5ce0b3a9950afd9655bebfe8"
+    },
     "arroyo-asphalt.webp": {
       "bytes": 2644378,
       "sha256": "12e88d94e7ce73ac8a94d351109650da262ca20f838a355cce415c4bf2a6a16a"

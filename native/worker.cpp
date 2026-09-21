@@ -16,6 +16,8 @@
 #include <sstream>
 #include <type_traits>
 #include <cerrno>
+#include <charconv>
+#include <vector>
 using namespace RakNet;
 using json=nlohmann::json;
 using Vec=std::array<float,3>;
@@ -60,6 +62,36 @@ void syncState(){
  client.Send(&b,HIGH_PRIORITY,UNRELIABLE_SEQUENCED,0);
 }
 static uint32_t footRate=30,carRate=30;
+// These fixture notices are carried by ordinary reliable server ClientMessage
+// RPCs. Player chat RPC 101 never enters this parser and cannot award a result.
+std::vector<std::string> noticeFields(const std::string&text,const std::string&prefix){
+ if(text.size()>144)throw std::runtime_error("oversized challenge notice");
+ std::vector<std::string> fields;std::istringstream stream(text.substr(prefix.size()));std::string field;
+ while(stream>>field){if(fields.size()>=16)throw std::runtime_error("too many challenge fields");fields.push_back(field);}return fields;
+}
+int64_t noticeInteger(const std::string&field,int64_t minimum,int64_t maximum){
+ int64_t value=0;const auto parsed=std::from_chars(field.data(),field.data()+field.size(),value);
+ if(parsed.ec!=std::errc{}||parsed.ptr!=field.data()+field.size()||value<minimum||value>maximum)throw std::runtime_error("invalid challenge integer");return value;
+}
+void noticeName(const std::string&name){
+ if(name.empty()||name.size()>24)throw std::runtime_error("invalid score name");
+ for(unsigned char c:name)if(!((c>='a'&&c<='z')||(c>='A'&&c<='Z')||(c>='0'&&c<='9')||c=='_'||c=='['||c==']'||c=='('||c==')'||c=='$'||c=='@'||c=='.'||c=='='||c=='-'))throw std::runtime_error("invalid score name");
+}
+bool challengeNotice(const std::string&text){
+ const std::string statePrefix="ARROYO_RACE_V1 ",clearPrefix="ARROYO_SCORES_V1 ",scorePrefix="ARROYO_SCORE_V1 ";
+ if(text.rfind(statePrefix,0)==0){
+  auto fields=noticeFields(text,statePrefix);if(fields.size()!=12)throw std::runtime_error("invalid challenge field count");
+  const char* phases[]={"idle","countdown","running","finished","cancelled"};
+  const char* reasons[]={"none","driver_exit","passenger_exit","driver_disconnect","passenger_disconnect","reset","cancelled","left_start","timeout","teleport","seat_change"};
+  auto generation=noticeInteger(fields[0],0,1000000000),phase=noticeInteger(fields[1],0,4),driver=noticeInteger(fields[2],0,65535),passenger=noticeInteger(fields[3],0,65535),vehicle=noticeInteger(fields[4],0,1999),index=noticeInteger(fields[5],0,64),count=noticeInteger(fields[6],1,64),elapsed=noticeInteger(fields[7],0,3600000),countdown=noticeInteger(fields[8],0,60000),best=noticeInteger(fields[9],0,3600000),tick=noticeInteger(fields[10],INT32_MIN,INT32_MAX),reason=noticeInteger(fields[11],0,10);
+  if((driver>=1000&&driver!=65535)||(passenger>=1000&&passenger!=65535)||index>count||(phase==3&&index!=count)||((phase==1||phase==2)&&index>=count)||((phase==1||phase==2||phase==3)&&(driver==65535||vehicle==0))||((phase!=1)&&countdown!=0)||(passenger==driver&&driver!=65535)||((phase==1)&&elapsed!=0)||((phase==3)&&elapsed==0)||((phase!=4)&&reason!=0)||((phase==4)&&reason==0)||((phase==0)&&(generation!=0||driver!=65535||passenger!=65535||index!=0||elapsed!=0))||((phase!=0)&&generation==0))throw std::runtime_error("inconsistent challenge state");
+  emit({{"type","challenge"},{"version",1},{"generation",generation},{"phase",phases[phase]},{"driverId",driver},{"passengerId",passenger},{"vehicleId",vehicle},{"checkpointIndex",index},{"checkpointCount",count},{"elapsedMs",elapsed},{"countdownMs",countdown},{"bestMs",best},{"serverTick",tick},{"reason",reasons[reason]}});return true;
+ }
+ if(text.rfind(clearPrefix,0)==0){auto fields=noticeFields(text,clearPrefix);if(fields.size()!=2)throw std::runtime_error("invalid score reset field count");emit({{"type","challengeScoresClear"},{"generation",noticeInteger(fields[0],0,1000000000)},{"count",noticeInteger(fields[1],0,5)}});return true;}
+ if(text.rfind(scorePrefix,0)==0){auto fields=noticeFields(text,scorePrefix);if(fields.size()!=5)throw std::runtime_error("invalid score field count");noticeName(fields[3]);noticeName(fields[4]);emit({{"type","challengeScore"},{"generation",noticeInteger(fields[0],0,1000000000)},{"rank",noticeInteger(fields[1],1,5)},{"timeMs",noticeInteger(fields[2],1,3600000)},{"driverName",fields[3]},{"passengerName",fields[4]=="-"?"":fields[4]}});return true;}
+ // A typo or unsupported version is visible as ordinary server text.
+ return false;
+}
 void onRpc(RPCParameters*params,void*extra){
  auto id=int(reinterpret_cast<intptr_t>(extra));std::cerr<<"RPC "<<id<<" bits "<<params->numberOfBitsOfData<<"\n";
  try{
@@ -79,7 +111,9 @@ void onRpc(RPCParameters*params,void*extra){
  case 138:case 163:{auto id=r.get<uint16_t>();if(reinterpret_cast<intptr_t>(extra)==138)r.skip(8);emit({{"type","playerRemove"},{"id",id}});break;}
  case 32:{auto id=r.get<uint16_t>();r.skip(40);auto p=r.vec();auto h=r.get<float>();r.skip(216);emit({{"type","playerState"},{"id",id},{"position",p},{"rotation",{cos(h*M_PI/360),0,0,-sin(h*M_PI/360)}},{"velocity",{0,0,0}},{"mode","onFoot"}});break;}
  case 101:{auto id=r.get<uint16_t>();auto text=r.str8();emit({{"type","chat"},{"id",id},{"text",text}});break;}
- case 93:{r.skip(32);auto text=r.string(r.get<uint32_t>());emit({{"type","message"},{"text",text}});break;}
+ case 93:{r.skip(32);auto text=r.string(r.get<uint32_t>());if(!challengeNotice(text))emit({{"type","message"},{"text",text}});break;}
+ case 38:{if(params->numberOfBitsOfData!=232)throw std::runtime_error("invalid race checkpoint length");auto kind=r.get<uint8_t>();auto p=r.vec();auto next=r.vec();auto radius=r.get<float>();if(kind>8||radius<=0||radius>1000)throw std::runtime_error("invalid race checkpoint");for(auto v:p)if(fabs(v)>20000)throw std::runtime_error("invalid checkpoint position");for(auto v:next)if(fabs(v)>20000)throw std::runtime_error("invalid next checkpoint position");emit({{"type","raceCheckpoint"},{"checkpointType",kind},{"position",p},{"nextPosition",next},{"radius",radius}});break;}
+ case 39:{if(params->numberOfBitsOfData!=0)throw std::runtime_error("invalid checkpoint disable length");emit({{"type","raceCheckpointClear"}});break;}
  case 12:case 13:{position=r.vec();state["position"]=position;emit({{"type","selfPosition"},{"position",position}});break;}
  case 19:{heading=r.get<float>();state["rotation"]=Quat{float(cos(heading*M_PI/360)),0,0,float(-sin(heading*M_PI/360))};emit({{"type","selfHeading"},{"heading",heading}});break;}
  case 164:{auto id=r.get<uint16_t>();auto model=r.get<uint32_t>();auto p=r.vec();auto h=r.get<float>();r.skip(328);emit({{"type","vehicle"},{"id",id},{"model",model},{"position",p},{"heading",h}});break;}
@@ -95,13 +129,13 @@ void onRpc(RPCParameters*params,void*extra){
 }
 void onSync(Packet*p){
  try{
- Reader r(p->data,p->length,p->bitSize);int kind=r.get<uint8_t>();auto id=r.get<uint16_t>();Vec pos,vel{0,0,0};Quat q{1,0,0,0};uint16_t vehicle=0;int seat=-1;std::string mode;
- if(kind==207){if(r.get<bool>())r.skip(16);if(r.get<bool>())r.skip(16);r.skip(16);pos=r.vec();q=r.quat();r.skip(24);vel=r.velocity();if(r.get<bool>()){r.skip(16);r.vec();}if(r.get<bool>())r.skip(32);mode="onFoot";}
- else if(kind==200){vehicle=r.get<uint16_t>();r.skip(48);q=r.quat();pos=r.vec();vel=r.velocity();r.skip(32);r.skip(2);if(r.get<bool>())r.skip(32);if(r.get<bool>())r.skip(16);seat=0;mode="driver";}
- else if(kind==211){vehicle=r.get<uint16_t>();seat=r.get<uint16_t>()&63;r.skip(64);pos=r.vec();mode="passenger";}
+ Reader r(p->data,p->length,p->bitSize);int kind=r.get<uint8_t>();auto id=r.get<uint16_t>();Vec pos,vel{0,0,0};Quat q{1,0,0,0};uint16_t vehicle=0,keys=0;int seat=-1;std::string mode;
+ if(kind==207){if(r.get<bool>())r.skip(16);if(r.get<bool>())r.skip(16);keys=r.get<uint16_t>();pos=r.vec();q=r.quat();r.skip(24);vel=r.velocity();if(r.get<bool>()){r.skip(16);r.vec();}if(r.get<bool>())r.skip(32);mode="onFoot";}
+ else if(kind==200){vehicle=r.get<uint16_t>();r.skip(32);keys=r.get<uint16_t>();q=r.quat();pos=r.vec();vel=r.velocity();r.skip(32);r.skip(2);if(r.get<bool>())r.skip(32);if(r.get<bool>())r.skip(16);seat=0;mode="driver";}
+ else if(kind==211){vehicle=r.get<uint16_t>();seat=r.get<uint16_t>()&63;r.skip(48);keys=r.get<uint16_t>();pos=r.vec();mode="passenger";}
  else return;
  if(id>=1000||(mode!="onFoot"&&(vehicle==0||vehicle>=2000||seat>7)))throw std::runtime_error("invalid synchronization identity");
- emit({{"type","playerState"},{"id",id},{"position",pos},{"rotation",q},{"velocity",vel},{"mode",mode},{"vehicleId",vehicle},{"seat",seat}});
+ emit({{"type","playerState"},{"id",id},{"position",pos},{"rotation",q},{"velocity",vel},{"mode",mode},{"vehicleId",vehicle},{"seat",seat},{"keys",keys}});
  if(kind==200)emit({{"type","vehicleState"},{"id",vehicle},{"position",pos},{"rotation",q},{"velocity",vel}});
  }catch(const std::exception&e){std::cerr<<"decode sync: "<<e.what()<<'\n';}
 }
@@ -133,7 +167,7 @@ int main(int argc,char**argv){
  std::string host="127.0.0.1",name="Browser";int port=7777;
  for(int i=1;i+1<argc;i+=2){std::string k=argv[i];if(k=="--host")host=argv[i+1];else if(k=="--name")name=argv[i+1];else if(k=="--port")port=std::stoi(argv[i+1]);}
  signal(SIGTERM,[](int){stopRequested=1;});signal(SIGINT,[](int){stopRequested=1;});signal(SIGPIPE,SIG_IGN);
- for(int id:{139,128,68,129,137,138,163,32,101,93,12,13,19,164,165,159,160,70,71,130})client.RegisterAsRemoteProcedureCall(id,onRpc,reinterpret_cast<void*>(intptr_t(id)));
+ for(int id:{139,128,68,129,137,138,163,32,101,93,12,13,19,164,165,159,160,70,71,130,38,39})client.RegisterAsRemoteProcedureCall(id,onRpc,reinterpret_cast<void*>(intptr_t(id)));
  client.SetMTUSize(576);client.SetTimeoutTime(10000);if(!client.Connect(host.c_str(),port,0,0,5)){emit({{"type","error"},{"message","Unable to start upstream connection"}});return 1;}int flags=fcntl(STDIN_FILENO,F_GETFL,0);if(flags<0||fcntl(STDIN_FILENO,F_SETFL,flags|O_NONBLOCK)<0){emit({{"type","error"},{"message","Cannot configure worker stdin"}});client.Disconnect(200);return 1;}
  std::string buffer;auto begin=std::chrono::steady_clock::now(),lastSync=begin;
  while(running&&!stopRequested){

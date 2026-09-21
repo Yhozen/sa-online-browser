@@ -30,6 +30,66 @@
     ],
     "heading": 0
   },
+  "challenge": {
+    "id": "arroyo-loop",
+    "name": "Arroyo Loop",
+    "start": [
+      0,
+      6,
+      10
+    ],
+    "startRadius": 3,
+    "countdownMs": 3000,
+    "maxMs": 180000,
+    "radius": 4.5,
+    "checkpoints": [
+      [
+        0,
+        12,
+        10
+      ],
+      [
+        30,
+        12,
+        10
+      ],
+      [
+        58,
+        12,
+        10
+      ],
+      [
+        58,
+        -18,
+        10
+      ],
+      [
+        58,
+        -48,
+        10
+      ],
+      [
+        28,
+        -48,
+        10
+      ],
+      [
+        0,
+        -48,
+        10
+      ],
+      [
+        0,
+        -18,
+        10
+      ],
+      [
+        0,
+        6,
+        10
+      ]
+    ]
+  },
   "barriers": [
     {
       "id": "boundary-west",
@@ -1056,6 +1116,149 @@
         0.7,
         0.7,
         11.4
+      ]
+    },
+    {
+      "id": "activity-board",
+      "position": [
+        14,
+        22,
+        10.32
+      ],
+      "size": [
+        2.8,
+        0.52,
+        2.64
+      ]
+    },
+    {
+      "id": "activity-bench-a",
+      "position": [
+        18,
+        22,
+        9.465
+      ],
+      "size": [
+        2.06,
+        0.8,
+        0.93
+      ]
+    },
+    {
+      "id": "activity-planter-a",
+      "position": [
+        21,
+        22,
+        9.79
+      ],
+      "size": [
+        1.42,
+        1.42,
+        1.58
+      ]
+    },
+    {
+      "id": "activity-bench-b",
+      "position": [
+        21,
+        26,
+        9.465
+      ],
+      "size": [
+        0.8,
+        2.06,
+        0.93
+      ]
+    },
+    {
+      "id": "activity-planter-b",
+      "position": [
+        16,
+        26,
+        9.79
+      ],
+      "size": [
+        1.42,
+        1.42,
+        1.58
+      ]
+    },
+    {
+      "id": "activity-pylon-0",
+      "position": [
+        -6.9,
+        4,
+        9.5325
+      ],
+      "size": [
+        0.9,
+        0.9,
+        1.065
+      ]
+    },
+    {
+      "id": "activity-pylon-1",
+      "position": [
+        6.9,
+        4,
+        9.5325
+      ],
+      "size": [
+        0.9,
+        0.9,
+        1.065
+      ]
+    },
+    {
+      "id": "activity-pylon-2",
+      "position": [
+        30,
+        18.9,
+        9.5325
+      ],
+      "size": [
+        0.9,
+        0.9,
+        1.065
+      ]
+    },
+    {
+      "id": "activity-pylon-3",
+      "position": [
+        64.9,
+        -18,
+        9.5325
+      ],
+      "size": [
+        0.9,
+        0.9,
+        1.065
+      ]
+    },
+    {
+      "id": "activity-pylon-4",
+      "position": [
+        28,
+        -54.9,
+        9.5325
+      ],
+      "size": [
+        0.9,
+        0.9,
+        1.065
+      ]
+    },
+    {
+      "id": "activity-pylon-5",
+      "position": [
+        -6.9,
+        -18,
+        9.5325
+      ],
+      "size": [
+        0.9,
+        0.9,
+        1.065
       ]
     }
   ],
@@ -2270,6 +2473,116 @@
         9
       ],
       "rotation": 0
+    },
+    {
+      "id": "activity-board",
+      "asset": "activity-board",
+      "position": [
+        14,
+        22,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "id": "activity-bench-a",
+      "asset": "activity-bench",
+      "position": [
+        18,
+        22,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "id": "activity-planter-a",
+      "asset": "activity-planter",
+      "position": [
+        21,
+        22,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "id": "activity-bench-b",
+      "asset": "activity-bench",
+      "position": [
+        21,
+        26,
+        9
+      ],
+      "rotation": -1.5707963267948966
+    },
+    {
+      "id": "activity-planter-b",
+      "asset": "activity-planter",
+      "position": [
+        16,
+        26,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "id": "activity-pylon-0",
+      "asset": "activity-pylon",
+      "position": [
+        -6.9,
+        4,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "id": "activity-pylon-1",
+      "asset": "activity-pylon",
+      "position": [
+        6.9,
+        4,
+        9
+      ],
+      "rotation": 0.27
+    },
+    {
+      "id": "activity-pylon-2",
+      "asset": "activity-pylon",
+      "position": [
+        30,
+        18.9,
+        9
+      ],
+      "rotation": 0.54
+    },
+    {
+      "id": "activity-pylon-3",
+      "asset": "activity-pylon",
+      "position": [
+        64.9,
+        -18,
+        9
+      ],
+      "rotation": 0.81
+    },
+    {
+      "id": "activity-pylon-4",
+      "asset": "activity-pylon",
+      "position": [
+        28,
+        -54.9,
+        9
+      ],
+      "rotation": 1.08
+    },
+    {
+      "id": "activity-pylon-5",
+      "asset": "activity-pylon",
+      "position": [
+        -6.9,
+        -18,
+        9
+      ],
+      "rotation": 1.35
     }
   ],
   "roads": [

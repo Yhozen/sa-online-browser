@@ -19,7 +19,8 @@ const archiveHash = "da4e69b06b75b9e642d106496c50e7e240218b411d2f6e18271c1d1d819
 const binaryHash = "e3ce4e960a2fd3beb1f9d2299e38b3804475ccd395193013aec239a4b75bfbfe";
 const pinnedBinary = path.join(root, ".runtime/blender-" + pinnedVersion + "-linux-x64/blender");
 const macBinary = "/Applications/Blender.app/Contents/MacOS/Blender";
-const models = ["house-0", "house-1", "house-2", "house-3", "palm", "tree", "roadside-oak", "fence", "fence-low", "mailbox", "bin", "pole", "lamp", "coupe", "neighbor", "garden-low", "garden-shrub"];
+const activityNames = ["activity-board", "activity-pylon", "activity-bench", "activity-planter"];
+const models = [...activityNames, "house-0", "house-1", "house-2", "house-3", "palm", "tree", "roadside-oak", "fence", "fence-low", "mailbox", "bin", "pole", "lamp", "coupe", "neighbor", "garden-low", "garden-shrub"];
 const compressedModels = new Set(["tree", "roadside-oak"]);
 const recipes = ["tools/build-assets.mjs", "tools/assets/build.py", "tools/assets/environment-kit.py", "tools/assets/heroes.py", "tools/assets/garden-kit.py", "tools/assets/canopy-visibility.py", "tools/assets/canopy-visibility.mjs"];
 const hash = bytes => createHash("sha256").update(bytes).digest("hex");
@@ -73,7 +74,9 @@ const selected = values["terrain-only"] ? [] : values.models !== undefined ? [..
 if (selected.some(name => !models.includes(name)))
   throw Error("Unknown model selection. Available models: " + models.join(", ") + ".");
 const canopyModels = selected.filter(name => compressedModels.has(name));
-const ordinaryModels = selected.filter(name => !compressedModels.has(name));
+const activityModels = selected.filter(name => activityNames.includes(name));
+const ordinaryModels = selected.filter(name => !compressedModels.has(name) && !activityNames.includes(name));
+const activeRecipes = activityModels.length ? [...recipes, "tools/assets/activity-kit.py"] : recipes;
 const outputRoot = values["output-root"] ? path.resolve(values["output-root"]) : root;
 if (outputRoot !== root && !values["skip-reflections"])
   throw Error("--output-root requires --skip-reflections; reflection baking reads the project scene.");
@@ -129,10 +132,13 @@ console.log("Building " + products + " with Blender " + version + " (" + distrib
 mkdirSync(path.join(root, ".runtime"), { recursive: true });
 const staging = mkdtempSync(path.join(root, ".runtime/asset-build-"));
 try {
-  const inputs = Object.fromEntries(recipes.map(file => [file, identify(path.join(root, file)).sha256]));
+  const inputs = Object.fromEntries(activeRecipes.map(file => [file, identify(path.join(root, file)).sha256]));
   if (ordinaryModels.length) run(binary, ["--background", "--factory-startup", "--python-exit-code", "1", "--python",
     path.join(root, "tools/assets/build.py"), "--", "--output-root", staging,
     "--models", ordinaryModels.join(","), "--blender-version", version]);
+  if (activityModels.length) run(binary, ["--background", "--factory-startup", "--python-exit-code", "1", "--python",
+    path.join(root, "tools/assets/activity-kit.py"), "--", "--output-root", staging,
+    "--models", activityModels.join(","), "--blender-version", version]);
   let canopyRecords = {};
   if (canopyModels.length) {
     run(binary, ["--background", "--factory-startup", "--python-exit-code", "1", "--python",

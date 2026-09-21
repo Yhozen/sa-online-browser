@@ -71,3 +71,58 @@ LD_LIBRARY_PATH="$PWD/native/build-review/sanitizer" \
 ```
 
 Final local evidence: `native/build-review/asan-ctest.log` (3/3 passing), `native/build-review/asan-codecs.log` (all codec/reassembly cases passing), and `native/build-release-review/ctest.log` (ordinary Release checks). The sanitizer run reported **zero AddressSanitizer findings and zero leaks** after the documented fixes. Logs/builds are ignored artifacts; the regression sources and dependency patch recipe are committed.
+
+
+## Arroyo checkpoint activity
+
+The worker decodes the unchanged server's standard **SetRaceCheckpoint (RPC 38)**
+and **DisableRaceCheckpoint (RPC 39)** into `raceCheckpoint` / `raceCheckpointClear`.
+The former is an exact 232-bit server-direction payload: one checkpoint type byte,
+two uncompressed XYZ float vectors, then a float radius. The decoder bounds type,
+coordinates, radius, packet length, and non-finite values. No browser input can
+submit checkpoint progress; open.mp detects checkpoint entry from its received
+player synchronization and invokes the Pawn callback.
+
+The local fixture also sends compact versioned notices using ordinary reliable
+**ClientMessage (RPC 93)**. The worker recognizes three prefixes only on that server
+RPC, validates field counts and ranges, and emits typed activity events:
+
+- `ARROYO_RACE_V1 generation phase driver passenger vehicle index count elapsed countdown best tick reason`
+  becomes `challenge`. Phases are idle/countdown/running/finished/cancelled, index
+  is the zero-based next checkpoint (equal to count after finish), and times are
+  milliseconds. Invalid player ID 65535 means no participant. The numeric reason
+  table is documented in `test-server/README.md`.
+- `ARROYO_SCORES_V1 generation count` becomes `challengeScoresClear` and begins a
+  bounded batch of up to five leaderboard rows.
+- `ARROYO_SCORE_V1 generation rank time driverName passengerName` becomes
+  `challengeScore`. Rank starts at one; `-` means no passenger.
+
+Names are limited to the legacy nickname character set and 24 bytes. Notices
+are limited to 144 bytes. Unsupported notice versions remain visible server text;
+malformed recognized notices emit a decoding error, never an award. Player chat
+(RPC 101) never enters this parser, even when its text copies the fixture prefix.
+This extension is specific to the local Pawn gamemode, while checkpoint RPCs are
+ordinary SA-MP wire behavior. It is not a new peer networking path.
+
+`python3 native/challenge-integration.py` compiles the active neighborhood fixture
+and runs a separate unchanged open.mp server on UDP 17779. Three ordinary native
+players exercise ordered progress, an out-of-order point, passenger-only movement,
+false starts, unauthorized cancellation, spoofed chat, score publication, role
+changes, corrections, and disconnect cleanup. Artifacts are written under ignored
+`artifacts/challenge-native/`. These clients deliberately position synchronization
+packets to isolate the server state machine; this test does not claim a physically
+driven route, native GTA interoperability, or anti-cheat protection. The browser
+suite provides keyboard-driven gameplay evidence separately.
+
+Set `POC_CHALLENGE_EXTENDED=1` for the actual 180-second timeout gate followed by
+six solo rematches that verify bounded, sorted top-five scores. The ordinary run
+also restarts the isolated server and checks that old generations and scores are
+cleared. A failed test writes `passed:false` to its summary instead of leaving a
+previous successful summary in place.
+
+Incoming on-foot, driver, and passenger synchronization now retain the server's
+16-bit key field as `playerState.keys`. Driver horn bit 2 and its release use the
+existing ordinary SA-MP synchronization packets; no new audio or gameplay RPC is
+introduced. Directional fixtures verify each layout, including driver-tail
+truncation, and the native integration verifies that a second player receives
+both horn press and release from the unchanged server.

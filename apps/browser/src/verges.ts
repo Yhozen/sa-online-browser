@@ -131,8 +131,13 @@ export function plantVerges(scene: THREE.Scene, manifest: SceneManifest, ground?
     materials[1] = clumps;
   }
   const matrices: THREE.Matrix4[][] = geometries.map(() => []), dummy = new THREE.Object3D();
+  // The challenge's flush gathering pavement has no solid collision barrier.
+  const gatheringPavement = manifest.challenge ? new THREE.Box2(
+    new THREE.Vector2(14, 20.7), new THREE.Vector2(24, 27)) : undefined;
   function clearGround(x: number, y: number) {
     if (Math.abs(x) > manifest.halfSize - .5 || Math.abs(y) > manifest.halfSize - .5) return false;
+    if (gatheringPavement && x >= gatheringPavement.min.x - .4 && x <= gatheringPavement.max.x + .4 &&
+      y >= gatheringPavement.min.y - .4 && y <= gatheringPavement.max.y + .4) return false;
     if (manifest.culdesac && Math.hypot(x - manifest.culdesac.center[0], y - manifest.culdesac.center[1]) < manifest.culdesac.radius + 2.55) return false;
     return !manifest.roads.some(road => road.points.slice(1).some((end, i) => {
       const start = road.points[i], margin = road.width / 2 + 2.5;
@@ -210,6 +215,7 @@ export function plantVerges(scene: THREE.Scene, manifest: SceneManifest, ground?
   const soilObstacleBounds = manifest.barriers.map(b => new THREE.Box2(
     new THREE.Vector2(b.position[0] - b.size[0] / 2, b.position[1] - b.size[1] / 2),
     new THREE.Vector2(b.position[0] + b.size[0] / 2, b.position[1] + b.size[1] / 2)));
+  if (gatheringPavement) soilObstacleBounds.push(gatheringPavement);
   const soilPositions: number[] = [], soilColors: number[] = [], soilUVs: number[] = [];
   function soilTransition(x: number, y: number, radiusX: number, radiusY: number, orientation: number) {
     const rings: { x: number; y: number; alpha: number }[][] = [];

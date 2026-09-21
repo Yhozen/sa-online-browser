@@ -1,0 +1,155 @@
+{
+  "version": 1,
+  "license": "GPL-3.0-or-later",
+  "creator": "Arroyo project",
+  "source": "tools/audio/synthesize.mjs",
+  "format": "PCM signed 16-bit little-endian mono",
+  "sampleRate": 24000,
+  "entries": [
+    {
+      "id": "engine-idle",
+      "file": "engine-idle.wav",
+      "bytes": 96044,
+      "sha256": "2f0f10ade905205c415ad3b39d02453781adec4b73c331ca746308fe9a431517",
+      "duration": 2,
+      "loop": true,
+      "description": "Original six-cylinder idle: periodic exhaust harmonics and filtered air."
+    },
+    {
+      "id": "engine-load",
+      "file": "engine-load.wav",
+      "bytes": 96044,
+      "sha256": "e2d8f5e5c81b9e0b8ce9ff8b961262b57c7a555dd6f3914e704cb4a1aba5be1a",
+      "duration": 2,
+      "loop": true,
+      "description": "Original loaded engine: stronger exhaust harmonics, smoothly pitch shifted at runtime."
+    },
+    {
+      "id": "tire-roll",
+      "file": "tire-roll.wav",
+      "bytes": 96044,
+      "sha256": "bbcc7a9aa4eabdde741ea044545b2919118ee30dc0cc6c4b907a492726783765",
+      "duration": 2,
+      "loop": true,
+      "description": "Circularly filtered tire contact noise; gain follows road speed."
+    },
+    {
+      "id": "footstep-a",
+      "file": "footstep-a.wav",
+      "bytes": 10604,
+      "sha256": "de9df961834635ef0a69fab1d6fa9a49c87779e9ec39d76460f13f8783e82b7f",
+      "duration": 0.22,
+      "loop": false,
+      "description": "Shoe heel and asphalt contact, first deterministic variation."
+    },
+    {
+      "id": "footstep-b",
+      "file": "footstep-b.wav",
+      "bytes": 11564,
+      "sha256": "9707b2841f80727c79564fcca40ea45c49a7ae1616527a1fb080658c5718ac35",
+      "duration": 0.24,
+      "loop": false,
+      "description": "Shoe heel and asphalt contact, second deterministic variation."
+    },
+    {
+      "id": "jump",
+      "file": "jump.wav",
+      "bytes": 9164,
+      "sha256": "69a8caaf633b5feec0a320e53426731ac20616579f8725d9fefd661b69d984d4",
+      "duration": 0.19,
+      "loop": false,
+      "description": "Clothing movement and push-off, synthesized filtered impulse."
+    },
+    {
+      "id": "land",
+      "file": "land.wav",
+      "bytes": 15404,
+      "sha256": "c32da03bcb8d8c5461930a1ed9700e214e4e0b1520e434245bf28bed1d4cb71c",
+      "duration": 0.32,
+      "loop": false,
+      "description": "Two-foot landing: a low, short shoe impact."
+    },
+    {
+      "id": "door-open",
+      "file": "door-open.wav",
+      "bytes": 20204,
+      "sha256": "78ec0fc46b5002fada09a0933fbd90888c7fbc04e2923cb349d017eb5df6d1f3",
+      "duration": 0.42,
+      "loop": false,
+      "description": "Seat-exit latch click and light panel resonance."
+    },
+    {
+      "id": "door-close",
+      "file": "door-close.wav",
+      "bytes": 24044,
+      "sha256": "e04253f96570261eaa077ae4b59632261d613534169914b4e119dfd5af7183c5",
+      "duration": 0.5,
+      "loop": false,
+      "description": "Seat-placement latch and low coupe door thump."
+    },
+    {
+      "id": "countdown",
+      "file": "countdown.wav",
+      "bytes": 10604,
+      "sha256": "20e285e21830b2361689681231d10fe018e7d1f08884bec5f31e7757d5d98267",
+      "duration": 0.22,
+      "loop": false,
+      "description": "Short A4 staging beep."
+    },
+    {
+      "id": "start",
+      "file": "start.wav",
+      "bytes": 26444,
+      "sha256": "0d770fff24444fb625259a76b1b67d2f1a4d31b3255dbe76e1277096f78d1a1f",
+      "duration": 0.55,
+      "loop": false,
+      "description": "Two ascending original tones signal the server race start."
+    },
+    {
+      "id": "checkpoint",
+      "file": "checkpoint.wav",
+      "bytes": 19244,
+      "sha256": "dc9b6813522edf99e5ba4c7cd82845241ad9b64bccc5e2ec889de435e9818f27",
+      "duration": 0.4,
+      "loop": false,
+      "description": "A restrained two-note checkpoint acknowledgement."
+    },
+    {
+      "id": "finish",
+      "file": "finish.wav",
+      "bytes": 61484,
+      "sha256": "a5f702b79bd8e9a4119a447fd8ca740c4aa067b5e7cdea7c6eb3b6123930a075",
+      "duration": 1.28,
+      "loop": false,
+      "description": "Original four-note finish phrase; no sampled melody."
+    },
+    {
+      "id": "reset",
+      "file": "reset.wav",
+      "bytes": 23084,
+      "sha256": "20a88622f0c225c9a57e577117b2c3f42df20f38461a615e575d1f9669756d5e",
+      "duration": 0.48,
+      "loop": false,
+      "description": "Descending pair acknowledges an actual reset."
+    },
+    {
+      "id": "horn",
+      "file": "horn.wav",
+      "bytes": 19244,
+      "sha256": "6838e35961668ede901b55dfec553cef15d4812d32fafba312fca77e11e99ae6",
+      "duration": 0.4,
+      "loop": false,
+      "description": "Original short automotive dual horn, F4 and A4."
+    },
+    {
+      "id": "ambience",
+      "file": "ambience.wav",
+      "bytes": 1152044,
+      "sha256": "3bf9dcbc169385ab5018d82764a39ef88938d21c3de6cb9bc7d86717a4227456",
+      "duration": 24,
+      "loop": true,
+      "description": "Quiet circular wind/leaf noise and sparse original synthesized bird chirps."
+    }
+  ],
+  "totalBytes": 1691264
+}

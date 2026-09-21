@@ -198,6 +198,14 @@ export function buildEnvironment(scene: THREE.Scene, manifest: SceneManifest) {
       }
     roadDetail(scene, manifest);
     plantVerges(scene, manifest, surfaceMaterials.get("grass"), surfaceMaterials.get("grass-clump")?.map ?? undefined);
+    if (manifest.challenge) {
+      // A flush paved gathering spot; the manifest's props own all solid collision.
+      surface(19, 23.85, 10, 6.3, z + .02, concrete);
+      for (const x of [16.5, 19, 21.5])
+        box([x, 23.85, z + .028], [.018, 6.3, .005], joint);
+      for (const y of [22.8, 24.9])
+        box([19, y, z + .028], [10, .018, .005], joint);
+    }
     instantiateStatic(scene, [...manifest.houses, ...manifest.props]);
     instantiateStatic(scene, [...gardenPlacements(manifest), ...vergeGardenPlacements(manifest), ...frontageGardenPlacements(manifest)]);
     for (const b of manifest.barriers.filter((b) =>
