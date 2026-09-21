@@ -53,7 +53,8 @@ test("activity announces server transitions once, keeps distance non-live, and r
     assert.equal(await live.getAttribute("aria-atomic"), "true");
     await page.evaluate(() => {
       window.announcements = []; window.navigationChanges = 0;
-      new MutationObserver(records => announcements.push(...records.map(() => document.querySelector('[role=status]').textContent)))
+      const liveRegion = document.querySelector('[role=status]');
+      new MutationObserver(records => announcements.push(...records.map(() => liveRegion.textContent)))
         .observe(document.querySelector('[role=status]'), { childList: true, subtree: true, characterData: true });
       new MutationObserver(records => navigationChanges += records.length)
         .observe(document.querySelector('#activity-status'), { childList: true, subtree: true, characterData: true });
@@ -99,7 +100,12 @@ test("activity announces server transitions once, keeps distance non-live, and r
     assert.equal(await page.locator("#activity-announcement").textContent(), "");
     await accept(finished, 9700);
     assert.match(await live.textContent(), /Finished in 0:12.34/, "rejoining must announce the received state again");
-    await page.evaluate(() => activity.dispose());
+    await page.evaluate(() => {
+      activity.dispose();
+      // pagehide may precede socket close and the final presentation timer.
+      activity.clear(); render(9800); activity.dispose();
+      activity.accept({ type: "challengeScoresClear" });
+    });
     assert.equal(await page.locator(".activity").count(), 0);
     assert.equal(await page.evaluate(() => scene.getObjectByName("driving-activity") === undefined), true);
     assert.deepEqual(errors, []);

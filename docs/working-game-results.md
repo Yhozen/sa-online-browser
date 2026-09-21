@@ -27,6 +27,8 @@ The merge exposed and repaired concrete integration issues: reverse-lamp extract
 
 Local logs and large recordings remain ignored under `artifacts/` and `.context/`. The retained full yard/neighborhood suite, twenty reconnects and both ten-minute sessions have **not been rerun on this combined feature revision**. Docker redeployment and native-Mac verification of the combined build are also unverified. Earlier complete native acceptance is not substituted for these missing runs.
 
+A late page-close callback in historical browser artifacts accessed the removed activity panel. Disposal is now idempotent; clear/update/accept/configure ignore late work. A real-DOM Chromium regression passes the dispose → clear → update → dispose sequence. The focused multiplayer run began before this final teardown-only fix; its exact tested revision is recorded separately. Future multiplayer runs also assert errors after closing both contexts.
+
 ## Visual judgement and resolution
 
 Dream-loop working targets, exact-composition image-generation prompts, actual screenshots and assessments are retained in ignored `.dream-loop/gameplay-2026-09-20/`. The first independent activity-frame review scored **4.1/10, Tier 1**: layout passed, while lighting/reflections/atmosphere blocked the next gate. Subsequent work replaced floating board lettering with a baked original enamel face, authored start-paint transparency and added 25 original yuccas. An intermediate candidate showed a blank scene followed by a dark sign and was withheld from scoring; fresh-profile diagnosis did not confirm WebGL context loss.

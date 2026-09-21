@@ -410,4 +410,5 @@ test("activity: two server-scored laps, crew swap, false starts, corrections and
     await a.close(); await b.close();
   }
   await expect.poll(async () => (await (await fetch(`${URL}/health`)).json()).workers).toBe(0);
+  expect(errors, "including page-close callbacks").toEqual([]);
 });

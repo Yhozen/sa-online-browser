@@ -29,6 +29,7 @@ export class DrivingActivity {
   private panel: HTMLElement;
   private announcement: HTMLElement;
   private expanded = false;
+  private disposed = false;
   private cue?: (cue: ActivityCue) => void;
 
   constructor(scene: THREE.Scene, private command: (text: string) => void) {
@@ -73,6 +74,7 @@ export class DrivingActivity {
   setCue(callback: (cue: ActivityCue) => void) { this.cue = callback; }
 
   configure(manifest: SceneManifest, startPaint?: THREE.Texture) {
+    if (this.disposed) return;
     this.manifest = manifest;
     this.releaseGeometry();
     this.marker.clear(); this.start.clear(); this.markerKey = "";
@@ -89,12 +91,13 @@ export class DrivingActivity {
   }
 
   accept(event: Record<string, unknown>, now = performance.now()) {
-    if (!this.manifest?.challenge) return;
+    if (this.disposed || !this.manifest?.challenge) return;
     const cue = this.replica.accept(event, now);
     if (cue) this.cue?.(cue);
   }
 
   clear() {
+    if (this.disposed) return;
     this.replica.clear(); this.marker.visible = false; this.group.visible = false;
     this.markerKey = ""; this.resultsKey = "";
     this.panel.classList.add("hidden");
@@ -103,6 +106,7 @@ export class DrivingActivity {
   }
 
   update(self: Self, names: Map<number, string>, now: number) {
+    if (this.disposed) return;
     const challenge = this.manifest?.challenge;
     const visible = !!challenge && self.spawned;
     this.panel.classList.toggle("hidden", !visible);
@@ -204,5 +208,5 @@ export class DrivingActivity {
   private material<T extends THREE.Material>(material: T): T { this.materials.push(material); return material; }
   private geometry<T extends THREE.BufferGeometry>(geometry: T): T { this.geometries.push(geometry); return geometry; }
   private releaseGeometry() { this.materials.forEach(m => m.dispose()); this.geometries.forEach(g => g.dispose()); this.materials = []; this.geometries = []; }
-  dispose() { this.releaseGeometry(); this.group.removeFromParent(); this.panel.remove(); }
+  dispose() { if (this.disposed) return; this.clear(); this.disposed = true; this.cue = undefined; this.releaseGeometry(); this.group.removeFromParent(); this.panel.remove(); }
 }
