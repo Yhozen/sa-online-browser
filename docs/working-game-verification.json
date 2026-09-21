@@ -1,0 +1,399 @@
+{
+  "recordedAt": "2026-09-21T02:30:57.854455+00:00",
+  "mergedMain": "07653efcda6411b50ba25a2a5fae44e2c857dcda",
+  "runtimeCommit": "a3c980688097bd86534f9ecfe84329dad33a6423",
+  "multiplayerTestedCommit": "248b92f",
+  "qualification": "Focused multiplayer process exited 143 (SIGTERM) during Standard screenshot capture. This is an interrupted run, not a complete pass. Earlier artifact results.json/agreements.json were not overwritten and are deliberately excluded. Final teardown-only guard separately passed the real-DOM lifecycle regression and typecheck.",
+  "checks": {
+    "gatewayTests": 3,
+    "unitTests": 108,
+    "activityDOMTests": 1,
+    "nativeCTests": 3,
+    "headedAudioTests": 1,
+    "nativeExtendedGates": 15,
+    "nativeSourceHashesStillMatch": true
+  },
+  "activity": {
+    "status": "interrupted after completed gameplay, before final capture/report/cleanup assertions",
+    "exitCode": 143,
+    "finishObservations": [
+      {
+        "event": "challengeFinished",
+        "generation": 1,
+        "elapsedMs": 56881,
+        "driver": 0,
+        "passenger": 1,
+        "tick": 166798
+      },
+      {
+        "event": "challengeFinished",
+        "generation": 2,
+        "elapsedMs": 50996,
+        "driver": 1,
+        "passenger": 0,
+        "tick": 235319
+      }
+    ],
+    "cancellations": [],
+    "serverObservations": 5554,
+    "lastPlayers": [
+      {
+        "event": "player",
+        "seq": 1937,
+        "player": 0,
+        "state": 1,
+        "vehicle": 0,
+        "seat": -1,
+        "x": -4.0,
+        "y": 0.0,
+        "z": 10.0,
+        "tick": 387775
+      },
+      {
+        "event": "player",
+        "seq": 1937,
+        "player": 1,
+        "state": 1,
+        "vehicle": 0,
+        "seat": -1,
+        "x": 4.0,
+        "y": 0.0,
+        "z": 10.0,
+        "tick": 387775
+      }
+    ],
+    "positionAgreement": "No final merged-run agreement artifact flushed. Earlier pre-merge max 0.007288 units remains historical only.",
+    "screenshots": "Actual 1280x720 Low gameplay screenshots, not generated references; Standard capture did not finish."
+  },
+  "inventory": {
+    "allListedAssetBytes": 53957726,
+    "note": "Inventory sum includes raw/compressed alternatives; not a measured transfer total. Final combined draw calls/triangles/frame timings were not flushed. No resolution or fidelity reduction was introduced.",
+    "audioBytes": 1691264
+  },
+  "artifacts": [
+    {
+      "path": "artifacts/activity-merged/server.log",
+      "bytes": 716134,
+      "sha256": "ac4fd7c88406e5e0636e9c853b5c8a9d74f01196a2240a1c7c0230c8139a1253"
+    },
+    {
+      "path": "artifacts/activity-merged/first-finish.png",
+      "bytes": 1316735,
+      "sha256": "063ce8525f4b6bbad5b090d89fed245d9a17698da14d1903462da8584a3d0068"
+    },
+    {
+      "path": "artifacts/activity-merged/passenger-finish.png",
+      "bytes": 1334543,
+      "sha256": "ec82a54a137092f0475efadddbd66542890c4da00deab9169f37ae0058dd001c"
+    },
+    {
+      "path": "artifacts/activity-merged/swapped-crew-finish.png",
+      "bytes": 1320422,
+      "sha256": "5d5e030d395dde7b4ccc324255fbe8d02cd864ce6412af11c3dec252853195b2"
+    },
+    {
+      "path": "artifacts/challenge-native-final/summary.json",
+      "bytes": 3394,
+      "sha256": "056eac24de34f9efe2b7971ab7c8c3979bbc0a4a1ed31873113e18cf2e1c5b27"
+    },
+    {
+      "path": "artifacts/audio/observations.json",
+      "bytes": 1350,
+      "sha256": "b12425bdc5b5a1c4627d34f173a9363bda7301c02066f23b63b9db93300f2d8c"
+    },
+    {
+      "path": ".context/merged-activity-verification-final.log",
+      "bytes": 87011,
+      "sha256": "2592e2bac4504ff73abc4131f6023f553e319a7c1d05e8bde21009a38ff50708"
+    },
+    {
+      "path": ".context/merged-disposal.log",
+      "bytes": 233,
+      "sha256": "5acfcbc9eb25f9b7d5621e359bcd33f6f052ddefe4754643c299d7f3c5aabba5"
+    },
+    {
+      "path": ".context/merged-audio.log",
+      "bytes": 247,
+      "sha256": "e476ccc001a214244e0511a1aafd7ec7a375be8dadab325ae8df4da72f06fe8b"
+    },
+    {
+      "path": ".context/merged-activity-verification.log",
+      "bytes": 14558,
+      "sha256": "3f9ee9c8fc9b7c23ecdff8d981583f731336d1ad65e3e01713428b620e7808b1"
+    },
+    {
+      "path": ".context/merged-assets.log",
+      "bytes": 3896,
+      "sha256": "7b6dc76560012c836213b3faafab0d33599931badbe46df8f86e1ca76bfbf357"
+    }
+  ],
+  "sources": [
+    {
+      "path": "apps/browser/src/antialias.ts",
+      "bytes": 3929,
+      "sha256": "29aad63b1b86354605f740bd8ce7b76bc0784afa84bebaad7ddb7ce315924161"
+    },
+    {
+      "path": "apps/browser/src/assets.ts",
+      "bytes": 23390,
+      "sha256": "8144f19e4e25110d47443ffc1db64a4c04a5599bbf02055637b216536f3bfd55"
+    },
+    {
+      "path": "apps/browser/src/audio.ts",
+      "bytes": 22433,
+      "sha256": "fc8f96af5332ad413344daf335b95f45eb2575038f6c1e96bef142bc11fbf70e"
+    },
+    {
+      "path": "apps/browser/src/bootstrap.ts",
+      "bytes": 1347,
+      "sha256": "d512c6fc9eaf612fc44cc93013b113ed233eabb17fe08ef560fad6af0fb3b98f"
+    },
+    {
+      "path": "apps/browser/src/camera.ts",
+      "bytes": 3133,
+      "sha256": "ab610c86911ff9f33ae3a91a5cb7cf2f16f4528028bc8abe0eff055a635c9ed6"
+    },
+    {
+      "path": "apps/browser/src/canopy-lighting.ts",
+      "bytes": 2673,
+      "sha256": "ccfb0a9640512b8287eb7aa2fb3ff0ea962f9a215325d354bd8bb9f66b99f35d"
+    },
+    {
+      "path": "apps/browser/src/challenge-state.ts",
+      "bytes": 5982,
+      "sha256": "e0adc02f6ca5f98e1cda71dfeafbd26e2975ef252a6fe0101197942cbd7a3a33"
+    },
+    {
+      "path": "apps/browser/src/challenge.ts",
+      "bytes": 14585,
+      "sha256": "1e78807760e35e77ba52df7c7302798dee96b1df29d1369f182496ea3009014b"
+    },
+    {
+      "path": "apps/browser/src/character-animation.ts",
+      "bytes": 1170,
+      "sha256": "0782bb10ef3fedfe9744937687dd63566e32abafae70d75e1420c4a62922e8bb"
+    },
+    {
+      "path": "apps/browser/src/characters.ts",
+      "bytes": 3357,
+      "sha256": "6e46d17e1a08b0b7b3ceed61a2eb962f32529d85af5d1942ca116f5f393bfc8e"
+    },
+    {
+      "path": "apps/browser/src/collision.ts",
+      "bytes": 3548,
+      "sha256": "bc98b1275031f6b3de5d753bc572f1ce2f77fa5d8d7b54e5b7bb5c65749cd110"
+    },
+    {
+      "path": "apps/browser/src/environment.ts",
+      "bytes": 12197,
+      "sha256": "06eda9e9097ff5a76f5778a5919d0b72c672f55b5e27dcb41165a86204b0e38b"
+    },
+    {
+      "path": "apps/browser/src/foliage-mips.ts",
+      "bytes": 3825,
+      "sha256": "bf7fe1414777bf98dc331fcf323a747dd6a1d20e1df857cde5e5ad47a98cb15c"
+    },
+    {
+      "path": "apps/browser/src/garden.ts",
+      "bytes": 8021,
+      "sha256": "dad060ffb85efecc4bf833281c13982137245452102253540e90fc98d9bec44f"
+    },
+    {
+      "path": "apps/browser/src/gateway.ts",
+      "bytes": 1329,
+      "sha256": "c62dd850b002cfb8fe762d28deaa663d0f8e643c75b9fe9e16ef60c3c2db8a97"
+    },
+    {
+      "path": "apps/browser/src/graphics.ts",
+      "bytes": 3711,
+      "sha256": "7b61ef63871d3f3d1633c38dfd5341b5dfedc60b7346af366acf4b653867832c"
+    },
+    {
+      "path": "apps/browser/src/ground-cover.ts",
+      "bytes": 1428,
+      "sha256": "8e5a7a64144227c24a5aa6c54ad735e07c7ee68b414602d39f21e0e88c757b89"
+    },
+    {
+      "path": "apps/browser/src/horizon.ts",
+      "bytes": 9515,
+      "sha256": "114aabbffcd15af17be77e578b7b47b73248a7c7dba8590540b88c79141a5fa2"
+    },
+    {
+      "path": "apps/browser/src/hud.ts",
+      "bytes": 8330,
+      "sha256": "566028c2f6d8c3bf77ca8341d6d7e1d999ebdb22cada1a660f122218af88c5ab"
+    },
+    {
+      "path": "apps/browser/src/interpolated-pose.ts",
+      "bytes": 2338,
+      "sha256": "5b647e17329d22245dbf9115e6df2037c4dfbf98734a16c3d49642d304d828c4"
+    },
+    {
+      "path": "apps/browser/src/lighting.ts",
+      "bytes": 6601,
+      "sha256": "267e4f6ee9b2cca0e3a282abbf8c9324693ba633ab292eb685daf7635fa71df7"
+    },
+    {
+      "path": "apps/browser/src/main.ts",
+      "bytes": 39500,
+      "sha256": "e330c01b362c7905e9a56dea223fc2ee4024536003accf912db4e46986f26e65"
+    },
+    {
+      "path": "apps/browser/src/mown-access.ts",
+      "bytes": 4836,
+      "sha256": "bb2b5f90b4ca762fb3358e7944f4cff08769a8a87b5e12cef1a6b74692f901da"
+    },
+    {
+      "path": "apps/browser/src/reflection-storage.ts",
+      "bytes": 3629,
+      "sha256": "110ed1f8d912cf01648e9369d4ccf088670fc7a1ce9f99e3084366fd1baa520b"
+    },
+    {
+      "path": "apps/browser/src/road-detail.ts",
+      "bytes": 10339,
+      "sha256": "cee37ba83270b3f77d1b050a697c458775f3adb9f5f47fa014ae196d642d2e0c"
+    },
+    {
+      "path": "apps/browser/src/shadows.ts",
+      "bytes": 877,
+      "sha256": "5201573101a62ae060534d77123c496f03b8b07617a1da5109341603b86c7be0"
+    },
+    {
+      "path": "apps/browser/src/simulation-clock.ts",
+      "bytes": 1312,
+      "sha256": "4db0b03b6155b649c2d95c814ce8d117516bb4030cce17c02e423580636e6c60"
+    },
+    {
+      "path": "apps/browser/src/snapshot-pose.ts",
+      "bytes": 5074,
+      "sha256": "bf2dbc7f268b8d097639723414315986e02d0e190cbabb332eec09b0d62c60c8"
+    },
+    {
+      "path": "apps/browser/src/style.css",
+      "bytes": 12509,
+      "sha256": "e78060b8ca454e2f8beafcc5cfb835ef8a8336584389b200e8a01d1020dae56a"
+    },
+    {
+      "path": "apps/browser/src/surface-lighting.ts",
+      "bytes": 1293,
+      "sha256": "a01bfef9ccd0a7685a18f0ef355dae70ab2d537c5252c8075c811d34fc58992f"
+    },
+    {
+      "path": "apps/browser/src/surface-pixels.ts",
+      "bytes": 2021,
+      "sha256": "327e2cc8c0971fc872b5459c65694c92cfb38a2e25182395470db28f5afdbabe"
+    },
+    {
+      "path": "apps/browser/src/surface-textures.ts",
+      "bytes": 1500,
+      "sha256": "2309c51c318e786734dd90470cbfcb3bb83e67eef2691cf6e3dc5c7028edac56"
+    },
+    {
+      "path": "apps/browser/src/surface-weathering.ts",
+      "bytes": 2610,
+      "sha256": "fe7052a24c8987b77dfa97cf2e9c2654bbf0f4d604f9d27f695cf4d4168353ff"
+    },
+    {
+      "path": "apps/browser/src/vehicle-presentation.ts",
+      "bytes": 9510,
+      "sha256": "ff61f682aecce57259873c41aebea7a6d42df6d1095f044f9a7a72289c25012e"
+    },
+    {
+      "path": "apps/browser/src/verges.ts",
+      "bytes": 21701,
+      "sha256": "30c81cbecf54fcbf2ca517bcab195b28aa2aedd93265e6908e4d9b661b292ccd"
+    },
+    {
+      "path": "apps/browser/src/warmup.ts",
+      "bytes": 1791,
+      "sha256": "2db7cbf9d34a1a13b65fe8b52cd8509360903d7084741b216be60e9cadad3406"
+    },
+    {
+      "path": "native/tests.cpp",
+      "bytes": 13991,
+      "sha256": "b1259ecc679a9d705b4232639624dd9bd2f757b090f0588eb065f59a51707e92"
+    },
+    {
+      "path": "native/worker.cpp",
+      "bytes": 19854,
+      "sha256": "ab78d048aa027ee842b6cf2b1f073c7b55338fb058eb6a188e09568b799c58a2"
+    },
+    {
+      "path": "packages/shared/protocol.ts",
+      "bytes": 2220,
+      "sha256": "5a5c517db685e494d62e5940a7c5269fe6e05fd447dd208025722aa03ef93ac3"
+    },
+    {
+      "path": "packages/shared/scene.mjs",
+      "bytes": 733,
+      "sha256": "bf854bf1c671d16b9ac3ec47a08b02bfbd78b32a545bdb2d39ce814d621c5cd4"
+    },
+    {
+      "path": "packages/shared/scene.ts",
+      "bytes": 1052,
+      "sha256": "9e5b463bc991cf2e4bc3a1609d993b7faf8fe41f09df1bd16e10c95bba63a702"
+    },
+    {
+      "path": "packages/shared/scenes/neighborhood.json",
+      "bytes": 44681,
+      "sha256": "af5ca779948b5477172e963a70f38f3ba8944861ef2b84d1090a65342ca158b6"
+    },
+    {
+      "path": "packages/shared/scenes/yard.json",
+      "bytes": 1239,
+      "sha256": "eafd501e8fef4ffa7df59050ec41059c4d86b53e510aa83e7479e936497ed5ac"
+    },
+    {
+      "path": "services/gateway/server.mjs",
+      "bytes": 10541,
+      "sha256": "0883e3ae489afcbfb8d7a918f017fe903a1b7b5886315b3ee97234182f53af8d"
+    },
+    {
+      "path": "test-server/README.md",
+      "bytes": 6240,
+      "sha256": "86adbff362d07c8e6a13e0e2bbeb1ee1b10ed885592ac7949d5b6fffe12c23f6"
+    },
+    {
+      "path": "test-server/arena.json",
+      "bytes": 1067,
+      "sha256": "b1dcd0a602599ba894d4bbe7a30a713a01daa61ae55bd9b5067135922019b53d"
+    },
+    {
+      "path": "test-server/manifest.json",
+      "bytes": 1907,
+      "sha256": "f2dc2740ea0d2ca92e14c371d94fefa68708dba064edf9263c0d0aa8e8355e89"
+    },
+    {
+      "path": "test-server/poc.pwn",
+      "bytes": 20037,
+      "sha256": "6c755851550e8c6f5b438e60195a5605bb8e73f76d357d76929c346612da6543"
+    },
+    {
+      "path": "tests/activity-browser.test.mjs",
+      "bytes": 7580,
+      "sha256": "35902681a1a94efcc01ffbbf771181cca76c1417b3a29acbd443cc8c85f68aae"
+    },
+    {
+      "path": "tests/browser/activity.spec.mjs",
+      "bytes": 18505,
+      "sha256": "2facdf7ae4a6f05a53bd17e47bd68284d9c1740cad1011d7e8e15a164fcbbf01"
+    },
+    {
+      "path": "tools/setup-runtime.py",
+      "bytes": 6509,
+      "sha256": "a422b68f84507c4dc2d93d79dc3bfd4d1a73c30edd6bdba9bce7a1e82822b792"
+    },
+    {
+      "path": "tools/verify.mjs",
+      "bytes": 2048,
+      "sha256": "48135fa71a16b79a38540934609cc81c1bd353f62e2345e74e818b16f22bc3b5"
+    }
+  ],
+  "unverified": [
+    "Complete focused multiplayer rerun including final Standard screenshot and cleanup",
+    "Full combined-build yard/neighborhood suite, twenty reconnects and ten-minute soaks",
+    "Fresh native-Mac and Docker deployment acceptance",
+    "Fresh 8/10 dream-loop verdict; earlier activity review 4.1/10",
+    "Original GTA/SA-MP-client geography compatibility, WAN/invite play, persistent records"
+  ]
+}
