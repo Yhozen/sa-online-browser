@@ -1,0 +1,337 @@
+{
+  "purpose": "Rounded connected sneakers and continuous seated garment deformation",
+  "generatedAt": "2026-09-13T05:29:11.461Z",
+  "authoring": "Original native Blender geometry authored in tools/assets/heroes.py; no external model or texture used.",
+  "blender": {
+    "version": "5.2.1",
+    "buildHash": "9e2066aef7ef",
+    "distribution": "native-macos",
+    "platform": "darwin",
+    "architecture": "arm64",
+    "executableSha256": "ea651e507c6b197df0e234bfa04e5ed43e7f4d498267a7df93fcb38f21928a5c"
+  },
+  "recipeSha256": "78d6d41ac6d4aa6ee127d72e7ab277362004edbd7cea72602b1611d42298e9b8",
+  "outputs": {
+    "glb": {
+      "bytes": 6365356,
+      "sha256": "cf14bd6ff88bee0e4333d9a67eea1b1c53d67200efb72aade705ff677e9f70e7"
+    },
+    "blend": {
+      "bytes": 3446298,
+      "sha256": "ed62584d5aad70bef4ed6bfe97444c8ecbadd5048e0f29051f9124eb4438eb1e"
+    }
+  },
+  "verification": {
+    "before": {
+      "bytes": 6886748,
+      "triangles": 118390
+    },
+    "after": {
+      "bytes": 6365356,
+      "triangles": 117702
+    },
+    "rigBoneCount": 11,
+    "clips": [
+      "idle",
+      "jump",
+      "seated",
+      "walk"
+    ],
+    "rigTransformsInverseBindAndAllAnimationKeyBytesIdentical": true,
+    "unchangedNonClothingMaterialGeometryAndSkinData": true,
+    "materialPrimitiveCount": 13,
+    "sceneBytesWithReplacement": 46489333
+  },
+  "topology": {
+    "before": {
+      "footBounds": {
+        "min": [
+          -0.25,
+          -0.125,
+          0.014999999664723873
+        ],
+        "max": [
+          0.25,
+          0.23000000417232513,
+          0.18446409702301025
+        ]
+      },
+      "connectedMainShoes": [
+        {
+          "bounds": {
+            "min": [
+              -0.25,
+              -0.125,
+              0.014999999664723873
+            ],
+            "max": [
+              -0.05000000074505806,
+              0.23000000417232513,
+              0.18446409702301025
+            ]
+          },
+          "vertices": 242,
+          "faces": 242,
+          "materials": [
+            "ivory",
+            "rubber",
+            "shoe-sole"
+          ],
+          "closedManifold": true
+        },
+        {
+          "bounds": {
+            "min": [
+              0.05000000074505806,
+              -0.125,
+              0.014999999664723873
+            ],
+            "max": [
+              0.25,
+              0.23000000417232513,
+              0.18446409702301025
+            ]
+          },
+          "vertices": 242,
+          "faces": 242,
+          "materials": [
+            "ivory",
+            "rubber",
+            "shoe-sole"
+          ],
+          "closedManifold": true
+        }
+      ]
+    },
+    "after": {
+      "footBounds": {
+        "min": [
+          -0.25,
+          -0.125,
+          0.014999999664723873
+        ],
+        "max": [
+          0.25,
+          0.23000000417232513,
+          0.18446409702301025
+        ]
+      },
+      "connectedMainShoes": [
+        {
+          "bounds": {
+            "min": [
+              -0.25,
+              -0.125,
+              0.014999999664723873
+            ],
+            "max": [
+              -0.05000000074505806,
+              0.23000000417232513,
+              0.18446409702301025
+            ]
+          },
+          "vertices": 720,
+          "faces": 682,
+          "materials": [
+            "ivory",
+            "rubber",
+            "shoe-sole"
+          ],
+          "closedManifold": true
+        },
+        {
+          "bounds": {
+            "min": [
+              0.05000000074505806,
+              -0.125,
+              0.014999999664723873
+            ],
+            "max": [
+              0.25,
+              0.23000000417232513,
+              0.18446409702301025
+            ]
+          },
+          "vertices": 720,
+          "faces": 682,
+          "materials": [
+            "ivory",
+            "rubber",
+            "shoe-sole"
+          ],
+          "closedManifold": true
+        }
+      ]
+    }
+  },
+  "seatedDeformation": {
+    "before": {
+      "hemVertices": 5851,
+      "hemForearm": 0.1611376255750656,
+      "regions": {
+        "armpit": {
+          "count": 12218,
+          "p99": {
+            "ratio": 13.659112386010232,
+            "stretch": 0.09525017257611416,
+            "rest": 0.007524237851097405,
+            "mid": [
+              -0.2346428632736206,
+              1.251997709274292,
+              0.05244830623269081
+            ]
+          },
+          "max": {
+            "ratio": 32.31306468068106,
+            "stretch": 0.10798633934992447,
+            "rest": 0.003448603337013762,
+            "mid": [
+              -0.23847532272338867,
+              1.2494623064994812,
+              -0.03837247006595135
+            ]
+          },
+          "over3": 393,
+          "over2": 869
+        },
+        "hem": {
+          "count": 19127,
+          "p99": {
+            "ratio": 2.855561083993847,
+            "stretch": 0.005352959760543924,
+            "rest": 0.002884820018440134,
+            "mid": [
+              0.23811449110507965,
+              0.8778007626533508,
+              0.028929405845701694
+            ]
+          },
+          "max": {
+            "ratio": 9.940517893062243,
+            "stretch": 0.022272424142532884,
+            "rest": 0.00249117829737985,
+            "mid": [
+              0.23718749731779099,
+              0.8052109777927399,
+              0.006611324846744537
+            ]
+          },
+          "over3": 172,
+          "over2": 429
+        },
+        "torso": {
+          "count": 37946,
+          "p99": {
+            "ratio": 1.5431221627471756,
+            "stretch": 0.005160075144942312,
+            "rest": 0.009500763362043717,
+            "mid": [
+              -0.24453569203615189,
+              1.1815258860588074,
+              0.004569236421957612
+            ]
+          },
+          "max": {
+            "ratio": 2.3761825476394183,
+            "stretch": 0.0043766991718264155,
+            "rest": 0.0031803187588258686,
+            "mid": [
+              -0.25973325967788696,
+              1.1899771094322205,
+              -0.03948797471821308
+            ]
+          },
+          "over3": 0,
+          "over2": 43
+        }
+      }
+    },
+    "after": {
+      "hemVertices": 5644,
+      "hemForearm": 0,
+      "regions": {
+        "armpit": {
+          "count": 11807,
+          "p99": {
+            "ratio": 3.459028731539635,
+            "stretch": 0.03742693684854943,
+            "rest": 0.01522021128444313,
+            "mid": [
+              0.24102389812469482,
+              1.1943914890289307,
+              -0.004403719212859869
+            ]
+          },
+          "max": {
+            "ratio": 5.037261189874999,
+            "stretch": 0.029080501342625707,
+            "rest": 0.007203026996508514,
+            "mid": [
+              -0.24451761692762375,
+              1.197703242301941,
+              -0.01808873750269413
+            ]
+          },
+          "over3": 246,
+          "over2": 950
+        },
+        "hem": {
+          "count": 18431,
+          "p99": {
+            "ratio": 1.136465447472787,
+            "stretch": 0.0024507761075292372,
+            "rest": 0.01795894970423157,
+            "mid": [
+              -0.19020976126194,
+              0.9736021757125854,
+              -0.08405778184533119
+            ]
+          },
+          "max": {
+            "ratio": 1.2686787405142839,
+            "stretch": 0.004677686914747525,
+            "rest": 0.017409962938615325,
+            "mid": [
+              -0.052005624398589134,
+              0.9755113422870636,
+              -0.15881720185279846
+            ]
+          },
+          "over3": 0,
+          "over2": 0
+        },
+        "torso": {
+          "count": 36658,
+          "p99": {
+            "ratio": 2.003944299371968,
+            "stretch": 0.003147431639612902,
+            "rest": 0.0031350660007550464,
+            "mid": [
+              0.25154829025268555,
+              1.1694284081459045,
+              -0.013834650628268719
+            ]
+          },
+          "max": {
+            "ratio": 4.67796647672675,
+            "stretch": 0.029264029627015707,
+            "rest": 0.007956578672533084,
+            "mid": [
+              -0.24465090036392212,
+              1.1890017986297607,
+              -0.008962796535342932
+            ]
+          },
+          "over3": 169,
+          "over2": 368
+        }
+      }
+    }
+  },
+  "regression": {
+    "file": "tests/character-animation.test.mjs",
+    "baseline": "Previous canonical neighbor fails actual seated hem deformation at9.94x edge stretch.",
+    "fixed": "Canonical replacement passes original animation test and new three-pose garment continuity regression.",
+    "acceptance": "Root reviewed rear shoe/standing and corrected seated-rear renders; front/opposite-side rendered and inspected before publication."
+  }
+}

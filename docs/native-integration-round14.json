@@ -1,0 +1,551 @@
+{
+  "version": 1,
+  "sourceBaseCommit": "3575f91",
+  "scene": {
+    "id": "neighborhood",
+    "revision": "7115db0e4f80afb9",
+    "ready": true
+  },
+  "changes": [
+    "Fixed world shadow camera includes actual distant crowns and playable fixture bounds while preserving the physical sun direction/intensity and the original4096shadow texture.",
+    "Original coupe receives real open-mouth exhaust bores and shallow recessed rear lamps, vent and plate; seats, wheels, materials and body panels preserved."
+  ],
+  "nativeSource": {
+    "coupe": {
+      "path": "assets/source/coupe.blend",
+      "bytes": 1297069,
+      "sha256": "79830d5818050044b47a96d8289d649a92875c918ee16ace0e9788d9a2674d0c"
+    },
+    "coupeRuntime": {
+      "path": "apps/browser/public/assets/coupe.glb",
+      "bytes": 2761200,
+      "sha256": "b15774812b3664a5906100f3ee9c25629f209c19806d6fb8e4c632d5be2a4790"
+    },
+    "modelProvenance": {
+      "path": "assets/source/asset-build.json",
+      "bytes": 8587,
+      "sha256": "c9808a86d56f020cb1022b3a286489b8a55d1a74f297ff89dab7ac3837f86004"
+    },
+    "terrain": {
+      "path": "assets/source/horizon.blend",
+      "bytes": 6092012,
+      "sha256": "33fcf618f11d8ea553aa175c97a262274097fc74a097058ef6df8492c06f8aaa"
+    },
+    "terrainRuntime": {
+      "path": "assets/horizon-relief.json",
+      "bytes": 859283,
+      "sha256": "77162b3135c66940b85e65b86ea7b4b595d9021628dd4be86f976fcd5e630cea"
+    },
+    "terrainProvenance": {
+      "path": "assets/source/horizon-build.json",
+      "bytes": 6949,
+      "sha256": "68656c5e3ffeca3057d92d8731a2de3cc60cb8cfaabe0b34d65925cc656a5f16"
+    },
+    "reflections": {
+      "path": "apps/browser/public/assets/arroyo-reflections.pmrem.gz",
+      "bytes": 11642720,
+      "sha256": "19121ceb84ec0672f887ba4889a7e67b3df368b13ef9ab7b756d45a52048b026"
+    },
+    "reflectionProvenance": {
+      "path": "assets/source/reflection-bake.json",
+      "bytes": 9808,
+      "sha256": "e56856c7f7f45a0d14f16ea6f207b9777cbbc80d04704e5488bced81dabe3bcf"
+    }
+  },
+  "shadowPreview": {
+    "complete": true,
+    "at": "2026-09-13T12:55:38.373Z",
+    "errors": [],
+    "warnings": [
+      {
+        "type": "warning",
+        "text": "THREE.WARNING: Multiple instances of Three.js being imported."
+      }
+    ],
+    "inputsUnchanged": true,
+    "cleanup": {
+      "targetId": "2437456F8BE7725416FC5E05F8CCC79D",
+      "protectedId": "37D9DDC1B1728B3F58602FBC3B3FBD38",
+      "closed": true,
+      "ownedWindowOnly": true
+    },
+    "shots": [
+      {
+        "name": "baseline",
+        "at": "2026-09-13T12:55:30.599Z",
+        "calls": 906,
+        "triangles": 4921215,
+        "pngSha256": "134ede8f94584a6d3fc5b88def3fa397a33e32291d9f0a3ff605eebf675717ee",
+        "comparison": {
+          "filename": "native-baseline-comparison.png",
+          "sha256": "eca41e1b45a758402085934c2d6be1877bf2e8db8f45bf259411d0e007db2ab8",
+          "dimensions": [
+            1672,
+            941
+          ],
+          "method": "native CDP clip scale .5, no file resizing or post-editing"
+        },
+        "identityProof": {
+          "changedColors": 0,
+          "allOtherIdentityExact": true
+        }
+      },
+      {
+        "name": "coverage",
+        "at": "2026-09-13T12:55:33.630Z",
+        "calls": 945,
+        "triangles": 5245583,
+        "pngSha256": "923d2531c5a67b27aada4c3468c777d1a8ee2d91543f17fbc73fcabebf69fc7d",
+        "comparison": {
+          "filename": "native-coverage-comparison.png",
+          "sha256": "e76bf8105699a9c3235935480997ce318622b5fa07b5b844a48a69285daededc",
+          "dimensions": [
+            1672,
+            941
+          ],
+          "method": "native CDP clip scale .5, no file resizing or post-editing"
+        },
+        "identityProof": {
+          "changedColors": 0,
+          "allOtherIdentityExact": true
+        }
+      },
+      {
+        "name": "baseline-restored",
+        "at": "2026-09-13T12:55:37.970Z",
+        "calls": 906,
+        "triangles": 4921215,
+        "pngSha256": "cd86f81b79da3c3a761c3696aa26cf2bbfaefdcb9b9f60964ec0ffe57418dbe3",
+        "comparison": {
+          "filename": "native-baseline-restored-comparison.png",
+          "sha256": "a90bad38f38b134fd1f6cadb3e9f895ce0d809f0e12c5a68ca15191ac559f3dd",
+          "dimensions": [
+            1672,
+            941
+          ],
+          "method": "native CDP clip scale .5, no file resizing or post-editing"
+        },
+        "identityProof": {
+          "changedColors": 0,
+          "allOtherIdentityExact": true
+        }
+      }
+    ],
+    "raw": {
+      "path": ".dream-loop/shadow-coverage-preview/native-comparison.json",
+      "bytes": 4499429,
+      "sha256": "290f77d251e52e26caf90d6742aee2b3846524ed0922ebfb8611f3e2676100db"
+    },
+    "decision": "Accepted modest crown-depth improvement; broad golden/cool crown clusters remain unresolved."
+  },
+  "coupePreview": {
+    "complete": true,
+    "at": "2026-09-13T13:03:26.464Z",
+    "errors": [],
+    "warnings": [
+      {
+        "type": "warning",
+        "text": "THREE.WARNING: Multiple instances of Three.js being imported."
+      }
+    ],
+    "inputsUnchanged": true,
+    "cleanup": {
+      "targetId": "45093503187622744C78734454F47335",
+      "protectedId": "37D9DDC1B1728B3F58602FBC3B3FBD38",
+      "closed": true,
+      "ownedWindowOnly": true
+    },
+    "shots": [
+      {
+        "name": "baseline",
+        "at": "2026-09-13T13:03:09.250Z",
+        "calls": 906,
+        "triangles": 4921215,
+        "pngSha256": "32bba885331c9a00eb5c94fa7f175e6d49b02402b8b810f857b616a3115d2586",
+        "comparison": {
+          "filename": "native-baseline-comparison.png",
+          "sha256": "bf5ca0e0e70d8bf0ea49cb2fd4186d1343ac3bc1fd8853d1a73f80acab2eefd9",
+          "dimensions": [
+            1672,
+            941
+          ],
+          "method": "native CDP clip scale .5, no file resizing or post-editing"
+        },
+        "identityProof": {
+          "changedRearBatches": 0,
+          "allOtherIdentityExact": true
+        }
+      },
+      {
+        "name": "coupe-depth",
+        "at": "2026-09-13T13:03:12.192Z",
+        "calls": 906,
+        "triangles": 4922255,
+        "pngSha256": "02fa449d58064a7ddf9b0a2748d43f918bcd483ca63d48bcf57e6f6089f7a7c8",
+        "comparison": {
+          "filename": "native-coupe-depth-comparison.png",
+          "sha256": "a4c6ca9391005e9eda7afae86b9726a92919c4731e0541ef4ce72164b2392f56",
+          "dimensions": [
+            1672,
+            941
+          ],
+          "method": "native CDP clip scale .5, no file resizing or post-editing"
+        },
+        "identityProof": {
+          "changedRearBatches": 5,
+          "allOtherIdentityExact": true
+        }
+      },
+      {
+        "name": "coupe-depth-close",
+        "at": "2026-09-13T13:03:16.973Z",
+        "calls": 887,
+        "triangles": 4852090,
+        "pngSha256": "4c0850b13422727e0ff1f2ad958efb7c4c12f91439c6e54c32341e5501b54f65",
+        "comparison": {
+          "filename": "native-coupe-depth-close-comparison.png",
+          "sha256": "03f071e0888e1463f296aa1842bf94640318c770770a2a67189bc15356743169",
+          "dimensions": [
+            1672,
+            941
+          ],
+          "method": "native CDP clip scale .5, no file resizing or post-editing"
+        },
+        "identityProof": {
+          "changedRearBatches": 5,
+          "allOtherIdentityExact": true
+        }
+      },
+      {
+        "name": "baseline-close",
+        "at": "2026-09-13T13:03:19.723Z",
+        "calls": 887,
+        "triangles": 4851050,
+        "pngSha256": "8fe1172637aa80efdd86b5947ac5a2d2b30ded28d89dc6db116720a74f99a2f8",
+        "comparison": {
+          "filename": "native-baseline-close-comparison.png",
+          "sha256": "21bdb7b261a81a233ba38f86e6fc538e9faec581be0b10357f845108736d50b8",
+          "dimensions": [
+            1672,
+            941
+          ],
+          "method": "native CDP clip scale .5, no file resizing or post-editing"
+        },
+        "identityProof": {
+          "changedRearBatches": 0,
+          "allOtherIdentityExact": true
+        }
+      },
+      {
+        "name": "baseline-restored",
+        "at": "2026-09-13T13:03:26.075Z",
+        "calls": 906,
+        "triangles": 4921215,
+        "pngSha256": "23d42940f322bc398f63dcca79a054f153208184cee07da2d091c4119bbb935d",
+        "comparison": {
+          "filename": "native-baseline-restored-comparison.png",
+          "sha256": "8c0a86bbb1e654e7427c0c27f04a34d1d3c56442c6e48bb9eda666f10d01e836",
+          "dimensions": [
+            1672,
+            941
+          ],
+          "method": "native CDP clip scale .5, no file resizing or post-editing"
+        },
+        "identityProof": {
+          "changedRearBatches": 0,
+          "allOtherIdentityExact": true
+        }
+      }
+    ],
+    "raw": {
+      "path": ".dream-loop/coupe-depth-round13/native-comparison.json",
+      "bytes": 6793984,
+      "sha256": "3948cc0cdd5145d2ea9ab1414bcb47de8c7c7aaa4e93e46d767695964818cd10"
+    },
+    "decision": "Accepted real rear recesses and hollow exhaust; no claim of improved paint reflections."
+  },
+  "coupeCanonicalProof": {
+    "version": 1,
+    "recordedAt": "2026-09-13T13:14:55.157Z",
+    "verdict": "no-semantic-coupe-blocker",
+    "scope": "Independent read-only semantic comparison of final canonical coupe against the actual staged native export; not a full acceptance or performance result.",
+    "timing": {
+      "currentFingerprintCheck": {
+        "startedAt": "2026-09-13T13:14:55.146Z",
+        "completedAt": "2026-09-13T13:14:55.157Z",
+        "scope": "Canonical/staged coupe GLB, canonical editable BLEND, recipe and ledger identity; no geometry rerun during active native benchmark16088"
+      },
+      "originalSemanticChecks": {
+        "exactWallClockRecorded": false,
+        "afterCanonicalBuildGeneratedAt": "2026-09-13T13:05:09.860Z",
+        "beforeReportRecordedAt": "2026-09-13T13:14:55.157Z",
+        "toolOutputIds": [
+          "38df49",
+          "b4a5c2",
+          "02f2d5"
+        ],
+        "note": "Original tool checks did not capture a separate wall-clock timestamp. Do not interpret the recording timestamp as an exact geometry-test time."
+      },
+      "inventoryComparison": {
+        "beforeReflectionBake": "Initial frozen-preview file-hash comparison saw only coupe.glb and inventory.json changed. This was a snapshot at that check, not an assertion that later reflection output stayed unchanged.",
+        "afterReflectionBake": "A later comparison to3575f91 saw only coupe.glb and arroyo-reflections.pmrem.gz inventory entries changed;26 other entries remained identical and all six pre-existing non-coupe native ledger records remained identical.",
+        "toolOutputIds": [
+          "004161",
+          "2ea0e8"
+        ]
+      }
+    },
+    "files": {
+      "staged": {
+        "path": ".dream-loop/coupe-depth-round13/apps/browser/public/assets/coupe.glb",
+        "bytes": 2763740,
+        "sha256": "7c75e3a7a869ced882fd3e5df610328575213b233ead12f106266918df093bcf"
+      },
+      "canonical": {
+        "path": "apps/browser/public/assets/coupe.glb",
+        "bytes": 2761200,
+        "sha256": "b15774812b3664a5906100f3ee9c25629f209c19806d6fb8e4c632d5be2a4790"
+      },
+      "blend": {
+        "path": "assets/source/coupe.blend",
+        "bytes": 1297069,
+        "sha256": "79830d5818050044b47a96d8289d649a92875c918ee16ace0e9788d9a2674d0c"
+      },
+      "recipe": {
+        "path": "tools/assets/heroes.py",
+        "bytes": 72377,
+        "sha256": "1da58c1c7592da2f3b19fe855d02b2e47af4d5b426129498b5419f883ea43559"
+      }
+    },
+    "semanticComparison": {
+      "meshes": {
+        "staged": 36,
+        "canonical": 36
+      },
+      "originalAttributesByteExactAcrossAllMeshes": [
+        "POSITION",
+        "NORMAL",
+        "TEXCOORD_0"
+      ],
+      "allMaterialJsonExact": true,
+      "allNodeJsonIncludingAnchorsExact": true,
+      "all94300OrientedTriangleMultisetsExact": true,
+      "indexArrayBytesDifferIn10Meshes": true,
+      "orientedTriangleDifferences": 0,
+      "vertexAttributeDifferences": 0,
+      "normalOrUvDifferences": 0,
+      "newGeometryOrDegenerateReduction": false
+    },
+    "packing": {
+      "staged": {
+        "bytes": 2763740,
+        "jsonChunkBytes": 31896,
+        "binaryBytes": 2731816,
+        "accessors": 134,
+        "bufferViews": 134
+      },
+      "canonical": {
+        "bytes": 2761200,
+        "jsonChunkBytes": 31756,
+        "binaryBytes": 2729416,
+        "accessors": 133,
+        "bufferViews": 133
+      },
+      "deltaBytes": -2540,
+      "explanation": "Cyclic index ordering differs without changing oriented triangles. Canonical tire carcass and tire carcass.001 share accessor67 (1200 UNSIGNED_SHORT indices;2400 bytes), whereas staged used separate accessors67 and87. JSON is140 bytes smaller. No vertices or triangles were removed."
+    },
+    "geometryAndCavityChecks": {
+      "actualCanonicalChecksPassed": true,
+      "triangles": {
+        "before": 93780,
+        "after": 94300,
+        "delta": 520
+      },
+      "bounds": {
+        "min": [
+          -1.1549999713897705,
+          -2.2869999408721924,
+          -1.0022797584533696
+        ],
+        "max": [
+          1.1549999713897705,
+          2.2419999837875366,
+          0.5120000243186955
+        ]
+      },
+      "protectedNativeBaselinePaintTriangles": 34480,
+      "protectedNativeBaselineGlassTriangles": 10704,
+      "protectedForwardRegionTriangles": 90120,
+      "bores": [
+        {
+          "x": -0.6,
+          "beforeMouthY": -2.286999821662856,
+          "baffleY": -2.2070000171661377,
+          "minimumClearDepthM": 0.07999998283386223,
+          "innerWallX": -0.556999982972778,
+          "lipY": -2.286199939660338
+        },
+        {
+          "x": 0.6,
+          "beforeMouthY": -2.286999821662856,
+          "baffleY": -2.2070000171661377,
+          "minimumClearDepthM": 0.07999998283386223,
+          "innerWallX": 0.6430000051062931,
+          "lipY": -2.286199949196967
+        }
+      ],
+      "housings": [
+        {
+          "x": -0.6,
+          "rimY": -2.246999979019165,
+          "opticY": -2.2290000710636377,
+          "lensY": -2.2220001011155546,
+          "opticSetbackM": 0.017999907955527306,
+          "lensSetbackM": 0.024999877903610468,
+          "innerWallZ": -0.2612727303774325
+        },
+        {
+          "x": 0.6,
+          "rimY": -2.246999979019165,
+          "opticY": -2.2290000710636377,
+          "lensY": -2.2220001011155546,
+          "opticSetbackM": 0.017999907955527306,
+          "lensSetbackM": 0.024999877903610468,
+          "innerWallZ": -0.2612727303774325
+        }
+      ],
+      "grilleDepthM": 0.04500007629394531,
+      "plateDepthM": 0.02599954605102539,
+      "maxNormalError": 1.3603688531205194e-7,
+      "tinyTriangleAreaThresholdM2": 1e-12,
+      "tinyTriangles": {
+        "nativeUnchangedRecipe": 683,
+        "staged": 401,
+        "canonical": 401
+      },
+      "note": "The prior no-write verification body was evaluated with candidate load redirected to actual canonical GLB. All cavity/bounds/anchor/normal/protected-region assertions passed. Its reused staged BLEND metadata is not used here; canonical BLEND identity is independently checked above."
+    },
+    "budget": {
+      "rawBefore": 2746064,
+      "rawCanonical": 2761200,
+      "rawDelta": 15136,
+      "gzipLevel": 9,
+      "gzipBefore": 1065509,
+      "gzipCanonical": 1070828,
+      "gzipDelta": 5319,
+      "newMaterials": 0,
+      "newTextures": 0,
+      "additionalMeshPrimitives": 0
+    },
+    "provenance": {
+      "canonicalRecipeEqualsStagedByteExact": true,
+      "canonicalLedgerMatchesActualGLBAndBLEND": true,
+      "allRecipeHashesMatchedAtReview": true,
+      "canonicalModelLedger": {
+        "generatedAt": "2026-09-13T13:05:09.860Z",
+        "blender": {
+          "version": "5.2.1",
+          "buildHash": "9e2066aef7ef",
+          "distribution": "explicit",
+          "platform": "darwin",
+          "architecture": "arm64",
+          "executableSha256": "ea651e507c6b197df0e234bfa04e5ed43e7f4d498267a7df93fcb38f21928a5c"
+        },
+        "recipes": {
+          "tools/build-assets.mjs": "06f52507fbabf20831ccefb4698613a7d3f3b57dd6f1f504c6a8bf6917ee8449",
+          "tools/assets/build.py": "3eb0039ccbd34a3c3aec5e88aced09f34c8ac3677f9d777b97ece47daad9a53e",
+          "tools/assets/environment-kit.py": "1fb49df90bba8637ec000f37464766c18bc22b969d7013776bd1c45ed3983f7c",
+          "tools/assets/heroes.py": "1da58c1c7592da2f3b19fe855d02b2e47af4d5b426129498b5419f883ea43559",
+          "tools/assets/garden-kit.py": "974d3add6e6f4ad5b9f52d681eeecb69dde28cb8b2a6d471365dcca4ddbf1c8e"
+        },
+        "glb": {
+          "bytes": 2761200,
+          "sha256": "b15774812b3664a5906100f3ee9c25629f209c19806d6fb8e4c632d5be2a4790"
+        },
+        "blend": {
+          "bytes": 1297069,
+          "sha256": "79830d5818050044b47a96d8289d649a92875c918ee16ace0e9788d9a2674d0c"
+        }
+      },
+      "unchangedExistingOtherModelLedgerRecords": 6,
+      "allOtherModelsUnchangedToFrozenPreview": true
+    },
+    "reflectionTimeline": {
+      "baselineCommit": "3575f91",
+      "frozenPreviewSha256": "bf2a732e3daccbe21ca91811bcf41ad2d34f7a56824043d081931061d457ca31",
+      "frozenPreviewBytes": 11641551,
+      "authorizedRootBake": 68430,
+      "afterCoupeBuild": true,
+      "published": {
+        "bytes": 11642720,
+        "sha256": "19121ceb84ec0672f887ba4889a7e67b3df368b13ef9ab7b756d45a52048b026"
+      },
+      "peakLinearRGB": 7.4765625,
+      "correction": "The new19121ceb reflection is the authorized shadow-coverage bake after the coupe build. It was NOT a preexisting difference in3575f91 or the frozen preview. This corrects an earlier agent message."
+    },
+    "shadowReview": {
+      "accepted": true,
+      "fixedTarget": [
+        0,
+        0,
+        9
+      ],
+      "offsetDistanceScale": 2.5,
+      "camera": {
+        "left": -138,
+        "right": 132,
+        "top": 88,
+        "bottom": -88,
+        "near": 1,
+        "far": 320
+      },
+      "physicalLightDirectionIntensityUnchanged": true,
+      "unusedTargetParameterRemovalBehaviorEquivalent": true,
+      "horizonCommentOnly": true
+    },
+    "limitations": [
+      "Canonical GLB whole-file SHA differs from staged; do not claim byte-identical files or index streams.",
+      "Factory-startup is not established as the cause; the measured difference is equivalent index ordering and buffer deduplication.",
+      "Original protected native export has documented micrometre differences versus the older canonical export; see prior staged verification.",
+      "This report neither reruns a native browser nor establishes final FPS, download budget or15-case acceptance."
+    ]
+  },
+  "tests": [
+    {
+      "command": "Docker node --experimental-transform-types --test tests/terrain.test.mjs tests/assets.test.mjs tests/asset-pipeline.test.mjs",
+      "passed": 17,
+      "failed": 0,
+      "skipped": 0,
+      "log": {
+        "path": ".dream-loop/round14-assets-terrain-tests.log",
+        "bytes": 1983,
+        "sha256": "8fac5ce99edd719988c8667cd920444e9ece9af238da8a98a61a708c3f987e39"
+      }
+    },
+    {
+      "command": "Docker node --experimental-transform-types --test tests/reflection.test.mjs",
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "log": {
+        "path": ".dream-loop/round14-reflection-tests.log",
+        "bytes": 504,
+        "sha256": "524f786d7f319ee5a47405d00119530fac52a19e7e547d442123ec9be1a551ba"
+      }
+    }
+  ],
+  "quality": "native-quality-cycle-round14.json",
+  "rendering": "native-rendering-round14-summary.json",
+  "rejectedMountain": {
+    "raw": {
+      "path": ".dream-loop/horizon-upper-spurs-round13/right-only/native-comparison.json",
+      "bytes": 4498403,
+      "sha256": "b4e57a835a5615c7e304930ff63e998730c58a7ec0c493ef9875715a9881c3ea"
+    },
+    "decision": "Rejected stronger-shaded smooth conical peaks as a visible shape regression; no terrain geometry was integrated."
+  },
+  "limitations": [
+    "Complete final-source motion and multiplayer acceptance remain pending.",
+    "Latest formal visual score5.0/10 is fromround13; current accepted improvements do not establish8/10."
+  ]
+}

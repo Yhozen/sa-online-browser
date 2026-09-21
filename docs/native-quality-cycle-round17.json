@@ -1,0 +1,563 @@
+{
+  "version": 1,
+  "milestone": "round17",
+  "recordedAt": "2026-09-13T14:44:44.658Z",
+  "sceneRevision": "fc8deb6a7bbf6a35",
+  "functionalCycles": {
+    "passed": true,
+    "cycles": 3,
+    "shots": 7,
+    "processExitCode": 0,
+    "processSession": "50135",
+    "errors": []
+  },
+  "pixelEquality": {
+    "passed": false,
+    "comparisonCount": 35,
+    "exactComparisons": 30,
+    "nonExactComparisons": 5,
+    "maximumChannelDifference": 1,
+    "changedPixelsPerNonExactComparison": 1,
+    "interpretation": "The strict pixel-equality assertion failed. Each nonexact comparison differs by one color level in one pixel at the car exhaust edge; no tolerance was substituted and no whole-frame bitwise-equality claim is made.",
+    "regions": {
+      "curb_sidewalk": [
+        430,
+        530,
+        655,
+        780
+      ],
+      "middle_road": [
+        800,
+        300,
+        1020,
+        425
+      ],
+      "terrain": [
+        1470,
+        123,
+        1570,
+        162
+      ],
+      "front_lawn": [
+        170,
+        415,
+        330,
+        510
+      ],
+      "left_crown": [
+        570,
+        112,
+        689,
+        192
+      ],
+      "rear_crown": [
+        1030,
+        151,
+        1200,
+        218
+      ],
+      "car_rear": [
+        1150,
+        447,
+        1345,
+        525
+      ]
+    },
+    "rows": [
+      {
+        "baseline": "0-standard.png",
+        "comparison": "2-standard.png",
+        "region": "curb_sidewalk",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "0-standard.png",
+        "comparison": "2-standard.png",
+        "region": "middle_road",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "0-standard.png",
+        "comparison": "2-standard.png",
+        "region": "terrain",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "0-standard.png",
+        "comparison": "2-standard.png",
+        "region": "front_lawn",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "0-standard.png",
+        "comparison": "2-standard.png",
+        "region": "left_crown",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "0-standard.png",
+        "comparison": "2-standard.png",
+        "region": "rear_crown",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "0-standard.png",
+        "comparison": "2-standard.png",
+        "region": "car_rear",
+        "max_channel_difference": 1,
+        "mean_absolute_channel_difference": 2.1915406530791147e-05,
+        "changed_pixels": 1
+      },
+      {
+        "baseline": "0-standard.png",
+        "comparison": "4-standard.png",
+        "region": "curb_sidewalk",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "0-standard.png",
+        "comparison": "4-standard.png",
+        "region": "middle_road",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "0-standard.png",
+        "comparison": "4-standard.png",
+        "region": "terrain",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "0-standard.png",
+        "comparison": "4-standard.png",
+        "region": "front_lawn",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "0-standard.png",
+        "comparison": "4-standard.png",
+        "region": "left_crown",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "0-standard.png",
+        "comparison": "4-standard.png",
+        "region": "rear_crown",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "0-standard.png",
+        "comparison": "4-standard.png",
+        "region": "car_rear",
+        "max_channel_difference": 1,
+        "mean_absolute_channel_difference": 2.1915406530791147e-05,
+        "changed_pixels": 1
+      },
+      {
+        "baseline": "0-standard.png",
+        "comparison": "6-standard.png",
+        "region": "curb_sidewalk",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "0-standard.png",
+        "comparison": "6-standard.png",
+        "region": "middle_road",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "0-standard.png",
+        "comparison": "6-standard.png",
+        "region": "terrain",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "0-standard.png",
+        "comparison": "6-standard.png",
+        "region": "front_lawn",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "0-standard.png",
+        "comparison": "6-standard.png",
+        "region": "left_crown",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "0-standard.png",
+        "comparison": "6-standard.png",
+        "region": "rear_crown",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "0-standard.png",
+        "comparison": "6-standard.png",
+        "region": "car_rear",
+        "max_channel_difference": 1,
+        "mean_absolute_channel_difference": 2.1915406530791147e-05,
+        "changed_pixels": 1
+      },
+      {
+        "baseline": "1-low.png",
+        "comparison": "3-low.png",
+        "region": "curb_sidewalk",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "1-low.png",
+        "comparison": "3-low.png",
+        "region": "middle_road",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "1-low.png",
+        "comparison": "3-low.png",
+        "region": "terrain",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "1-low.png",
+        "comparison": "3-low.png",
+        "region": "front_lawn",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "1-low.png",
+        "comparison": "3-low.png",
+        "region": "left_crown",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "1-low.png",
+        "comparison": "3-low.png",
+        "region": "rear_crown",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "1-low.png",
+        "comparison": "3-low.png",
+        "region": "car_rear",
+        "max_channel_difference": 1,
+        "mean_absolute_channel_difference": 2.1915406530791147e-05,
+        "changed_pixels": 1
+      },
+      {
+        "baseline": "1-low.png",
+        "comparison": "5-low.png",
+        "region": "curb_sidewalk",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "1-low.png",
+        "comparison": "5-low.png",
+        "region": "middle_road",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "1-low.png",
+        "comparison": "5-low.png",
+        "region": "terrain",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "1-low.png",
+        "comparison": "5-low.png",
+        "region": "front_lawn",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "1-low.png",
+        "comparison": "5-low.png",
+        "region": "left_crown",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "1-low.png",
+        "comparison": "5-low.png",
+        "region": "rear_crown",
+        "max_channel_difference": 0,
+        "mean_absolute_channel_difference": 0,
+        "changed_pixels": 0
+      },
+      {
+        "baseline": "1-low.png",
+        "comparison": "5-low.png",
+        "region": "car_rear",
+        "max_channel_difference": 1,
+        "mean_absolute_channel_difference": 2.1915406530791147e-05,
+        "changed_pixels": 1
+      }
+    ],
+    "detail": [
+      {
+        "pair": [
+          0,
+          2
+        ],
+        "pixels": [
+          {
+            "x": 1328,
+            "y": 518,
+            "before": [
+              33,
+              39,
+              54
+            ],
+            "after": [
+              33,
+              40,
+              54
+            ]
+          }
+        ]
+      },
+      {
+        "pair": [
+          1,
+          3
+        ],
+        "pixels": [
+          {
+            "x": 1329,
+            "y": 518,
+            "before": [
+              15,
+              39,
+              77
+            ],
+            "after": [
+              15,
+              39,
+              78
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "inputs": {
+    "sourceCount": 107,
+    "assetCount": 28,
+    "servedCount": 4,
+    "allExact": true,
+    "before": {
+      "path": ".dream-loop/quality-round17/inputs-before.json",
+      "bytes": 21331,
+      "sha256": "dbeaca4872970f3365d85d3b08f845d2d8c5cd6a176ef343362d51fa5d4c91e2"
+    },
+    "after": {
+      "path": ".dream-loop/quality-round17/inputs-after.json",
+      "bytes": 21331,
+      "sha256": "144a39c1691e4edfd46689f0afb9250c21fb10d0ed848ca8a1bdf388f108ea7f"
+    }
+  },
+  "cleanup": {
+    "ownedTarget": "31C585B9F69E9BDA681A9B224823671B",
+    "ownedTargetAbsent": true,
+    "health": {
+      "ok": true,
+      "sessions": 0,
+      "workers": 0
+    }
+  },
+  "shots": [
+    {
+      "file": ".dream-loop/quality-round17/0-standard.png",
+      "preset": "standard",
+      "renderSize": [
+        3344,
+        1882
+      ],
+      "triangles": 5352079,
+      "calls": 954,
+      "image": {
+        "path": ".dream-loop/quality-round17/0-standard.png",
+        "bytes": 2645534,
+        "sha256": "863ff02bae3c0d59d6171c1ab264b48b68e5cec713eb946cc5fc6b694c481684"
+      }
+    },
+    {
+      "file": ".dream-loop/quality-round17/1-low.png",
+      "preset": "low",
+      "renderSize": [
+        3344,
+        1882
+      ],
+      "triangles": 1720990,
+      "calls": 281,
+      "image": {
+        "path": ".dream-loop/quality-round17/1-low.png",
+        "bytes": 2490438,
+        "sha256": "69d093955285b1446debf4ebb80ef4e611f3e4e3ddadc045488d5c43ec4c81d3"
+      }
+    },
+    {
+      "file": ".dream-loop/quality-round17/2-standard.png",
+      "preset": "standard",
+      "renderSize": [
+        3344,
+        1882
+      ],
+      "triangles": 5352079,
+      "calls": 954,
+      "image": {
+        "path": ".dream-loop/quality-round17/2-standard.png",
+        "bytes": 2645358,
+        "sha256": "74dab3c68c098470d69276d0f8f35c2ac702e89cf7c9e4b064fca3c7b760c1ac"
+      }
+    },
+    {
+      "file": ".dream-loop/quality-round17/3-low.png",
+      "preset": "low",
+      "renderSize": [
+        3344,
+        1882
+      ],
+      "triangles": 1720990,
+      "calls": 281,
+      "image": {
+        "path": ".dream-loop/quality-round17/3-low.png",
+        "bytes": 2490478,
+        "sha256": "831b7b925873ac5e82a3ce9fc893cd9d78c8d1a75a36e5cfcbbdbda697213f4c"
+      }
+    },
+    {
+      "file": ".dream-loop/quality-round17/4-standard.png",
+      "preset": "standard",
+      "renderSize": [
+        3344,
+        1882
+      ],
+      "triangles": 5352079,
+      "calls": 954,
+      "image": {
+        "path": ".dream-loop/quality-round17/4-standard.png",
+        "bytes": 2645516,
+        "sha256": "0674a0fc3a925325d011d23a7cd3a9bf4e7fdf198a5852fb7e6439847292d666"
+      }
+    },
+    {
+      "file": ".dream-loop/quality-round17/5-low.png",
+      "preset": "low",
+      "renderSize": [
+        3344,
+        1882
+      ],
+      "triangles": 1720990,
+      "calls": 281,
+      "image": {
+        "path": ".dream-loop/quality-round17/5-low.png",
+        "bytes": 2490449,
+        "sha256": "40f58274e34a027b94f181d432e8bcf598efaed790f3c1d9ce21cc56d04b40a3"
+      }
+    },
+    {
+      "file": ".dream-loop/quality-round17/6-standard.png",
+      "preset": "standard",
+      "renderSize": [
+        3344,
+        1882
+      ],
+      "triangles": 5352079,
+      "calls": 954,
+      "image": {
+        "path": ".dream-loop/quality-round17/6-standard.png",
+        "bytes": 2645373,
+        "sha256": "f17bf6297e45ce1f5dd612cde94aed054bf5542b526d689ca728b4570f8514f3"
+      }
+    }
+  ],
+  "sourceScripts": {
+    ".dream-loop/run-round17-quality.mjs": "c9d08eb8d7a913aed9ee495ab16351d845bb314926b32b3f9db16df3e0906df4",
+    ".dream-loop/round17-quality-cycle.mjs": "9057b023656e0388a60611ea75d9a9759d06a10449e80cbca2d39643db3e41a1",
+    ".dream-loop/capture-game-inputs.mjs": "f127908161d892d450016748fc551d93dd63e600b0dec2a48b93a549277add03"
+  },
+  "rawEvidence": [
+    {
+      "path": ".dream-loop/quality-round17/verification.json",
+      "bytes": 268973,
+      "sha256": "7f0f8ed0d1a4d149072890dbee9d7a24a8c83c2845bf6da37e3662ed95577205"
+    },
+    {
+      "path": ".dream-loop/quality-round17/complete.json",
+      "bytes": 683,
+      "sha256": "33eac0cde10c44bd60fba0b44cc5cf298a2fd9bd07d7f26562cf9e04ebdc6e8c"
+    },
+    {
+      "path": ".dream-loop/quality-round17/pixel-comparison.json",
+      "bytes": 8393,
+      "sha256": "59a2d96eec62ed9ee2bdd83dfa302b7349cd4506e14a3894b63e0d67abbead43"
+    },
+    {
+      "path": ".dream-loop/quality-round17/one-level-pixel-detail.json",
+      "bytes": 531,
+      "sha256": "1585011d5b0a8340161bcdf15587fa7a34449238b70a912a79d1afee8578be86"
+    },
+    {
+      "path": ".dream-loop/round17-quality-cycle.log",
+      "bytes": 2382,
+      "sha256": "b604f579a0bc2ab69e64170780aa2715d224dca4d0a1e26ab2749b6deef95e2a"
+    }
+  ],
+  "limitations": [
+    "Functional quality switching passed; strict static-region pixel equality did not.",
+    "This is not a formal visual score or the full gameplay acceptance suite."
+  ]
+}

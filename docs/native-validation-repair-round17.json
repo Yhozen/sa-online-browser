@@ -1,0 +1,266 @@
+{
+  "version": 1,
+  "recordedAt": "2026-09-13T15:02:24.820691+00:00",
+  "status": "Validation repairs focused-pass; fresh full acceptance pending",
+  "sceneRevision": "fc8deb6a7bbf6a35",
+  "failedFullRun": {
+    "sourceCommit": "439b916cdaefcc6777fa4fc0cb9fa29ff6e39454",
+    "cleanBeforeAndAfter": true,
+    "command": [
+      "docker",
+      "compose",
+      "exec",
+      "-T",
+      "-e",
+      "POC_BROWSER_WS_ENDPOINT=ws://host.docker.internal:9344/sa-online-acceptance",
+      "dev",
+      "npm",
+      "run",
+      "verify:poc"
+    ],
+    "startedAt": "2026-09-13T14:51:06.459Z",
+    "finishedAt": "2026-09-13T14:54:52.288Z",
+    "exitCode": 1,
+    "completedStages": {
+      "typecheck": "pass",
+      "gatewayTests": {
+        "pass": 3,
+        "fail": 0
+      },
+      "firstSceneTestBatch": {
+        "tests": 67,
+        "pass": 65,
+        "fail": 2,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    "failures": [
+      {
+        "test": "native mature oak retains connected real geometry, low trunk and pedestrian-height crown",
+        "location": "tests/mature-oak.test.mjs:39:67",
+        "error": "AssertionError: false == true"
+      },
+      {
+        "test": "published v4 terrain retains complete hashed native provenance",
+        "location": "tests/terrain.test.mjs:49:12",
+        "dependency": "apps/browser/src/assets.ts",
+        "actualSha256": "a2f4aeecee9bd34f490bdc5902bd20f23be31eca43fa759499824a06596e9036",
+        "recordedSha256": "8e4d472017782e133c1abf8bd11fc3668a0373ad574d31fbfbfa1cf4884315ba"
+      }
+    ],
+    "notReached": [
+      "second source-test batch (assets/verges/garden/asset-pipeline)",
+      "ctest",
+      "build:browser",
+      "all 15 Playwright browser scenarios",
+      "both supervisor validations",
+      "acceptance summary"
+    ],
+    "archive": ".dream-loop/full-native-acceptance-round17-prebrowser-failed",
+    "retainedFilesIncludingManifest": 20,
+    "retainedPayloadBytes": 211769,
+    "rawLog": {
+      "path": ".dream-loop/full-native-acceptance-round17-prebrowser-failed/run.log",
+      "bytes": 11103,
+      "sha256": "b89436aeb35327461ba68720188e9cebf5b3c1cb62cb0ff16111ab1f92fb5f34"
+    },
+    "process": {
+      "path": ".dream-loop/full-native-acceptance-round17-prebrowser-failed/process.json",
+      "bytes": 556,
+      "sha256": "a75debc63c59842a1d4186658c8cc9c6d9dd264ee7dba0293a8feeb0c07a921f"
+    },
+    "manifest": {
+      "path": ".dream-loop/full-native-acceptance-round17-prebrowser-failed/manifest.json",
+      "bytes": 5909,
+      "sha256": "c430f17d98db9508d6896a6b9d5ded0274ec8dcc0a621ac38159d976f61276fc"
+    }
+  },
+  "terrainProvenanceRepair": {
+    "nativeBuild": {
+      "rootExecSession": 36958,
+      "exitCode": 0,
+      "exitEvidence": "Root observed completed native build; committed native ledger status is complete.",
+      "blenderVersion": "5.2.1"
+    },
+    "changedFiles": [
+      "assets/source/horizon.blend",
+      "assets/source/horizon-build.json"
+    ],
+    "changedLedgerFields": [
+      "dependencies",
+      "nativeSource"
+    ],
+    "dependency": "apps/browser/src/assets.ts",
+    "previousRecordedDependency": {
+      "path": "apps/browser/src/assets.ts",
+      "bytes": 22386,
+      "sha256": "8e4d472017782e133c1abf8bd11fc3668a0373ad574d31fbfbfa1cf4884315ba"
+    },
+    "currentRecordedDependency": {
+      "path": "apps/browser/src/assets.ts",
+      "bytes": 22324,
+      "sha256": "a2f4aeecee9bd34f490bdc5902bd20f23be31eca43fa759499824a06596e9036"
+    },
+    "nativeSourceBefore": {
+      "path": "assets/source/horizon.blend",
+      "bytes": 6091979,
+      "sha256": "1e41f355dd92f5de372cfc2e8a022fb1345caa1f921ee5767c7e8dd454c35982"
+    },
+    "nativeSourceAfter": {
+      "path": "assets/source/horizon.blend",
+      "bytes": 6091983,
+      "sha256": "b690196eb1f261e7caf71950cdcfc522d2360d52f5f490056ee10682b8206d2e"
+    },
+    "unchangedLedgerFields": [
+      "runtime",
+      "encoding",
+      "lighting",
+      "metrics",
+      "geometry",
+      "quantization"
+    ],
+    "unchangedRuntimeAssetFingerprints": {
+      "assets/horizon-relief.json": {
+        "bytes": 859283,
+        "sha256": "a5d1351177c927700fcc381bf3a4c8b7698a025f21a7973798a79263e81ef922"
+      },
+      "assets/source/asset-build.json": {
+        "bytes": 25113,
+        "sha256": "6a3b11bfbfec7477091e3e39bf1a29f78114f93ce52cbda72a56de7d5fb55203"
+      },
+      "apps/browser/public/assets/inventory.json": {
+        "bytes": 3884,
+        "sha256": "596ee921a093d1a5b690e7f53c046b550427d20ae37b5fa36111934ad2fa15b7"
+      },
+      "apps/browser/public/assets/arroyo-reflections.pmrem.gz": {
+        "bytes": 11647597,
+        "sha256": "7fb519596f3825a101330cb12e0ae96423013005d59e9f10aa1c2c562af47504"
+      },
+      "assets/source/reflection-bake.json": {
+        "bytes": 10026,
+        "sha256": "0ae75278ae1510fd26ac1db060d8c8356edfdac8079113833c979f6b9f3c7dd7"
+      }
+    },
+    "focusedTest": {
+      "rootExecSession": 64214,
+      "exitCode": 0,
+      "passed": 9,
+      "failed": 0,
+      "durationMs": 23888.567968,
+      "log": {
+        "path": ".dream-loop/round17-provenance-refresh/terrain-tests.log",
+        "bytes": 1212,
+        "sha256": "4e885de191c20ff0c752de2c79fb00814fd79f6a7aa138006f47efb8e888192e"
+      }
+    },
+    "comparison": {
+      "path": ".dream-loop/round17-provenance-refresh/comparison.json",
+      "bytes": 3376,
+      "sha256": "ad6826d95fddc155aba57f3bdb0887322b7471d163ea2b35e2a097c04946a6a9"
+    },
+    "currentLedger": {
+      "path": "assets/source/horizon-build.json",
+      "bytes": 7269,
+      "sha256": "d6aa07e9158c8df52e14672b1a221da97f675c83b0cf027d02504585f91f5ea0"
+    }
+  },
+  "matureOakGuardRepair": {
+    "changedFile": "tests/mature-oak.test.mjs",
+    "cause": "Obsolete low-wood equality to the untapered tree model; accepted native roadside taper intentionally differs.",
+    "previousGuardMaximumDistanceMetres": 0.11533948029388064,
+    "replacement": "Pin the original untapered parent and accepted native tapered base; require exact published native fields and topology, 55% low-wood envelope, unchanged original wood heights and upper scaffold, physical root/scaffold contacts, preserved face orientation and collider clearance.",
+    "existingChecksRetained": [
+      "8536 triangles and nondegenerate areas",
+      "unit normals",
+      "630 actual leaf attachments",
+      "leaf height and crown span",
+      "road, turning sidewalk, house access and roof clearance",
+      "lamp, street sign, center house and center palm visibility"
+    ],
+    "measurements": {
+      "lowWidthRatios": [
+        0.550000003735895,
+        0.5499999851094162
+      ],
+      "maximumLowRadiusMetres": 0.2218169812185444,
+      "colliderHalfWidthMetres": 0.35,
+      "minimumFaceOrientationDot": 0.9597005031287952,
+      "rootSurfaceContacts": [
+        14,
+        14,
+        14,
+        14,
+        14,
+        14
+      ],
+      "scaffoldSurfaceContacts": [
+        24,
+        24,
+        16
+      ],
+      "leafAnchors": 630,
+      "maximumAttachmentGapMetres": 0.026645074449358017,
+      "minimumRoadGapMetres": 4.27898596227169,
+      "minimumTurningGapMetres": 8.350848575291916,
+      "requiredLandmarkOcclusions": {
+        "street-sign": 0,
+        "center-house": 0,
+        "center-palm": 0,
+        "lamp": 0
+      },
+      "leftPalmConservativeOpaqueCardOverlapPercent": 24.690303289192652
+    },
+    "focusedTest": {
+      "command": "node --test tests/mature-oak.test.mjs",
+      "exitCode": 0,
+      "passed": 4,
+      "failed": 0,
+      "log": ".dream-loop/mature-oak-guard-round17/focused-test.log",
+      "scope": "Actual published GLBs; CPU geometry tests, no browser/GPU"
+    },
+    "test": {
+      "path": "tests/mature-oak.test.mjs",
+      "bytes": 15797,
+      "sha256": "77d014aa4b10dded0dab7ed18f506792479369e056cb3b607aa3450612a78ef5"
+    },
+    "proof": {
+      "path": ".dream-loop/mature-oak-guard-round17/repair-proof.json",
+      "bytes": 2247,
+      "sha256": "b820193e2657673b8e9ab5232cd02c7c695b4f71e94e14e90c2a197a93c0407a"
+    },
+    "geometryProof": {
+      "path": ".dream-loop/mature-oak-guard-round17/geometry-after.json",
+      "bytes": 3652,
+      "sha256": "dda7202f646cba6e54e7b552b44026ac067201037852be46f760f69fca34ce57"
+    },
+    "log": {
+      "path": ".dream-loop/mature-oak-guard-round17/focused-test.log",
+      "bytes": 734,
+      "sha256": "8e8b6949935d56a34d1f80966396f914181fc1d3f544e1119238fbfd670ae472"
+    },
+    "independentReadOnlyReview": "No concrete blocker found by native_test_transport; no runtime or browser changes."
+  },
+  "scope": {
+    "nonDocumentationChanges": [
+      "assets/source/horizon-build.json",
+      "assets/source/horizon.blend",
+      "tests/mature-oak.test.mjs"
+    ],
+    "runtimeCodeChanged": false,
+    "shaderChanged": false,
+    "deliveredAssetsChanged": false,
+    "reflectionChanged": false,
+    "gameplayAssertionsOrDeadlinesChanged": false,
+    "priorMotionAndRenderingApplyToSameRuntime": true,
+    "originalMilestoneRecordsRewritten": false,
+    "authoringIdentityCaveat": "Original quality, motion and rendering records retain the native-BLEND hash captured at their measurement time. The later native terrain source hash is not substituted into those historical brackets.",
+    "full15BrowserScenariosAndBothSupervisorChecks": "pending fresh unfiltered run",
+    "formalArtScore": {
+      "latestJudge": 13,
+      "score": 5.0,
+      "tier": 1,
+      "targetOpen": true
+    }
+  }
+}

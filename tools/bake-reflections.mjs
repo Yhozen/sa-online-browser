@@ -133,11 +133,30 @@ try {
     .filter(([name]) => name !== "arroyo-reflections.pmrem.gz")
     .sort(([a], [b]) => a.localeCompare(b)));
   const sources = [
+    "apps/browser/index.html", "apps/browser/vite.config.ts",
+    "apps/browser/src/bootstrap.ts", "apps/browser/src/style.css",
+    "apps/browser/src/main.ts", "apps/browser/src/graphics.ts",
+    "apps/browser/src/antialias.ts", "apps/browser/src/assets.ts",
     "apps/browser/src/lighting.ts", "apps/browser/src/environment.ts",
-    "apps/browser/src/assets.ts", "apps/browser/src/main.ts",
-    "apps/browser/src/reflection-storage.ts", "apps/browser/src/warmup.ts", "apps/browser/src/foliage-mips.ts", "apps/browser/src/character-animation.ts", "apps/browser/src/horizon.ts",
+    "apps/browser/src/surface-textures.ts", "apps/browser/src/surface-pixels.ts",
+    "apps/browser/src/surface-lighting.ts", "apps/browser/src/canopy-lighting.ts",
+    "apps/browser/src/foliage-mips.ts", "apps/browser/src/reflection-storage.ts",
+    "apps/browser/src/garden.ts", "apps/browser/src/horizon.ts",
+    "assets/horizon-relief.json",
     "apps/browser/src/road-detail.ts", "apps/browser/src/verges.ts",
-    "packages/shared/scenes/neighborhood.json", "tools/bake-reflections.mjs", "package-lock.json",
+    "apps/browser/src/mown-access.ts", "apps/browser/src/ground-cover.ts",
+  "apps/browser/src/surface-weathering.ts",
+    "apps/browser/src/warmup.ts", "apps/browser/src/characters.ts",
+    "apps/browser/src/character-animation.ts", "apps/browser/src/shadows.ts",
+    "apps/browser/src/camera.ts", "apps/browser/src/collision.ts",
+    "apps/browser/src/gateway.ts", "apps/browser/src/hud.ts",
+    "apps/browser/src/simulation-clock.ts", "apps/browser/src/interpolated-pose.ts",
+    "apps/browser/src/snapshot-pose.ts", "packages/shared/protocol.ts",
+    "packages/shared/scene.ts", "packages/shared/scene.mjs",
+    "packages/shared/scenes/neighborhood.json", "packages/shared/scenes/yard.json",
+    "services/gateway/server.mjs", "tools/asset-inventory.mjs",
+    "tools/bake-reflections.mjs", "tools/browser-options.mjs",
+    "package.json", "package-lock.json",
   ];
   throwIfInterrupted();
   const metadata = {

@@ -2,7 +2,9 @@
 import * as THREE from "three";
 import { plantVerges } from "./verges";
 import { roadDetail } from "./road-detail";
+import { weatherSurface, weatheredDisk } from "./surface-weathering";
 import { buildHorizon } from "./horizon";
+import { gardenPlacements, vergeGardenPlacements, frontageGardenPlacements } from "./garden";
 import type { SceneManifest } from "../../../packages/shared/scene";
 import { instantiateStatic, surfaceMaterials, assetStats } from "./assets";
 export function buildEnvironment(scene: THREE.Scene, manifest: SceneManifest) {
@@ -18,6 +20,18 @@ export function buildEnvironment(scene: THREE.Scene, manifest: SceneManifest) {
       );
     return colors.get(name)!;
   };
+  // Weathered albedo belongs to the horizontal surfaces. Curbs retain the
+  // original shared material so Low's normal bake cannot leak into Standard.
+  const weatheredMaterials = new WeakMap<THREE.Material, THREE.Material>();
+  function weatheredMaterial(material: THREE.Material, kind: "asphalt" | "concrete") {
+    let shaded = weatheredMaterials.get(material);
+    if (!shaded) {
+      shaded = material.clone(); shaded.vertexColors = true;
+      shaded.userData.surfaceAlbedoKind = kind;
+      weatheredMaterials.set(material, shaded);
+    }
+    return shaded;
+  }
   const batches = new Map<THREE.Material, THREE.Matrix4[]>(),
     unit = new THREE.BoxGeometry(1, 1, 1),
     dummy = new THREE.Object3D();
@@ -43,10 +57,12 @@ export function buildEnvironment(scene: THREE.Scene, manifest: SceneManifest) {
     height: number,
     material: THREE.Material,
   ) {
-    const g = new THREE.PlaneGeometry(w, d),
-      uv = g.getAttribute("uv");
+    const weatherKind = material === surfaceMaterials.get("asphalt") ? "asphalt" : material === surfaceMaterials.get("concrete") ? "concrete" : undefined;
+    const g = new THREE.PlaneGeometry(w, d, weatherKind ? Math.ceil(w / .75) : 1, weatherKind ? Math.ceil(d / .75) : 1),
+      uv = g.getAttribute("uv"), position = g.getAttribute("position");
     for (let i = 0; i < uv.count; i++)
-      uv.setXY(i, (uv.getX(i) * w) / 4, (uv.getY(i) * d) / 4);
+      uv.setXY(i, (position.getX(i) + x) / 4, (position.getY(i) + y) / 4);
+    if (weatherKind) { weatherSurface(g, x, y, weatherKind); material = weatheredMaterial(material, weatherKind); }
     const mesh = new THREE.Mesh(g, material);
     mesh.position.set(x, y, height);
     mesh.receiveShadow = true;
@@ -105,11 +121,12 @@ export function buildEnvironment(scene: THREE.Scene, manifest: SceneManifest) {
       [c.radius + 2.5, 0.025, concrete],
       [c.radius, 0.05, asphalt],
     ] as const) {
-      const g = new THREE.CircleGeometry(r, 64);
-      const uv = g.getAttribute("uv");
+      const g = weatheredDisk(r);
+      const uv = g.getAttribute("uv"), position = g.getAttribute("position");
       for (let i = 0; i < uv.count; i++)
-        uv.setXY(i, (uv.getX(i) * r) / 2, (uv.getY(i) * r) / 2);
-      const mesh = new THREE.Mesh(g, m);
+        uv.setXY(i, (position.getX(i) + c.center[0]) / 4, (position.getY(i) + c.center[1]) / 4);
+      weatherSurface(g, c.center[0], c.center[1], m === asphalt ? "asphalt" : "concrete");
+      const mesh = new THREE.Mesh(g, weatheredMaterial(m, m === asphalt ? "asphalt" : "concrete"));
       mesh.position.set(...c.center, z + h);
       mesh.receiveShadow = true;
       scene.add(mesh);
@@ -180,7 +197,7 @@ export function buildEnvironment(scene: THREE.Scene, manifest: SceneManifest) {
           }
       }
     roadDetail(scene, manifest);
-    plantVerges(scene, manifest, surfaceMaterials.get("grass"));
+    plantVerges(scene, manifest, surfaceMaterials.get("grass"), surfaceMaterials.get("grass-clump")?.map ?? undefined);
     if (manifest.challenge) {
       // A flush paved gathering spot; the manifest's props own all solid collision.
       surface(19, 23.85, 10, 6.3, z + .02, concrete);
@@ -191,6 +208,7 @@ export function buildEnvironment(scene: THREE.Scene, manifest: SceneManifest) {
         box([19, y, z + .028], [10, .018, .005], joint);
     }
     instantiateStatic(scene, [...manifest.houses, ...manifest.props]);
+    instantiateStatic(scene, [...gardenPlacements(manifest), ...vergeGardenPlacements(manifest), ...frontageGardenPlacements(manifest)]);
     for (const b of manifest.barriers.filter((b) =>
       b.id?.startsWith("boundary"),
     ))

@@ -1,14 +1,129 @@
 # Project status and continuation
 
-## Active game-feature milestone — September 20
+## Game-feature delivery — September 21
 
-The user reports 120 FPS on their real computer and explicitly excludes FPS optimization. `origin/main` was pulled to `50963d1` before work. The [working-game plan](working-game-plan.md) adds a server-scored Arroyo Loop activity, original gathering-area assets, spatial audio and vehicle feedback while retaining full native resolution. Work is in progress; do not treat earlier acceptance results as verification of this new revision.
+Merged latest `origin/main` (`07653ef`) and integrated the Arroyo Loop server-scored activity, five original prop types, 25 field yuccas, original start marking, sixteen spatial sound assets, horn replication, vehicle steering/lights, accessible activity controls and session records. Main's newer neighborhood, hero assets and movement interpolation are preserved. Full native resolution remains unchanged; FPS optimization is outside this goal.
 
-Four original Blender assets and sixteen deterministic sound assets are committed. The unchanged open.mp server has passed native checkpoint/crew/lifecycle tests; browser driving and live visual checks are underway. Initial live inspection exposed start-line rendering and distant sign lettering defects, which are being investigated before final art review. The download ceiling rises explicitly from 48 to 52 MB for 2.28 MB of modeled props and 1.69 MB of sounds; triangle, draw-call, texture and native-resolution requirements remain unchanged.
+See [delivery results](working-game-results.md) and [verification identities](working-game-verification.json). Focused merged-build checks are recorded separately from historical native-Mac acceptance. Full combined-build yard/neighborhood soaks, twenty reconnects, native-Mac revalidation and an 8/10 art verdict remain unverified. Traffic, combat, interiors, persistent progression and native GTA-world compatibility remain future milestones.
 
-The minimum active work window began 17:37:45 UTC and ends no earlier than 20:37:45 UTC. Conventional milestone commits and continued verification are authorized. Unrelated `skills-lock.json` edits are preserved.
+The work began September 20 at 17:37:45 UTC; the user requested final integration after more than eight elapsed hours. Unrelated `skills-lock.json` changes are preserved. Conventional milestone commits and push are authorized.
 
-## Active visual milestone — September 8
+## Earlier native milestone — September 13, round seventeen
+
+The following results describe the September 13 build before the game-feature
+merge. They do not verify the incoming September 20 changes.
+
+The accepted build is **`fc8deb6a7bbf6a35`**, served by `main-DrSvmP81.js`.
+Round seventeen adds localized native trouser folds, refined ankle/shoe boundaries,
+olive lawn pigment and short walkable turf on unpaved house approaches. An
+actual-footprint test caught a lamp overlap: eight tufts were removed while all
+9,285 surviving placement/color bytes stayed exact. The final terrain study was
+rejected after native inspection and was not integrated. See the
+[integration record](native-integration-round17.json) and
+[current native capture](images/native-street-round17-2026-09-13.png).
+
+The **complete native motion probe passed**, with both owned windows confirmed
+absent afterward and zero server sessions/workers. The four isolated native
+rendering cases also passed: **120.48 median FPS**, p95 at most **9.1 ms**, and
+no stalls above 50 ms. Maximum logical texture storage was **315.72 MiB**;
+measured encoded download was **46,985,679 bytes**. Maximum sampled geometry was
+**5,352,079 triangles / 954 calls**. These remain bounded hardware measurements;
+see the [motion](native-motion-round17-summary.json) and
+[rendering](native-rendering-round17-summary.json) records.
+
+Three Standard → Low → Standard cycles completed without browser errors.
+**Strict pixel equality failed:** 30 of 35 measured region comparisons were
+exact; each remaining car-rear comparison changed one pixel by one color level
+at the exhaust edge. No tolerance was substituted. Quality and motion preserved
+all **107 source, 28 asset and 4 served-resource identities**. See the
+[quality record](native-quality-cycle-round17.json).
+
+Focused assets/character tests passed **6/6**, verges clearance/budget tests
+**5/5**, and typecheck passed. A reflection-test filename typo ran no tests and
+exited one; the corrected command passed **2/2**. The integration record preserves
+both outcomes.
+
+**The full 15-scenario acceptance and both supervisor checks passed** on clean
+`2a6ffde`, with 15 successful attempts and no failed, skipped or flaky
+cases. The yard completed **75 rounds / 601.902 seconds**; the
+neighborhood completed **81 rounds / 606.240 seconds**.
+Both twenty-cycle reconnect checks and twenty resident-tab rejoins passed. The
+strict reset checks covered **78 resets**, with maximum browser convergence
+**272.9 ms** and browser/server distances **0 /
+0 m**. See the [archived acceptance](native-acceptance-round17a/summary.json).
+The historical 14/15 failed run and focused heartbeat/lifecycle pass remain
+separate records. **The visual target remains
+open:** the latest formal [review](art-review-round13-2026-09-13.md) is still
+judge thirteen's **5.0/10, Tier 1**. No new formal score or ready declaration is
+assigned to this build.
+
+The first final-source attempt on clean `439b916` exited one before browser
+tests: 65/67 source checks passed. The obsolete untapered-oak equality was
+replaced with checks of the accepted 55% trunk taper; a proper native terrain
+save refreshed its stale dependency ledger. Focused oak and terrain checks now
+pass **4/4 and 9/9**. Runtime and delivered assets are unchanged, so the motion
+and performance measurements above still describe this build; their original
+captured authoring hashes remain intact. The [repair record](native-validation-repair-round17.json)
+preserves the failure separately. The corrected full run subsequently passed;
+the failed attempt remains failed.
+
+## Earlier native milestone — round fifteen
+
+The following paragraphs retain the earlier round-fifteen measurements and
+pending items; the round-seventeen record above supersedes its current status.
+
+Round fifteen integrates native oak diffuse accessibility, a narrower roadside
+trunk, connected terrain gullies, sparse road/curb wear and redistributed frontage
+planting. The measured scene is `f7da0f68c9f8ca5a`, served by
+`main-zC6pAPDJ.js`. Exact native sources, outputs and test history are in the
+[integration record](native-integration-round15.json).
+
+Standard and Low both measured **120.48 FPS median** at native DPR 2 in
+2560×1440 and 3344×1882 buffers. All four cases passed the unchanged budgets:
+maximum sampled logical texture storage was 315.72 MiB, downloads 46,969,633 B,
+geometry 5,304,703 triangles and 951 calls. Frame-time p95 was at most 9.1 ms,
+with no stalls over 50 ms or browser errors. The explicitly selected reference
+window stayed frozen through the [isolated audit](native-rendering-round15-summary.json).
+
+Three real Standard → Low → Standard cycles restored all 35 measured static
+region comparisons exactly. All 106 source, 28 asset and 4 served-resource
+fingerprints remained unchanged; the owned window closed and health returned to
+zero sessions/workers. See the [quality record](native-quality-cycle-round15.json).
+The initial focused test batch was **35 passed / 2 failed**, due to a stale terrain
+expectation and an incomplete test fixture. After correction, the terrain tests
+passed **9/9**; reflection checks passed **2/2**. This is not a clean 37-test run.
+
+A 36.791-second native walkthrough reached the oak, house-front beds and car rear
+through ordinary walking and orbit controls. All four captures were error-free,
+input hashes stayed exact, keys were released, and the owned target disappeared
+with health at zero. This visual inspection does not replace final motion or
+multiplayer testing. A fresh final-source motion run remains pending.
+
+**The visual target remains open.** The latest formal
+[review](art-review-round13-2026-09-13.md), from round thirteen, scores **5.0/10,
+Tier 1**. Round fifteen's readiness review is **NOT READY** for another formal
+judge; no new score is assigned. Broad golden crown faces, lawn variation and
+readable cool mountain gullies remain unresolved. Compare the
+[current capture](images/native-street-round15-2026-09-13.png) with the
+[generated target](images/native-concept-2026-09-13.png).
+
+**The complete 15-scenario acceptance suite still needs a fresh final-source
+pass and both supervisor checks.** The prior full native run finished **14
+passed / 1 failed**, despite both ten-minute soaks passing. The worker-crash case
+lost its browser transport before rejoining. The failed run remains preserved in
+[its record](native-acceptance-round12-failed.json). Empty-page controls isolated
+idle transport closure, and the host's [WebSocket keepalive](native-transport-heartbeat.json)
+then passed a 60-second quiet control and the unchanged recovery case. Those
+focused passes do not certify the full suite. The earlier strict browser-clock
+reset controls and focused 75-round yard soak also remain historical evidence.
+
+## Historical record — September 8
+
+Everything below preserves the earlier cloud implementation, measurements and
+continuation notes. Its “final” results and pending items refer to that dated
+revision; the September 13 section above preserves the subsequent native milestone.
+
+### Visual milestone — September 8
 
 The Dream-loop visual implementation is integrated and pushed through `d8f0210`; see the [accepted plan](visual-upgrade-plan.md) and [current visual results](visual-upgrade-results.md). Original detailed Blender assets, physical image inputs, cached neighborhood reflections, native-resolution antialiasing/contact shading, an SA-inspired HUD and live entry screen are implemented. Standard is the new-install default; saved Low remains respected. Eight independent art reviews retain all three shape gates; latest driving/pedestrian/street scores are **5.0/5.0/5.0**, below the requested 8. Connected foliage/yard lighting and coherent car reflections remain explicit visual work.
 
@@ -16,7 +131,7 @@ The final full suite passed: **15 headed browser scenarios**, 3 gateway tests, 1
 
 The final unrecorded two-view cloud measurement is **0.9 / 0.8 FPS** at native 1280×720 Low, below the diagnostic 4 FPS target; resolution is unchanged. The user reports that the game runs fine on their machine; this is qualitative confirmation, not a hardware-GPU benchmark. Earlier timing/presentation failures and their exact corrections remain documented in the visual plan.
 
-### Historical native-resolution correction
+#### Historical native-resolution correction
 
 Updated 2026-09-08. **Both graphics presets now render at full native screen resolution, per the user's correction.** See [current rendering verification](resolution-results.md). At that stage, four headed graphics scenarios, type checking, build and actual desktop verification passed. The user revised the cloud target to 4 FPS; the existing full-resolution measurements of 5.0 / 4.6 FPS satisfy that target. The threshold was checked against those recorded measurements without rerunning the unchanged renderer. The original neighborhood acceptance and reduced-resolution performance figures below are historical; the complete multiplayer soak suite has not been rerun for this rendering-only correction. See [measured neighborhood results](neighborhood-results.md), [source-hashed verification](neighborhood-verification.json), and the [accepted plan](neighborhood-plan.md). SA-MP 0.3.7 through separate native workers remains the protocol architecture.
 
@@ -24,7 +139,7 @@ Historical neighborhood acceptance: **14 headed browser scenarios**, 3 gateway t
 
 Two 1280×720 Low views measured 20 FPS median / about 67 ms p95 using 384×216 internal 3D rendering. Complete scene load: 5.09 MB. Audited texture storage: 5.70 MiB cold Low / 13.70 MiB after Standard switching. Standard desktop views submitted at most 143,868 triangles / 125 calls. These are SwiftShader results; native GTA world compatibility, WAN behavior and hardware GPU performance remain unverified.
 
-## Current implementation
+### Implementation at that time
 
 The unchanged official open.mp release runs locally. Two ordinary, non-NPC protocol workers and two independent browser sessions have joined, spawned, exchanged server-routed walking/chat, and shared a car with driver/passenger synchronization. The browser now loads original Blender GLB houses, props, a rigged human and a sports coupe, with shared scene geometry and arcade collision/handling. Commands allocate seats through the Pawn fixture and standard placement RPCs.
 
@@ -32,7 +147,7 @@ The cloud desktop WebGL startup failure is fixed with `npm run open:poc`, which 
 
 The original WebGL recovery fix is preserved by the expanded graphics checks. The 14-scenario neighborhood suite below is historical; the visual milestone has 15 browser scenarios and its own result record.
 
-### Historical initial PoC milestones
+#### Historical initial PoC milestones
 
 | Milestone | Status | Evidence |
 | --- | --- | --- |
@@ -44,7 +159,7 @@ The original WebGL recovery fix is preserved by the expanded graphics checks. Th
 | Full headed acceptance and ten-minute soak | Passed | Five scenarios; 79 active rounds / 602.817 seconds; zero uncaught browser errors |
 | Native GTA / original SA-MP / public servers | Deferred, unverified | Separate compatibility work; not implied by this PoC |
 
-## Experiments and decisions
+### Experiments and decisions
 
 - **Runtime:** native execution of the official 32-bit binary reached denied socket syscalls (`EACCES`) under this cloud's syscall restrictions. An x86_64 source fallback was investigated but not completed. Running the unchanged release with a checksum-pinned `qemu-i386-static` and isolated Debian bookworm i386 libraries successfully translates the calls. Host libraries remain untouched.
 - **Client transport:** the pinned RakNet server fork needs client-direction transformation, cookie/auth handling, guarded server-only behavior, and bounded fragment acceptance. These adaptations affect only the worker dependency. The upstream binary is unchanged.
@@ -55,17 +170,17 @@ The original WebGL recovery fix is preserved by the expanded graphics checks. Th
 - **Automation corrections:** a fixed eleven-second wait after worker crash raced actual server slot expiry; the test now waits for the observed disconnect before rejoining. Playwright 1.59.1 forces focus/visibility on its internal CDP session. The hidden-tab regression disables that override through a pinned test-only adapter, then switches real Chromium tabs; it does not inject document visibility or gameplay state.
 - **Verification hardening:** native checks remain active with `-DNDEBUG`, with a deliberate failing-fixture negative control. Initialization bytes are independently packed from the pinned upstream schema, fragmented/reordered, and decoded. Lifecycle checks observe worker exit and server slot release, not only gateway session-map deletion.
 
-## Continuing work
+### Continuing work recorded at that time
 
 The approved local PoC and first neighborhood are complete; the newer visual milestone and its remaining art target are tracked in [visual results](visual-upgrade-results.md). See [historical neighborhood results](neighborhood-results.md) and their [historical machine summary](neighborhood-verification.json). The earlier [PoC result](poc-results.md) remains historical evidence. Run `npm run setup:poc`, then `npm run verify:poc` with ports 3000/7777 free to reproduce acceptance. Start the demo with `npm run dev:poc`. Keep generated runtime downloads and recordings ignored; committed summaries and source hashes identify the tested implementation.
 
 The next slices are a server-scored checkpoint challenge and private remote play, followed by a native-reference interoperability slice with user-provided assets and an original/native comparison fixture. Public-server admission, broader RPC coverage, cross-browser behavior, network impairment, realistic GTA collision/handling, asset streaming, and deployment remain separate gates in the long-horizon roadmap.
 
-## History
+### History
 
 Research compared MTA, SA-MP/open.mp, and browser/runtime feasibility with parallel agents. MTA's unavailable transport/anti-cheat internals made SA-MP the more inspectable initial target. The user then approved the narrower placeholder PoC and its local two-browser acceptance criteria. Parallel implementation covered the runtime fixture, native protocol, and browser; the primary agent integrated the gateway, verification, and durable project record.
 
-## Neighborhood implementation history
+### Neighborhood implementation history
 
 The neighborhood implementation is complete; these notes preserve the experiments and corrections. The existing yard remains the multiplayer regression fixture. Art direction and gates: [neighborhood plan](neighborhood-plan.md). Original concept and texture inputs generated with the imagegen skill; official Blender download returned a Cloudflare challenge, and the official mirror supplies the pinned release/checksum.
 

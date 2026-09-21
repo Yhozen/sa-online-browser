@@ -1,0 +1,59 @@
+{
+  "scope": "Round12 full native Low motion probe; copied existing completed records, no browser rerun performed while documenting.",
+  "sourceCommit": "b49e186ba92077c49372e2d537d6c74acd073ff1",
+  "sceneRevision": "6c1739ad64e66280",
+  "copied": [
+    {
+      "source": ".dream-loop/motion-final-round12/verification.json",
+      "path": "docs/native-motion/round12/verification.json",
+      "bytes": 5838795,
+      "sha256": "fad5b440cb7dfe3cb637acc5092891dd311a07ab67f94510215b8ad0a2c9deaf",
+      "byteIdentical": true
+    },
+    {
+      "source": ".dream-loop/motion-final-round12/served-before.json",
+      "path": "docs/native-motion/round12/served-before.json",
+      "bytes": 15871,
+      "sha256": "506d5d575f53aaeddf79de0bc67cc5a45294d6f7e07569f572f5a704629dcfba",
+      "byteIdentical": true
+    },
+    {
+      "source": ".dream-loop/motion-final-round12/served-after.json",
+      "path": "docs/native-motion/round12/served-after.json",
+      "bytes": 15871,
+      "sha256": "8a58993fa27efb56a00795daaa13e58227770508e84fc18b78866f40769c85cf",
+      "byteIdentical": true
+    },
+    {
+      "source": ".dream-loop/motion-final-round12/cleanup.json",
+      "path": "docs/native-motion/round12/cleanup.json",
+      "bytes": 768,
+      "sha256": "2457abb564040812374e9383cb0a8d3fd34b7524b91152188611cf9ca6de64b2",
+      "byteIdentical": true
+    }
+  ],
+  "summary": {
+    "path": "docs/native-motion-summary.json",
+    "derivation": "Selected exact scalar/object values from round12 verification, served captures and cleanup; prose limitations added. This is a derived summary, not a copy of a pre-existing round12 summary.",
+    "sha256": "6506d38b1320fd44c35cb99975e601c6b2d1c523694d33b83bc1fdf989971f3b"
+  },
+  "historicalRound7Summary": {
+    "source": "docs/native-motion-summary.json before round12 documentation update",
+    "path": "docs/native-motion/round12/historical-round7-summary.json",
+    "bytes": 14434,
+    "sha256": "d369b93a7d49c7d1397f067434f9a85b99bf7542abe90025f234b813f8a9fedc",
+    "byteIdentical": true,
+    "reason": "Preserves the exact former summary referenced by historical docs/native-motion/provenance.json; all other round7 and setup-failure records remain in their existing paths."
+  },
+  "comparisons": {
+    "sourceFiles": 74,
+    "assets": 28,
+    "resources": 4,
+    "beforeAfterIdentical": true
+  },
+  "limitations": [
+    "Native Low motion only; no Standard performance claim.",
+    "Remote walking retains 3 repeated positions / 322 intervals and 15.35712358344128% speed variation.",
+    "Round12 full browser acceptance has not rerun."
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "passed": true,
+  "rawNative": {
+    "bytes": 651132,
+    "sha256": "123fcabc8809524e4615d658e9c3fb83d71b23d9171d34a2b0fb8927efb10e47"
+  },
+  "declaredBase": {
+    "bytes": 651132,
+    "sha256": "c263048dc87e8f2580719d5631928255aa5768621bbe58b7a0f33541b31fd4d5"
+  },
+  "declaredBaseGzipBytes": 383739,
+  "records": [
+    {
+      "material": "foliage",
+      "vertices": 7850,
+      "triangles": 4208,
+      "allFieldsAndIndexBytesExact": true
+    },
+    {
+      "material": "foliage-light",
+      "vertices": 1538,
+      "triangles": 832,
+      "allFieldsAndIndexBytesExact": true
+    },
+    {
+      "material": "wood",
+      "vertices": 4161,
+      "triangles": 3496,
+      "nativeCornerSequenceBijection": true,
+      "changedPositions": 256,
+      "changedNormals": 272,
+      "allHeightsExact": true,
+      "upperPositionsExactAbove": 3.55,
+      "lowBounds": {
+        "min": [
+          -0.21773698925971985,
+          -0.19396677613258362,
+          -0.021168066188693047
+        ],
+        "max": [
+          0.22101403772830963,
+          0.1913066953420639,
+          1.667466163635254
+        ]
+      },
+      "maximumLowRadius": 0.2218169812185444,
+      "colliderHalfWidth": 0.35,
+      "UVColorIndicesOriginalBytesPreserved": true
+    }
+  ],
+  "allNonWoodStreamsExact": true,
+  "sourceNativeReport": "mirror/assets/source/canopy-base/native-authoring.json",
+  "canonicalOriginalBaseUnchanged": true,
+  "onlyChangedBinaryRanges": [
+    "wood POSITION",
+    "wood NORMAL"
+  ],
+  "changedBinaryBytes": 4243,
+  "originalJSONAndAllOtherBINBytesExact": true
+}

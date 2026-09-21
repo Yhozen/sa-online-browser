@@ -1,11 +1,18 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-"""Original editable neighborhood kit. Run with the pinned Blender, no addons required."""
-import bpy, math, json, pathlib, random
+"""Original editable neighborhood kit. Run through build-assets.mjs; no addons required."""
+import bpy, math, json, pathlib, random, argparse, sys
 from mathutils import Vector
 ROOT=pathlib.Path(__file__).resolve().parents[2]
-OUT=ROOT/'apps/browser/public/assets'; OUT.mkdir(parents=True,exist_ok=True)
-SOURCE=ROOT/'assets/source'; SOURCE.mkdir(exist_ok=True)
-assert bpy.app.version[:3]==(4,5,13), bpy.app.version_string
+parser=argparse.ArgumentParser()
+parser.add_argument('--output-root',type=pathlib.Path,default=ROOT)
+parser.add_argument('--models',default='house-0,house-1,house-2,house-3,palm,tree,roadside-oak,fence,fence-low,mailbox,bin,pole,lamp,coupe,neighbor,garden-low,garden-shrub')
+parser.add_argument('--blender-version',default='4.5.13')
+args=parser.parse_args(sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else [])
+SELECTED=set(args.models.split(',')); PHASE='base'
+OUT=args.output_root/'apps/browser/public/assets'; OUT.mkdir(parents=True,exist_ok=True)
+SOURCE=args.output_root/'assets/source'; SOURCE.mkdir(parents=True,exist_ok=True)
+assert args.blender_version in ['4.5.13','5.2.1'], args.blender_version
+assert bpy.app.version[:3]==tuple(map(int,args.blender_version.split('.'))), bpy.app.version_string
 random.seed(73)
 bpy.context.preferences.filepaths.save_version=0
 bpy.ops.object.select_all(action='SELECT');bpy.ops.object.delete(use_global=False)
@@ -35,6 +42,11 @@ def start():
  global objects
  bpy.ops.object.select_all(action='SELECT');bpy.ops.object.delete(use_global=False);objects=[]
 def export(name,merge=True):
+ # The detailed hero pass needs the freshly authored base rig. It is an
+ # intermediate .blend, never a final base-mesh GLB in a selective build.
+ rig_dependency=PHASE=='base' and name=='neighbor' and bool(SELECTED & {'coupe','neighbor'})
+ refined_base=PHASE=='base' and name in {'house-0','house-1','house-2','house-3','palm','tree','coupe','neighbor'}
+ if (name not in SELECTED or refined_base) and not rig_dependency:return
  if merge:
   for mat in materials.values():
    group=[o for o in list(bpy.context.scene.objects) if o.type=='MESH' and o.data.materials[0]==mat and not (name=='coupe' and (o.name.startswith('wheel') or o.name.startswith('hub')))]
@@ -44,6 +56,7 @@ def export(name,merge=True):
    bpy.context.view_layer.objects.active=group[0];bpy.ops.object.join();group[0].name=mat.name
  bpy.ops.object.select_all(action='SELECT')
  bpy.ops.wm.save_as_mainfile(filepath=str(SOURCE/f'{name}.blend'),compress=True)
+ if refined_base:return
  bpy.ops.export_scene.gltf(filepath=str(OUT/f'{name}.glb'),export_format='GLB',export_animations=True,export_animation_mode='ACTIONS',export_force_sampling=True,export_materials='EXPORT',export_yup=True)
 
 def house(v):
@@ -232,6 +245,8 @@ for p in rig.pose.bones:p.rotation_euler=(0,0,0)
 export('neighbor',False)
 print('Original asset kit exported with Blender',bpy.app.version_string)
 
-# Detailed original assets share the same pinned export and editable source pipeline.
-for extension in ["environment-kit.py", "heroes.py"]:
- exec(compile((ROOT/"tools/assets"/extension).read_text(),str(ROOT/"tools/assets"/extension),"exec"))
+# Selected final assets share the same export and editable source pipeline.
+PHASE='detailed'
+for extension,names in [("environment-kit.py",{'house-0','house-1','house-2','house-3','palm','tree','roadside-oak','garden-low','garden-shrub'}),("garden-kit.py",{'garden-low','garden-shrub'}),("heroes.py",{'coupe','neighbor'})]:
+ if SELECTED & names:
+  exec(compile((ROOT/"tools/assets"/extension).read_text(),str(ROOT/"tools/assets"/extension),"exec"))

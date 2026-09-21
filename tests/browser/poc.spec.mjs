@@ -2,13 +2,20 @@
 import { test, expect } from '@playwright/test';
 import playwright from 'playwright';
 import { spawn } from 'node:child_process';
+import { randomUUID } from 'node:crypto';
 import { mkdirSync, createWriteStream, readFileSync, writeFileSync } from 'node:fs';
 import { createGateway } from '../../services/gateway/server.mjs';
+import { acceptanceConnectOptions, setAcceptanceFocusEmulation } from '../../tools/browser-options.mjs';
+import { armResetObservation, collectResetObservation, disposeResetObservation } from './reset-observer.mjs';
 
 const URL = 'http://127.0.0.1:3000';
-let gateway, server, observations = [], agreements = [], browserErrors = [], traceCounter = 0, serverReady = false;
+let gateway, server, observations = [], agreements = [], resetAgreements = [], browserErrors = [], traceCounter = 0, serverReady = false;
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-const snapshot = page => page.evaluate(() => window.__poc);
+// Transfer only the fields exercised here; failure evidence retains the full snapshot.
+const snapshot = page => page.evaluate(() => {
+  const { self, peers, vehicles, chat, status } = window.__poc;
+  return { self, peers, vehicles, chat, status };
+});
 const distance = (a, b) => Math.hypot(...a.map((x, i) => x - b[i]));
 function last(event, player) { return observations.findLast(x => x.event === event && (player === undefined || x.player === player)); }
 async function startServer() {
@@ -42,6 +49,7 @@ test.afterAll(async () => {
   await gateway?.close(); await stopServer();
   writeFileSync('artifacts/verification/server-observations.json', JSON.stringify(observations, null, 2));
   writeFileSync('artifacts/verification/position-agreements.json', JSON.stringify(agreements, null, 2));
+  writeFileSync('artifacts/verification/reset-agreements.json', JSON.stringify(resetAgreements, null, 2));
   writeFileSync('artifacts/verification/browser-errors.json', JSON.stringify(browserErrors, null, 2));
 });
 async function session(browser, name, testInfo) {
@@ -50,11 +58,13 @@ async function session(browser, name, testInfo) {
   // Network/lifecycle fixtures use the explicit Low fallback at full native size.
   // Standard and both DPRs are exercised independently by graphics/desktop cases.
   await context.addInitScript(() => localStorage.setItem('poc-quality', 'low'));
-  await context.tracing.start({ screenshots: true, snapshots: true });
+  // Continuous WebM and explicit PNGs retain visual evidence. Native-host
+  // traces keep actions, DOM and network without a duplicate JPEG timeline.
+  await context.tracing.start({ screenshots: !acceptanceConnectOptions(), snapshots: true });
   const page = await context.newPage(); const errors = [];
   page.on('pageerror', e => errors.push(e.message));
   await page.goto(URL); await page.getByTestId('nickname').fill(name); await page.getByTestId('join').click();
-  return { context, page, errors, name, async close() { browserErrors.push({ name, traceId, errors: [...errors] }); await context.tracing.stop({ path: `artifacts/verification/${name}-${traceId}-${testInfo.retry}.zip` }); await context.close(); } };
+  return { context, page, errors, name, async close() { browserErrors.push({ name, traceId, errors: [...errors] }); await context.tracing.stop({ path: `artifacts/verification/${name}-${traceId}-${testInfo.retry}.zip` }); await context.close(); if (acceptanceConnectOptions()) await page.video()?.saveAs(`artifacts/verification/videos/${name}-${traceId}-${testInfo.retry}.webm`); } };
 }
 async function spawned(s) { await expect.poll(async () => (await snapshot(s.page)).self.spawned).toBe(true); return (await snapshot(s.page)).self.id; }
 async function focus(page) { await page.bringToFront(); await page.mouse.click(720, 400); }
@@ -73,17 +83,53 @@ async function positionAgrees(page, id) {
       return delta;
     }, { timeout: 1000, intervals: [100, 100, 200] }).toBeLessThan(0.5);
   } catch (error) {
-    writeFileSync(`artifacts/verification/divergence-${id}.json`, JSON.stringify({ browser: await snapshot(page), server: last('player', id), vehicle: last('vehicle') }, null, 2));
+    writeFileSync(`artifacts/verification/divergence-${id}.json`, JSON.stringify({ browser: await page.evaluate(() => window.__poc), server: last('player', id), vehicle: last('vehicle') }, null, 2));
     throw error;
   }
 }
 async function reset(page) {
   const count = observations.filter(x => x.event === 'reset').length;
-  await chat(page, '/reset');
-  await expect.poll(() => observations.filter(x => x.event === 'reset').length).toBeGreaterThan(count);
-  await mode(page, 'onFoot');
-  await expect.poll(() => { const v = last('vehicle'); return v ? distance([v.x, v.y, v.z], [0, 6, 10]) : 1000; }, { timeout: 1000 }).toBeLessThan(0.5);
-  await expect.poll(async () => { const v = (await snapshot(page)).vehicles[0]; return v ? distance(v.position, [0, 6, 10]) : 1000; }, { timeout: 1000 }).toBeLessThan(0.5);
+  const key = `__acceptance_reset_${randomUUID()}`;
+  const agreement = { token: key, scenario: test.info().title, requestedAt: Date.now(), priorResetCount: count, serverDeadlineMs: 1000 };
+  resetAgreements.push(agreement);
+  let failure;
+  try {
+    await page.getByTestId('chat-input').fill('/reset');
+    await page.evaluate(armResetObservation, { key });
+    await page.getByTestId('chat-input').press('Enter');
+    // Intentional replacement: measure <=1 s from the actual command Enter in
+    // the browser, rather than racing a remote snapshot round trip after reset.
+    // The immutable verdict still requires <.5 m and fresh correction counters.
+    agreement.browser = await page.evaluate(collectResetObservation, { key });
+    agreement.retrievedAt = Date.now();
+    await expect.poll(() => observations.filter(x => x.event === 'reset').length).toBeGreaterThan(count);
+    await mode(page, 'onFoot');
+    agreement.serverReset = observations.filter(x => x.event === 'reset')[count];
+    agreement.serverResetIndex = observations.indexOf(agreement.serverReset);
+    await expect.poll(() => {
+      const v = last('vehicle'), index = observations.indexOf(v);
+      if (!v || index <= agreement.serverResetIndex) return 1000;
+      const delta = distance([v.x, v.y, v.z], [0, 6, 10]);
+      if (delta < 0.5) {
+        agreement.serverVehicle = v;
+        agreement.serverVehicleIndex = index;
+        agreement.serverDistance = delta;
+      }
+      return delta;
+    }, { timeout: 1000 }).toBeLessThan(0.5);
+    expect(agreement.browser.passed, JSON.stringify(agreement.browser)).toBe(true);
+    expect(agreement.browser.elapsedMs).toBeLessThanOrEqual(1000);
+    expect(agreement.browser.last.fresh).toBe(true);
+    expect(agreement.browser.last.mode).toBe('onFoot');
+    expect(agreement.browser.last.distance).toBeLessThan(0.5);
+  } catch (error) {
+    failure = error; agreement.error = String(error);
+    throw error;
+  } finally {
+    try { await page.evaluate(disposeResetObservation, { key }); }
+    catch (error) { agreement.cleanupError = String(error); if (!failure) throw error; }
+    finally { writeFileSync('artifacts/verification/reset-agreements.json', JSON.stringify(resetAgreements, null, 2)); }
+  }
 }
 
 test('end-to-end: normal players walk, chat, share a car and recover', async ({ browser }, info) => {
@@ -169,7 +215,9 @@ test('failures: duplicate name, worker crash, unavailable server and restart', a
 test('lifecycle: twenty browser connection cycles release sessions', async ({ browser }, info) => {
   // Twenty fresh native-resolution asset admissions plus trace flushes exceed
   // two minutes on SwiftShader. Keep every cycle and its cleanup assertions.
-  test.setTimeout(180000);
+  // Remote native-browser traces also undergo complete ZIP recompression in
+  // the runner (~24–30s per 60MB trace). Keep every recording and release check.
+  test.setTimeout(acceptanceConnectOptions() ? 900000 : 180000);
   for (let i = 0; i < 20; i++) {
     const s = await session(browser, `BrowserCycle_${i}`, info);
     const id = await spawned(s), connectedAt = last('connect', id)?.receivedAt;
@@ -208,9 +256,7 @@ test('edges: jump, wall collision, safe passenger exit and hidden-tab cleanup', 
     // session; another CDP session cannot disable it. This test-only adapter
     // removes that override, then switches actual Chrome tabs. No app state
     // or document visibility properties are injected.
-    const implementation = playwright._connection.toImpl(b.page);
-    const cdp = implementation.delegate._mainFrameSession._client;
-    await cdp.send('Emulation.setFocusEmulationEnabled', { enabled: false });
+    const cdp = await setAcceptanceFocusEmulation(b.page, false, playwright);
     const { targetInfo } = await cdp.send('Target.getTargetInfo');
     const { targetId } = await cdp.send('Target.createTarget', { url: 'about:blank', browserContextId: targetInfo.browserContextId, newWindow: false, background: false, forTab: true });
     await cdp.send('Target.activateTarget', { targetId });
@@ -221,7 +267,7 @@ test('edges: jump, wall collision, safe passenger exit and hidden-tab cleanup', 
     expect((await snapshot(b.page)).peers).toEqual([]);
     expect((await snapshot(b.page)).vehicles).toEqual([]);
     await expect.poll(async () => (await snapshot(b.page)).status).toMatch(/hidden/i);
-    await cdp.send('Emulation.setFocusEmulationEnabled', { enabled: true });
+    await setAcceptanceFocusEmulation(b.page, true, playwright);
     await b.page.getByTestId('join').click(); await spawned(b);
     expect(a.errors).toEqual([]); expect(b.errors).toEqual([]);
   } finally { await a.close(); await b.close(); }

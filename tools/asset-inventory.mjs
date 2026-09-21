@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 import { readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { createHash } from "node:crypto";
-const dir = "apps/browser/public/assets";
+const dir = process.argv[2] || "apps/browser/public/assets";
 const files = Object.fromEntries(
   readdirSync(dir)
-    .filter((n) => /\.(glb|png|webp|jpg|ktx2|pmrem\.gz)$/.test(n))
+    .filter((n) => /\.(glb|glb\.gz|png|webp|jpg|ktx2|pmrem\.gz)$/.test(n))
     .sort()
     .map((name) => {
       const bytes = readFileSync(`${dir}/${name}`);

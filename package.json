@@ -20,7 +20,8 @@
     "test:audio": "node --experimental-transform-types --test tests/audio.test.mjs && node --test tests/audio-browser.test.mjs",
     "verify:activity": "node tools/verify.mjs tests/browser/activity.spec.mjs",
     "verify:neighborhood": "node tools/verify.mjs tests/browser/neighborhood.spec.mjs",
-    "verify:desktop": "node tools/verify-desktop.mjs"
+    "verify:desktop": "node tools/verify-desktop.mjs",
+    "build:horizon": "node tools/build-assets.mjs --terrain-only"
   },
   "dependencies": {
     "three": "0.185.1",

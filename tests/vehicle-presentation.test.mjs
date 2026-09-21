@@ -75,7 +75,7 @@ test('reverse extraction partitions actual authored ivory triangles without movi
     location.fromBufferAttribute(positions, index).applyMatrix4(lamps.matrixWorld);
     occupied.add(Math.sign(location.x));
     assert.ok(Math.abs(Math.abs(location.x) - .42) < .034);
-    assert.ok(Math.abs(location.y + 2.235) < .006);
+    assert.ok(Math.abs(location.y + 2.222) < .006);
     assert.ok(Math.abs(location.z + .327) < .0095);
   }
   assert.deepEqual([...occupied].sort(), [-1, 1]);

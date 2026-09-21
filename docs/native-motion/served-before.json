@@ -1,0 +1,54 @@
+{
+  "at": "2026-09-13T05:57:19.135Z",
+  "base": "http://127.0.0.1:3000",
+  "sceneRevision": "7e1fc8ada24a68ec",
+  "bundle": "/assets/index-CpkWJa7v.js",
+  "bundleSha256": "2afedec2737282bbf7b985c896ba501a0294c45ee1880ef76338705f47ec1bfb",
+  "bundleBytes": 578469,
+  "health": {
+    "ok": true,
+    "sessions": 1,
+    "workers": 1
+  },
+  "targets": [
+    {
+      "id": "3F77E15FD5E5C8794A8A7F7DE97B2648",
+      "title": "SA / Browser playground",
+      "url": "http://127.0.0.1:3000/"
+    },
+    {
+      "id": "738475D557EFD4DF33491702D5175C42",
+      "title": "Omnibox Popup",
+      "url": "chrome://omnibox-popup.top-chrome/"
+    },
+    {
+      "id": "D71B23CB24300C6F7532ED3ADA311803",
+      "title": "Omnibox Popup",
+      "url": "chrome://omnibox-popup.top-chrome/omnibox_popup_aim.html"
+    },
+    {
+      "id": "37D9DDC1B1728B3F58602FBC3B3FBD38",
+      "title": "SA / Browser playground",
+      "url": "http://127.0.0.1:3000/"
+    },
+    {
+      "id": "D23186078530072EE328A7F4B6FD581C",
+      "title": "Omnibox Popup",
+      "url": "chrome://omnibox-popup.top-chrome/"
+    },
+    {
+      "id": "EDA37D2AA6CC304812D2C207E82C5716",
+      "title": "Omnibox Popup",
+      "url": "chrome://omnibox-popup.top-chrome/omnibox_popup_aim.html"
+    }
+  ],
+  "protectedTarget": "37D9DDC1B1728B3F58602FBC3B3FBD38",
+  "protectedPresent": true,
+  "gameModules": [
+    {
+      "path": "/assets/main-CXPv_yyV.js",
+      "sha256": "c829f3f4343574d21ce329c82983427c9bad891582e1a09f29b2db854e337cde",
+      "bytes": 1204841
+    }
+  ]
+}

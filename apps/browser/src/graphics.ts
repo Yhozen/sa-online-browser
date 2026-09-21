@@ -66,7 +66,7 @@ export function applyQuality(root: Object3D, low: boolean) {
       if (!(m instanceof MeshStandardMaterial)) return m;
       let converted = lowMaterials.get(m);
       if (!converted) {
-        converted = new MeshBasicMaterial({
+        const basic = new MeshBasicMaterial({
           color: m.color,
           map: m.map,
           transparent: m.transparent,
@@ -77,6 +77,15 @@ export function applyQuality(root: Object3D, low: boolean) {
           alphaMap: m.alphaMap,
           vertexColors: true,
         });
+        // These RGB vertex values are pigment, not baked light. Horizontal
+        // normals previously contributed (0.81, 0.81, 0.7776) in Low. Apply that
+        // existing diffuse approximation only to the converted material so the
+        // authored colors and restored Standard material remain unchanged.
+        if (m.userData.surfaceAlbedoKind === "asphalt" || m.userData.surfaceAlbedoKind === "concrete") {
+          basic.color.multiplyScalar(.81);
+          basic.color.b *= .96;
+        }
+        converted = basic;
         converted.name = m.name;
         lowMaterials.set(m, converted);
         standardMaterials.set(converted, m);

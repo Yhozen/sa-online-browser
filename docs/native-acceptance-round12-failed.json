@@ -1,0 +1,461 @@
+{
+  "recordedAt": "2026-09-13T12:19:59.748Z",
+  "status": "failed",
+  "notFullAcceptance": true,
+  "sourceCommit": "8c66c949ab450ab8dcc425f403e23114ceb63176",
+  "runtimeCommit": "b49e186",
+  "sceneRevision": "6c1739ad64e66280",
+  "stats": {
+    "startTime": "2026-09-13T11:35:49.035Z",
+    "duration": 2428345.5289999996,
+    "expected": 14,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  },
+  "scenarios": [
+    {
+      "title": "graphics: WebGL starts the playground",
+      "status": "expected",
+      "durationMs": 12663,
+      "errors": []
+    },
+    {
+      "title": "graphics: both presets preserve native screen resolution after resize and reload",
+      "status": "expected",
+      "durationMs": 58931,
+      "errors": []
+    },
+    {
+      "title": "graphics: disabled WebGL shows recovery without starting a session",
+      "status": "expected",
+      "durationMs": 1686,
+      "errors": []
+    },
+    {
+      "title": "graphics: context exceptions are handled and retry can recover",
+      "status": "expected",
+      "durationMs": 6735,
+      "errors": []
+    },
+    {
+      "title": "neighborhood: failed assets and scene mismatch never simulate a joined player",
+      "status": "expected",
+      "durationMs": 29142,
+      "errors": []
+    },
+    {
+      "title": "neighborhood: walking, fences, camera, occupants, loop and role swap",
+      "status": "expected",
+      "durationMs": 148163,
+      "errors": []
+    },
+    {
+      "title": "neighborhood: twenty reconnects release browser workers and server slots",
+      "status": "expected",
+      "durationMs": 368209,
+      "errors": []
+    },
+    {
+      "title": "neighborhood: ten minute recorded active session",
+      "status": "expected",
+      "durationMs": 659116,
+      "errors": []
+    },
+    {
+      "title": "neighborhood: two full-resolution views meet the low graphics budget",
+      "status": "expected",
+      "durationMs": 58913,
+      "errors": []
+    },
+    {
+      "title": "neighborhood: rejoining the same tab releases skeleton textures",
+      "status": "expected",
+      "durationMs": 35018,
+      "errors": []
+    },
+    {
+      "title": "end-to-end: normal players walk, chat, share a car and recover",
+      "status": "expected",
+      "durationMs": 40639,
+      "errors": []
+    },
+    {
+      "title": "failures: duplicate name, worker crash, unavailable server and restart",
+      "status": "unexpected",
+      "durationMs": 36266,
+      "errors": [
+        "Error: tracing.stop: locator.click: Target page, context or browser has been closed\n\n  65 |   page.on('pageerror', e => errors.push(e.message));\n  66 |   await page.goto(URL); await page.getByTestId('nickname').fill(name); await page.getByTestId('join').click();\n> 67 |   return { context, page, errors, name, async close() { browserErrors.push({ name, traceId, errors: [...errors] }); await context.tracing.stop({ path: `artifacts/verification/${name}-${traceId}-${testInfo.retry}.zip` }); await context.close(); if (acceptanceConnectOptions()) await page.video()?.saveAs(`artifacts/verification/videos/${name}-${traceId}-${testInfo.retry}.webm`); } };\n     |                                                                                                                                           ^\n  68 | }\n  69 | async function spawned(s) { await expect.poll(async () => (await snapshot(s.page)).self.spawned).toBe(true); return (await snapshot(s.page)).self.id; }\n  70 | async function focus(page) { await page.bringToFront(); await page.mouse.click(720, 400); }\n    at Object.close (/work/tests/browser/poc.spec.mjs:67:139)\n    at /work/tests/browser/poc.spec.mjs:212:23"
+      ]
+    },
+    {
+      "title": "lifecycle: twenty browser connection cycles release sessions",
+      "status": "expected",
+      "durationMs": 265425,
+      "errors": []
+    },
+    {
+      "title": "edges: jump, wall collision, safe passenger exit and hidden-tab cleanup",
+      "status": "expected",
+      "durationMs": 35443,
+      "errors": []
+    },
+    {
+      "title": "soak: ten minutes of active two-player walking chat and driving",
+      "status": "expected",
+      "durationMs": 639452,
+      "errors": []
+    }
+  ],
+  "browser": {
+    "capturedAt": "2026-09-13T11:36:00.080Z",
+    "transport": "remote-playwright-loopback",
+    "chromium": "153.0.8010.37",
+    "headed": true,
+    "launchOptions": {
+      "channel": "chrome",
+      "args": [
+        "--disable-background-timer-throttling",
+        "--disable-backgrounding-occluded-windows",
+        "--disable-renderer-backgrounding"
+      ]
+    },
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+    "browserPlatform": "MacIntel",
+    "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+    "vendor": "Google Inc. (Apple)",
+    "webglVersion": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+  },
+  "soaks": {
+    "neighborhood": {
+      "durationMs": 605520,
+      "rounds": 81
+    },
+    "yard": {
+      "durationMs": 602801,
+      "rounds": 75,
+      "playerIds": [
+        0,
+        1
+      ],
+      "errors": []
+    }
+  },
+  "resetGroups": [
+    {
+      "file": "worker-before-restart/reset-agreements.json",
+      "sha256": "7170dde3553f1e5f3e6e23000099ef805c591e3df36a06f3841ead82301e4e74",
+      "count": 3,
+      "passed": true,
+      "maxCorrectionMs": 202.5,
+      "maxBrowserDistance": 0,
+      "maxServerDistance": 0
+    },
+    {
+      "file": "verification/reset-agreements.json",
+      "sha256": "6d398a014c7113d528681fcde89d4e8c7cff26fd75b3160172024155af5cc64b",
+      "count": 75,
+      "passed": true,
+      "maxCorrectionMs": 265.5,
+      "maxBrowserDistance": 0,
+      "maxServerDistance": 0
+    }
+  ],
+  "supervisorChecks": "not run because browser suite failed",
+  "failure": "Case 12 browser connection closed before rejoining; cleanup reused the original click error. Root cause unresolved in this full-run evidence.",
+  "sourceEvidence": {
+    "description": "Canonical game, asset, and test directories remain identical to HEAD. Listed art/game inputs also match the preserved pre-run native comparison.",
+    "sourceHashes": {
+      "apps/browser/public/assets/arroyo-asphalt.webp": "12e88d94e7ce73ac8a94d351109650da262ca20f838a355cce415c4bf2a6a16a",
+      "apps/browser/public/assets/arroyo-details.webp": "6e52afeee96d9f897e3cb8b253bcacdae66bed31e4c02e3a534700b246d71a95",
+      "apps/browser/public/assets/arroyo-foliage.webp": "3b54fbaba32d6281b19346e41a60fb88f2858888cc73327edef4a1fcd30d539b",
+      "apps/browser/public/assets/arroyo-grass-clumps.webp": "e8cbf331e24e0bfeb4904c9e767e92d166c1283f476f619d6f854236d4c3b70d",
+      "apps/browser/public/assets/arroyo-grass.webp": "08d34e0817d828d21aa74ff32b43b4400ff325d58c96408dd31004b248d400a0",
+      "apps/browser/public/assets/arroyo-reflections.pmrem.gz": "baaee4d62728808e5713ca4fc74fc674a69172c356e3cb0cbfa7bd9f9e6d3c9f",
+      "apps/browser/public/assets/arroyo-sky.webp": "a4b66bd9f4ba837201bb517499df4b06fef2ae08ed7850ee35a57e9b6ddff0eb",
+      "apps/browser/public/assets/arroyo-surfaces.webp": "3d841a80edf8e956769e039747d38ef9837f985a2f3a9683a2515ad4fac4b09d",
+      "apps/browser/public/assets/bin.glb": "086ed48597d16096bfc08c320a17be1f8f44a186d1bf849853c66c57284c7e19",
+      "apps/browser/public/assets/coupe.glb": "e6d3a3585beeeef45387bb1253853c786885a445cb7b2623466eee92936c0735",
+      "apps/browser/public/assets/fence-low.glb": "79e4c3e03e5ace29a6b2e15eb70b7c90d2d026a80fa417cb936bc9b74f392ec5",
+      "apps/browser/public/assets/fence.glb": "b2c7c7b0bb8e44fe74c5744c96361ada3a18acee106306ed3a04beac94e070a4",
+      "apps/browser/public/assets/garden-low.glb": "bd515240ae8f8dcb05d539a3c354a114e9aeb4d0c10ee682a7233a280f605e56",
+      "apps/browser/public/assets/garden-shrub.glb": "08eef3cb1db02a4f55ba4b9721c88a2d3da9b9c2d98caf8c94f76de4bc95f9e4",
+      "apps/browser/public/assets/house-0.glb": "42cbcb9a02bbf1a550f28903b2b301ea05ee2de937d73b45ab411ab6d89e5aa0",
+      "apps/browser/public/assets/house-1.glb": "fef0a57b04cbf48fb0dd70ffd8844959a5e070a8ee840cb5f31d2e8ee46cf200",
+      "apps/browser/public/assets/house-2.glb": "2fde094bc5882189e67d689eedbdd48e51be16008bc6c3ac4004bde3f9478a0b",
+      "apps/browser/public/assets/house-3.glb": "f7722e73d6471e5431a10a9a47e65827093fe77be88af7e3abccc2d26ea2e6a2",
+      "apps/browser/public/assets/inventory.json": "ac457ad1ee7ba9e570fccf171acbed48b266e677180685a2ea48bac59bda0a0d",
+      "apps/browser/public/assets/lamp.glb": "1beb6ea081641fa80292c01b697895c4c45f29936d84628fd29fd9c2eaaf9b18",
+      "apps/browser/public/assets/mailbox.glb": "34c2f0adc8180dc0df68dbec19d2e9af2162fcd0ffc2acdd0442bb93ea97abe3",
+      "apps/browser/public/assets/neighbor.glb": "1cb95aa9ef86eb067d51e283eb03a11e9f85095aebe86a12fbfe097df5219d8f",
+      "apps/browser/public/assets/neighborhood-atlas.png": "03157ab45abb63aaf697823c9e6a8d927ac1b062ca27fdf21fcf7a8bd0948269",
+      "apps/browser/public/assets/palm.glb": "83e001d52a835436bf62bc39c361e229b83dd025f1ba8aa8ef09a41d6461233d",
+      "apps/browser/public/assets/pole.glb": "4a0fea05e8451630f0030e999b284cd50bd3ba6e0d237fb416043c6b549227c0",
+      "apps/browser/public/assets/roadside-oak.glb": "e34fd145e45d23567816a5d44dfa2bd8d02ae7af57b25080dcc8fb7ea511199a",
+      "apps/browser/public/assets/roadside-oak.glb.gz": "76591ea210f6d9ee37078f5515b1d5fea4536c45cb5c48a3baca5774809e2e85",
+      "apps/browser/public/assets/tree.glb": "1587be859a79d45c3418fc442b9d0f47ded1d7b4efd8d1858c074139673f11b4",
+      "apps/browser/public/assets/tree.glb.gz": "0ce7b7bb8329eef22a8fc8cf1575421a9856682a92bda70382b72184addf1b2e",
+      "apps/browser/src/antialias.ts": "29aad63b1b86354605f740bd8ce7b76bc0784afa84bebaad7ddb7ce315924161",
+      "apps/browser/src/assets.ts": "2f690c66ea6fba8fdeaa25e24181efedc1a78175ebe131a0b414a30334fb592c",
+      "apps/browser/src/bootstrap.ts": "d512c6fc9eaf612fc44cc93013b113ed233eabb17fe08ef560fad6af0fb3b98f",
+      "apps/browser/src/camera.ts": "ab610c86911ff9f33ae3a91a5cb7cf2f16f4528028bc8abe0eff055a635c9ed6",
+      "apps/browser/src/character-animation.ts": "0782bb10ef3fedfe9744937687dd63566e32abafae70d75e1420c4a62922e8bb",
+      "apps/browser/src/characters.ts": "92f0aea16b7e509bc9ed6f47ab298ae0f88b7ca2f74eafc447be560d1a99021b",
+      "apps/browser/src/collision.ts": "bc98b1275031f6b3de5d753bc572f1ce2f77fa5d8d7b54e5b7bb5c65749cd110",
+      "apps/browser/src/environment.ts": "cfb348a9da7007d29d432bde3ea4fc3a48a7e41dad83503d9d97e6f50dbd7798",
+      "apps/browser/src/foliage-mips.ts": "bf7fe1414777bf98dc331fcf323a747dd6a1d20e1df857cde5e5ad47a98cb15c",
+      "apps/browser/src/garden.ts": "7f830a04a2622d01d59367ca18c14bb876a8bc54d759a2c6d65293612d6b1d79",
+      "apps/browser/src/gateway.ts": "c62dd850b002cfb8fe762d28deaa663d0f8e643c75b9fe9e16ef60c3c2db8a97",
+      "apps/browser/src/graphics.ts": "7b61ef63871d3f3d1633c38dfd5341b5dfedc60b7346af366acf4b653867832c",
+      "apps/browser/src/ground-cover.ts": "8e5a7a64144227c24a5aa6c54ad735e07c7ee68b414602d39f21e0e88c757b89",
+      "apps/browser/src/horizon.ts": "42b93f9b283d936e31609094ee3a15c7a7480d2102405128720ee511597b0b7e",
+      "apps/browser/src/hud.ts": "af1dee461a169484731193bf2f5d123aa70dd8473311323dc670ce1564409b9f",
+      "apps/browser/src/interpolated-pose.ts": "5b647e17329d22245dbf9115e6df2037c4dfbf98734a16c3d49642d304d828c4",
+      "apps/browser/src/lighting.ts": "a88d2532b54083df2b8177b6cdc8300164dedc93ad449e759157cf3437dee057",
+      "apps/browser/src/main.ts": "a9263b57d32640e8dc73012982105ae05f4258f44fdb5adf97420bb96167a2f3",
+      "apps/browser/src/reflection-storage.ts": "8b7f07a99248d1885e509aa3e916b87982ad33019348ae87fd04e09635c13720",
+      "apps/browser/src/road-detail.ts": "668e02a7ea48e45a5317679960efaa624f574322b68d8a290792f85ff3094805",
+      "apps/browser/src/shadows.ts": "5201573101a62ae060534d77123c496f03b8b07617a1da5109341603b86c7be0",
+      "apps/browser/src/simulation-clock.ts": "4db0b03b6155b649c2d95c814ce8d117516bb4030cce17c02e423580636e6c60",
+      "apps/browser/src/snapshot-pose.ts": "bf2dbc7f268b8d097639723414315986e02d0e190cbabb332eec09b0d62c60c8",
+      "apps/browser/src/style.css": "33e340bf401787473e31dfd3b18a2ab63edca9016dd462217cdd29530a56e0aa",
+      "apps/browser/src/surface-lighting.ts": "a01bfef9ccd0a7685a18f0ef355dae70ab2d537c5252c8075c811d34fc58992f",
+      "apps/browser/src/surface-pixels.ts": "327e2cc8c0971fc872b5459c65694c92cfb38a2e25182395470db28f5afdbabe",
+      "apps/browser/src/surface-textures.ts": "2309c51c318e786734dd90470cbfcb3bb83e67eef2691cf6e3dc5c7028edac56",
+      "apps/browser/src/surface-weathering.ts": "fe7052a24c8987b77dfa97cf2e9c2654bbf0f4d604f9d27f695cf4d4168353ff",
+      "apps/browser/src/verges.ts": "c631fd92661b9b863525a1bfef409701b739e27dcf3be79e1b33461229232817",
+      "apps/browser/src/warmup.ts": "2db7cbf9d34a1a13b65fe8b52cd8509360903d7084741b216be60e9cadad3406",
+      "assets/horizon-relief.json": "94e2c411dacb524e2ee90c4cf5bd312fbf0c7b3e4355b2ba8f11c6bacf1c9b56",
+      "package-lock.json": "b99e5c05368deae7d0cd82a86505d33671cc2275c0852eed3f08afbd0b07bd74",
+      "package.json": "184b45dea4a55d0bbb5c32801804bcaf6fc199caeca30ce4b692a91a6b840f96",
+      "packages/shared/protocol.ts": "63056480786a5caf48b42fcef1d59427a7525b3eff7c4136e49b86f88758ccde",
+      "packages/shared/scene.mjs": "bf854bf1c671d16b9ac3ec47a08b02bfbd78b32a545bdb2d39ce814d621c5cd4",
+      "packages/shared/scene.ts": "1a3a1fd90813248ba8ad85ce22254e5e7ae1b8c0d05e2b4c6876df4833064c5b",
+      "packages/shared/scenes/neighborhood.json": "a396b576a26d665224ef38c643d9308866f886babab999baa767f9946db8422d",
+      "packages/shared/scenes/yard.json": "eafd501e8fef4ffa7df59050ec41059c4d86b53e510aa83e7479e936497ed5ac"
+    }
+  },
+  "archive": {
+    "path": ".dream-loop/full-native-acceptance-round12-failed",
+    "files": 150,
+    "bytes": 1847685931,
+    "manifestSha256": "db46627258296643bd6b35a2f2cba51c2220a5fd5b67693d82db712277c43721",
+    "artifacts": [
+      {
+        "path": "neighborhood/agreements.json",
+        "bytes": 62349,
+        "sha256": "0397868caffc856d9cda84825318255b374cfa20577eeeee4c007bc74e043774"
+      },
+      {
+        "path": "neighborhood/camera-obstruction.png",
+        "bytes": 81159,
+        "sha256": "92c5d5ec1394a8fdba14b3fd09fbbb85fa08f8452851c9df51378c50b06314cc"
+      },
+      {
+        "path": "neighborhood/cycles.json",
+        "bytes": 61,
+        "sha256": "2fe31e312c89a96f4a6f6ca48fe73b264cbc8e39881bb72908e9783c9b52d92c"
+      },
+      {
+        "path": "neighborhood/driver.png",
+        "bytes": 1395470,
+        "sha256": "25368f26f26eb243351620cf787557c999da9d58015dc9cd153e967dfb175d5d"
+      },
+      {
+        "path": "neighborhood/errors.json",
+        "bytes": 2,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      {
+        "path": "neighborhood/observations.json",
+        "bytes": 2139016,
+        "sha256": "5cf73341f539e0c7587393736e1f67fbd504afc63392ccf865b87748912b86ca"
+      },
+      {
+        "path": "neighborhood/passenger.png",
+        "bytes": 1309356,
+        "sha256": "7a621085275e5929cbba6b5858861c03b98606ca1e27937790fd42aa10cb0f79"
+      },
+      {
+        "path": "neighborhood/pedestrian.png",
+        "bytes": 1416044,
+        "sha256": "6882e71c96ce34e110ed0a1068d8cb5f9837693ae47d1fe11476d88e998b9468"
+      },
+      {
+        "path": "neighborhood/performance.json",
+        "bytes": 1403,
+        "sha256": "9bae2199a530bd631fd3dc11aee7a038a4a3c2230b4055dea6a75715d4c9bfda"
+      },
+      {
+        "path": "neighborhood/resident-rejoins.json",
+        "bytes": 1951,
+        "sha256": "5f191dd01a675bb5a67a9ad29d03182a9624346e0579f391efb1c3dab35c7840"
+      },
+      {
+        "path": "neighborhood/routes.json",
+        "bytes": 7923,
+        "sha256": "d2b9ade3d3effb03d1b4c4932df558313c514ddab860f1fc222757d8f129b3fa"
+      },
+      {
+        "path": "neighborhood/server.log",
+        "bytes": 1943129,
+        "sha256": "770654b6ed15f2b3dd2e6f82053fb4bbcabf9f0f5810d2e4a4058e57954e2fe7"
+      },
+      {
+        "path": "neighborhood/session-transitions.json",
+        "bytes": 8994,
+        "sha256": "adb74940587af51871f45b95fa7e82f1e664cc07694474a5048c77cd0d9d64ab"
+      },
+      {
+        "path": "neighborhood/soak.json",
+        "bytes": 71050,
+        "sha256": "189c9dbb5a6ba656eb852a27dffc50e7b101c628c2da5ae1841eae650ea075c1"
+      },
+      {
+        "path": "neighborhood/standard-driver.png",
+        "bytes": 1482145,
+        "sha256": "0689a6d6d6ae55b9951aeb834a50bdf828c6d1b0d294f44f4db5be33e7986045"
+      },
+      {
+        "path": "neighborhood/standard-passenger.png",
+        "bytes": 1424964,
+        "sha256": "02242b591cca4c49c62dee16cb3ce55b46c143f5508b0c6aa20c488cacf71447"
+      },
+      {
+        "path": "neighborhood/standard-street.png",
+        "bytes": 1486379,
+        "sha256": "07898975d56f14f51786dbfd8f639e6ba4c138501b7c2d76225be09caf35bf8d"
+      },
+      {
+        "path": "neighborhood/street.png",
+        "bytes": 1376504,
+        "sha256": "65b219c1a90c46f8808ba54ec01691b11fc3d03f8e1933c3268e506e1083cde6"
+      },
+      {
+        "path": "run.log",
+        "bytes": 372671,
+        "sha256": "7b5f0b7bccb0153bbadec4f38c5bec5e334e80f2a0fae2a9564fac2e34317afb"
+      },
+      {
+        "path": "verification/browser-environment.json",
+        "bytes": 698,
+        "sha256": "81c8395246e297deb2b06ffa0320203dd6615accf7b136a006d032b42a2fc7b2"
+      },
+      {
+        "path": "verification/browser-errors.json",
+        "bytes": 1773,
+        "sha256": "0b4b97e42538af63543d4455ae69e5272e2c6922a3dac5beb217f1f6211d50a7"
+      },
+      {
+        "path": "verification/driver-passenger.png",
+        "bytes": 153349,
+        "sha256": "6bad6eeaa758e0aedf3e7005bf881708b4a2dba416ec4750e64ed641238c3f74"
+      },
+      {
+        "path": "verification/mature-oak-geometry.json",
+        "bytes": 1607,
+        "sha256": "8c541dfcaba1ef3c20bd866a09dd7affba797ad29e5e5f3743f5d4e0af999c6c"
+      },
+      {
+        "path": "verification/position-agreements.json",
+        "bytes": 38406,
+        "sha256": "5a6176532a8464510ebccbadb0519137543134d891132ce1de381ac490e8882e"
+      },
+      {
+        "path": "verification/report/data/1dc6216ecb02a4038d699defd13b790fa449d438.md",
+        "bytes": 13462,
+        "sha256": "a5acdfb0e40ad5962d6bd8df8d7c4a73bf6978c1574e5d4c8fd347db8d695bfd"
+      },
+      {
+        "path": "verification/report/index.html",
+        "bytes": 961812,
+        "sha256": "cf4ab3fb1acd199ee4fdd0a1d4beafb70e55d08248b8a4897f7002625ab901d8"
+      },
+      {
+        "path": "verification/reset-agreements.json",
+        "bytes": 118752,
+        "sha256": "6d398a014c7113d528681fcde89d4e8c7cff26fd75b3160172024155af5cc64b"
+      },
+      {
+        "path": "verification/results.json",
+        "bytes": 676132,
+        "sha256": "f8282f8d154812f4a16573a43acaf33a55d7762f366e5a0d48758311c37b50dd"
+      },
+      {
+        "path": "verification/server-observations.json",
+        "bytes": 2490116,
+        "sha256": "8593657defb9747e1e6d05256c87b6f65eb2666d13969502e2d0fa089f533424"
+      },
+      {
+        "path": "verification/server.log",
+        "bytes": 1606582,
+        "sha256": "d00d5775cab057e7152ab7203a504eac36601a95ce010680b6fc5edb186e8de8"
+      },
+      {
+        "path": "verification/soak-complete.png",
+        "bytes": 177634,
+        "sha256": "ed728774a0423a5de678bebf77db7970ae6ede63160a9f4d2a3c4627163a9e2f"
+      },
+      {
+        "path": "verification/soak.json",
+        "bytes": 93,
+        "sha256": "2fba7703b00e6701756372b58622eb9e09f8b6489e0bcd6c9f086c506f484153"
+      },
+      {
+        "path": "verification/tests/.last-run.json",
+        "bytes": 96,
+        "sha256": "a13041c552cb05acf772cc7a1d474c78d30c3b0195ee0d1aa45ac8e9ae58e20f"
+      },
+      {
+        "path": "verification/tests/graphics-graphics-disabled-a37f8--without-starting-a-session/webgl-unavailable.png",
+        "bytes": 55046,
+        "sha256": "05d5525a21edd189d122c08de4a65afb8ce29fbadef4e1b9cbd2b395a5e52773"
+      },
+      {
+        "path": "verification/tests/poc-failures-duplicate-nam-dfffd-vailable-server-and-restart/error-context.md",
+        "bytes": 13462,
+        "sha256": "a5acdfb0e40ad5962d6bd8df8d7c4a73bf6978c1574e5d4c8fd347db8d695bfd"
+      },
+      {
+        "path": "verification/walking-chat.png",
+        "bytes": 189275,
+        "sha256": "85ca59a06b9ae6c149a46ac5a162a4b258f8191430053ae0b7d4e5985ed6a8ee"
+      },
+      {
+        "path": "verification/wall-exit.png",
+        "bytes": 144861,
+        "sha256": "f629d943d84331d3fb97f325e9d1cfd5f07a7adcd5330a81e0125633583720ff"
+      },
+      {
+        "path": "worker-before-restart/browser-errors.json",
+        "bytes": 274,
+        "sha256": "62a20b0eef75a7903b69e14d8159a3d75e8e2374dc1fd51d2d9d54f313369e4c"
+      },
+      {
+        "path": "worker-before-restart/manifest.json",
+        "bytes": 1536,
+        "sha256": "b0387c92bb238b21e668849144878bdb8d77cf16c5a464c0b8c950851c705789"
+      },
+      {
+        "path": "worker-before-restart/position-agreements.json",
+        "bytes": 1741,
+        "sha256": "a95c97190fed94273d1b22bb6eee168b22fe35e93979ce5dca3c0ffe76b6cb5f"
+      },
+      {
+        "path": "worker-before-restart/reset-agreements.json",
+        "bytes": 4707,
+        "sha256": "7170dde3553f1e5f3e6e23000099ef805c591e3df36a06f3841ead82301e4e74"
+      },
+      {
+        "path": "worker-before-restart/server-observations.json",
+        "bytes": 165139,
+        "sha256": "7de8cfb41193b63b24c7ca5dad2b600f0c8db451fabe34ff58e22638b8c2df9d"
+      },
+      {
+        "path": "worker-before-restart/tests/poc-failures-duplicate-nam-dfffd-vailable-server-and-restart/error-context.md",
+        "bytes": 13462,
+        "sha256": "a5acdfb0e40ad5962d6bd8df8d7c4a73bf6978c1574e5d4c8fd347db8d695bfd"
+      }
+    ]
+  }
+}

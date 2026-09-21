@@ -1,0 +1,54 @@
+{
+  "passed": true,
+  "scope": "Actual procedural environment excluding static asset instances, terrain and grass; actual GLB garden clearance covered separately by existing tests",
+  "baseline": {
+    "triangles": 81684,
+    "surfaceTriangles": 144,
+    "surfaceVertices": 164
+  },
+  "current": {
+    "triangles": 124536,
+    "surfaces": 10,
+    "surfaceTriangles": 47532,
+    "surfaceVertices": 24944
+  },
+  "addedProceduralTriangles": 42852,
+  "otherProceduralMeshCount": 9,
+  "otherProceduralMeshesByteExact": true,
+  "manifestUnchanged": true,
+  "planting": {
+    "gardenPlacements": {
+      "before": 30,
+      "after": 30
+    },
+    "vergeGardenPlacements": {
+      "before": 27,
+      "after": 27
+    },
+    "frontageGardenPlacements": {
+      "before": 84,
+      "after": 141
+    }
+  },
+  "allExistingPlantTransformsPreserved": true,
+  "frontageMatchesAcceptedPreview": true,
+  "addedGardenShrubInstances": 57,
+  "addedInstancedTriangles": 85272,
+  "addedInstanceMatrixBytes": 14592,
+  "additionalTextureAllocation": 0,
+  "materialClones": 2,
+  "removedDrawCalls": 1,
+  "qualityCycles": 3,
+  "qualityVertexEvaluations": 74832,
+  "checksPassed": 18,
+  "typecheckPassed": true,
+  "nativeBuildOrBrowserRun": false,
+  "sourceSha256": {
+    "apps/browser/src/environment.ts": "cfb348a9da7007d29d432bde3ea4fc3a48a7e41dad83503d9d97e6f50dbd7798",
+    "apps/browser/src/graphics.ts": "7b61ef63871d3f3d1633c38dfd5341b5dfedc60b7346af366acf4b653867832c",
+    "apps/browser/src/garden.ts": "7f830a04a2622d01d59367ca18c14bb876a8bc54d759a2c6d65293612d6b1d79",
+    "apps/browser/src/road-detail.ts": "668e02a7ea48e45a5317679960efaa624f574322b68d8a290792f85ff3094805",
+    "apps/browser/src/surface-weathering.ts": "fe7052a24c8987b77dfa97cf2e9c2654bbf0f4d604f9d27f695cf4d4168353ff",
+    "tests/surface-pixels.test.mjs": "8b5ffba5c724774e6ceac87fdab7e1ff95e7de82051430c2f8a62536fd0a8591"
+  }
+}

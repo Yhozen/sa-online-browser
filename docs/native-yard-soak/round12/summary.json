@@ -1,0 +1,94 @@
+{
+  "passed": true,
+  "scope": "Focused native yard soak; not full acceptance",
+  "commit": "9b340a7211f26983e089fdca988cfd57d302990f",
+  "runtimeCommit": "b49e186",
+  "scene": "6c1739ad64e66280",
+  "command": "docker compose exec -T -e POC_BROWSER_WS_ENDPOINT=ws://host.docker.internal:9344/sa-online-acceptance dev npx playwright test tests/browser/poc.spec.mjs --grep 'soak:'",
+  "stats": {
+    "startTime": "2026-09-13T10:54:55.321Z",
+    "duration": 657401.4210000001,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "active": {
+    "durationMs": 605182,
+    "rounds": 75,
+    "playerIds": [
+      0,
+      1
+    ],
+    "errors": []
+  },
+  "reset": {
+    "count": 75,
+    "maxElapsedMs": 267.69999998807907,
+    "maxBrowserDistance": 0,
+    "maxServerDistance": 0
+  },
+  "positions": {
+    "count": 150,
+    "maxDistance": 0.4824484632587822
+  },
+  "browserErrors": [
+    {
+      "name": "Soak_A",
+      "traceId": 1,
+      "errors": []
+    },
+    {
+      "name": "Soak_B",
+      "traceId": 2,
+      "errors": []
+    }
+  ],
+  "artifacts": {
+    "reset-agreements.json": {
+      "bytes": 118725,
+      "sha256": "67aeb2667b4b0143f49501f107d27dcc7816e5fe1317a12e81895c5b39f0e17b"
+    },
+    "position-agreements.json": {
+      "bytes": 37855,
+      "sha256": "b300603192b676d46260fee9c7ac12cece179bcca75a48aa5c0ed4a98820bf37"
+    },
+    "soak.json": {
+      "bytes": 93,
+      "sha256": "6f651d01c2acf83f360d23641220cf14677bfcb346da9dd295626896c0af84be"
+    },
+    "browser-errors.json": {
+      "bytes": 134,
+      "sha256": "e655e205fb808be1b86699adfd2c8b2e1ad5da3c41d3e2605095dbf6c16d5e4d"
+    },
+    "results.json": {
+      "bytes": 222946,
+      "sha256": "6aeda15e001379f4ce39e0c7a88ac206c8aafbc341ffacfa3a48a96be85ac358"
+    },
+    "server-observations.json": {
+      "bytes": 2114226,
+      "sha256": "c4ecbbca5aa24e7d2b75af5514dd98f6a87c1cf1a577fbdfebdf8dfd81b52881"
+    },
+    "server.log": {
+      "bytes": 1267922,
+      "sha256": "98ec1645aa1fb2e3e8974df1124c5eec5ea9c6e21738ebd9301147a4c6e060f1"
+    },
+    "Soak_A-1-0.zip": {
+      "bytes": 21968144,
+      "sha256": "d67c2604f4668886a280c57017a7c20325745dc7a14204e24c3b0877b00323f3"
+    },
+    "Soak_B-2-0.zip": {
+      "bytes": 21963714,
+      "sha256": "778919e2150b8e93b999b24794c54d2e06e143796bdca2949a03520f7062e6e8"
+    },
+    "videos/Soak_A-1-0.webm": {
+      "bytes": 61392402,
+      "sha256": "6347e0872330ba745f2168ef9e711d282e43be72e49a611b80fe914d1856e730"
+    },
+    "videos/Soak_B-2-0.webm": {
+      "bytes": 61155349,
+      "sha256": "4c7cd31c87117b86f012e072a346f8143b827aa999d4af59abbcd576ad655476"
+    }
+  },
+  "archivedAt": "2026-09-13T11:06:23.758Z"
+}

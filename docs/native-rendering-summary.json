@@ -1,0 +1,248 @@
+{
+  "verifiedAt": "2026-09-13T10:53:34.016Z",
+  "sourceRecord": "native-rendering-verification.json",
+  "sourceRecordSha256": "7e448b6cf7f1c99bb708b07b51be34843d5103b34449ea14283681b4ff00f636",
+  "runtimeCommit": "b49e186",
+  "auditGuardCommit": "9b340a7",
+  "sceneRevision": "6c1739ad64e66280",
+  "servedBuild": {
+    "/": {
+      "bytes": 449,
+      "sha256": "049ee04895ab56a9696d4c4abd40ac699b69014ac14cc328a6cb748bfdc936ea",
+      "lastModified": null,
+      "etag": null,
+      "matchesLocalDist": null,
+      "localDistModifiedAt": null,
+      "localDistStatus": "Not present on host; build may reside in the fixture container"
+    },
+    "/assets/index-CLSF4nJg.css": {
+      "bytes": 6991,
+      "sha256": "0655f264cfc9ca400288720b93a106c022f381daa4c7ce52c88deb326995367a",
+      "lastModified": null,
+      "etag": null,
+      "matchesLocalDist": null,
+      "localDistModifiedAt": null,
+      "localDistStatus": "Not present on host; build may reside in the fixture container"
+    },
+    "/assets/index-CwDjqzK3.js": {
+      "bytes": 577842,
+      "sha256": "63ad762b318c3018337edf9e3f670659ef4eb61e22b0adf25d35af3e4c7ce757",
+      "lastModified": null,
+      "etag": null,
+      "matchesLocalDist": null,
+      "localDistModifiedAt": null,
+      "localDistStatus": "Not present on host; build may reside in the fixture container"
+    },
+    "/assets/main-B6cZGs4C.js": {
+      "bytes": 1001087,
+      "sha256": "507908629ceba28a7194fa8c0eeb73695bcb44663b6bfe0e773a8886ad0ff2c5",
+      "lastModified": null,
+      "etag": null,
+      "matchesLocalDist": null,
+      "localDistModifiedAt": null,
+      "localDistStatus": "Not present on host; build may reside in the fixture container"
+    }
+  },
+  "allTargets60FPS": true,
+  "budgets": {
+    "downloadBytes": 48000000,
+    "triangles": 6000000,
+    "drawCalls": 1000,
+    "textureStorageBytes": 335544320,
+    "targetMedianFPS": 60
+  },
+  "errors": [],
+  "referenceIsolation": {
+    "enabled": true,
+    "targetId": "37D9DDC1B1728B3F58602FBC3B3FBD38",
+    "method": "Freeze the explicitly selected disconnected game page before each warmup; require unchanged frame count after idle and walking"
+  },
+  "referenceFrameCount": 556629,
+  "cases": [
+    {
+      "name": "standard-1280x720-dpr2",
+      "readyMs": 1621,
+      "renderSize": [
+        2560,
+        1440
+      ],
+      "renderer": {
+        "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+        "vendor": "Google Inc. (Apple)",
+        "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+      },
+      "idle": {
+        "frameIntervals": 2400,
+        "durationMs": 20000,
+        "medianFPS": 120.48192771085394,
+        "averageFPS": 120,
+        "p95FrameMs": 9.600000000002183,
+        "p99FrameMs": 10.200000000000728,
+        "maxFrameMs": 10.400000000001455,
+        "stallsOver50Ms": 0,
+        "maxSampledTriangles": 4946823,
+        "maxSampledCalls": 912,
+        "maxSampledDownloadBytes": 46575188,
+        "maxSampledTextureStorageBytes": 278916564,
+        "nativeResolutionThroughoutObservedSamples": true
+      },
+      "walking": {
+        "frameIntervals": 481,
+        "durationMs": 4008.2999999999993,
+        "medianFPS": 120.48192771085394,
+        "averageFPS": 120.00099792929673,
+        "p95FrameMs": 9.599999999998545,
+        "p99FrameMs": 10.099999999998545,
+        "maxFrameMs": 10.299999999999272,
+        "stallsOver50Ms": 0,
+        "maxSampledTriangles": 4985512,
+        "maxSampledCalls": 912,
+        "maxSampledDownloadBytes": 46575188,
+        "maxSampledTextureStorageBytes": 278916564,
+        "nativeResolutionThroughoutObservedSamples": true,
+        "distanceMetres": 20.083333333333318
+      },
+      "referenceUnchangedThroughout": true
+    },
+    {
+      "name": "low-1280x720-dpr2",
+      "readyMs": 1493.800000011921,
+      "renderSize": [
+        2560,
+        1440
+      ],
+      "renderer": {
+        "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+        "vendor": "Google Inc. (Apple)",
+        "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+      },
+      "idle": {
+        "frameIntervals": 2400,
+        "durationMs": 20000.2,
+        "medianFPS": 120.48192771085394,
+        "averageFPS": 119.99880001199988,
+        "p95FrameMs": 9.700000000000728,
+        "p99FrameMs": 10.200000000000728,
+        "maxFrameMs": 10.400000000001455,
+        "stallsOver50Ms": 0,
+        "maxSampledTriangles": 1615014,
+        "maxSampledCalls": 272,
+        "maxSampledDownloadBytes": 46575188,
+        "maxSampledTextureStorageBytes": 125133476,
+        "nativeResolutionThroughoutObservedSamples": true
+      },
+      "walking": {
+        "frameIntervals": 481,
+        "durationMs": 4007.5999999999985,
+        "medianFPS": 120.48192771085394,
+        "averageFPS": 120.02195827926943,
+        "p95FrameMs": 9.799999999999272,
+        "p99FrameMs": 10.299999999999272,
+        "maxFrameMs": 10.30000000000291,
+        "stallsOver50Ms": 0,
+        "maxSampledTriangles": 1615014,
+        "maxSampledCalls": 272,
+        "maxSampledDownloadBytes": 46575188,
+        "maxSampledTextureStorageBytes": 125133476,
+        "nativeResolutionThroughoutObservedSamples": true,
+        "distanceMetres": 20.083333333333318
+      },
+      "referenceUnchangedThroughout": true
+    },
+    {
+      "name": "standard-1672x941-dpr2",
+      "readyMs": 1546.5999999940395,
+      "renderSize": [
+        3344,
+        1882
+      ],
+      "renderer": {
+        "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+        "vendor": "Google Inc. (Apple)",
+        "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+      },
+      "idle": {
+        "frameIntervals": 2400,
+        "durationMs": 20000.1,
+        "medianFPS": 120.48192771085394,
+        "averageFPS": 119.99940000299999,
+        "p95FrameMs": 9.699999999998909,
+        "p99FrameMs": 10.200000000000728,
+        "maxFrameMs": 10.400000000001455,
+        "stallsOver50Ms": 0,
+        "maxSampledTriangles": 4946823,
+        "maxSampledCalls": 912,
+        "maxSampledDownloadBytes": 46575188,
+        "maxSampledTextureStorageBytes": 331056724,
+        "nativeResolutionThroughoutObservedSamples": true
+      },
+      "walking": {
+        "frameIntervals": 480,
+        "durationMs": 4001.4000000000015,
+        "medianFPS": 120.48192771080113,
+        "averageFPS": 119.95801469485676,
+        "p95FrameMs": 9.599999999998545,
+        "p99FrameMs": 10.299999999995634,
+        "maxFrameMs": 10.30000000000291,
+        "stallsOver50Ms": 0,
+        "maxSampledTriangles": 4985512,
+        "maxSampledCalls": 912,
+        "maxSampledDownloadBytes": 46575188,
+        "maxSampledTextureStorageBytes": 331056724,
+        "nativeResolutionThroughoutObservedSamples": true,
+        "distanceMetres": 20.083333333333318
+      },
+      "referenceUnchangedThroughout": true
+    },
+    {
+      "name": "low-1672x941-dpr2",
+      "readyMs": 1461.5999999940395,
+      "renderSize": [
+        3344,
+        1882
+      ],
+      "renderer": {
+        "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+        "vendor": "Google Inc. (Apple)",
+        "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+      },
+      "idle": {
+        "frameIntervals": 2400,
+        "durationMs": 20000,
+        "medianFPS": 120.48192771085394,
+        "averageFPS": 120,
+        "p95FrameMs": 9.799999999999272,
+        "p99FrameMs": 10.200000000000728,
+        "maxFrameMs": 10.400000000001455,
+        "stallsOver50Ms": 0,
+        "maxSampledTriangles": 1615014,
+        "maxSampledCalls": 272,
+        "maxSampledDownloadBytes": 46575188,
+        "maxSampledTextureStorageBytes": 177273636,
+        "nativeResolutionThroughoutObservedSamples": true
+      },
+      "walking": {
+        "frameIntervals": 481,
+        "durationMs": 4007.699999999997,
+        "medianFPS": 120.48192771085394,
+        "averageFPS": 120.01896349527169,
+        "p95FrameMs": 9.799999999999272,
+        "p99FrameMs": 10.200000000000728,
+        "maxFrameMs": 10.299999999999272,
+        "stallsOver50Ms": 0,
+        "maxSampledTriangles": 1615014,
+        "maxSampledCalls": 272,
+        "maxSampledDownloadBytes": 46575188,
+        "maxSampledTextureStorageBytes": 177273636,
+        "nativeResolutionThroughoutObservedSamples": true,
+        "distanceMetres": 20.083333333333318
+      },
+      "referenceUnchangedThroughout": true
+    }
+  ],
+  "limitations": [
+    "Short native samples on Apple M5 Pro; no claim of constant120FPS on every route or other hardware.",
+    "Logical WebGL texture allocation excludes driver overhead and renderbuffers. Geometry/download/call maxima are sparsely sampled.",
+    "Earlier round12 run with an active unrelated owned reference page is preserved as a workload-contaminated comparison, not the isolated benchmark."
+  ]
+}

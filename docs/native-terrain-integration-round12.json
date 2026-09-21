@@ -1,0 +1,124 @@
+{
+  "completedAt": "2026-09-13T10:38:32.852280+00:00",
+  "status": "integrated-native-source-verified",
+  "runtime": {
+    "path": "assets/horizon-relief.json",
+    "bytes": 859283,
+    "sha256": "94e2c411dacb524e2ee90c4cf5bd312fbf0c7b3e4355b2ba8f11c6bacf1c9b56"
+  },
+  "nativeSource": {
+    "path": "assets/source/horizon.blend",
+    "bytes": 6089441,
+    "sha256": "206b3e0416ce4da83de95c8bc75b31132ff689cdf85a961e077f7a0b39e56b59"
+  },
+  "provenance": {
+    "bytes": 6921,
+    "sha256": "f1d3ba91bb5e1f0dc3f33094e06e0d7a10df3bdedf4bd2cec947134113e77f82"
+  },
+  "native": {
+    "version": "5.2.1",
+    "buildHash": "9e2066aef7ef",
+    "executableSha256": "ea651e507c6b197df0e234bfa04e5ed43e7f4d498267a7df93fcb38f21928a5c",
+    "distribution": "explicit",
+    "platform": "darwin",
+    "architecture": "arm64"
+  },
+  "geometry": {
+    "layers": 3,
+    "triangles": 172800,
+    "vertices": 90783,
+    "runtimeAttributeAndIndexBytes": 3306375
+  },
+  "validation": {
+    "terrainAndAssetPipelineTestsPassed": 13,
+    "failed": 0,
+    "skipped": 0,
+    "typecheck": true,
+    "diffCheck": true,
+    "allCompletedProvenanceHashesMatch": true,
+    "packedCandidateByteIdentical": true
+  },
+  "browserBuilt": false,
+  "reflectionsRun": false,
+  "browserOrGPUInvoked": false,
+  "committed": false,
+  "coordinatedWith": [
+    "native_test_transport ground runtime freeze",
+    "native_assets selected model export completion"
+  ],
+  "ownedFiles": {
+    "apps/browser/src/horizon.ts": {
+      "bytes": 9542,
+      "sha256": "42b93f9b283d936e31609094ee3a15c7a7480d2102405128720ee511597b0b7e"
+    },
+    "assets/horizon-relief.json": {
+      "bytes": 859283,
+      "sha256": "94e2c411dacb524e2ee90c4cf5bd312fbf0c7b3e4355b2ba8f11c6bacf1c9b56"
+    },
+    "assets/source/horizon.blend": {
+      "bytes": 6089441,
+      "sha256": "206b3e0416ce4da83de95c8bc75b31132ff689cdf85a961e077f7a0b39e56b59"
+    },
+    "assets/source/horizon-build.json": {
+      "bytes": 6921,
+      "sha256": "f1d3ba91bb5e1f0dc3f33094e06e0d7a10df3bdedf4bd2cec947134113e77f82"
+    },
+    "assets/source/horizon-envelope-v3.json": {
+      "bytes": 2284878,
+      "sha256": "42b9fd6aba7e4e7e9416d33722b6661f3deb09ce34baccdc410a3812c0bae557"
+    },
+    "assets/source/horizon-envelope-v3.blend": {
+      "bytes": 3967327,
+      "sha256": "6d5f38fd94408bf478ebd5e867aece47f637a11097a431311b862dc8c941c03d"
+    },
+    "assets/source/horizon-envelope-v3-build.json": {
+      "bytes": 1233,
+      "sha256": "be46cd9215f7fc49559c7eb39c6194b2e6d3eb7bc97b80c20c282979f58e8612"
+    },
+    "assets/source/horizon-lighting.json": {
+      "bytes": 475,
+      "sha256": "1ef772e1425ae75861db0fb1b702ed3769944746ce39c27709a7782802e29ef5"
+    },
+    "tools/assets/horizon.py": {
+      "bytes": 1570,
+      "sha256": "6a4fb64c39bcd3579355e5a9c8f463b62e6733be7234cf044604c3ec44e86ef9"
+    },
+    "tools/assets/horizon-envelope-v3.py": {
+      "bytes": 15606,
+      "sha256": "9c738fa74fec6a155a838ecacde64ce37b6d52fae557164c66b85baf40e125cd"
+    },
+    "tools/assets/horizon-bake.mjs": {
+      "bytes": 25266,
+      "sha256": "eab572f404f65c8cecdff745cbdf7a02bd05b122f6daf96f8a85447cb88b503e"
+    },
+    "tools/assets/horizon-save.py": {
+      "bytes": 6958,
+      "sha256": "ae6bc76103272672d807b5c10fb7163d79f4565e8a1cb79f08a6a49c6c0acf68"
+    },
+    "tools/build-assets.mjs": {
+      "bytes": 11229,
+      "sha256": "06f52507fbabf20831ccefb4698613a7d3f3b57dd6f1f504c6a8bf6917ee8449"
+    },
+    "package.json": {
+      "bytes": 1047,
+      "sha256": "184b45dea4a55d0bbb5c32801804bcaf6fc199caeca30ce4b692a91a6b840f96"
+    },
+    "tests/terrain.test.mjs": {
+      "bytes": 13364,
+      "sha256": "59c47b3bb99ccb019351500c9bb1fb92876447cd3c12916726bac419638f1d8a"
+    },
+    "tools/summarize-verification.mjs": {
+      "bytes": 13970,
+      "sha256": "f3b9ee9909e7d942c30fb8fd387880cd1c281718a39d69d90c098707f796def2"
+    },
+    "tools/verify-native-rendering.mjs": {
+      "bytes": 27094,
+      "sha256": "1869fab215c24d33adc39f19b84a308b9fbd8ed3e94db1af50ebc08ec6cf8c93"
+    }
+  },
+  "limits": [
+    "Final integrated browser build, reflection refresh and native visual/performance/download acceptance remain outstanding.",
+    "A later change to hashed lighting/material/quality inputs requires rerunning the production terrain pipeline; do not hand-edit provenance.",
+    "Only terrain geometry and exact decoded fields are represented by the editable Blender source; its inspection material displays irradiance. Full geological texture and fog treatment remains in runtime horizon.ts."
+  ]
+}

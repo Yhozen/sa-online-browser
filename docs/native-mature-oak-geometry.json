@@ -1,0 +1,80 @@
+{
+  "candidatePath": "apps/browser/public/assets/roadside-oak.glb",
+  "placement": {
+    "asset": "roadside-oak",
+    "position": [
+      -13,
+      14,
+      9
+    ],
+    "rotation": 0
+  },
+  "generatedAt": "2026-09-13T09:13:32.087Z",
+  "geometry": {
+    "triangles": 9256,
+    "minimumArea": 0.00032408416880851,
+    "maximumLowWoodDifference": 0,
+    "leafBounds": {
+      "min": [
+        -3.5812911987304688,
+        -3.0911841392517068,
+        7.09478235244751
+      ],
+      "max": [
+        3.441462755203247,
+        3.406967878341677,
+        11.396501541137695
+      ]
+    },
+    "woodBounds": {
+      "min": [
+        -2.482083559036255,
+        -2.0580983161926247,
+        -0.021168066188692998
+      ],
+      "max": [
+        2.429581880569458,
+        2.36217522621155,
+        10.432263374328613
+      ]
+    },
+    "anchors": 720,
+    "maximumAttachmentGap": 0.03135811080418763
+  },
+  "clearance": {
+    "minimumRoadGap": 4.101135432720184,
+    "minimumTurningGap": 8.170745665044219
+  },
+  "landmarks": [
+    {
+      "name": "street-sign",
+      "sampled": 1333,
+      "occluded": 0,
+      "occludedPercent": 0
+    },
+    {
+      "name": "center-house",
+      "sampled": 4712,
+      "occluded": 0,
+      "occludedPercent": 0
+    },
+    {
+      "name": "center-palm",
+      "sampled": 1237,
+      "occluded": 0,
+      "occludedPercent": 0
+    },
+    {
+      "name": "lamp",
+      "sampled": 519,
+      "occluded": 0,
+      "occludedPercent": 0
+    },
+    {
+      "name": "left-palm",
+      "sampled": 2751,
+      "occluded": 739,
+      "occludedPercent": 26.862958924027627
+    }
+  ]
+}

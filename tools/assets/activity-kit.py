@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Original Arroyo driving-club / neighborhood meeting-point assets.
 
-Run with the pinned Blender 4.5.13, or execute after build.py's other extensions.
+Run through build-assets.mjs with Blender 4.5.13 or native Blender 5.2.1.
 Models are meters, Z up; the sign and bench face -Y, with bottom-center origins.
 No downloaded models, fonts, or newly generated bitmap dependencies are required.
 The sign's lettering is an original hand-authored single-line geometric alphabet.
@@ -12,6 +12,7 @@ Optional standalone authoring previews:
 """
 
 import bpy
+import argparse
 import math
 import pathlib
 import random
@@ -24,16 +25,26 @@ from mathutils import Vector, noise
 
 
 def build_activity_kit():
-    assert bpy.app.version[:3] == (4, 5, 13), bpy.app.version_string
-    root = pathlib.Path(__file__).resolve().parents[2]
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--output-root", type=pathlib.Path, default=pathlib.Path(__file__).resolve().parents[2])
+    selection = parser.add_mutually_exclusive_group()
+    selection.add_argument("--models")
+    selection.add_argument("--only")
+    parser.add_argument("--blender-version", choices=["4.5.13", "5.2.1"], default="4.5.13")
+    parser.add_argument("--preview", action="store_true")
+    args = parser.parse_args(sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else [])
+    assert bpy.app.version[:3] == tuple(map(int, args.blender_version.split("."))), bpy.app.version_string
+    names = {"activity-board", "activity-pylon", "activity-bench", "activity-planter", "activity-yucca"}
+    selected = set((args.models or args.only).split(",")) if args.models is not None or args.only is not None else names
+    if not selected or not selected <= names:
+        parser.error("Unknown activity model selection")
+    root = args.output_root.resolve()
     source = root / "assets/source"
     output = root / "apps/browser/public/assets"
     evidence = root / ".dream-loop/activity-assets"
     for path in (source, output, evidence):
         path.mkdir(parents=True, exist_ok=True)
-    args = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
-    only = args[args.index("--only") + 1] if "--only" in args else None
-    preview = "--preview" in args
+    preview = args.preview
     rng = random.Random(9020)
     bpy.context.preferences.filepaths.save_version = 0
     materials = {}
@@ -669,7 +680,7 @@ def build_activity_kit():
 
     report=[]
     for index,(name,builder) in enumerate([("activity-board",board),("activity-pylon",pylon),("activity-bench",bench),("activity-planter",planter),("activity-yucca",yucca)]):
-        if only and name != only:continue
+        if name not in selected:continue
         rng.seed(9020+index*1337)
         builder()
         report.append(finish(name))

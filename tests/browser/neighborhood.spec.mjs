@@ -2,10 +2,12 @@
 import { visualBudgets as budget } from "../../tools/visual-budgets.mjs";
 import { test, expect } from "@playwright/test";
 import { spawn } from "node:child_process";
+import { randomUUID } from "node:crypto";
 import { mkdirSync, writeFileSync, createWriteStream } from "node:fs";
 import { createGateway } from "../../services/gateway/server.mjs";
 import { loadScene } from "../../packages/shared/scene.mjs";
 import { installTextureAudit } from "../../tools/texture-audit.mjs";
+import { acceptanceConnectOptions } from "../../tools/browser-options.mjs";
 const URL = "http://127.0.0.1:3300",
   manifest = loadScene("neighborhood"),
   dir = process.env.POC_NEIGHBORHOOD_ARTIFACTS || "artifacts/neighborhood";
@@ -77,6 +79,7 @@ test.afterAll(async () => {
   writeFileSync(`${dir}/session-transitions.json`, JSON.stringify(sessionTransitions, null, 2));
 });
 async function session(browser, name, recording = true) {
+  const recordingId = `${name}-${randomUUID()}`;
   const context = await browser.newContext({
     viewport: { width: 1280, height: 720 },
     ...(recording
@@ -89,8 +92,11 @@ async function session(browser, name, recording = true) {
       : {}),
   });
   await context.addInitScript(() => localStorage.setItem("poc-quality", "low"));
+  // Native steering produces ~44 trace JPEGs/second in addition to the WebM.
+  // Keep action/DOM/network traces, explicit PNGs and continuous video; avoid
+  // recompressing that duplicate video in the emulated runner.
   if (recording)
-    await context.tracing.start({ screenshots: true, snapshots: true });
+    await context.tracing.start({ screenshots: !acceptanceConnectOptions(), snapshots: true });
   const page = await context.newPage();
   await context.addInitScript(installTextureAudit);
   page.on("pageerror", (e) => errors.push({ name, message: e.message }));
@@ -111,10 +117,16 @@ async function session(browser, name, recording = true) {
       let timer;
       try {
         if (recording) await Promise.race([
-          context.tracing.stop({ path: `${dir}/${name}.zip` }),
-          new Promise((_, reject) => {timer=setTimeout(() => reject(Error(`Trace flush timed out for ${name}`)),30000);}),
+          context.tracing.stop({ path: `${dir}/${recordingId}.zip` }),
+          // Remote traces retain every resource and stack; Playwright recompresses
+          // their archive in the runner before returning. Allow that file work
+          // separately from the unchanged one-second gameplay agreement gate.
+          new Promise((_, reject) => {timer=setTimeout(() => reject(Error(`Trace flush timed out for ${name}`)),acceptanceConnectOptions() ? 120000 : 30000);}),
         ]);
-      } finally { clearTimeout(timer);await context.close(); }
+      } finally {
+        clearTimeout(timer);await context.close();
+        if (acceptanceConnectOptions()) await page.video()?.saveAs(`${dir}/videos/${recordingId}.webm`);
+      }
     },
   };
 }
@@ -285,11 +297,11 @@ test("neighborhood: failed assets and scene mismatch never simulate a joined pla
   await page.unroute("**/assets/house-0.glb");
   await page.locator("#retry-assets").click();
   await expect(page.getByTestId("join")).toBeEnabled();
-  await page.route("**/assets/arroyo-foliage.png", r => r.fulfill({ contentType: "image/png", body: "corrupt texture" }));
+  await page.route("**/assets/arroyo-foliage.webp", r => r.fulfill({ contentType: "image/webp", body: "corrupt texture" }));
   await page.reload();
-  await expect(page.locator("#loading")).toContainText("Asset revision mismatch: arroyo-foliage.png", {timeout:60000});
+  await expect(page.locator("#loading")).toContainText("Asset revision mismatch: arroyo-foliage.webp", {timeout:60000});
   await expect(page.getByTestId("join")).toBeDisabled();
-  await page.unroute("**/assets/arroyo-foliage.png");
+  await page.unroute("**/assets/arroyo-foliage.webp");
   await page.route("**/assets/arroyo-reflections.pmrem.gz", r => r.fulfill({body:"corrupt reflection cache"}));
   await page.reload();
   await expect(page.locator("#loading")).toContainText("Asset revision mismatch: arroyo-reflections.pmrem.gz", {timeout:60000});
@@ -410,7 +422,9 @@ test("neighborhood: walking, fences, camera, occupants, loop and role swap", asy
 test("neighborhood: twenty reconnects release browser workers and server slots", async ({
   browser,
 }) => {
-  test.setTimeout(300000);
+  // Native-host admissions plus complete recorded artifacts measured ~29s per
+  // cycle through the emulated runner. Preserve all twenty cycles and releases.
+  test.setTimeout(acceptanceConnectOptions() ? 900000 : 300000);
   const ids = [];
   for (let i = 0; i < 20; i++) {
     const s = await session(browser, "ArroyoCycle");
@@ -526,7 +540,7 @@ test("neighborhood: ten minute recorded active session", async ({
 
 // Performance is measured without the instrumentation overhead of video and tracing.
 // The recorded soak above retains its own metrics, including capture overhead.
-test("neighborhood: two full-resolution cloud views meet the low graphics budget", async ({
+test("neighborhood: two full-resolution views meet the low graphics budget", async ({
   browser,
 }) => {
   test.setTimeout(240000);

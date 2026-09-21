@@ -1,0 +1,482 @@
+{
+  "at": "2026-09-13T05:53:38.402Z",
+  "log": ".dream-loop/motion-final-round7-server-preserved.log",
+  "logSha256": "5e0212f469bb75a8991c9e9b665fc02f2135ec70e8a8ca11d1c3098f9814b9e9",
+  "firstLine": 34429,
+  "sequence": [
+    {
+      "line": {
+        "event": "player",
+        "seq": 1199,
+        "player": 0,
+        "state": 1,
+        "vehicle": 0,
+        "seat": -1,
+        "x": -14.195,
+        "y": 10.192,
+        "z": 10,
+        "tick": 244993
+      },
+      "lineNumber": 34754
+    },
+    {
+      "line": {
+        "event": "player",
+        "seq": 1199,
+        "player": 1,
+        "state": 1,
+        "vehicle": 0,
+        "seat": -1,
+        "x": 4,
+        "y": 0,
+        "z": 10,
+        "tick": 244993
+      },
+      "lineNumber": 34755
+    },
+    {
+      "line": {
+        "event": "vehicle",
+        "seq": 1199,
+        "vehicle": 1,
+        "driver": 65535,
+        "passenger": 65535,
+        "x": 0,
+        "y": 6,
+        "z": 10,
+        "heading": 0,
+        "tick": 245000
+      },
+      "lineNumber": 34756
+    },
+    {
+      "line": {
+        "event": "player",
+        "seq": 1200,
+        "player": 0,
+        "state": 1,
+        "vehicle": 0,
+        "seat": -1,
+        "x": -14.667,
+        "y": 10.663,
+        "z": 10,
+        "tick": 245193
+      },
+      "lineNumber": 34757
+    },
+    {
+      "line": {
+        "event": "player",
+        "seq": 1200,
+        "player": 1,
+        "state": 1,
+        "vehicle": 0,
+        "seat": -1,
+        "x": 4,
+        "y": 0,
+        "z": 10,
+        "tick": 245193
+      },
+      "lineNumber": 34758
+    },
+    {
+      "line": {
+        "event": "vehicle",
+        "seq": 1200,
+        "vehicle": 1,
+        "driver": 65535,
+        "passenger": 65535,
+        "x": 0,
+        "y": 6,
+        "z": 10,
+        "heading": 0,
+        "tick": 245202
+      },
+      "lineNumber": 34759
+    },
+    {
+      "line": {
+        "event": "player",
+        "seq": 1201,
+        "player": 0,
+        "state": 1,
+        "vehicle": 0,
+        "seat": -1,
+        "x": -14.667,
+        "y": 10.663,
+        "z": 10,
+        "tick": 245392
+      },
+      "lineNumber": 34760
+    },
+    {
+      "line": {
+        "event": "player",
+        "seq": 1201,
+        "player": 1,
+        "state": 1,
+        "vehicle": 0,
+        "seat": -1,
+        "x": 4,
+        "y": 0,
+        "z": 10,
+        "tick": 245393
+      },
+      "lineNumber": 34761
+    },
+    {
+      "line": {
+        "event": "vehicle",
+        "seq": 1201,
+        "vehicle": 1,
+        "driver": 65535,
+        "passenger": 65535,
+        "x": 0,
+        "y": 6,
+        "z": 10,
+        "heading": 0,
+        "tick": 245402
+      },
+      "lineNumber": 34762
+    },
+    {
+      "line": {
+        "event": "player",
+        "seq": 1202,
+        "player": 0,
+        "state": 1,
+        "vehicle": 0,
+        "seat": -1,
+        "x": -14.667,
+        "y": 10.663,
+        "z": 10,
+        "tick": 245593
+      },
+      "lineNumber": 34763
+    },
+    {
+      "line": {
+        "event": "player",
+        "seq": 1202,
+        "player": 1,
+        "state": 1,
+        "vehicle": 0,
+        "seat": -1,
+        "x": 4,
+        "y": 0,
+        "z": 10,
+        "tick": 245594
+      },
+      "lineNumber": 34764
+    },
+    {
+      "line": {
+        "event": "vehicle",
+        "seq": 1202,
+        "vehicle": 1,
+        "driver": 65535,
+        "passenger": 65535,
+        "x": 0,
+        "y": 6,
+        "z": 10,
+        "heading": 0,
+        "tick": 245602
+      },
+      "lineNumber": 34765
+    },
+    {
+      "line": {
+        "event": "resetRequested",
+        "tick": 245613
+      },
+      "lineNumber": 34766
+    },
+    {
+      "line": {
+        "event": "reset",
+        "tick": 245815
+      },
+      "lineNumber": 34767
+    },
+    {
+      "line": {
+        "event": "player",
+        "seq": 1203,
+        "player": 0,
+        "state": 1,
+        "vehicle": 0,
+        "seat": -1,
+        "x": -14.667,
+        "y": 10.663,
+        "z": 10,
+        "tick": 245816
+      },
+      "lineNumber": 34768
+    },
+    {
+      "line": {
+        "event": "player",
+        "seq": 1203,
+        "player": 1,
+        "state": 1,
+        "vehicle": 0,
+        "seat": -1,
+        "x": 4,
+        "y": 0,
+        "z": 10,
+        "tick": 245818
+      },
+      "lineNumber": 34769
+    },
+    {
+      "line": {
+        "event": "vehicle",
+        "seq": 1203,
+        "vehicle": 1,
+        "driver": 65535,
+        "passenger": 65535,
+        "x": 0,
+        "y": 6,
+        "z": 10,
+        "heading": 0,
+        "tick": 245825
+      },
+      "lineNumber": 34770
+    },
+    {
+      "line": {
+        "event": "seatRejected",
+        "player": 0,
+        "seat": 0,
+        "reason": "distance",
+        "tick": 245857
+      },
+      "lineNumber": 34771
+    },
+    {
+      "line": {
+        "event": "player",
+        "seq": 1204,
+        "player": 0,
+        "state": 1,
+        "vehicle": 0,
+        "seat": -1,
+        "x": -4,
+        "y": 0,
+        "z": 10,
+        "tick": 245993
+      },
+      "lineNumber": 34772
+    },
+    {
+      "line": {
+        "event": "player",
+        "seq": 1204,
+        "player": 1,
+        "state": 1,
+        "vehicle": 0,
+        "seat": -1,
+        "x": 4,
+        "y": 0,
+        "z": 10,
+        "tick": 245994
+      },
+      "lineNumber": 34773
+    },
+    {
+      "line": {
+        "event": "vehicle",
+        "seq": 1204,
+        "vehicle": 1,
+        "driver": 65535,
+        "passenger": 65535,
+        "x": 0,
+        "y": 6,
+        "z": 10,
+        "heading": 0,
+        "tick": 246000
+      },
+      "lineNumber": 34774
+    },
+    {
+      "line": {
+        "event": "player",
+        "seq": 1205,
+        "player": 0,
+        "state": 1,
+        "vehicle": 0,
+        "seat": -1,
+        "x": -4,
+        "y": 0,
+        "z": 10,
+        "tick": 246191
+      },
+      "lineNumber": 34775
+    },
+    {
+      "line": {
+        "event": "player",
+        "seq": 1205,
+        "player": 1,
+        "state": 1,
+        "vehicle": 0,
+        "seat": -1,
+        "x": 4,
+        "y": 0,
+        "z": 10,
+        "tick": 246192
+      },
+      "lineNumber": 34776
+    },
+    {
+      "line": {
+        "event": "vehicle",
+        "seq": 1205,
+        "vehicle": 1,
+        "driver": 65535,
+        "passenger": 65535,
+        "x": 0,
+        "y": 6,
+        "z": 10,
+        "heading": 0,
+        "tick": 246200
+      },
+      "lineNumber": 34777
+    },
+    {
+      "line": {
+        "event": "player",
+        "seq": 1206,
+        "player": 0,
+        "state": 1,
+        "vehicle": 0,
+        "seat": -1,
+        "x": -4,
+        "y": 0,
+        "z": 10,
+        "tick": 246391
+      },
+      "lineNumber": 34778
+    },
+    {
+      "line": {
+        "event": "player",
+        "seq": 1206,
+        "player": 1,
+        "state": 1,
+        "vehicle": 0,
+        "seat": -1,
+        "x": 4,
+        "y": 0,
+        "z": 10,
+        "tick": 246392
+      },
+      "lineNumber": 34779
+    },
+    {
+      "line": {
+        "event": "vehicle",
+        "seq": 1206,
+        "vehicle": 1,
+        "driver": 65535,
+        "passenger": 65535,
+        "x": 0,
+        "y": 6,
+        "z": 10,
+        "heading": 0,
+        "tick": 246399
+      },
+      "lineNumber": 34780
+    },
+    {
+      "line": {
+        "event": "player",
+        "seq": 1207,
+        "player": 0,
+        "state": 1,
+        "vehicle": 0,
+        "seat": -1,
+        "x": -4,
+        "y": 0,
+        "z": 10,
+        "tick": 246593
+      },
+      "lineNumber": 34781
+    },
+    {
+      "line": {
+        "event": "player",
+        "seq": 1207,
+        "player": 1,
+        "state": 1,
+        "vehicle": 0,
+        "seat": -1,
+        "x": 4,
+        "y": 0,
+        "z": 10,
+        "tick": 246594
+      },
+      "lineNumber": 34782
+    },
+    {
+      "line": {
+        "event": "vehicle",
+        "seq": 1207,
+        "vehicle": 1,
+        "driver": 65535,
+        "passenger": 65535,
+        "x": 0,
+        "y": 6,
+        "z": 10,
+        "heading": 0,
+        "tick": 246601
+      },
+      "lineNumber": 34783
+    },
+    {
+      "line": {
+        "event": "player",
+        "seq": 1208,
+        "player": 0,
+        "state": 1,
+        "vehicle": 0,
+        "seat": -1,
+        "x": -4,
+        "y": 0,
+        "z": 10,
+        "tick": 246793
+      },
+      "lineNumber": 34784
+    },
+    {
+      "line": {
+        "event": "player",
+        "seq": 1208,
+        "player": 1,
+        "state": 1,
+        "vehicle": 0,
+        "seat": -1,
+        "x": 4,
+        "y": 0,
+        "z": 10,
+        "tick": 246793
+      },
+      "lineNumber": 34785
+    },
+    {
+      "line": {
+        "event": "vehicle",
+        "seq": 1208,
+        "vehicle": 1,
+        "driver": 65535,
+        "passenger": 65535,
+        "x": 0,
+        "y": 6,
+        "z": 10,
+        "heading": 0,
+        "tick": 246800
+      },
+      "lineNumber": 34786
+    }
+  ]
+}

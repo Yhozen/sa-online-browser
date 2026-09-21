@@ -1,0 +1,30 @@
+{
+  "at": "2026-09-13T05:55:10.165Z",
+  "failedVerification": {
+    "path": ".dream-loop/motion-final-round7/verification.json",
+    "sha256": "7f315d305d5bf5ccc2d6d850e64b64ee10eed00188fb7008120074a8aed12d7b"
+  },
+  "preservedServerLog": {
+    "path": ".dream-loop/motion-final-round7-server-preserved.log",
+    "sha256": "5e0212f469bb75a8991c9e9b665fc02f2135ec70e8a8ca11d1c3098f9814b9e9"
+  },
+  "currentTestSha256": "d722a65817c9511960440c78ff426c3088c4ec7826b6e7ad3ccbb4a240cf486a",
+  "originalTestSha256": "39ae4c0c6df9e2a6268a936b6bfc750857b5d7d49fb513061de2e0e2de99e633",
+  "movingResetStrictAcceptanceUnchanged": true,
+  "oldAuthoritativePosition": [
+    -14.667,
+    10.663,
+    10
+  ],
+  "car": [
+    0,
+    6,
+    10
+  ],
+  "oldDistance": 15.390401489239975,
+  "resetRequestedTick": 245613,
+  "resetCompletedTick": 245815,
+  "rejectedTick": 245857,
+  "firstCorrectedServerSampleTick": 245993,
+  "setupChange": "Require fresh reset corrections on both clients, then subsequent actual peer playerState agreeing with each corrected position at <0.001 m before requesting seats; 10s bounded event polling; no sleep delay or seat retry."
+}

@@ -5,7 +5,7 @@ import { readFileSync } from 'node:fs';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 async function load(name) {
-  const bytes=readFileSync(`apps/browser/public/assets/${name}.glb`);
+  const bytes=readFileSync(`${process.env.ASSET_TEST_DIR || "apps/browser/public/assets"}/${name}.glb`);
   const gltf=await new GLTFLoader().parseAsync(bytes.buffer.slice(bytes.byteOffset,bytes.byteOffset+bytes.byteLength),'');
   const root=new THREE.Group();gltf.scene.rotation.x=Math.PI/2;root.add(gltf.scene);root.updateMatrixWorld(true);
   return {root,gltf};
@@ -60,14 +60,15 @@ test('all four houses expose actual recessed glazing through front and side maso
     }
   }
 });
-test('oak normals follow its measured crown volume while original leaf UVs cover the alpha atlas',async()=>{
+test('oak normals form outward curved lobes while original leaf UVs cover the alpha atlas',async()=>{
   const {root}=await load('tree'),center=new THREE.Vector3(0,0,6.05),radii=new THREE.Vector3(3.85,3.75,2.25);
-  const bounds=new THREE.Box3(),samples=[],uvBounds=new THREE.Box2();
+  const bounds=new THREE.Box3(),samples=[],uvBounds=new THREE.Box2(),edges=[];
   root.traverse(o=>{
     if(!o.isMesh||!o.material.name.startsWith('foliage'))return;
     const p=o.geometry.getAttribute('position'),n=o.geometry.getAttribute('normal'),uv=o.geometry.getAttribute('uv');
     assert.equal(n.count,p.count);assert.equal(uv.count,p.count);
     const normalMatrix=new THREE.Matrix3().getNormalMatrix(o.matrixWorld);
+    const offset=samples.length;
     for(let i=0;i<p.count;i++){
       const position=new THREE.Vector3().fromBufferAttribute(p,i).applyMatrix4(o.matrixWorld);
       // Do not normalize before this assertion: malformed exported normals must fail.
@@ -78,6 +79,12 @@ test('oak normals follow its measured crown volume while original leaf UVs cover
       const texel=new THREE.Vector2().fromBufferAttribute(uv,i);uvBounds.expandByPoint(texel);
       assert.ok(Number.isFinite(texel.x+texel.y)&&texel.x>=-1e-6&&texel.x<=1.000001&&texel.y>=-1e-6&&texel.y<=1.000001);
       bounds.expandByPoint(position);samples.push({position,normal});
+    }
+    const index=o.geometry.index,visited=new Set();
+    for(let triangle=0;triangle<index.count;triangle+=3)for(const [a,b] of [[0,1],[1,2],[2,0]]){
+      const i=index.getX(triangle+a),j=index.getX(triangle+b),key=i<j?`${i}:${j}`:`${j}:${i}`;
+      if(visited.has(key))continue;visited.add(key);
+      if(samples[offset+i].position.distanceTo(samples[offset+j].position)>.01)edges.push([offset+i,offset+j]);
     }
   });
   assert.ok(samples.length>1000);
@@ -90,8 +97,27 @@ test('oak normals follow its measured crown volume while original leaf UVs cover
     const radial=position.clone().sub(center).divide(new THREE.Vector3(radii.x**2,radii.y**2,radii.z**2)).normalize();
     alignment+=normal.dot(radial);if(normal.z<0)lower++;
   }
-  assert.ok(alignment/samples.length>.90,'canopy light must follow crown volume rather than arbitrary card planes');
-  // Measured candidate is 41–43% downward-facing: both hemispheres exist around
+  // Local botanical lobes intentionally turn away from one inflated whole-tree
+  // ellipsoid. Retain broad outward coherence without erasing those shoulders.
+  assert.ok(alignment/samples.length>.5,'lobe normals must still point broadly out of the crown');
+  const assertCurvedLobes=normals=>{
+    let outward=0,curvature=0;
+    for(const [i,j] of edges){
+      const displacement=samples[j].position.clone().sub(samples[i].position);
+      // A convex shoulder's outward normals diverge as its surface separates.
+      // Measure actual mesh edges, independently of recipe lobe centers/mixes.
+      const bending=normals[j].clone().sub(normals[i]).dot(displacement)/displacement.lengthSq();
+      if(bending>0)outward++;curvature+=bending;
+    }
+    assert.ok(edges.length>10000,'sample the actual connected folded leaf surfaces');
+    assert.ok(outward/edges.length>.95,'leaf normal changes must describe convex outward shoulders');
+    assert.ok(curvature/edges.length>.2,'retain substantial spatial normal variation, not flat card lighting');
+  };
+  assertCurvedLobes(samples.map(s=>s.normal));
+  // Prove that the independent shape check detects collapsed and reversed fields.
+  assert.throws(()=>assertCurvedLobes(samples.map(()=>new THREE.Vector3(0,0,1))));
+  assert.throws(()=>assertCurvedLobes(samples.map(s=>s.normal.clone().negate())));
+  // Measured candidate is 49% downward-facing: both hemispheres exist around
   // the actual crown center. The old 5.15m center incorrectly forced >91% upward.
   assert.ok(lower/samples.length>.25&&lower/samples.length<.55,'retain a substantial shaded lower hemisphere without inverting the crown');
   assert.ok(uvBounds.min.x<.001&&uvBounds.min.y<.001&&uvBounds.max.x>.999&&uvBounds.max.y>.999,'leaf cards must retain complete original atlas UV coverage');

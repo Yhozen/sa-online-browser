@@ -14,14 +14,22 @@ run(process.execPath, [
   "--test",
   "tests/scene.test.mjs",
   "tests/simulation-clock.test.mjs",
+  "tests/snapshot-pose.test.mjs",
+  "tests/reset-observer.test.mjs",
+  "tests/acceptance-browser-heartbeat.test.mjs",
   "tests/reflection.test.mjs",
   "tests/foliage-mips.test.mjs",
+  "tests/canopy-lighting.test.mjs",
+  "tests/surface-pixels.test.mjs",
   "tests/character-animation.test.mjs",
   "tests/challenge-state.test.mjs",
   "tests/audio.test.mjs",
   "tests/vehicle-presentation.test.mjs",
+  "tests/terrain.test.mjs",
+  "tests/street-oaks.test.mjs",
+  "tests/mature-oak.test.mjs",
 ]);
-run(process.execPath, ["--experimental-transform-types", "--test", "tests/assets.test.mjs", "tests/verges.test.mjs", "tests/activity-assets.test.mjs"]);
+run(process.execPath, ["--experimental-transform-types", "--test", "tests/assets.test.mjs", "tests/verges.test.mjs", "tests/garden.test.mjs", "tests/asset-pipeline.test.mjs", "tests/activity-assets.test.mjs"]);
 run(process.execPath, ["--test", "tests/activity-browser.test.mjs"]);
 run("ctest", ["--test-dir", "native/build", "--output-on-failure"]);
 run("npm", ["run", "build:browser"]);

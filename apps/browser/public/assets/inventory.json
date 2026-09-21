@@ -21,41 +21,49 @@
       "bytes": 524796,
       "sha256": "23742dd473bbce0923fdd910b22622884b4608603ce74976d7a75b18ec625776"
     },
-    "arroyo-asphalt.png": {
-      "bytes": 3594191,
-      "sha256": "df6aa654341074cff7d9b324f115a00ab91a5eaa46afe4daaf723374ab87c87f"
+    "arroyo-asphalt.webp": {
+      "bytes": 2644378,
+      "sha256": "12e88d94e7ce73ac8a94d351109650da262ca20f838a355cce415c4bf2a6a16a"
     },
-    "arroyo-details.png": {
-      "bytes": 3574318,
-      "sha256": "5dc6dd4744e68f408c4ede5e263ad435f42aa9abf2f4b07da915c9130a688a52"
+    "arroyo-details.webp": {
+      "bytes": 2357446,
+      "sha256": "6e52afeee96d9f897e3cb8b253bcacdae66bed31e4c02e3a534700b246d71a95"
     },
-    "arroyo-foliage.png": {
-      "bytes": 1561388,
-      "sha256": "603140ee50b79a8da0f06034276e3b9eddc3dd8c560d679e37ddc682d7be3073"
+    "arroyo-foliage.webp": {
+      "bytes": 1131330,
+      "sha256": "3b54fbaba32d6281b19346e41a60fb88f2858888cc73327edef4a1fcd30d539b"
+    },
+    "arroyo-grass-clumps.webp": {
+      "bytes": 1468482,
+      "sha256": "e8cbf331e24e0bfeb4904c9e767e92d166c1283f476f619d6f854236d4c3b70d"
+    },
+    "arroyo-grass.webp": {
+      "bytes": 2840886,
+      "sha256": "08d34e0817d828d21aa74ff32b43b4400ff325d58c96408dd31004b248d400a0"
     },
     "arroyo-reflections.pmrem.gz": {
-      "bytes": 10852682,
-      "sha256": "47ee622eba8b1718d3179bf837998d457f5985715a19850b44d7fa6a04391740"
+      "bytes": 11665360,
+      "sha256": "4864e9d148976eb2f67ba2be994243f4ded5d51fbf97f9cdde579ae8076d81bd"
     },
-    "arroyo-sky.png": {
-      "bytes": 1281272,
-      "sha256": "c045ac5131befcdb1e43fe6b2036ad0b487bfd0878453ca6ae1bc92c6d1cec9c"
+    "arroyo-sky.webp": {
+      "bytes": 1029670,
+      "sha256": "a4b66bd9f4ba837201bb517499df4b06fef2ae08ed7850ee35a57e9b6ddff0eb"
     },
     "arroyo-start-paint.png": {
       "bytes": 599455,
       "sha256": "2294081c7ba5469b5ba19d263c4930152cb41603206b84ec333c54a5f55857a9"
     },
-    "arroyo-surfaces.png": {
-      "bytes": 3444449,
-      "sha256": "53f7d61fbc5e8741fbbc3bf373c60d241a226010ca2c3d88d0ca6fa4bcf12578"
+    "arroyo-surfaces.webp": {
+      "bytes": 2304636,
+      "sha256": "3d841a80edf8e956769e039747d38ef9837f985a2f3a9683a2515ad4fac4b09d"
     },
     "bin.glb": {
       "bytes": 26804,
       "sha256": "086ed48597d16096bfc08c320a17be1f8f44a186d1bf849853c66c57284c7e19"
     },
     "coupe.glb": {
-      "bytes": 2746064,
-      "sha256": "e6d3a3585beeeef45387bb1253853c786885a445cb7b2623466eee92936c0735"
+      "bytes": 2761200,
+      "sha256": "b15774812b3664a5906100f3ee9c25629f209c19806d6fb8e4c632d5be2a4790"
     },
     "fence-low.glb": {
       "bytes": 9696,
@@ -64,6 +72,14 @@
     "fence.glb": {
       "bytes": 47904,
       "sha256": "b2c7c7b0bb8e44fe74c5744c96361ada3a18acee106306ed3a04beac94e070a4"
+    },
+    "garden-low.glb": {
+      "bytes": 216084,
+      "sha256": "bd515240ae8f8dcb05d539a3c354a114e9aeb4d0c10ee682a7233a280f605e56"
+    },
+    "garden-shrub.glb": {
+      "bytes": 102380,
+      "sha256": "08eef3cb1db02a4f55ba4b9721c88a2d3da9b9c2d98caf8c94f76de4bc95f9e4"
     },
     "house-0.glb": {
       "bytes": 2214460,
@@ -90,24 +106,36 @@
       "sha256": "34c2f0adc8180dc0df68dbec19d2e9af2162fcd0ffc2acdd0442bb93ea97abe3"
     },
     "neighbor.glb": {
-      "bytes": 7109104,
-      "sha256": "06fe2ad041ad7ed4d2877c097433bb1bf360fc465df254a5f1e032be7eaa8eac"
+      "bytes": 6521848,
+      "sha256": "fe3aa34b83ff038774d06675ea3fa123c6532149cc8a0f26e1746d26350915be"
     },
     "neighborhood-atlas.png": {
       "bytes": 3529016,
       "sha256": "03157ab45abb63aaf697823c9e6a8d927ac1b062ca27fdf21fcf7a8bd0948269"
     },
     "palm.glb": {
-      "bytes": 1777472,
-      "sha256": "c818602e9276dacf113e43d4222fc0c8366c7c40ff5495673146321cb6bb83a6"
+      "bytes": 881160,
+      "sha256": "83e001d52a835436bf62bc39c361e229b83dd025f1ba8aa8ef09a41d6461233d"
     },
     "pole.glb": {
       "bytes": 10416,
       "sha256": "4a0fea05e8451630f0030e999b284cd50bd3ba6e0d237fb416043c6b549227c0"
     },
+    "roadside-oak.glb": {
+      "bytes": 726552,
+      "sha256": "cf70689b2314e8d480a9fa50c5de8c9f46a53665f04286858db382206a102ef3"
+    },
+    "roadside-oak.glb.gz": {
+      "bytes": 449731,
+      "sha256": "3c99cbea1e4316b020733616fb5ef7f2d9e53322983e0adf4fc89431feefdb7e"
+    },
     "tree.glb": {
-      "bytes": 768360,
-      "sha256": "36091bbf80302d24fbeb5ac77f78e170ac547c674f2a4e9977d0fbba89c7eab2"
+      "bytes": 726496,
+      "sha256": "15ac566413627cf0221e0d2b765b69f7b4f901b2202b117c84b616bba7dcdb6f"
+    },
+    "tree.glb.gz": {
+      "bytes": 448792,
+      "sha256": "3fc8c0a6d034ceb65a77755670c1e6367e624d4d80719e721102586a28c0b770"
     }
   }
 }

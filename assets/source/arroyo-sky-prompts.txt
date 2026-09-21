@@ -1,0 +1,56 @@
+EDIT 1
+
+Use case: lighting-weather.
+Asset type: original render-ready 360-degree equirectangular sky environment texture, a full 2:1 panorama, 2048 x 1024 requested.
+Input image 1 is the EDIT TARGET: the existing Arroyo sky panorama. Input image 2 is a LIGHTING AND CLOUD-CHARACTER REFERENCE ONLY: the ideal game screenshot. Output only the panorama texture, never the game scene.
+
+Edit the first image to retain a believable clear blue afternoon sky while rebuilding its cloud distribution. The current image puts nearly all substantial cumulus too far overhead. We need roughly THREE TIMES the visible cumulus area at low elevation when a street-level camera looks toward the horizon. Author broad, beautifully modeled, naturally irregular fair-weather cumulus banks with soft warm-white illuminated tops, restrained cool blue-gray undersides, and airy detailed edges. Keep rich blue channels between cloud groups; this is partly cloudy afternoon, not overcast or sunset. Match the second reference's softly sunlit cloud volumes and clean in-engine clarity without copying any objects or composition from that screenshot.
+
+Exact projection requirements:
+- A complete 360° horizontal by 180° vertical latitude-longitude/equirectangular image, width exactly twice height. No fisheye or perspective photograph.
+- The horizon is EXACTLY at y = 0.500 of image height, completely level across the width. Upper half is sky; lower half is featureless neutral medium-gray lower hemisphere. No land, ground, water, geometry, or horizon silhouette.
+- Place MOST of the substantial cumulus volume 5–30 degrees ABOVE the horizon: normalized image rows y = 0.333 through 0.472. This numerical placement is critical. Broad cloud bodies should rise from low bases near y = 0.44–0.47 toward y = 0.33–0.39, with varied heights and depths. The low-elevation band should contain large distinct cumulus shapes over roughly half its area, not tiny distant specks or one flat haze stripe.
+- Spread these low cloud groups around the panorama so ordinary horizon-facing views see generous cloud coverage, especially across the middle horizontal two-thirds. Some higher clouds can extend to y = 0.22–0.32, but do not move the main clouds toward the zenith.
+- Respect spherical distortion toward the top pole, and make the left and right edges continue seamlessly at the 360° wrap.
+- Retain a restrained, pale warm horizon haze at y = 0.48–0.50. Keep the broad upper sky visibly blue, with warm sunlight limited to cloud highlights and a narrow horizon transition. Do not tint the entire image orange.
+
+Quality and invariants: original high-quality bitmap sky for a real-time game, soft but well-defined cloud volumes and continuous clean gradients, no film grain, speckles, repeated stamped cloud shapes, excessive sharpening, halos, visible sun disk, lens flare, aurora, stars, buildings, people, vehicles, vegetation, land, text, marks, borders, labels, or watermark. Keep the lower half neutral gray and featureless. Deliver one finished panorama texture.
+
+EDIT 2
+
+Use case: precise-object-edit.
+Edit target: this single supplied equirectangular sky panorama. Make ONE precise layout correction to it, preserving all the excellent blue sky, broad warm-white cumulus cloud shapes, detailed cloud shading, and neutral gray lower hemisphere.
+
+The current horizontal SKY/GRAY BOUNDARY is too low, at approximately 54.5% of image height (around row 484 of this 887-pixel-high image). RAISE THE BOUNDARY BY ABOUT 40 PIXELS so the horizon is EXACTLY HALFWAY DOWN THE IMAGE at y = 50.0% (row 443.5). Compress the entire existing upper sky slightly in the vertical direction into the TOP EXACT HALF, and extend the featureless gray lower hemisphere upward to occupy the BOTTOM EXACT HALF. This is a precise equirectangular projection correction, not a change in weather. The two halves must be equal height. Do not leave the boundary below the centerline. Keep a narrow natural pale warm haze just ABOVE the new centerline and the medium neutral gray immediately BELOW it.
+
+Keep the image as a 2:1 full 360° longitude × 180° latitude panorama; top is zenith, exact image centerline is horizon, bottom is nadir. Preserve the cloud-rich band 5–30 degrees above the corrected horizon, with the large cloud bodies concentrated around normalized image rows y=.33–.47, and preserve the deep clear blue elsewhere. Maintain continuous left/right wrap. Lower half remains absolutely featureless neutral gray: no clouds, objects, land, sea or pattern below the midpoint. Keep all cloud colors and fine detail. No new objects, sun disk, text, labels, border, orange color wash, grain, halos or artifacts. Output only the corrected panorama bitmap.
+
+EDIT 3
+
+Use case: precise-object-edit.
+Edit target: the supplied accepted 2:1 equirectangular sky environment panorama. Repair ONLY its horizontal wrap seam. Preserve the accepted afternoon blue palette, generous warm-white cumulus, cloud-rich low elevations, and the exact centered horizon.
+
+This is a 360-degree environment texture: the LEFT EDGE touches the RIGHT EDGE directly when wrapped onto the sky sphere. They must join continuously, pixel-row by pixel-row. At present, around image rows 270–310 (about 27–35 degrees above the horizon), a bright white cumulus cloud reaches one edge while blue sky reaches the opposite edge. This produces an obvious vertical cut in the game. Fix that mismatched cloud silhouette and all other side-edge discontinuities.
+
+Use this robust seam treatment: in a narrow band within about 4 percent of EACH horizontal edge, shape the few edge-touching cumulus fragments back into natural rounded endings before they hit the image boundary. Make the outermost edge columns show the SAME uninterrupted blue-sky/haze vertical gradient on both sides. There should be a small natural clear-blue gap centered on the 360-degree wrap, with matching color, brightness and gradient at corresponding rows. Feather the revised cloud shapes naturally into the unchanged interior by about 8 percent of image width. The gap must read as ordinary sky between cloud groups, not a rectangular edited strip. If any very distant horizon cloud detail crosses an edge, its exact shape/color must continue at the opposite edge. Keep at least the middle 84 percent of the panorama unchanged, especially the large cumulus banks.
+
+Critical invariants:
+- Entire output is one complete 360° horizontal × 180° vertical equirectangular panorama, exactly 2:1 aspect ratio.
+- HORIZON REMAINS EXACTLY AT THE VERTICAL MIDPOINT y = 0.500. Upper half sky, lower half featureless neutral gray. Do not shift, crop or tilt the horizon.
+- Preserve the soft warm-white, cool-shaded cumulus concentrated 5–30° above the horizon, normalized image rows y=.333–.472.
+- Preserve the accepted exposure and blue color; do not darken the panorama, turn it orange, flatten the cloud shading or add overall haze.
+- Keep the entire lower hemisphere neutral gray with corresponding left/right edges matching there as well.
+- No seam, dividing line, bands, repeated/mirrored cloud pattern, rectangular clear patches, objects, land, text, sun disk, halos, film grain or new visual elements.
+Output only the corrected original panorama bitmap. Prioritize invisible left/right wrap continuity over keeping the two tiny mismatched cloud fragments at the outer edges.
+
+EDIT 4
+
+Edit the supplied sky PANORAMA (image 1). Image 2 is only the target cloud character from the game concept; never output its scene. Output one 2:1, 360° equirectangular sky texture, with its horizon exactly at half image height and the lower half featureless neutral gray.
+
+Make these two precise corrections:
+
+1. SEAMLESS LEFT/RIGHT WRAP. There must be NO cloud fragments touching either vertical image edge. Make the outermost 90 pixels on BOTH sides uninterrupted clear blue sky above the horizon, transitioning to the SAME pale horizon haze at the centerline and SAME neutral gray below. The colors of the very first and last pixel columns must match at every row. Gently reshape nearby clouds into natural rounded endings before they reach those edge strips; no rectangular cutoff or visible edited panel. The clear gap should look like ordinary blue space between clouds when the image wraps. Especially remove edge-touching clouds around rows 270–380: the previous attempt still left white cloud on one side and blue sky on the other, which is unacceptable for a panorama.
+
+2. LIGHTER, AIRIER CUMULUS. Reduce the overall area of the current dense low cumulus banks by about 35–40 percent, retaining their presence 5–30° above the horizon (normalized y=.333–.472) but opening much wider blue channels between them. Break large heavy cloud banks into several smaller wispy-edged fair-weather cumulus groups, keeping natural rounded volume. Match image 2's approximately 25–30% visible cloud coverage, with predominantly blue afternoon sky. Lighten the cloud undersides considerably: delicate pale warm white with subtle cool-gray volume, never large dark-gray bottoms. Keep the highlights warm white and keep the blue sky clear and naturally saturated. Do not make the image hazy, overcast, chalky or uniformly orange.
+
+Preserve the horizon EXACTLY at y=.500 and the full 2:1 equirectangular projection. Keep the lower half neutral gray, without land, sea or objects. Preserve clean continuous gradients and credible cloud detail. No mirrored/repeated clouds, grain, text, sun disk, halos, harsh outlines, objects, borders or artifacts. This is a seamless render-ready sky texture, not a photograph of a flat sky rectangle. Prioritize exact edge continuity and smaller airy cumulus.

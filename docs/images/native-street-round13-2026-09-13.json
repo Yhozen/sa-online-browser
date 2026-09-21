@@ -1,0 +1,27 @@
+{
+  "kind": "actual native Chrome gameplay screenshot",
+  "capturedAt": "2026-09-13T12:38:49.864Z",
+  "sourceBaseCommit": "2108faa",
+  "sourceEvidence": "../native-rendering-round13-summary.json",
+  "scene": {
+    "id": "neighborhood",
+    "revision": "7ef8f91ef0fd9fec",
+    "ready": true
+  },
+  "cssSize": [
+    1672,
+    941
+  ],
+  "nativeDrawingBuffer": [
+    3344,
+    1882
+  ],
+  "dpr": 2,
+  "path": "docs/images/native-street-round13-2026-09-13.png",
+  "bytes": 2645332,
+  "sha256": "a889ae902fbe4cb00e6eb092f8f6936e39925b942ef05a2d626c79d9b9db76a8",
+  "browser": "Chrome/153.0.8010.37",
+  "errors": [],
+  "quality": "standard",
+  "note": "Native DPR2 rendering; CDP captures1672x941 comparison PNG. No image post-processing."
+}

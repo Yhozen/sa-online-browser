@@ -1,0 +1,191 @@
+{
+  "regions": {
+    "curb_sidewalk": [
+      430,
+      530,
+      655,
+      780
+    ],
+    "middle_road": [
+      800,
+      300,
+      1020,
+      425
+    ],
+    "terrain": [
+      1470,
+      123,
+      1570,
+      162
+    ],
+    "front_lawn": [
+      170,
+      415,
+      330,
+      510
+    ]
+  },
+  "rows": [
+    {
+      "quality": "standard",
+      "cycle_capture": 2,
+      "region": "curb_sidewalk",
+      "max_channel_difference": 0,
+      "mean_absolute_channel_difference": 0.0,
+      "changed_pixels": 0
+    },
+    {
+      "quality": "standard",
+      "cycle_capture": 2,
+      "region": "middle_road",
+      "max_channel_difference": 0,
+      "mean_absolute_channel_difference": 0.0,
+      "changed_pixels": 0
+    },
+    {
+      "quality": "standard",
+      "cycle_capture": 2,
+      "region": "terrain",
+      "max_channel_difference": 0,
+      "mean_absolute_channel_difference": 0.0,
+      "changed_pixels": 0
+    },
+    {
+      "quality": "standard",
+      "cycle_capture": 2,
+      "region": "front_lawn",
+      "max_channel_difference": 0,
+      "mean_absolute_channel_difference": 0.0,
+      "changed_pixels": 0
+    },
+    {
+      "quality": "standard",
+      "cycle_capture": 4,
+      "region": "curb_sidewalk",
+      "max_channel_difference": 0,
+      "mean_absolute_channel_difference": 0.0,
+      "changed_pixels": 0
+    },
+    {
+      "quality": "standard",
+      "cycle_capture": 4,
+      "region": "middle_road",
+      "max_channel_difference": 0,
+      "mean_absolute_channel_difference": 0.0,
+      "changed_pixels": 0
+    },
+    {
+      "quality": "standard",
+      "cycle_capture": 4,
+      "region": "terrain",
+      "max_channel_difference": 0,
+      "mean_absolute_channel_difference": 0.0,
+      "changed_pixels": 0
+    },
+    {
+      "quality": "standard",
+      "cycle_capture": 4,
+      "region": "front_lawn",
+      "max_channel_difference": 0,
+      "mean_absolute_channel_difference": 0.0,
+      "changed_pixels": 0
+    },
+    {
+      "quality": "standard",
+      "cycle_capture": 6,
+      "region": "curb_sidewalk",
+      "max_channel_difference": 0,
+      "mean_absolute_channel_difference": 0.0,
+      "changed_pixels": 0
+    },
+    {
+      "quality": "standard",
+      "cycle_capture": 6,
+      "region": "middle_road",
+      "max_channel_difference": 0,
+      "mean_absolute_channel_difference": 0.0,
+      "changed_pixels": 0
+    },
+    {
+      "quality": "standard",
+      "cycle_capture": 6,
+      "region": "terrain",
+      "max_channel_difference": 0,
+      "mean_absolute_channel_difference": 0.0,
+      "changed_pixels": 0
+    },
+    {
+      "quality": "standard",
+      "cycle_capture": 6,
+      "region": "front_lawn",
+      "max_channel_difference": 0,
+      "mean_absolute_channel_difference": 0.0,
+      "changed_pixels": 0
+    },
+    {
+      "quality": "low",
+      "cycle_capture": 3,
+      "region": "curb_sidewalk",
+      "max_channel_difference": 0,
+      "mean_absolute_channel_difference": 0.0,
+      "changed_pixels": 0
+    },
+    {
+      "quality": "low",
+      "cycle_capture": 3,
+      "region": "middle_road",
+      "max_channel_difference": 0,
+      "mean_absolute_channel_difference": 0.0,
+      "changed_pixels": 0
+    },
+    {
+      "quality": "low",
+      "cycle_capture": 3,
+      "region": "terrain",
+      "max_channel_difference": 0,
+      "mean_absolute_channel_difference": 0.0,
+      "changed_pixels": 0
+    },
+    {
+      "quality": "low",
+      "cycle_capture": 3,
+      "region": "front_lawn",
+      "max_channel_difference": 0,
+      "mean_absolute_channel_difference": 0.0,
+      "changed_pixels": 0
+    },
+    {
+      "quality": "low",
+      "cycle_capture": 5,
+      "region": "curb_sidewalk",
+      "max_channel_difference": 0,
+      "mean_absolute_channel_difference": 0.0,
+      "changed_pixels": 0
+    },
+    {
+      "quality": "low",
+      "cycle_capture": 5,
+      "region": "middle_road",
+      "max_channel_difference": 0,
+      "mean_absolute_channel_difference": 0.0,
+      "changed_pixels": 0
+    },
+    {
+      "quality": "low",
+      "cycle_capture": 5,
+      "region": "terrain",
+      "max_channel_difference": 0,
+      "mean_absolute_channel_difference": 0.0,
+      "changed_pixels": 0
+    },
+    {
+      "quality": "low",
+      "cycle_capture": 5,
+      "region": "front_lawn",
+      "max_channel_difference": 0,
+      "mean_absolute_channel_difference": 0.0,
+      "changed_pixels": 0
+    }
+  ],
+  "scope": "Actual native PNG static region comparisons after three real preset cycles; excludes moving character. No image changes."
+}

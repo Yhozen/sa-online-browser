@@ -14,7 +14,9 @@ artifacts
 test-results
 playwright-report
 docs
-assets
+# Vite imports this runtime terrain file from the root assets directory.
+/assets/*
+!/assets/horizon-relief.json
 *.log
 *.blend1
 .dream-loop

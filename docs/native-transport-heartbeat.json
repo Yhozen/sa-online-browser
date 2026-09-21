@@ -1,0 +1,158 @@
+{
+  "version": 1,
+  "scope": "Optional native acceptance WebSocket host only; focused transport and unchanged lifecycle evidence, not final full acceptance",
+  "baselineIdleObservations": [
+    {
+      "kind": "idle",
+      "idleStart": "2026-09-13T12:22:06.489Z",
+      "clientDisconnected": "2026-09-13T12:22:19.736Z",
+      "clientObservedIdleToDisconnectMs": 13247.154381,
+      "successfulPeriodicCalls": 0
+    },
+    {
+      "kind": "periodic-then-idle",
+      "idleStart": "2026-09-13T12:22:55.164Z",
+      "clientDisconnected": "2026-09-13T12:23:12.505Z",
+      "clientObservedIdleToDisconnectMs": 17340.26129999999,
+      "successfulPeriodicCalls": 8
+    }
+  ],
+  "baselineNativeCloseCodes": [
+    1006,
+    1006
+  ],
+  "fix": {
+    "intervalMs": 5000,
+    "frame": "empty WebSocket ping; peer automatic pong",
+    "gameOrPageCommands": false,
+    "newTimeoutOrTerminationPolicy": false,
+    "defaultLocalBrowserPathChanged": false
+  },
+  "quietControl": {
+    "idleMs": 60010.828402,
+    "page": "about:blank",
+    "gamePresent": false,
+    "connectedAfterIdle": true,
+    "connectedAfterCleanup": false,
+    "actualPongs": 12,
+    "chromeExitCode": 0
+  },
+  "unchangedCase": {
+    "status": "targeted pass, not full acceptance",
+    "stats": {
+      "startTime": "2026-09-13T12:27:59.946Z",
+      "duration": 84266.304,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "sourceInputsUnchanged": true,
+    "sourceTestSha256": "3679be69706db29ca162a76e901aece773b93056257f9a9dee3daafa85e0fd7b",
+    "traceZips": 3,
+    "savedWebMs": 3,
+    "nativePongs": 14,
+    "nativePageCrashes": 0,
+    "abnormal1006Closures": 0,
+    "browserErrors": [
+      {
+        "name": "Failure_A",
+        "traceId": 2,
+        "errors": []
+      },
+      {
+        "name": "Unavailable",
+        "traceId": 3,
+        "errors": []
+      },
+      {
+        "name": "Failure_A",
+        "traceId": 1,
+        "errors": []
+      }
+    ],
+    "nativeChromeExits": [
+      {
+        "at": "2026-09-13T12:29:24.156Z",
+        "monotonicMs": 181326.687542,
+        "type": "chromeProcessExit",
+        "browserGuid": "browser@4a3c4f74071c5ee66d0b0efaedd6b34a",
+        "pid": 40769,
+        "code": 0,
+        "signal": null
+      }
+    ]
+  },
+  "units": {
+    "command": "node --test tests/acceptance-browser-heartbeat.test.mjs",
+    "nativeExecSession": 83715,
+    "exitCode": 0,
+    "tests": 4,
+    "passed": 4,
+    "failed": 0,
+    "actualPingPongDurationMs": 5033.11175,
+    "suiteDurationMs": 5074.530458,
+    "environment": "native Node v24.14.0; loopback-only WebSocket server; no browser",
+    "inputs": {
+      "tools/acceptance-browser-server.mjs": "4e303fdd8609b84066dee0502d373dab7755361409f09256922576b464946fd6",
+      "tools/acceptance-browser-heartbeat.mjs": "c3d942b3ecbd9d4ec3c0e46eb7eeb3e8ff414256e3fd9cee8cedf6989d363df5",
+      "tests/acceptance-browser-heartbeat.test.mjs": "ed6ebca90670af843b2d8826d54b2f559a28e2d728348dd5319577d83a8eadbb"
+    },
+    "note": "Recorded from the completed tool output; normal verify will run the registered source test again."
+  },
+  "sourceInputs": {
+    "tools/acceptance-browser-server.mjs": "4e303fdd8609b84066dee0502d373dab7755361409f09256922576b464946fd6",
+    "tools/acceptance-browser-heartbeat.mjs": "c3d942b3ecbd9d4ec3c0e46eb7eeb3e8ff414256e3fd9cee8cedf6989d363df5",
+    "tests/acceptance-browser-heartbeat.test.mjs": "ed6ebca90670af843b2d8826d54b2f559a28e2d728348dd5319577d83a8eadbb",
+    "tests/browser/poc.spec.mjs": "3679be69706db29ca162a76e901aece773b93056257f9a9dee3daafa85e0fd7b",
+    "playwright.config.mjs": "8b7f8dec98c9eeadaaf1e3664a45abcea75f7b7f7e0f5e1ed62b03b53452c09e",
+    "tools/browser-options.mjs": "56fd39e253c23572382810e42c2c432ebc4d752618e6dfab898c2dff24956f70",
+    "package-lock.json": "b99e5c05368deae7d0cd82a86505d33671cc2275c0852eed3f08afbd0b07bd74"
+  },
+  "artifacts": {
+    ".dream-loop/round12-lifecycle-failure/diagnostic/repro-1/archive-manifest.json": {
+      "sha256": "e89e5c436bb006c6a2aa046739f294db143e6f2303639ce48b006507999c7af4",
+      "bytes": 9080
+    },
+    ".dream-loop/round12-lifecycle-failure/diagnostic/idle-control-evidence/manifest.json": {
+      "sha256": "795e0307c8807002c257580031620a30d43000970c1b33b7766b9b8d7eb4bd9a",
+      "bytes": 1263
+    },
+    ".dream-loop/round12-lifecycle-failure/diagnostic/heartbeat-host/quiet-evidence/archive-manifest.json": {
+      "sha256": "25339bbad6e8d349344db040c9acde5e5dc3210a2a736a15f9752c9bcef54a1e",
+      "bytes": 1357
+    },
+    ".dream-loop/round12-lifecycle-failure/diagnostic/heartbeat-host/unchanged-case-pass/archive-manifest.json": {
+      "sha256": "f2d1cdfca73d68b2457a50ebb3f2804d7a72e9223c365dcc85e719826cf2ca9e",
+      "bytes": 10587
+    }
+  },
+  "remaining": "A fresh unfiltered verify:poc run with all 15 browser cases and supervisor checks is required after final source freeze.",
+  "workerCleanup": {
+    "started": 5,
+    "exited": 5,
+    "intentionalSigkill": 1,
+    "normalExit0": 4,
+    "pids": [
+      2255,
+      2259,
+      2263,
+      2267,
+      2281
+    ]
+  },
+  "dockerUnits": {
+    "command": "docker compose exec -T dev node --test tests/acceptance-browser-heartbeat.test.mjs",
+    "exitCode": 0,
+    "tests": 4,
+    "passed": 4,
+    "failed": 0,
+    "durationMs": 6305.516377,
+    "actualPingPongDurationMs": 5610.906127,
+    "scope": "Same acceptance runner runtime; loopback WebSocket control, no browser"
+  },
+  "verificationWiring": {
+    "tools/verify.mjs": "aa865e7f578f5ee0f3169af6f6e90adf3bb64c7724a62e15172a1ddae665b404",
+    "tools/summarize-verification.mjs": "ef7c36f35cb2189df668899f2cd707dbe8db9bace1aef43c15e6e13d579ed708"
+  }
+}

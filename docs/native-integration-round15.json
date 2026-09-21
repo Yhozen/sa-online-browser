@@ -1,0 +1,932 @@
+{
+  "version": 1,
+  "milestone": "round15",
+  "recordedAt": "2026-09-13T13:56:16.260Z",
+  "sourceBaseCommit": "fe6f25ff4935c3aa043cb8ae2309a5c602dad748",
+  "sourceState": "Round 15 working-tree integration; exact tested source hashes below, not a claim that the base commit alone contains these changes.",
+  "scene": {
+    "id": "neighborhood",
+    "revision": "f7da0f68c9f8ca5a",
+    "ready": true
+  },
+  "servedMain": {
+    "bytes": 1006955,
+    "sha256": "3800c0733bec7cc47a1b6dd45b0ab82486be491097df292b7633922566232741",
+    "lastModified": null,
+    "etag": null,
+    "matchesLocalDist": null,
+    "localDistModifiedAt": null,
+    "localDistStatus": "Not present on host; build may reside in the fixture container"
+  },
+  "servedMainPath": "/assets/main-zC6pAPDJ.js",
+  "changes": [
+    "Raw alpha-aware same-specimen diffuse accessibility on original oak leaf geometry; direct sun and original maps retained.",
+    "Narrower low roadside-oak wood from a separately declared native base, with a fresh visibility bake.",
+    "Connected native terrain gully refinement with matching decoded geometry and one-time irradiance.",
+    "Sparse road cracks and correctly elevated circular-sidewalk deposits reuse original maps. Exactly36 frontage shrubs are redistributed; total141 remains."
+  ],
+  "nativeSource": [
+    {
+      "path": "assets/source/asset-build.json",
+      "bytes": 24890,
+      "sha256": "b80cb9cf608638a891e0ccfeef76ca3e61e68f1ec5809d9577dd40de574c728a"
+    },
+    {
+      "path": "assets/source/canopy-base/base.json",
+      "bytes": 6150,
+      "sha256": "47748da221dbe45aa2fd11893fe95ec0c2eddaa31f1f6d0b7f690c335c3f2b06"
+    },
+    {
+      "path": "assets/source/tree.blend",
+      "bytes": 474676,
+      "sha256": "201eb6324a35f578be3ac75f977f89bd375c8f52eb9614c379e88c72de9a4549"
+    },
+    {
+      "path": "assets/source/roadside-oak.blend",
+      "bytes": 476173,
+      "sha256": "0f53697d841607fb3b39a611e5482b4d2ae549678e27705823dc577ef1294413"
+    },
+    {
+      "path": "apps/browser/public/assets/tree.glb",
+      "bytes": 726496,
+      "sha256": "15ac566413627cf0221e0d2b765b69f7b4f901b2202b117c84b616bba7dcdb6f"
+    },
+    {
+      "path": "apps/browser/public/assets/roadside-oak.glb",
+      "bytes": 726552,
+      "sha256": "cf70689b2314e8d480a9fa50c5de8c9f46a53665f04286858db382206a102ef3"
+    },
+    {
+      "path": "assets/source/canopy/tree.json",
+      "bytes": 5958,
+      "sha256": "045376a4cf8c5089cbaafc6bb6f99ea3904042e5037a94439145237b864256cc"
+    },
+    {
+      "path": "assets/source/canopy/roadside-oak.json",
+      "bytes": 8221,
+      "sha256": "df305a77ed944552bcf2bfafb7e3660674918a189f37d02a17c6d43b5eb48b11"
+    },
+    {
+      "path": "assets/source/horizon.blend",
+      "bytes": 6091979,
+      "sha256": "1e41f355dd92f5de372cfc2e8a022fb1345caa1f921ee5767c7e8dd454c35982"
+    },
+    {
+      "path": "assets/horizon-relief.json",
+      "bytes": 859283,
+      "sha256": "a5d1351177c927700fcc381bf3a4c8b7698a025f21a7973798a79263e81ef922"
+    },
+    {
+      "path": "assets/source/horizon-build.json",
+      "bytes": 7269,
+      "sha256": "fa58fe0d6f779d31b08ca037fbeeba30910f2437bd146da759f0c52a2c6dc6a7"
+    },
+    {
+      "path": "apps/browser/public/assets/arroyo-reflections.pmrem.gz",
+      "bytes": 11647908,
+      "sha256": "b16d8d30fea892da2b3925afb2b627527f70b7a123a726a02d284d5739df0dfe"
+    },
+    {
+      "path": "assets/source/reflection-bake.json",
+      "bytes": 9919,
+      "sha256": "263d77cb9e8b64b516ecb44296577602b41fec0eab134f2f7b7dc5aa51e7fb90"
+    },
+    {
+      "path": "apps/browser/public/assets/inventory.json",
+      "bytes": 3884,
+      "sha256": "d90268bb7acbd02c091432abaac00b61a67ce5f4b155028ccc83998ba40127e1"
+    }
+  ],
+  "oakModels": {
+    "tree": {
+      "generatedAt": "2026-09-13T13:41:47.122Z",
+      "blender": {
+        "version": "5.2.1",
+        "buildHash": "9e2066aef7ef",
+        "distribution": "explicit",
+        "platform": "darwin",
+        "architecture": "arm64",
+        "executableSha256": "ea651e507c6b197df0e234bfa04e5ed43e7f4d498267a7df93fcb38f21928a5c"
+      },
+      "recipes": {
+        "tools/build-assets.mjs": "2d9120347c8d7bd23d47d9344a57063641b875c5e3dae63df98ba0f05838ee00",
+        "tools/assets/canopy-visibility.py": "925962dae8e588d6ea16ed200035ede81961faaefa015d49f26713e8aca73b1c",
+        "tools/assets/canopy-visibility.mjs": "f133547bc664fbf46a4b9aedaa83d9199695a1702247c59e0acb8c2cc9b4d352"
+      },
+      "canopy": {
+        "version": 1,
+        "method": "Raw256-ray alpha-aware same-specimen isotropic diffuse accessibility; forward/back authored-normal hemispheres; no gain or clamp",
+        "base": {
+          "blend": {
+            "path": "assets/source/canopy-base/tree.blend",
+            "bytes": 430669,
+            "sha256": "1707626df2a5c36fab64eaaf026be4159295e5ada88a9474231e707a24af5647"
+          },
+          "glb": {
+            "path": "assets/source/canopy-base/tree.glb",
+            "bytes": 651080,
+            "sha256": "1587be859a79d45c3418fc442b9d0f47ded1d7b4efd8d1858c074139673f11b4"
+          },
+          "originalBuild": {
+            "generatedAt": "2026-09-13T10:36:17.661Z",
+            "blender": {
+              "version": "5.2.1",
+              "buildHash": "9e2066aef7ef",
+              "distribution": "native-macos",
+              "platform": "darwin",
+              "architecture": "arm64",
+              "executableSha256": "ea651e507c6b197df0e234bfa04e5ed43e7f4d498267a7df93fcb38f21928a5c"
+            },
+            "recipes": {
+              "tools/build-assets.mjs": "06f52507fbabf20831ccefb4698613a7d3f3b57dd6f1f504c6a8bf6917ee8449",
+              "tools/assets/build.py": "3eb0039ccbd34a3c3aec5e88aced09f34c8ac3677f9d777b97ece47daad9a53e",
+              "tools/assets/environment-kit.py": "1fb49df90bba8637ec000f37464766c18bc22b969d7013776bd1c45ed3983f7c",
+              "tools/assets/heroes.py": "d2593504f492fd69b42687b24c5bf85d41af18056e2d9385c7175cbf94e2c630",
+              "tools/assets/garden-kit.py": "974d3add6e6f4ad5b9f52d681eeecb69dde28cb8b2a6d471365dcca4ddbf1c8e"
+            },
+            "glb": {
+              "bytes": 651080,
+              "sha256": "1587be859a79d45c3418fc442b9d0f47ded1d7b4efd8d1858c074139673f11b4"
+            },
+            "blend": {
+              "bytes": 430669,
+              "sha256": "1707626df2a5c36fab64eaaf026be4159295e5ada88a9474231e707a24af5647"
+            },
+            "gzip": {
+              "bytes": 382873,
+              "sha256": "0ce7b7bb8329eef22a8fc8cf1575421a9856682a92bda70382b72184addf1b2e"
+            }
+          }
+        },
+        "inputs": {
+          "tools/assets/canopy-visibility.mjs": {
+            "bytes": 10195,
+            "sha256": "f133547bc664fbf46a4b9aedaa83d9199695a1702247c59e0acb8c2cc9b4d352"
+          },
+          "assets/source/canopy-base/base.json": {
+            "bytes": 6150,
+            "sha256": "47748da221dbe45aa2fd11893fe95ec0c2eddaa31f1f6d0b7f690c335c3f2b06"
+          },
+          "assets/source/canopy-base/tree.blend": {
+            "bytes": 430669,
+            "sha256": "1707626df2a5c36fab64eaaf026be4159295e5ada88a9474231e707a24af5647"
+          },
+          "assets/source/canopy-base/tree.glb": {
+            "bytes": 651080,
+            "sha256": "1587be859a79d45c3418fc442b9d0f47ded1d7b4efd8d1858c074139673f11b4"
+          },
+          "assets/source/canopy-base/roadside-oak.blend": {
+            "bytes": 408758,
+            "sha256": "d9ad319d747e3c859a33e6a2e60d7ab08969a7d09e8b7cc5de21baf7d17c6511"
+          },
+          "assets/source/canopy-base/roadside-oak.glb": {
+            "bytes": 651132,
+            "sha256": "c263048dc87e8f2580719d5631928255aa5768621bbe58b7a0f33541b31fd4d5"
+          },
+          "assets/textures/arroyo-foliage.webp": {
+            "bytes": 1131330,
+            "sha256": "3b54fbaba32d6281b19346e41a60fb88f2858888cc73327edef4a1fcd30d539b"
+          },
+          "tools/assets/canopy-visibility.py": {
+            "bytes": 8192,
+            "sha256": "925962dae8e588d6ea16ed200035ede81961faaefa015d49f26713e8aca73b1c"
+          }
+        },
+        "native": {
+          "model": "tree",
+          "samples": 256,
+          "sourceSha256": "201eb6324a35f578be3ac75f977f89bd375c8f52eb9614c379e88c72de9a4549",
+          "glbSha256": "86ffd6186c31fc120e14f7e4e8caeb7a64cf95323b15c1f37f8dd58aaa2e636d",
+          "sprays": 630,
+          "equivalenceClasses": 9388,
+          "opaqueOrigins": 5670,
+          "rays": 1451520,
+          "transparentSteps": 2154115,
+          "atlasSize": [
+            1254,
+            1254
+          ],
+          "nearestOpaqueUv": {
+            "(0, 0)": [
+              0.01555023923444976,
+              0.008373205741626795
+            ],
+            "(0, 0.5)": [
+              0.09529505582137161,
+              0.483652312599681
+            ],
+            "(0, 1)": [
+              0.15829346092503987,
+              0.7085326953748007
+            ],
+            "(0.5, 0)": [
+              0.5849282296650717,
+              0.11363636363636363
+            ],
+            "(0.5, 0.5)": [
+              0.5027910685805422,
+              0.5059808612440191
+            ],
+            "(0.5, 1)": [
+              0.6686602870813397,
+              0.9070972886762361
+            ],
+            "(1, 0)": [
+              0.9270334928229665,
+              0.08492822966507177
+            ],
+            "(1, 0.5)": [
+              0.9549441786283892,
+              0.6279904306220095
+            ],
+            "(1, 1)": [
+              0.8672248803827751,
+              0.976475279106858
+            ]
+          },
+          "originDisplacementMetres": {
+            "maximum": 0.3506407595250837,
+            "p90": 0.2471681918662905,
+            "mean": 0.11099084954269746
+          },
+          "rawAccessibility": {
+            "minimum": 0,
+            "maximum": 1,
+            "mean": 0.24619809607230733
+          },
+          "elapsedSeconds": 7.447890996932983,
+          "blender": {
+            "version": "5.2.1",
+            "buildHash": "9e2066aef7ef",
+            "distribution": "explicit",
+            "platform": "darwin",
+            "architecture": "arm64",
+            "executableSha256": "ea651e507c6b197df0e234bfa04e5ed43e7f4d498267a7df93fcb38f21928a5c"
+          },
+          "rawExport": {
+            "path": "assets/source/canopy/tree.glb",
+            "bytes": 801900,
+            "sha256": "86ffd6186c31fc120e14f7e4e8caeb7a64cf95323b15c1f37f8dd58aaa2e636d"
+          },
+          "source": {
+            "path": "assets/source/tree.blend",
+            "bytes": 474676,
+            "sha256": "201eb6324a35f578be3ac75f977f89bd375c8f52eb9614c379e88c72de9a4549"
+          }
+        },
+        "originalGeometryPreserved": true,
+        "originalVertexOrderPreserved": true,
+        "originalSceneAndMaterialsPreserved": true,
+        "nativeUvEchoOmitted": true,
+        "fields": [
+          {
+            "material": "foliage",
+            "vertices": 7850,
+            "bytes": 62800,
+            "sha256": "888ce9dcec808d8b3478ec47caa46a50edeed5fd1fa6112d059db7623c54baf0"
+          },
+          {
+            "material": "foliage-light",
+            "vertices": 1538,
+            "bytes": 12304,
+            "sha256": "31027610cbc374eae581772e74281aabb0dd9b1400018e3d28012282371b24f8"
+          }
+        ],
+        "output": {
+          "path": "apps/browser/public/assets/tree.glb",
+          "bytes": 726496,
+          "sha256": "15ac566413627cf0221e0d2b765b69f7b4f901b2202b117c84b616bba7dcdb6f"
+        }
+      },
+      "glb": {
+        "bytes": 726496,
+        "sha256": "15ac566413627cf0221e0d2b765b69f7b4f901b2202b117c84b616bba7dcdb6f"
+      },
+      "blend": {
+        "bytes": 474676,
+        "sha256": "201eb6324a35f578be3ac75f977f89bd375c8f52eb9614c379e88c72de9a4549"
+      },
+      "gzip": {
+        "bytes": 448792,
+        "sha256": "3fc8c0a6d034ceb65a77755670c1e6367e624d4d80719e721102586a28c0b770"
+      }
+    },
+    "roadside-oak": {
+      "generatedAt": "2026-09-13T13:41:47.122Z",
+      "blender": {
+        "version": "5.2.1",
+        "buildHash": "9e2066aef7ef",
+        "distribution": "explicit",
+        "platform": "darwin",
+        "architecture": "arm64",
+        "executableSha256": "ea651e507c6b197df0e234bfa04e5ed43e7f4d498267a7df93fcb38f21928a5c"
+      },
+      "recipes": {
+        "tools/build-assets.mjs": "2d9120347c8d7bd23d47d9344a57063641b875c5e3dae63df98ba0f05838ee00",
+        "tools/assets/canopy-visibility.py": "925962dae8e588d6ea16ed200035ede81961faaefa015d49f26713e8aca73b1c",
+        "tools/assets/canopy-visibility.mjs": "f133547bc664fbf46a4b9aedaa83d9199695a1702247c59e0acb8c2cc9b4d352"
+      },
+      "canopy": {
+        "version": 1,
+        "method": "Raw256-ray alpha-aware same-specimen isotropic diffuse accessibility; forward/back authored-normal hemispheres; no gain or clamp",
+        "base": {
+          "blend": {
+            "path": "assets/source/canopy-base/roadside-oak.blend",
+            "bytes": 408758,
+            "sha256": "d9ad319d747e3c859a33e6a2e60d7ab08969a7d09e8b7cc5de21baf7d17c6511"
+          },
+          "glb": {
+            "path": "assets/source/canopy-base/roadside-oak.glb",
+            "bytes": 651132,
+            "sha256": "c263048dc87e8f2580719d5631928255aa5768621bbe58b7a0f33541b31fd4d5"
+          },
+          "originalBuild": {
+            "generatedAt": "2026-09-13T10:36:17.661Z",
+            "blender": {
+              "version": "5.2.1",
+              "buildHash": "9e2066aef7ef",
+              "distribution": "native-macos",
+              "platform": "darwin",
+              "architecture": "arm64",
+              "executableSha256": "ea651e507c6b197df0e234bfa04e5ed43e7f4d498267a7df93fcb38f21928a5c"
+            },
+            "recipes": {
+              "tools/build-assets.mjs": "06f52507fbabf20831ccefb4698613a7d3f3b57dd6f1f504c6a8bf6917ee8449",
+              "tools/assets/build.py": "3eb0039ccbd34a3c3aec5e88aced09f34c8ac3677f9d777b97ece47daad9a53e",
+              "tools/assets/environment-kit.py": "1fb49df90bba8637ec000f37464766c18bc22b969d7013776bd1c45ed3983f7c",
+              "tools/assets/heroes.py": "d2593504f492fd69b42687b24c5bf85d41af18056e2d9385c7175cbf94e2c630",
+              "tools/assets/garden-kit.py": "974d3add6e6f4ad5b9f52d681eeecb69dde28cb8b2a6d471365dcca4ddbf1c8e"
+            },
+            "glb": {
+              "bytes": 651132,
+              "sha256": "e34fd145e45d23567816a5d44dfa2bd8d02ae7af57b25080dcc8fb7ea511199a"
+            },
+            "blend": {
+              "bytes": 431030,
+              "sha256": "8125d8bfb1e070578fdc76ab60c48d23ea0b900a47e112851850a5ac0bcda048"
+            },
+            "gzip": {
+              "bytes": 383478,
+              "sha256": "76591ea210f6d9ee37078f5515b1d5fea4536c45cb5c48a3baca5774809e2e85"
+            }
+          },
+          "derivation": {
+            "method": "Original native Blender5.2.1 low-wood taper at55%, smooth return below scaffold; native POSITION/NORMAL only transported to original packing. All crown/leaf/index/UV/color bytes retained.",
+            "parent": {
+              "blend": {
+                "path": "assets/source/canopy-base/parents/roadside-oak-before-trunk-taper.blend",
+                "bytes": 431030,
+                "sha256": "8125d8bfb1e070578fdc76ab60c48d23ea0b900a47e112851850a5ac0bcda048"
+              },
+              "glb": {
+                "path": "assets/source/canopy-base/parents/roadside-oak-before-trunk-taper.glb",
+                "bytes": 651132,
+                "sha256": "e34fd145e45d23567816a5d44dfa2bd8d02ae7af57b25080dcc8fb7ea511199a"
+              },
+              "record": {
+                "path": "assets/source/canopy-base/parents/roadside-oak-before-trunk-taper.json",
+                "bytes": 1676,
+                "sha256": "7e29b3dca296ac88cd116de3797afda11107546b9b6f28979ed0529afa41cc21"
+              }
+            },
+            "authorRecipe": {
+              "path": "assets/source/canopy-base/provenance/roadside-trunk-taper/author-taper.py",
+              "bytes": 7174,
+              "sha256": "a4f62583d3530447e8cbe4d7ae59d875a31cf8c298f19579ad863e833456b764"
+            },
+            "packingRecipe": {
+              "path": "assets/source/canopy-base/provenance/roadside-trunk-taper/packing-transport.mjs",
+              "bytes": 8224,
+              "sha256": "18f75be884221e4a155a7b15cbbfa3ebd8ed6e483b5b7a4c250eea5b05161623"
+            },
+            "nativeAuthoring": {
+              "path": "assets/source/canopy-base/provenance/roadside-trunk-taper/native-authoring.json",
+              "bytes": 4404,
+              "sha256": "9562128f867f3d10861ee24e91273b8a68534f02a7546b37da8b4c46d770ab49"
+            },
+            "rawNativeExport": {
+              "path": "assets/source/canopy-base/provenance/roadside-trunk-taper/raw-native-export.glb",
+              "bytes": 651132,
+              "sha256": "123fcabc8809524e4615d658e9c3fb83d71b23d9171d34a2b0fb8927efb10e47"
+            },
+            "verification": {
+              "path": "assets/source/canopy-base/provenance/roadside-trunk-taper/packing-verification.json",
+              "bytes": 1572,
+              "sha256": "e34736ee045ce51792f57a8b4a07ae1d8d0ad6f5b83dd2c4564a1f6a85b6d1aa"
+            },
+            "requiresFreshVisibilityBake": true
+          }
+        },
+        "inputs": {
+          "tools/assets/canopy-visibility.mjs": {
+            "bytes": 10195,
+            "sha256": "f133547bc664fbf46a4b9aedaa83d9199695a1702247c59e0acb8c2cc9b4d352"
+          },
+          "assets/source/canopy-base/base.json": {
+            "bytes": 6150,
+            "sha256": "47748da221dbe45aa2fd11893fe95ec0c2eddaa31f1f6d0b7f690c335c3f2b06"
+          },
+          "assets/source/canopy-base/tree.blend": {
+            "bytes": 430669,
+            "sha256": "1707626df2a5c36fab64eaaf026be4159295e5ada88a9474231e707a24af5647"
+          },
+          "assets/source/canopy-base/tree.glb": {
+            "bytes": 651080,
+            "sha256": "1587be859a79d45c3418fc442b9d0f47ded1d7b4efd8d1858c074139673f11b4"
+          },
+          "assets/source/canopy-base/roadside-oak.blend": {
+            "bytes": 408758,
+            "sha256": "d9ad319d747e3c859a33e6a2e60d7ab08969a7d09e8b7cc5de21baf7d17c6511"
+          },
+          "assets/source/canopy-base/roadside-oak.glb": {
+            "bytes": 651132,
+            "sha256": "c263048dc87e8f2580719d5631928255aa5768621bbe58b7a0f33541b31fd4d5"
+          },
+          "assets/textures/arroyo-foliage.webp": {
+            "bytes": 1131330,
+            "sha256": "3b54fbaba32d6281b19346e41a60fb88f2858888cc73327edef4a1fcd30d539b"
+          },
+          "tools/assets/canopy-visibility.py": {
+            "bytes": 8192,
+            "sha256": "925962dae8e588d6ea16ed200035ede81961faaefa015d49f26713e8aca73b1c"
+          }
+        },
+        "native": {
+          "model": "roadside-oak",
+          "samples": 256,
+          "sourceSha256": "0f53697d841607fb3b39a611e5482b4d2ae549678e27705823dc577ef1294413",
+          "glbSha256": "609726126c30d14f78d2677df02a661803a65a793a801b05789cc84d6bb53aca",
+          "sprays": 630,
+          "equivalenceClasses": 9388,
+          "opaqueOrigins": 5670,
+          "rays": 1451520,
+          "transparentSteps": 2154658,
+          "atlasSize": [
+            1254,
+            1254
+          ],
+          "nearestOpaqueUv": {
+            "(0, 0)": [
+              0.01555023923444976,
+              0.008373205741626795
+            ],
+            "(0, 0.5)": [
+              0.09529505582137161,
+              0.483652312599681
+            ],
+            "(0, 1)": [
+              0.15829346092503987,
+              0.7085326953748007
+            ],
+            "(0.5, 0)": [
+              0.5849282296650717,
+              0.11363636363636363
+            ],
+            "(0.5, 0.5)": [
+              0.5027910685805422,
+              0.5059808612440191
+            ],
+            "(0.5, 1)": [
+              0.6686602870813397,
+              0.9070972886762361
+            ],
+            "(1, 0)": [
+              0.9270334928229665,
+              0.08492822966507177
+            ],
+            "(1, 0.5)": [
+              0.9549441786283892,
+              0.6279904306220095
+            ],
+            "(1, 1)": [
+              0.8672248803827751,
+              0.976475279106858
+            ]
+          },
+          "originDisplacementMetres": {
+            "maximum": 0.35064457360518486,
+            "p90": 0.2478593561134711,
+            "mean": 0.11117892394600466
+          },
+          "rawAccessibility": {
+            "minimum": 0,
+            "maximum": 1,
+            "mean": 0.24585688070820388
+          },
+          "elapsedSeconds": 7.488306999206543,
+          "blender": {
+            "version": "5.2.1",
+            "buildHash": "9e2066aef7ef",
+            "distribution": "explicit",
+            "platform": "darwin",
+            "architecture": "arm64",
+            "executableSha256": "ea651e507c6b197df0e234bfa04e5ed43e7f4d498267a7df93fcb38f21928a5c"
+          },
+          "rawExport": {
+            "path": "assets/source/canopy/roadside-oak.glb",
+            "bytes": 801952,
+            "sha256": "609726126c30d14f78d2677df02a661803a65a793a801b05789cc84d6bb53aca"
+          },
+          "source": {
+            "path": "assets/source/roadside-oak.blend",
+            "bytes": 476173,
+            "sha256": "0f53697d841607fb3b39a611e5482b4d2ae549678e27705823dc577ef1294413"
+          }
+        },
+        "originalGeometryPreserved": true,
+        "originalVertexOrderPreserved": true,
+        "originalSceneAndMaterialsPreserved": true,
+        "nativeUvEchoOmitted": true,
+        "fields": [
+          {
+            "material": "foliage",
+            "vertices": 7850,
+            "bytes": 62800,
+            "sha256": "34f6d08dec1e33d5253a59eff340d38e390d4a6882238849c8abb08b313d8367"
+          },
+          {
+            "material": "foliage-light",
+            "vertices": 1538,
+            "bytes": 12304,
+            "sha256": "5858e7b0e18cd2b70e18bdcfc8c4aecec8b64bd87bd117978fcc2742aa0f6ee8"
+          }
+        ],
+        "output": {
+          "path": "apps/browser/public/assets/roadside-oak.glb",
+          "bytes": 726552,
+          "sha256": "cf70689b2314e8d480a9fa50c5de8c9f46a53665f04286858db382206a102ef3"
+        }
+      },
+      "glb": {
+        "bytes": 726552,
+        "sha256": "cf70689b2314e8d480a9fa50c5de8c9f46a53665f04286858db382206a102ef3"
+      },
+      "blend": {
+        "bytes": 476173,
+        "sha256": "0f53697d841607fb3b39a611e5482b4d2ae549678e27705823dc577ef1294413"
+      },
+      "gzip": {
+        "bytes": 449731,
+        "sha256": "3c99cbea1e4316b020733616fb5ef7f2d9e53322983e0adf4fc89431feefdb7e"
+      }
+    }
+  },
+  "reflection": {
+    "generatedAt": "2026-09-13T13:43:45.344Z",
+    "sha256": "b16d8d30fea892da2b3925afb2b627527f70b7a123a726a02d284d5739df0dfe",
+    "compressedBytes": 11647908,
+    "width": 1536,
+    "height": 2048,
+    "peakRadiance": 7.4765625,
+    "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)"
+  },
+  "build": {
+    "nativeAssets": {
+      "completed": true,
+      "log": {
+        "path": ".dream-loop/round15-native-assets.log",
+        "bytes": 4871,
+        "sha256": "1270e1ef569f7211ffa35f910bd056c4c92c4529aed66650581d0a77878cb306"
+      }
+    },
+    "nativeReflections": {
+      "completed": true,
+      "log": {
+        "path": ".dream-loop/round15-native-reflections.log",
+        "bytes": 267,
+        "sha256": "1353869a954f8ef57a7fbfee03ab50471c231b729f5d92b523589eb19dfe7c80"
+      }
+    },
+    "servedBuildIdentifiedBy": "native-rendering-round15-summary.json"
+  },
+  "tests": {
+    "firstFocusedBatch": {
+      "tests": 37,
+      "passed": 35,
+      "failed": 2,
+      "status": "failed",
+      "log": {
+        "path": ".dream-loop/round15-assets-terrain-tests.log",
+        "bytes": 9052,
+        "sha256": "dc53ac180ff812e0adee21b85540ad8499fad10752f740efacdfc4ad78e7245f"
+      },
+      "failures": [
+        "Retained-v3 regeneration test still expected the earlier terrain runtime hash.",
+        "Isolated failure fixture omitted the newly imported canopy-visibility helper."
+      ]
+    },
+    "correctedTerrain": {
+      "tests": 9,
+      "passed": 9,
+      "failed": 0,
+      "status": "passed after fixture corrections",
+      "log": {
+        "path": ".dream-loop/round15-terrain-tests-corrected.log",
+        "bytes": 1214,
+        "sha256": "61e3884bb2a3c1918ba86169960b31943db3939b8ee392b526ac903dc0adcb29"
+      }
+    },
+    "reflection": {
+      "tests": 2,
+      "passed": 2,
+      "failed": 0,
+      "log": {
+        "path": ".dream-loop/round15-reflection-tests.log",
+        "bytes": 505,
+        "sha256": "22fd34d4e296d323dcc32139a10b6beaec44798174a9948c67d2f24593933168"
+      }
+    },
+    "roadPlanting": {
+      "recordedAt": "2026-09-13T13:33:36.005Z",
+      "scope": "CPU-only source/actual-GLB geometry verification; no browser or visual claim",
+      "sourceSha256": {
+        "apps/browser/src/road-detail.ts": "cee37ba83270b3f77d1b050a697c458775f3adb9f5f47fa014ae196d642d2e0c",
+        "apps/browser/src/garden.ts": "dad060ffb85efecc4bf833281c13982137245452102253540e90fc98d9bec44f",
+        "tests/surface-pixels.test.mjs": "0b98b243b75e561a3e4440722777e8d0795dcf72b74305de08fd3c4a9bb360f1",
+        "tests/garden.test.mjs": "2dc16af37f775ea83cd0bf025ef13a08d6409258a6502a5f2906d22f11bb043d"
+      },
+      "checks": [
+        {
+          "command": "node --test tests/surface-pixels.test.mjs tests/garden.test.mjs",
+          "toolOutputChunk": "ea71cb",
+          "exitCode": 0,
+          "tests": 16,
+          "passed": 16,
+          "failed": 0
+        },
+        {
+          "command": "npm run typecheck",
+          "toolOutputChunk": "25f6e3",
+          "exitCode": 0
+        },
+        {
+          "command": "git diff --check -- apps/browser/src/road-detail.ts apps/browser/src/garden.ts tests/surface-pixels.test.mjs tests/garden.test.mjs",
+          "toolOutputChunk": "ce8a4e",
+          "exitCode": 0
+        }
+      ],
+      "road": {
+        "newTriangles": 4224,
+        "newBufferBytes": 295680,
+        "newMaterialBatches": 2,
+        "newTextures": 0,
+        "circleCrackTriangles": 530,
+        "circleDepositTriangles": 1026,
+        "originalStraightJointTriangles": 2960,
+        "originalStraightJointAttributeHashesPreserved": true,
+        "wholeTriangleFootprintAndBelowPaintChecks": true,
+        "sharedMapsAndQualityRoundtrip": true
+      },
+      "planting": {
+        "frontageTotal": 141,
+        "moved": 36,
+        "perCuldesacHouse": 12,
+        "gardenBatchCells": 4,
+        "actualVergeAndFrontagePlants": 168,
+        "actualExportedTrianglesInspected": 285132,
+        "maximumHeightMetres": 0.604,
+        "minimumSidewalkVertexGapMetres": 0.299,
+        "footprintExclusionsChecked": true
+      },
+      "limitations": [
+        "Native screenshot strength and performance remain to be measured by root.",
+        "No broad asphalt texture scale, authored assets, scene fixture or collision footprint changed.",
+        "This is a compact retained record of completed tool output, not a new test run or a fabricated raw console log."
+      ]
+    },
+    "finalSourceFullTests": "pending"
+  },
+  "quality": {
+    "record": "native-quality-cycle-round15.json",
+    "cycles": 3,
+    "staticComparisons": 35,
+    "changedPixels": 0
+  },
+  "rendering": {
+    "record": "native-rendering-round15-summary.json",
+    "cases": 4,
+    "allTargets60FPS": true,
+    "maxSampledDownloadBytes": 46969633,
+    "maxSampledTriangles": 5304703,
+    "maxSampledDrawCalls": 951,
+    "maxSampledTextureStorageBytes": 331056724
+  },
+  "visual": {
+    "latestFormalRound": 13,
+    "latestFormalScore": 5,
+    "latestFormalTier": 1,
+    "formalReview": "art-review-round13-2026-09-13.md",
+    "round15Readiness": "NOT READY",
+    "round15FormalScore": null,
+    "readinessEvidence": {
+      "path": ".dream-loop/art-readiness-round15.md",
+      "bytes": 1734,
+      "sha256": "fd39da0cb8d2fb15149bfab7b9d20ccde473185c51a20c3b8ea61c6bcf8f1f98"
+    },
+    "remaining": "Broad golden crown faces, lawn variation and readable cool mountain gullies remain unresolved."
+  },
+  "walkthrough": {
+    "status": "passed bounded visual walkthrough; not full motion or interaction acceptance",
+    "elapsedMs": 36791,
+    "targetId": "7B0C9F6BBA76533DD4F59327719A91AA",
+    "errors": [],
+    "cleanup": {
+      "targetId": "7B0C9F6BBA76533DD4F59327719A91AA",
+      "protectedId": "37D9DDC1B1728B3F58602FBC3B3FBD38",
+      "closed": true,
+      "keysReleased": true,
+      "keyReleaseErrors": [],
+      "cleanupPolls": 2,
+      "health": {
+        "ok": true,
+        "sessions": 0,
+        "workers": 0
+      },
+      "ownedTargetAbsent": true
+    },
+    "inputComparison": {
+      "checkedAt": "2026-09-13T13:55:41.596Z",
+      "exactKeys": [
+        "sourceFiles",
+        "assets",
+        "resources",
+        "sceneRevision"
+      ],
+      "sourceCount": 106,
+      "assetCount": 28,
+      "resourceCount": 4,
+      "inputFiles": [
+        {
+          "path": ".dream-loop/round15-walkthrough-02-inputs-before.json",
+          "sha256": "e52b0657d45d889e724251f23ccfccd95a956a302d9548845fc7d122da107c31"
+        },
+        {
+          "path": ".dream-loop/round15-walkthrough-02-inputs-after.json",
+          "sha256": "b53f752514831099ea57cc0189b50de391a720eda497d8e791da3a09d5bca916"
+        }
+      ],
+      "processExitCode": 0,
+      "exact": true
+    },
+    "shots": [
+      {
+        "name": "0-initial-street",
+        "at": "2026-09-13T13:54:28.911Z",
+        "position": [
+          -4,
+          0,
+          10
+        ],
+        "images": [
+          {
+            "file": "0-initial-street.png",
+            "dimensions": [
+              3344,
+              1882
+            ],
+            "sha256": "ece33889888b6352cfb70c48baf5983d95d61391043cc764d06e244a9cece791",
+            "path": ".dream-loop/round15-walkthrough-02/0-initial-street.png"
+          },
+          {
+            "file": "0-initial-street-comparison.png",
+            "dimensions": [
+              1672,
+              941
+            ],
+            "sha256": "7b6600e74d045f22d20d50880948c081ead56888ea30f2af7c0e691972dae5aa",
+            "path": ".dream-loop/round15-walkthrough-02/0-initial-street-comparison.png"
+          }
+        ]
+      },
+      {
+        "name": "1-roadside-oak-approach",
+        "at": "2026-09-13T13:54:34.535Z",
+        "position": [
+          -10.666666666666671,
+          11.750000000000014,
+          10
+        ],
+        "images": [
+          {
+            "file": "1-roadside-oak-approach.png",
+            "dimensions": [
+              3344,
+              1882
+            ],
+            "sha256": "a822521439d5680b2cfcda38aba863b09a6c09fd8045f8d258c0e706d26832bc",
+            "path": ".dream-loop/round15-walkthrough-02/1-roadside-oak-approach.png"
+          },
+          {
+            "file": "1-roadside-oak-approach-comparison.png",
+            "dimensions": [
+              1672,
+              941
+            ],
+            "sha256": "af47aa96fe7fdecb8e191db1ae79abecb6f292264904d74766624ed1acc6e394",
+            "path": ".dream-loop/round15-walkthrough-02/1-roadside-oak-approach-comparison.png"
+          }
+        ]
+      },
+      {
+        "name": "2-house-front-beds",
+        "at": "2026-09-13T13:54:47.557Z",
+        "position": [
+          -3.0833333333333326,
+          57.000000000000526,
+          10
+        ],
+        "images": [
+          {
+            "file": "2-house-front-beds.png",
+            "dimensions": [
+              3344,
+              1882
+            ],
+            "sha256": "004cafb5e4e0641c863660337ddfc4b331206cc0013f3f92553d8c6bd6222a86",
+            "path": ".dream-loop/round15-walkthrough-02/2-house-front-beds.png"
+          },
+          {
+            "file": "2-house-front-beds-comparison.png",
+            "dimensions": [
+              1672,
+              941
+            ],
+            "sha256": "1316133610411014fc27c4d2c1dddb15f583fb5e1e3adf496907b1c12d102bf8",
+            "path": ".dream-loop/round15-walkthrough-02/2-house-front-beds-comparison.png"
+          }
+        ]
+      },
+      {
+        "name": "3-car-rear-close",
+        "at": "2026-09-13T13:55:01.350Z",
+        "position": [
+          -2.268485450578995,
+          1.2398899713700313,
+          10
+        ],
+        "images": [
+          {
+            "file": "3-car-rear-close.png",
+            "dimensions": [
+              3344,
+              1882
+            ],
+            "sha256": "d74cbd046b876b2081b532e1d70b94bc4281439c4b2a277f0960a49d97896bc6",
+            "path": ".dream-loop/round15-walkthrough-02/3-car-rear-close.png"
+          },
+          {
+            "file": "3-car-rear-close-comparison.png",
+            "dimensions": [
+              1672,
+              941
+            ],
+            "sha256": "5bd8457c90423020a04cb53ac0f8acf4c428229184e1f55ac797f575490c5545",
+            "path": ".dream-loop/round15-walkthrough-02/3-car-rear-close-comparison.png"
+          }
+        ]
+      }
+    ],
+    "rawEvidence": {
+      "path": ".dream-loop/round15-walkthrough-02/verification.json",
+      "bytes": 10282,
+      "sha256": "87fcf2e5fe7a5e311ca81734a962154008ecde87943f5253e28d1e291392a6a5"
+    },
+    "inputComparisonEvidence": {
+      "path": ".dream-loop/round15-walkthrough-02/input-comparison.json",
+      "bytes": 598,
+      "sha256": "2a54e6dd56c416accb90d7f5b8c4fd62866171ea86bd9c0cc4dee4f7c920351b"
+    },
+    "firstAttempt": {
+      "status": "failed before join; native select key input did not select Standard",
+      "preserved": true,
+      "rawEvidence": {
+        "path": ".dream-loop/round15-walkthrough/verification.json",
+        "bytes": 1512,
+        "sha256": "0bc4f6411d5b363eb62083b96298c107f45232cad0fc6b810d1c56a2f4b99164"
+      },
+      "preparation": {
+        "path": ".dream-loop/round15-walkthrough-v2-preparation.json",
+        "bytes": 1273,
+        "sha256": "8c55b3778183de07d438ca784517a86cb8358fc296be43ac43afb999e6fcb250"
+      }
+    },
+    "visualInspection": "Root inspected oak approach, front beds and car close view: narrower trunk coherent; beds and exhaust/trim depths visible; no obvious clipping. No formal score."
+  },
+  "finalMotion": {
+    "status": "pending"
+  },
+  "fullAcceptance": {
+    "status": "pending fresh unfiltered final-source15-scenario run plus both supervisors",
+    "historicalRun": "native-acceptance-round12-failed.json",
+    "historicalResult": {
+      "passed": 14,
+      "failed": 1
+    },
+    "targetedTransportEvidence": "native-transport-heartbeat.json",
+    "targetedPassDoesNotCertifyFullSuite": true
+  },
+  "limitations": [
+    "Round15 is a measured integration milestone, not final acceptance or completion of the visual target.",
+    "No new formal visual score is assigned. The earlier failed focused batch remains failed."
+  ]
+}

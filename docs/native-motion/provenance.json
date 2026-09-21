@@ -1,0 +1,80 @@
+{
+  "copiedAt": "2026-09-13T06:16:12.653Z",
+  "scope": "Round 7 native motion and matching rendering, scene 7e1fc8ada24a68ec; preserved round 8 formal art review. These records remain separate from the current round 10 rendering audit and pending full browser acceptance.",
+  "copied": [
+    {
+      "originalArtifact": ".dream-loop/judge-5.md",
+      "durableArtifact": "docs/art-review-round8-2026-09-13.md",
+      "bytes": 7616,
+      "sha256": "1cbb8cda23cd740d4d80de8abdd78640a4a60666d5364dbf0fb883a49979a2cc",
+      "byteIdentical": true
+    },
+    {
+      "originalArtifact": ".dream-loop/motion-final-round7-synchronized/summary.json",
+      "durableArtifact": "docs/native-motion-summary.json",
+      "bytes": 14434,
+      "sha256": "d369b93a7d49c7d1397f067434f9a85b99bf7542abe90025f234b813f8a9fedc",
+      "byteIdentical": true
+    },
+    {
+      "originalArtifact": ".dream-loop/motion-final-round7-synchronized/verification.json",
+      "durableArtifact": "docs/native-motion/verification.json",
+      "bytes": 5832493,
+      "sha256": "98bfb86095beed474cb477100153b227cedf5a6a3b1c5c06772fdd259d3c3323",
+      "byteIdentical": true
+    },
+    {
+      "originalArtifact": ".dream-loop/motion-final-round7-synchronized/served-before.json",
+      "durableArtifact": "docs/native-motion/served-before.json",
+      "bytes": 1523,
+      "sha256": "04e81038a05f56e2c5b11b6f157ed22f8e3ff32900cb518f7ad37527a9c0d796",
+      "byteIdentical": true
+    },
+    {
+      "originalArtifact": ".dream-loop/motion-final-round7/verification.json",
+      "durableArtifact": "docs/native-motion/reset-setup-failure.json",
+      "bytes": 1605657,
+      "sha256": "7f315d305d5bf5ccc2d6d850e64b64ee10eed00188fb7008120074a8aed12d7b",
+      "byteIdentical": true
+    },
+    {
+      "originalArtifact": ".dream-loop/motion-final-round7-reset-sequence.json",
+      "durableArtifact": "docs/native-motion/reset-setup-server-sequence.json",
+      "bytes": 8874,
+      "sha256": "c738d7c093205573eb271d45c31133e77cdb81a365b6c08999218e344e4a3a46",
+      "byteIdentical": true
+    },
+    {
+      "originalArtifact": ".dream-loop/motion-final-round7-reset-diagnosis.json",
+      "durableArtifact": "docs/native-motion/reset-setup-source-record.json",
+      "bytes": 1145,
+      "sha256": "fd306d9b5e0e70e3392188d67a37ceb7f61b7570fd3a0e63899e492f57d192a6",
+      "byteIdentical": true
+    },
+    {
+      "originalArtifact": ".dream-loop/native-render-audit/round-7/verification.json",
+      "durableArtifact": "docs/native-motion/rendering-round7.json",
+      "bytes": 724711,
+      "sha256": "56c3d2dda3b346925f0a4e8edc3d05eae6e6074803a19f19262ad3c5b7ca45f7",
+      "byteIdentical": true
+    }
+  ],
+  "extracted": [
+    {
+      "source": "verification.json#/movingReset/after",
+      "durableArtifact": "docs/native-motion/served-after.json",
+      "description": "Exact captured final browser states, including scene revision. No separate after-run HTTP build/asset hash snapshot was persisted.",
+      "bytes": 92952,
+      "sha256": "a79fc7cba7634498a8647797f52df24050e565c7fa4c730595f8374a8f59cc0f",
+      "jsonValueIdentical": true
+    },
+    {
+      "source": "../native-motion-summary.json#/cleanup",
+      "durableArtifact": "docs/native-motion/cleanup.json",
+      "description": "Exact captured closure and local server-health evidence from the passing summary.",
+      "bytes": 337,
+      "sha256": "58e682ac11e829aaa527f8f58886c6a75a623d9f47f96fb2e1c6d1d6fc4f0d1b",
+      "jsonValueIdentical": true
+    }
+  ]
+}

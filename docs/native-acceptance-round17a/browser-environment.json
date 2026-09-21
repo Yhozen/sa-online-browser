@@ -1,0 +1,19 @@
+{
+  "capturedAt": "2026-09-13T15:09:23.106Z",
+  "transport": "remote-playwright-loopback",
+  "chromium": "153.0.8010.37",
+  "headed": true,
+  "launchOptions": {
+    "channel": "chrome",
+    "args": [
+      "--disable-background-timer-throttling",
+      "--disable-backgrounding-occluded-windows",
+      "--disable-renderer-backgrounding"
+    ]
+  },
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+  "browserPlatform": "MacIntel",
+  "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+  "vendor": "Google Inc. (Apple)",
+  "webglVersion": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+}

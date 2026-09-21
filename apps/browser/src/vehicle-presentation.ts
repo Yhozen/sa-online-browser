@@ -47,7 +47,7 @@ export class VehiclePresentation {
     for (const object of meshes) {
       // The exported tail mesh contains only the red lenses and optic elements;
       // clone it per car so braking never illuminates another vehicle's lights.
-      if (object.material instanceof THREE.MeshStandardMaterial && object.material.name === "tail") {
+      if (object.material instanceof THREE.MeshStandardMaterial && ["tail", "coupe-tail"].includes(object.material.name)) {
         const original = object.material, material = original.clone();
         object.material = material;
         this.lamps.push({ object, original, material, base: material.color.clone(), kind: "brake" });
@@ -64,7 +64,7 @@ export class VehiclePresentation {
           const triangle = [0, 1, 2].map(offset => indices?.getX(i + offset) ?? i + offset);
           const isReverse = triangle.every(index => {
             point.fromBufferAttribute(positions, index).applyMatrix4(transform);
-            return Math.abs(Math.abs(point.x) - .42) <= .034 && Math.abs(point.y + 2.235) <= .006 && Math.abs(point.z + .327) <= .0095;
+            return Math.abs(Math.abs(point.x) - .42) <= .034 && Math.abs(point.y + 2.222) <= .006 && Math.abs(point.z + .327) <= .0095;
           });
           (isReverse ? reverse : rest).push(...triangle);
         }

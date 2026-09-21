@@ -1,0 +1,1019 @@
+{
+  "verifiedAt": "2026-09-13T15:52:49.737Z",
+  "command": "npm run verify:poc",
+  "environment": {
+    "node": "v24.14.0",
+    "platform": "linux",
+    "architecture": "x64",
+    "chromium": "153.0.8010.37",
+    "headed": true,
+    "rendering": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version); remote browser with Linux loopback fixture; functional acceptance only, separate from native FPS audit",
+    "browser": {
+      "capturedAt": "2026-09-13T15:09:23.106Z",
+      "transport": "remote-playwright-loopback",
+      "chromium": "153.0.8010.37",
+      "headed": true,
+      "launchOptions": {
+        "channel": "chrome",
+        "args": [
+          "--disable-background-timer-throttling",
+          "--disable-backgrounding-occluded-windows",
+          "--disable-renderer-backgrounding"
+        ]
+      },
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+      "browserPlatform": "MacIntel",
+      "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+      "vendor": "Google Inc. (Apple)",
+      "webglVersion": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+    }
+  },
+  "upstream": {
+    "version": "v1.5.8.3079",
+    "sourceCommit": "c6759bd8d265171ae3d86598895a23d5a8d92a3b",
+    "url": "https://github.com/openmultiplayer/open.mp/releases/download/v1.5.8.3079/open.mp-linux-x86.tar.gz",
+    "sha256": "5df708898cbbb97f6c299ad5c1ff663a52ad4d3d39b3d561f1fe08a32df424f4",
+    "binarySha256": "4c402c280168447b841b862386ccc1bc1fd3126cfaad3481be493d84a04689ff"
+  },
+  "browserScenarios": [
+    {
+      "title": "graphics: WebGL starts the playground",
+      "status": "expected",
+      "durationMs": 16873
+    },
+    {
+      "title": "graphics: both presets preserve native screen resolution after resize and reload",
+      "status": "expected",
+      "durationMs": 84186
+    },
+    {
+      "title": "graphics: disabled WebGL shows recovery without starting a session",
+      "status": "expected",
+      "durationMs": 1956
+    },
+    {
+      "title": "graphics: context exceptions are handled and retry can recover",
+      "status": "expected",
+      "durationMs": 9989
+    },
+    {
+      "title": "neighborhood: failed assets and scene mismatch never simulate a joined player",
+      "status": "expected",
+      "durationMs": 40619
+    },
+    {
+      "title": "neighborhood: walking, fences, camera, occupants, loop and role swap",
+      "status": "expected",
+      "durationMs": 203903
+    },
+    {
+      "title": "neighborhood: twenty reconnects release browser workers and server slots",
+      "status": "expected",
+      "durationMs": 403995
+    },
+    {
+      "title": "neighborhood: ten minute recorded active session",
+      "status": "expected",
+      "durationMs": 661579
+    },
+    {
+      "title": "neighborhood: two full-resolution views meet the low graphics budget",
+      "status": "expected",
+      "durationMs": 60905
+    },
+    {
+      "title": "neighborhood: rejoining the same tab releases skeleton textures",
+      "status": "expected",
+      "durationMs": 35923
+    },
+    {
+      "title": "end-to-end: normal players walk, chat, share a car and recover",
+      "status": "expected",
+      "durationMs": 42198
+    },
+    {
+      "title": "failures: duplicate name, worker crash, unavailable server and restart",
+      "status": "expected",
+      "durationMs": 71846
+    },
+    {
+      "title": "lifecycle: twenty browser connection cycles release sessions",
+      "status": "expected",
+      "durationMs": 256572
+    },
+    {
+      "title": "edges: jump, wall collision, safe passenger exit and hidden-tab cleanup",
+      "status": "expected",
+      "durationMs": 34483
+    },
+    {
+      "title": "soak: ten minutes of active two-player walking chat and driving",
+      "status": "expected",
+      "durationMs": 638365
+    }
+  ],
+  "durationMs": 2588049.891,
+  "normalPlayers": [
+    {
+      "name": "Proof_A",
+      "player": 0,
+      "npc": 0
+    },
+    {
+      "name": "Proof_B",
+      "player": 1,
+      "npc": 0
+    },
+    {
+      "name": "Proof_B",
+      "player": 1,
+      "npc": 0
+    }
+  ],
+  "browserCyclesReleased": 20,
+  "sustainedSession": {
+    "durationMs": 601902,
+    "rounds": 75,
+    "playerIds": [
+      0,
+      1
+    ],
+    "errors": []
+  },
+  "neighborhood": {
+    "performance": {
+      "recording": false,
+      "targetMedianFPS": 4,
+      "cloudTargetPassed": true,
+      "performanceIsDiagnostic": true,
+      "budgets": {
+        "sceneDownloadBytes": 48000000,
+        "renderedTriangles": 6000000,
+        "drawCalls": 1000,
+        "textureStorageBytes": 335544320,
+        "cloudTargetMedianFPS": 4
+      },
+      "warmupMs": 10000,
+      "durationMs": 31667,
+      "rounds": 9,
+      "metrics": [
+        {
+          "preset": "low",
+          "viewport": [
+            1280,
+            720
+          ],
+          "renderScale": 1,
+          "renderSize": [
+            1280,
+            720
+          ],
+          "measuredFrames": 300,
+          "medianFrameMs": 8.30000000000291,
+          "medianFPS": 120.5,
+          "p95FrameMs": 9.799999999995634,
+          "triangles": 1745783,
+          "calls": 268,
+          "bytes": 45360568,
+          "textureBytes": 114990005.33333333,
+          "files": 25,
+          "sceneDownloadBytes": 46972136,
+          "textureStorageBytes": 69851812
+        },
+        {
+          "preset": "low",
+          "viewport": [
+            1280,
+            720
+          ],
+          "renderScale": 1,
+          "renderSize": [
+            1280,
+            720
+          ],
+          "measuredFrames": 300,
+          "medianFrameMs": 8.30000000000291,
+          "medianFPS": 120.5,
+          "p95FrameMs": 9.700000000004366,
+          "triangles": 1745783,
+          "calls": 268,
+          "bytes": 45360568,
+          "textureBytes": 114990005.33333333,
+          "files": 25,
+          "sceneDownloadBytes": 46972136,
+          "textureStorageBytes": 69851812
+        }
+      ]
+    },
+    "residentRejoins": [
+      {
+        "geometries": 160,
+        "textures": 31,
+        "programs": 23,
+        "observedFrame": 81
+      },
+      {
+        "geometries": 160,
+        "textures": 31,
+        "programs": 23,
+        "observedFrame": 170
+      },
+      {
+        "geometries": 160,
+        "textures": 31,
+        "programs": 23,
+        "observedFrame": 259
+      },
+      {
+        "geometries": 160,
+        "textures": 31,
+        "programs": 23,
+        "observedFrame": 351
+      },
+      {
+        "geometries": 160,
+        "textures": 31,
+        "programs": 23,
+        "observedFrame": 476
+      },
+      {
+        "geometries": 160,
+        "textures": 31,
+        "programs": 23,
+        "observedFrame": 573
+      },
+      {
+        "geometries": 160,
+        "textures": 31,
+        "programs": 23,
+        "observedFrame": 673
+      },
+      {
+        "geometries": 160,
+        "textures": 31,
+        "programs": 23,
+        "observedFrame": 770
+      },
+      {
+        "geometries": 160,
+        "textures": 31,
+        "programs": 23,
+        "observedFrame": 872
+      },
+      {
+        "geometries": 160,
+        "textures": 31,
+        "programs": 23,
+        "observedFrame": 974
+      },
+      {
+        "geometries": 160,
+        "textures": 31,
+        "programs": 23,
+        "observedFrame": 1075
+      },
+      {
+        "geometries": 160,
+        "textures": 31,
+        "programs": 23,
+        "observedFrame": 1181
+      },
+      {
+        "geometries": 160,
+        "textures": 31,
+        "programs": 23,
+        "observedFrame": 1290
+      },
+      {
+        "geometries": 160,
+        "textures": 31,
+        "programs": 23,
+        "observedFrame": 1401
+      },
+      {
+        "geometries": 160,
+        "textures": 31,
+        "programs": 23,
+        "observedFrame": 1512
+      },
+      {
+        "geometries": 160,
+        "textures": 31,
+        "programs": 23,
+        "observedFrame": 1627
+      },
+      {
+        "geometries": 160,
+        "textures": 31,
+        "programs": 23,
+        "observedFrame": 1743
+      },
+      {
+        "geometries": 160,
+        "textures": 31,
+        "programs": 23,
+        "observedFrame": 1860
+      },
+      {
+        "geometries": 160,
+        "textures": 31,
+        "programs": 23,
+        "observedFrame": 1979
+      },
+      {
+        "geometries": 160,
+        "textures": 31,
+        "programs": 23,
+        "observedFrame": 2097
+      }
+    ],
+    "sustainedSession": {
+      "durationMs": 606240,
+      "rounds": 81,
+      "metrics": [
+        {
+          "preset": "low",
+          "viewport": [
+            1280,
+            720
+          ],
+          "renderScale": 1,
+          "renderSize": [
+            1280,
+            720
+          ],
+          "measuredFrames": 300,
+          "medianFrameMs": 8.300000000046566,
+          "medianFPS": 120.5,
+          "p95FrameMs": 9.599999999976717,
+          "triangles": 1742109,
+          "calls": 265,
+          "bytes": 45360568,
+          "textureBytes": 114990005.33333333,
+          "files": 25,
+          "sceneDownloadBytes": 46972136,
+          "textureStorageBytes": 69851812
+        },
+        {
+          "preset": "low",
+          "viewport": [
+            1280,
+            720
+          ],
+          "renderScale": 1,
+          "renderSize": [
+            1280,
+            720
+          ],
+          "measuredFrames": 300,
+          "medianFrameMs": 8.300000000046566,
+          "medianFPS": 120.5,
+          "p95FrameMs": 9.599999999976717,
+          "triangles": 1750647,
+          "calls": 269,
+          "bytes": 45360568,
+          "textureBytes": 114990005.33333333,
+          "files": 25,
+          "sceneDownloadBytes": 46972136,
+          "textureStorageBytes": 69851812
+        }
+      ]
+    },
+    "routes": [
+      [
+        {
+          "goal": [
+            0,
+            9
+          ],
+          "position": [
+            0,
+            6.097541628885433,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 447,
+            "vehicle": 1,
+            "driver": 0,
+            "passenger": 1,
+            "x": 0,
+            "y": 6,
+            "z": 10,
+            "heading": 0,
+            "tick": 94185,
+            "receivedAt": 1789312365100
+          }
+        },
+        {
+          "goal": [
+            5,
+            12
+          ],
+          "position": [
+            2.933768132872574,
+            10.55015005875824,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 455,
+            "vehicle": 1,
+            "driver": 0,
+            "passenger": 1,
+            "x": 2.334,
+            "y": 10.314,
+            "z": 10,
+            "heading": 291.495,
+            "tick": 95786,
+            "receivedAt": 1789312366703
+          }
+        },
+        {
+          "goal": [
+            53,
+            12
+          ],
+          "position": [
+            50.708573829204916,
+            11.71939972146272,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 496,
+            "vehicle": 1,
+            "driver": 0,
+            "passenger": 1,
+            "x": 50.569,
+            "y": 11.688,
+            "z": 10,
+            "heading": 281.104,
+            "tick": 103994,
+            "receivedAt": 1789312374913
+          }
+        },
+        {
+          "goal": [
+            58,
+            7
+          ],
+          "position": [
+            56.11223370928246,
+            8.848631962518557,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 506,
+            "vehicle": 1,
+            "driver": 0,
+            "passenger": 1,
+            "x": 55.874,
+            "y": 9.491,
+            "z": 10,
+            "heading": 200.248,
+            "tick": 105992,
+            "receivedAt": 1789312376908
+          }
+        },
+        {
+          "goal": [
+            58,
+            -43
+          ],
+          "position": [
+            57.990038162622156,
+            -40.6117013717095,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 550,
+            "vehicle": 1,
+            "driver": 0,
+            "passenger": 1,
+            "x": 58.23,
+            "y": -40.04,
+            "z": 10,
+            "heading": 151.521,
+            "tick": 114794,
+            "receivedAt": 1789312385710
+          }
+        },
+        {
+          "goal": [
+            53,
+            -48
+          ],
+          "position": [
+            53.606675999790106,
+            -46.12932997804959,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 559,
+            "vehicle": 1,
+            "driver": 0,
+            "passenger": 1,
+            "x": 53.915,
+            "y": -45.714,
+            "z": 10,
+            "heading": 139.34,
+            "tick": 116605,
+            "receivedAt": 1789312387521
+          }
+        },
+        {
+          "goal": [
+            5,
+            -48
+          ],
+          "position": [
+            7.753521560071121,
+            -48.068694149628506,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 604,
+            "vehicle": 1,
+            "driver": 0,
+            "passenger": 1,
+            "x": 7.928,
+            "y": -47.992,
+            "z": 10,
+            "heading": 115.66,
+            "tick": 125608,
+            "receivedAt": 1789312396524
+          }
+        },
+        {
+          "goal": [
+            0,
+            -43
+          ],
+          "position": [
+            1.9752141478565157,
+            -44.637759142909076,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 616,
+            "vehicle": 1,
+            "driver": 0,
+            "passenger": 1,
+            "x": 2.502,
+            "y": -45.084,
+            "z": 10,
+            "heading": 43.687,
+            "tick": 128039,
+            "receivedAt": 1789312398956
+          }
+        },
+        {
+          "goal": [
+            0,
+            6
+          ],
+          "position": [
+            0.2669692894380112,
+            3.2210458458170628,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 663,
+            "vehicle": 1,
+            "driver": 0,
+            "passenger": 1,
+            "x": 0.205,
+            "y": 2.728,
+            "z": 10,
+            "heading": 348.514,
+            "tick": 137421,
+            "receivedAt": 1789312408361
+          }
+        }
+      ],
+      [
+        {
+          "goal": [
+            0,
+            9
+          ],
+          "position": [
+            0,
+            6.097541628885433,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 695,
+            "vehicle": 1,
+            "driver": 1,
+            "passenger": 0,
+            "x": 0,
+            "y": 6.04,
+            "z": 10,
+            "heading": 0,
+            "tick": 143830,
+            "receivedAt": 1789312414746
+          }
+        },
+        {
+          "goal": [
+            5,
+            12
+          ],
+          "position": [
+            2.656152600675399,
+            10.162338209061291,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 702,
+            "vehicle": 1,
+            "driver": 1,
+            "passenger": 0,
+            "x": 1.869,
+            "y": 9.786,
+            "z": 10,
+            "heading": 298.03,
+            "tick": 145231,
+            "receivedAt": 1789312416146
+          }
+        },
+        {
+          "goal": [
+            53,
+            12
+          ],
+          "position": [
+            50.25380759470527,
+            11.840806196550021,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 747,
+            "vehicle": 1,
+            "driver": 1,
+            "passenger": 0,
+            "x": 50.061,
+            "y": 11.881,
+            "z": 10,
+            "heading": 258.002,
+            "tick": 154238,
+            "receivedAt": 1789312425176
+          }
+        },
+        {
+          "goal": [
+            58,
+            7
+          ],
+          "position": [
+            55.06402824048216,
+            7.4155110843335095,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 756,
+            "vehicle": 1,
+            "driver": 1,
+            "passenger": 0,
+            "x": 54.801,
+            "y": 7.602,
+            "z": 10,
+            "heading": 231.517,
+            "tick": 156036,
+            "receivedAt": 1789312426953
+          }
+        },
+        {
+          "goal": [
+            58,
+            -43
+          ],
+          "position": [
+            59.01339074924192,
+            -40.66975613113492,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 801,
+            "vehicle": 1,
+            "driver": 1,
+            "passenger": 0,
+            "x": 58.897,
+            "y": -40.493,
+            "z": 10,
+            "heading": 215.447,
+            "tick": 165053,
+            "receivedAt": 1789312435972
+          }
+        },
+        {
+          "goal": [
+            53,
+            -48
+          ],
+          "position": [
+            55.22853416140401,
+            -46.6325988909499,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 814,
+            "vehicle": 1,
+            "driver": 1,
+            "passenger": 0,
+            "x": 55.953,
+            "y": -46.153,
+            "z": 10,
+            "heading": 115.706,
+            "tick": 167647,
+            "receivedAt": 1789312438564
+          }
+        },
+        {
+          "goal": [
+            5,
+            -48
+          ],
+          "position": [
+            7.642727678037213,
+            -48.70921662900081,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 855,
+            "vehicle": 1,
+            "driver": 1,
+            "passenger": 0,
+            "x": 7.866,
+            "y": -48.716,
+            "z": 10,
+            "heading": 90.143,
+            "tick": 175858,
+            "receivedAt": 1789312446775
+          }
+        },
+        {
+          "goal": [
+            0,
+            -43
+          ],
+          "position": [
+            1.9517807530670002,
+            -44.32247271824712,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 866,
+            "vehicle": 1,
+            "driver": 1,
+            "passenger": 0,
+            "x": 2.259,
+            "y": -44.5,
+            "z": 10,
+            "heading": 59.956,
+            "tick": 178057,
+            "receivedAt": 1789312448973
+          }
+        },
+        {
+          "goal": [
+            0,
+            6
+          ],
+          "position": [
+            0.2873044074744174,
+            3.377307387151409,
+            10
+          ],
+          "server": {
+            "event": "vehicle",
+            "seq": 910,
+            "vehicle": 1,
+            "driver": 1,
+            "passenger": 0,
+            "x": 0.3,
+            "y": 3.215,
+            "z": 10,
+            "heading": 2.955,
+            "tick": 186876,
+            "receivedAt": 1789312457793
+          }
+        }
+      ]
+    ],
+    "cycles": {
+      "cycles": 20,
+      "ids": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "positionChecks": {
+      "count": 176,
+      "maxServerDistance": 0.06929481389701486,
+      "maxPeerDistance": 0.022706985473632812
+    },
+    "errors": []
+  },
+  "demoSupervisor": {
+    "termination": {
+      "startup": true,
+      "normalWorkerSpawn": true,
+      "signal": "SIGTERM",
+      "exitCode": 0,
+      "pidFileRemoved": true,
+      "allSupervisedProcessesExited": true,
+      "upstreamAbort": false
+    },
+    "keyboardInterrupt": {
+      "startup": true,
+      "normalWorkerSpawn": true,
+      "signal": "process-group SIGINT",
+      "exitCode": 0,
+      "pidFileRemoved": true,
+      "allSupervisedProcessesExited": true,
+      "upstreamAbort": false
+    }
+  },
+  "positionChecks": {
+    "count": 159,
+    "maxDistance": 0.4792277171958581,
+    "maxSampleAgeMs": 202,
+    "requiredDistance": 0.5,
+    "deadlineMs": 1000
+  },
+  "resetChecks": {
+    "count": 78,
+    "clock": "browser performance.now from actual trusted reset Enter; immutable verdict retrieved afterward",
+    "maxElapsedMs": 272.90000000596046,
+    "maxBrowserDistance": 0,
+    "maxServerDistance": 0,
+    "requiredDistance": 0.5,
+    "deadlineMs": 1000,
+    "freshness": "same epoch/player/vehicle; fresh selfPosition/selfHeading and generic vehicleState counters; independent fresh server reset/car sample"
+  },
+  "uncaughtBrowserErrors": [],
+  "testedSourceSha256": {
+    "apps/browser/src/main.ts": "655c8c6f8c8ef6fe50f6e4ff7d51649bee865423e227b463f9df113c7be9b472",
+    "apps/browser/src/bootstrap.ts": "d512c6fc9eaf612fc44cc93013b113ed233eabb17fe08ef560fad6af0fb3b98f",
+    "apps/browser/src/graphics.ts": "7b61ef63871d3f3d1633c38dfd5341b5dfedc60b7346af366acf4b653867832c",
+    "services/gateway/server.mjs": "c2e08a361dd313443790050bda4fb308c33bc38ade6e3a0aba5e9f7ff8e0f326",
+    "native/worker.cpp": "805debb07a1504151f4deb487cc10d41f589d20f359bdd53cab147f2f10567e9",
+    "tools/setup-protocol.py": "fcaa0ce80cb14bf33a007d6bec1687e832e7d31a9a13b8a469e43110e0cfb2d4",
+    "test-server/poc.pwn": "4eff00e771aad1ecb1ade9905375889bdc252b1361b4a5ee7d08b262007b5fc7",
+    "test-server/arena.json": "b1dcd0a602599ba894d4bbe7a30a713a01daa61ae55bd9b5067135922019b53d",
+    "tests/browser/poc.spec.mjs": "3679be69706db29ca162a76e901aece773b93056257f9a9dee3daafa85e0fd7b",
+    "tests/browser/reset-observer.mjs": "09b1724e8321071cc597a7dd02cd9602092399e8b9412ed7895328446dc2ec40",
+    "tests/reset-observer.test.mjs": "0f86d2b6e101635685f1de19caae854494091ccf9f867cbf6276c37a7059ff3b",
+    "tools/verify.mjs": "eb7ea74bd823d6e04db9736497a8261d39ed8684a796e8542fa486a13dda0a40",
+    "tools/summarize-verification.mjs": "be027a43c66de8970b9f81dfb6ed650e9a8f792606d8bd91414d08a1b1ad7fc4",
+    "tests/browser/graphics.spec.mjs": "67ed86949ad4551bb3b27d85407686078f58487c6450f5a73dcc7e86a923497b",
+    "tools/browser-options.mjs": "56fd39e253c23572382810e42c2c432ebc4d752618e6dfab898c2dff24956f70",
+    "tools/acceptance-browser-server.mjs": "4e303fdd8609b84066dee0502d373dab7755361409f09256922576b464946fd6",
+    "tools/acceptance-browser-heartbeat.mjs": "c3d942b3ecbd9d4ec3c0e46eb7eeb3e8ff414256e3fd9cee8cedf6989d363df5",
+    "tests/acceptance-browser-heartbeat.test.mjs": "ed6ebca90670af843b2d8826d54b2f559a28e2d728348dd5319577d83a8eadbb",
+    "tools/open-browser.mjs": "34d1a3bd96e72f94b819e6ffe36f88eab093a589b416d1b84c5fef731df78d1c",
+    "playwright.config.mjs": "8b7f8dec98c9eeadaaf1e3664a45abcea75f7b7f7e0f5e1ed62b03b53452c09e",
+    "tools/dev.mjs": "a32709f89229838bf118130367b16a016e375df0dc94ff1cabe75d5585ef0104",
+    "tools/verify-supervisor.py": "c0a2e0594b98236a2a1d7114e66d2ca0a8ddbba05e1ae77e4134ff7fa2cd0bd9",
+    "package-lock.json": "b99e5c05368deae7d0cd82a86505d33671cc2275c0852eed3f08afbd0b07bd74",
+    "apps/browser/src/assets.ts": "a2f4aeecee9bd34f490bdc5902bd20f23be31eca43fa759499824a06596e9036",
+    "apps/browser/src/environment.ts": "cfb348a9da7007d29d432bde3ea4fc3a48a7e41dad83503d9d97e6f50dbd7798",
+    "apps/browser/src/characters.ts": "92f0aea16b7e509bc9ed6f47ab298ae0f88b7ca2f74eafc447be560d1a99021b",
+    "apps/browser/src/collision.ts": "bc98b1275031f6b3de5d753bc572f1ce2f77fa5d8d7b54e5b7bb5c65749cd110",
+    "apps/browser/src/camera.ts": "ab610c86911ff9f33ae3a91a5cb7cf2f16f4528028bc8abe0eff055a635c9ed6",
+    "apps/browser/src/hud.ts": "af1dee461a169484731193bf2f5d123aa70dd8473311323dc670ce1564409b9f",
+    "apps/browser/src/shadows.ts": "5201573101a62ae060534d77123c496f03b8b07617a1da5109341603b86c7be0",
+    "apps/browser/src/antialias.ts": "29aad63b1b86354605f740bd8ce7b76bc0784afa84bebaad7ddb7ce315924161",
+    "apps/browser/src/simulation-clock.ts": "4db0b03b6155b649c2d95c814ce8d117516bb4030cce17c02e423580636e6c60",
+    "apps/browser/src/interpolated-pose.ts": "5b647e17329d22245dbf9115e6df2037c4dfbf98734a16c3d49642d304d828c4",
+    "apps/browser/src/snapshot-pose.ts": "bf2dbc7f268b8d097639723414315986e02d0e190cbabb332eec09b0d62c60c8",
+    "tests/simulation-clock.test.mjs": "975e7eb98901a7cf1165f4c30a648ce352b2186565fe0faddbb64e11b8ecd017",
+    "tests/snapshot-pose.test.mjs": "ac36ba7d272d774faeb0ac1e472fee489903f45884bf0251110413d07b223cfd",
+    "tests/character-animation.test.mjs": "6c33927c6f86d3486659412474cd37c4868f42a09c443ac5e1747660b04da30f",
+    "tests/foliage-mips.test.mjs": "21733557b8f82358e7828eca4f6e7db09b5357f8293aa8ef318fdf07d329bc04",
+    "apps/browser/src/lighting.ts": "267e4f6ee9b2cca0e3a282abbf8c9324693ba633ab292eb685daf7635fa71df7",
+    "apps/browser/src/warmup.ts": "2db7cbf9d34a1a13b65fe8b52cd8509360903d7084741b216be60e9cadad3406",
+    "apps/browser/src/foliage-mips.ts": "bf7fe1414777bf98dc331fcf323a747dd6a1d20e1df857cde5e5ad47a98cb15c",
+    "apps/browser/src/character-animation.ts": "0782bb10ef3fedfe9744937687dd63566e32abafae70d75e1420c4a62922e8bb",
+    "apps/browser/src/reflection-storage.ts": "8b7f07a99248d1885e509aa3e916b87982ad33019348ae87fd04e09635c13720",
+    "tools/bake-reflections.mjs": "3f8dfda19b40d6cb8f3d6cab2ba2d238bb46574209334df33e139ef50e4718e8",
+    "tests/reflection.test.mjs": "68e29b1c865ca646671504378e7d67193612eeaba536ffe48d2e0d19198ad997",
+    "apps/browser/src/horizon.ts": "114aabbffcd15af17be77e578b7b47b73248a7c7dba8590540b88c79141a5fa2",
+    "apps/browser/src/road-detail.ts": "cee37ba83270b3f77d1b050a697c458775f3adb9f5f47fa014ae196d642d2e0c",
+    "apps/browser/src/verges.ts": "39f357c5341a64a3bf503337a6c7215e99ff18c7a5d78c44a650238dd4ea4297",
+    "apps/browser/src/mown-access.ts": "bb2b5f90b4ca762fb3358e7944f4cff08769a8a87b5e12cef1a6b74692f901da",
+    "apps/browser/src/ground-cover.ts": "8e5a7a64144227c24a5aa6c54ad735e07c7ee68b414602d39f21e0e88c757b89",
+    "apps/browser/src/surface-weathering.ts": "fe7052a24c8987b77dfa97cf2e9c2654bbf0f4d604f9d27f695cf4d4168353ff",
+    "apps/browser/src/garden.ts": "dad060ffb85efecc4bf833281c13982137245452102253540e90fc98d9bec44f",
+    "apps/browser/src/surface-textures.ts": "2309c51c318e786734dd90470cbfcb3bb83e67eef2691cf6e3dc5c7028edac56",
+    "apps/browser/src/surface-pixels.ts": "327e2cc8c0971fc872b5459c65694c92cfb38a2e25182395470db28f5afdbabe",
+    "apps/browser/src/surface-lighting.ts": "a01bfef9ccd0a7685a18f0ef355dae70ab2d537c5252c8075c811d34fc58992f",
+    "apps/browser/src/canopy-lighting.ts": "ccfb0a9640512b8287eb7aa2fb3ff0ea962f9a215325d354bd8bb9f66b99f35d",
+    "tests/canopy-lighting.test.mjs": "e0112ba795a0b1c38326ccb5f6bd268fca72c667ccddb3f33eaf783d08ae3482",
+    "tests/surface-pixels.test.mjs": "0b98b243b75e561a3e4440722777e8d0795dcf72b74305de08fd3c4a9bb360f1",
+    "tools/assets/environment-kit.py": "1fb49df90bba8637ec000f37464766c18bc22b969d7013776bd1c45ed3983f7c",
+    "tools/assets/heroes.py": "781b3f194f2d7dd21acd85ff00815ef9aa0aa760269841de9ef47ae62022a919",
+    "tools/assets/garden-kit.py": "974d3add6e6f4ad5b9f52d681eeecb69dde28cb8b2a6d471365dcca4ddbf1c8e",
+    "tools/assets/canopy-visibility.py": "925962dae8e588d6ea16ed200035ede81961faaefa015d49f26713e8aca73b1c",
+    "tools/assets/canopy-visibility.mjs": "f133547bc664fbf46a4b9aedaa83d9199695a1702247c59e0acb8c2cc9b4d352",
+    "assets/source/canopy-base/base.json": "47748da221dbe45aa2fd11893fe95ec0c2eddaa31f1f6d0b7f690c335c3f2b06",
+    "assets/source/canopy-base/tree.blend": "1707626df2a5c36fab64eaaf026be4159295e5ada88a9474231e707a24af5647",
+    "assets/source/canopy-base/tree.glb": "1587be859a79d45c3418fc442b9d0f47ded1d7b4efd8d1858c074139673f11b4",
+    "assets/source/canopy-base/roadside-oak.blend": "d9ad319d747e3c859a33e6a2e60d7ab08969a7d09e8b7cc5de21baf7d17c6511",
+    "assets/source/canopy-base/roadside-oak.glb": "c263048dc87e8f2580719d5631928255aa5768621bbe58b7a0f33541b31fd4d5",
+    "tools/assets/horizon.py": "6a4fb64c39bcd3579355e5a9c8f463b62e6733be7234cf044604c3ec44e86ef9",
+    "tools/assets/horizon-envelope-v3.py": "9c738fa74fec6a155a838ecacde64ce37b6d52fae557164c66b85baf40e125cd",
+    "tools/assets/horizon-bake.mjs": "1b17a1c9943944373dcab38e799038c8e226e41b10b40292d8bb8aed538ae79d",
+    "tools/assets/horizon-save.py": "ae6bc76103272672d807b5c10fb7163d79f4565e8a1cb79f08a6a49c6c0acf68",
+    "assets/source/horizon-envelope-v3.json": "42b9fd6aba7e4e7e9416d33722b6661f3deb09ce34baccdc410a3812c0bae557",
+    "assets/source/horizon-envelope-v3.blend": "6d5f38fd94408bf478ebd5e867aece47f637a11097a431311b862dc8c941c03d",
+    "assets/source/horizon-envelope-v3-build.json": "be46cd9215f7fc49559c7eb39c6194b2e6d3eb7bc97b80c20c282979f58e8612",
+    "assets/source/horizon-lighting.json": "c3092455f8ad174a1c3c93e9d5618006b52dec57d87094c759544e2a07b03909",
+    "assets/source/horizon-build.json": "d6aa07e9158c8df52e14672b1a221da97f675c83b0cf027d02504585f91f5ea0",
+    "assets/horizon-relief.json": "a5d1351177c927700fcc381bf3a4c8b7698a025f21a7973798a79263e81ef922",
+    "assets/source/asset-build.json": "6a3b11bfbfec7477091e3e39bf1a29f78114f93ce52cbda72a56de7d5fb55203",
+    "tests/assets.test.mjs": "203f56b435c77f15f3211b4642fa13b014690c49a2aff43b07a1a98d515bcf1c",
+    "tests/verges.test.mjs": "c46f02b46a9db1e652d490f6137477634c5db480d95f2914b0d2e6f0b3e789e2",
+    "tests/garden.test.mjs": "2dc16af37f775ea83cd0bf025ef13a08d6409258a6502a5f2906d22f11bb043d",
+    "tests/asset-pipeline.test.mjs": "6ddd729e126019c16f5f75349526c8e3fcbfbecd6a56221b3f07ae8d20cdc8a5",
+    "tests/terrain.test.mjs": "3522de00181ef28a798be36936572b8f783d4da453c4aebc3476e98e7e8ec9d6",
+    "tests/street-oaks.test.mjs": "a8cc5425141eb39c9d7108c13657e057fb40bc7991a5a0fc906633f1cbc2cf89",
+    "tests/mature-oak.test.mjs": "77d014aa4b10dded0dab7ed18f506792479369e056cb3b607aa3450612a78ef5",
+    "tools/visual-budgets.mjs": "39018d5b960556c5054b2106168f53cd63e9cb6e12e92293946ddab228cb09fb",
+    "packages/shared/scenes/neighborhood.json": "a396b576a26d665224ef38c643d9308866f886babab999baa767f9946db8422d",
+    "apps/browser/public/assets/inventory.json": "596ee921a093d1a5b690e7f53c046b550427d20ae37b5fa36111934ad2fa15b7",
+    "tests/browser/neighborhood.spec.mjs": "52a071c52615763699bb464203b5c2ce554f925926939a24b4621b80de2be9c1",
+    "tools/texture-audit.mjs": "63f31cce5de94af40edaa72f3f873c96a291b65d3f139f5713f6394bb07cb707",
+    "tools/verify-desktop.mjs": "e9c24c1f2a03d6426fde6efaa5f59da85d542caf93d6d9d64d7c8a4ed7189cce",
+    "tools/create-scenes.mjs": "0bfaed5d26e28345341e0d7824a190355bd7c2948ccfebbc63be473d6d58f2ff",
+    "tools/build-assets.mjs": "2d9120347c8d7bd23d47d9344a57063641b875c5e3dae63df98ba0f05838ee00",
+    "tools/assets/build.py": "3eb0039ccbd34a3c3aec5e88aced09f34c8ac3677f9d777b97ece47daad9a53e",
+    "packages/shared/scene.mjs": "bf854bf1c671d16b9ac3ec47a08b02bfbd78b32a545bdb2d39ce814d621c5cd4",
+    "tools/setup-runtime.py": "d5f25a2dcbf91567ee20da8de05068cddda236b0b739148ecbb8963357716be3",
+    "packages/shared/scenes/yard.json": "eafd501e8fef4ffa7df59050ec41059c4d86b53e510aa83e7479e936497ed5ac",
+    "apps/browser/src/style.css": "33e340bf401787473e31dfd3b18a2ab63edca9016dd462217cdd29530a56e0aa",
+    "package.json": "184b45dea4a55d0bbb5c32801804bcaf6fc199caeca30ce4b692a91a6b840f96"
+  },
+  "nativeWorkerSha256": "a78239777d44e7bc41a5aafda445f4440e17cf214450f5a2b3066be9d0ac4723",
+  "evidence": [
+    "results.json",
+    "browser-environment.json",
+    "server-observations.json",
+    "position-agreements.json",
+    "reset-agreements.json",
+    "browser-errors.json",
+    "soak.json",
+    "walking-chat.png",
+    "driver-passenger.png",
+    "wall-exit.png",
+    "soak-complete.png",
+    "report/",
+    "videos/",
+    "*.zip"
+  ],
+  "unverified": [
+    "original GTA clients",
+    "original SA-MP servers",
+    "public servers",
+    "non-Chromium browsers",
+    "hardware GPU performance",
+    "WAN behavior",
+    "GTA assets and realistic physics",
+    "full legacy protocol coverage"
+  ]
+}

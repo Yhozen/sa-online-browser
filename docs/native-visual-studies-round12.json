@@ -1,0 +1,331 @@
+{
+  "complete": true,
+  "at": "2026-09-13T11:30:09.165Z",
+  "mode": "independent then combined",
+  "targetId": "6A67DE5DC13D2FD4A0E2E5C8A456E82B",
+  "protectedId": "37D9DDC1B1728B3F58602FBC3B3FBD38",
+  "version": {
+    "Browser": "Chrome/153.0.8010.37",
+    "Protocol-Version": "1.3",
+    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36",
+    "V8-Version": "15.3.76.10",
+    "WebKit-Version": "537.36 (@b75a5a95ea1a1b55bdbfd6d9f42d47be7507fb8b)",
+    "webSocketDebuggerUrl": "ws://127.0.0.1:9333/devtools/browser/4bfa4033-aa50-4b09-ba1c-f897642d82ab"
+  },
+  "errors": [],
+  "warnings": [
+    {
+      "type": "warning",
+      "text": "THREE.WARNING: Multiple instances of Three.js being imported."
+    }
+  ],
+  "inputsUnchanged": true,
+  "cleanup": {
+    "targetId": "6A67DE5DC13D2FD4A0E2E5C8A456E82B",
+    "protectedId": "37D9DDC1B1728B3F58602FBC3B3FBD38",
+    "closed": true,
+    "ownedWindowOnly": true
+  },
+  "limitations": [
+    "Scratch visual comparison only; no canonical integration or unseen quality claim.",
+    "SH requires a validated real native capture; no sky-only fallback exists.",
+    "Leaf normals are the separately documented staged hybrid model. The original geometry and diffuse/alpha identity must remain unchanged.",
+    "Combined material order is SH first, leaf second; restoration reverses that order.",
+    "Pixel captures include live character animation and UI. Final baseline restoration is checked structurally; full-image pixel equality is not claimed."
+  ],
+  "decision": "Rejected on visual inspection; no canonical integration.",
+  "shots": [
+    {
+      "name": "baseline",
+      "at": "2026-09-13T11:29:56.173Z",
+      "pngSha256": "84ba93de478c6b29da4bb1c1659147ae2d0a157057c70b570f83a94bb5032cd5",
+      "gl": {
+        "errors": [],
+        "contextLost": false,
+        "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+        "failedPrograms": 0,
+        "memory": {
+          "geometries": 266,
+          "textures": 51,
+          "programs": 44
+        }
+      }
+    },
+    {
+      "name": "sh-only",
+      "at": "2026-09-13T11:29:59.170Z",
+      "pngSha256": "9fcb1b461856c802d3e0d9f223d06b401140362e87f36f8112425f206ebb24dd",
+      "gl": {
+        "errors": [],
+        "contextLost": false,
+        "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+        "failedPrograms": 0,
+        "memory": {
+          "geometries": 266,
+          "textures": 51,
+          "programs": 72
+        }
+      }
+    },
+    {
+      "name": "baseline-after-sh",
+      "at": "2026-09-13T11:30:01.046Z",
+      "pngSha256": "e2b8c30aa6af6a0a9b57dd73135216994f7a0d9cd5e587e130a9c0132ffcaa9d",
+      "gl": {
+        "errors": [],
+        "contextLost": false,
+        "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+        "failedPrograms": 0,
+        "memory": {
+          "geometries": 266,
+          "textures": 51,
+          "programs": 72
+        }
+      }
+    },
+    {
+      "name": "leaf-only",
+      "at": "2026-09-13T11:30:04.085Z",
+      "pngSha256": "41b68f6ad68fd682c51749ef325dea804eab3d19196e7591ac4f225552849d87",
+      "gl": {
+        "errors": [],
+        "contextLost": false,
+        "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+        "failedPrograms": 0,
+        "memory": {
+          "geometries": 266,
+          "textures": 52,
+          "programs": 74
+        }
+      }
+    },
+    {
+      "name": "combined",
+      "at": "2026-09-13T11:30:07.114Z",
+      "pngSha256": "5ed405f367874b08082f2fb4208934332339b789aa761d3afdfb9d1c5082365d",
+      "gl": {
+        "errors": [],
+        "contextLost": false,
+        "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+        "failedPrograms": 0,
+        "memory": {
+          "geometries": 266,
+          "textures": 52,
+          "programs": 74
+        }
+      }
+    },
+    {
+      "name": "baseline-restored",
+      "at": "2026-09-13T11:30:08.982Z",
+      "pngSha256": "bc74397d5f548f0b5b877ddf2a618d9f0da2e8e3fdff40d90ca754873691a44f",
+      "gl": {
+        "errors": [],
+        "contextLost": false,
+        "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Pro, Unspecified Version)",
+        "failedPrograms": 0,
+        "memory": {
+          "geometries": 266,
+          "textures": 51,
+          "programs": 72
+        }
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "path": ".dream-loop/lighting-comparison/native-comparison.json",
+      "bytes": 10140908,
+      "sha256": "ebef9c2decf50c9a15bdf654fefd37d33198f0c1109ec0295994426727d3d325"
+    },
+    {
+      "path": ".dream-loop/lighting-comparison/inputs-before.json",
+      "bytes": 10369,
+      "sha256": "afe3c9830d08e68ecfd0698ce5980c98548faedd91c6f53e4d36a89cb2b66cb4"
+    },
+    {
+      "path": ".dream-loop/lighting-comparison/inputs-after.json",
+      "bytes": 10369,
+      "sha256": "afe3c9830d08e68ecfd0698ce5980c98548faedd91c6f53e4d36a89cb2b66cb4"
+    },
+    {
+      "path": ".dream-loop/lighting-capture/capture-verification.json",
+      "bytes": 7116,
+      "sha256": "15adfeb6cfbbb912bab48a1e013fa40d495da8fa2bdd886f309459146e64971c"
+    },
+    {
+      "path": ".dream-loop/lighting-capture/capture-faces.json",
+      "bytes": 5534,
+      "sha256": "aeb5dd5b80471f406f6a8f22a275f89591bb0f492a4d4bf77013c4053ab78273"
+    },
+    {
+      "path": ".dream-loop/diffuse-light-prototype/field.json",
+      "bytes": 3259,
+      "sha256": "1eebb8255bc54093efa06bf0cdc0cc457c01c85a01409a894609a0dbdc4a2204"
+    },
+    {
+      "path": ".dream-loop/leaf-normal-prototype/imagegen-provenance.json",
+      "bytes": 2469,
+      "sha256": "926c95a5cfab1677ad0c9fdd0805209ed9376b5216bdf2eaf6c400307ffb786e"
+    },
+    {
+      "path": ".dream-loop/leaf-normal-prototype/normal-map-provenance.json",
+      "bytes": 6783,
+      "sha256": "0b7845c4ae301b703a582451b1f8ac258fd9b568a60d81acfb18172b5b275ec8"
+    },
+    {
+      "path": ".dream-loop/lighting-capture/attempt1-guard-self-copy/INVALIDATED.md",
+      "bytes": 474,
+      "sha256": "250677b28e2dec00af9ed24028aa768de077e22786c22758d5b05cf382e6c8c2"
+    }
+  ],
+  "coordinatedSun": {
+    "complete": true,
+    "at": "2026-09-13T12:20:25.041Z",
+    "degrees": 30,
+    "decision": "Rejected: longer distant shade does not offset broad dark foreground/hero shadow.",
+    "errors": [],
+    "inputsUnchanged": true,
+    "cleanup": {
+      "targetId": "83C6A884F7C4138A133225B5570BBA99",
+      "protectedId": "37D9DDC1B1728B3F58602FBC3B3FBD38",
+      "closed": true,
+      "ownedWindowOnly": true
+    },
+    "probe": {
+      "size": 512,
+      "faces": 6,
+      "position": [
+        0,
+        6,
+        10.6
+      ],
+      "shadowAnchor": [
+        0,
+        3.99609375,
+        9
+      ],
+      "actorsExcluded": [
+        {
+          "uuid": "8aa076c0-1e46-4c28-ae84-d8b1f129fa59",
+          "asset": "neighbor"
+        },
+        {
+          "uuid": "1e987e04-db81-438c-8c20-1e98ca4fcded",
+          "asset": "coupe"
+        }
+      ],
+      "requestedStaticShadowUpdates": 1,
+      "shadowTargetPreserved": true,
+      "originalProbe": "d22c3e31-8f22-489a-bf51-d4c03082615e",
+      "candidateProbe": "19cf76eb-7904-416a-9b46-b20c508a0b8f",
+      "baselineRange": {
+        "width": 1536,
+        "height": 2048,
+        "rgbaSamples": 12582912,
+        "nonfinite": 0,
+        "minimumRGB": 0,
+        "peakRGB": 3.8046875,
+        "meanRGB": 0.14218419076253971
+      },
+      "candidateRange": {
+        "width": 1536,
+        "height": 2048,
+        "rgbaSamples": 12582912,
+        "nonfinite": 0,
+        "minimumRGB": 0,
+        "peakRGB": 5.39453125,
+        "meanRGB": 0.1392106792522504,
+        "readback": "full linear RGBA32F texelFetch; no gain or clamp",
+        "temporaryColorTargetBytes": 50331648
+      },
+      "peakRatio": 1.4178644763860369
+    },
+    "stages": [
+      {
+        "name": "baseline",
+        "at": "2026-09-13T12:20:17.311Z",
+        "comparison": {
+          "filename": "native-baseline-comparison.png",
+          "sha256": "e0ce523054b278cdd6e2430c215778381cae831853c9d0a6108b7f797a961f7a",
+          "dimensions": [
+            1672,
+            941
+          ],
+          "method": "native CDP clip scale .5, no file resizing or post-editing"
+        },
+        "calls": 912,
+        "triangles": 4946823
+      },
+      {
+        "name": "sun-30",
+        "at": "2026-09-13T12:20:20.321Z",
+        "comparison": {
+          "filename": "native-sun-30-comparison.png",
+          "sha256": "b259a6c91427f60de9d306c25f9d027fcfa978133c10fd57734688bc27423d1a",
+          "dimensions": [
+            1672,
+            941
+          ],
+          "method": "native CDP clip scale .5, no file resizing or post-editing"
+        },
+        "calls": 900,
+        "triangles": 4844391
+      },
+      {
+        "name": "baseline-restored",
+        "at": "2026-09-13T12:20:24.625Z",
+        "comparison": {
+          "filename": "native-baseline-restored-comparison.png",
+          "sha256": "ed7af831aa432337eadf1aafb14952a2b50c41a4f58093601d40197bca78c19f",
+          "dimensions": [
+            1672,
+            941
+          ],
+          "method": "native CDP clip scale .5, no file resizing or post-editing"
+        },
+        "calls": 912,
+        "triangles": 4946823
+      }
+    ],
+    "limitations": [
+      "Staged 30 degree visual comparison only; no canonical publication or performance claim.",
+      "Original sky, hemisphere, environment intensity and street bounce remain unchanged; vertical direct irradiance rises about 37.4 percent while horizontal direct irradiance stays constant.",
+      "The local PMREM is rebuilt from the actual changed static scene using the canonical 512px cube/PMREM pipeline. Joined actor roots and their contact shadows are excluded synchronously only during this capture.",
+      "The new local PMREM temporarily coexists with the original cached probe in this preview; that allocation is not a production budget measurement.",
+      "Original sun, terrain bytes, material bindings and shadow target attachments restore exactly. Idle animation may advance between full-resolution and concept-resolution CDP captures; full-image pixel equality is not claimed."
+    ],
+    "evidence": [
+      {
+        "path": ".dream-loop/coordinated-sun/native-comparison.json",
+        "bytes": 4501649,
+        "sha256": "ac8aa3f7024b657aa22f720847017cf6c09a582e7c4f03b5be58020de8e2bf70"
+      },
+      {
+        "path": ".dream-loop/coordinated-sun/inputs-before.json",
+        "bytes": 10505,
+        "sha256": "00466d27a848df52de70528cd1426ac9403e70264a92741a2eecbfa92a0f86db"
+      },
+      {
+        "path": ".dream-loop/coordinated-sun/inputs-after.json",
+        "bytes": 10505,
+        "sha256": "00466d27a848df52de70528cd1426ac9403e70264a92741a2eecbfa92a0f86db"
+      },
+      {
+        "path": ".dream-loop/coordinated-sun/native-baseline-comparison.png",
+        "bytes": 2592917,
+        "sha256": "e0ce523054b278cdd6e2430c215778381cae831853c9d0a6108b7f797a961f7a"
+      },
+      {
+        "path": ".dream-loop/coordinated-sun/native-sun-30-comparison.png",
+        "bytes": 2544475,
+        "sha256": "b259a6c91427f60de9d306c25f9d027fcfa978133c10fd57734688bc27423d1a"
+      },
+      {
+        "path": ".dream-loop/coordinated-sun/native-baseline-restored-comparison.png",
+        "bytes": 2592712,
+        "sha256": "ed7af831aa432337eadf1aafb14952a2b50c41a4f58093601d40197bca78c19f"
+      }
+    ]
+  }
+}

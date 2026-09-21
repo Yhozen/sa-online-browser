@@ -37,7 +37,13 @@ export async function encodeReflection(renderer: THREE.WebGLRenderer, source: TH
   finally { renderer.setRenderTarget(previous);output.dispose();geometry.dispose();material.dispose(); }
   const raw=new ArrayBuffer(12+pixels.length*2),header=new DataView(raw),half=new Uint16Array(raw,12);
   header.setUint32(0,MAGIC,true);header.setUint32(4,width,true);header.setUint32(8,height,true);
-  for(let i=0;i<pixels.length;i++)half[i]=THREE.DataUtils.toHalfFloat(pixels[i]);
+  // Software PMREM filtering can undershoot zero at a handful of texels.
+  // Radiance cannot be negative; reject nonfinite readbacks and bound only
+  // those undershoots, preserving all positive HDR values without tonemapping.
+  for(let i=0;i<pixels.length;i++) {
+    if (!Number.isFinite(pixels[i])) throw Error("Nonfinite reflection readback.");
+    half[i]=THREE.DataUtils.toHalfFloat(Math.max(0,pixels[i]));
+  }
   const packed=new Uint8Array(await new Response(new Blob([raw]).stream().pipeThrough(new CompressionStream('gzip'))).arrayBuffer());
   let binary='';for(let i=0;i<packed.length;i+=32768)binary+=String.fromCharCode(...packed.subarray(i,i+32768));
   return btoa(binary);

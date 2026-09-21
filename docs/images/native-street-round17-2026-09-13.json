@@ -1,0 +1,19 @@
+{
+  "source": {
+    "path": ".dream-loop/quality-round17/0-standard.png",
+    "bytes": 2645534,
+    "sha256": "863ff02bae3c0d59d6171c1ab264b48b68e5cec713eb946cc5fc6b694c481684"
+  },
+  "destination": "images/native-street-round17-2026-09-13.png",
+  "sha256": "863ff02bae3c0d59d6171c1ab264b48b68e5cec713eb946cc5fc6b694c481684",
+  "width": 1672,
+  "height": 941,
+  "sceneRevision": "fc8deb6a7bbf6a35",
+  "quality": "Standard",
+  "nativeRenderSize": [
+    3344,
+    1882
+  ],
+  "sourceMethod": "Direct native CDP half-scale screenshot; copied without image editing",
+  "formalScore": null
+}

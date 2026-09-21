@@ -1,0 +1,97 @@
+{
+  "sources": {
+    "tools/build-assets.mjs": {
+      "bytes": 11229,
+      "sha256": "06f52507fbabf20831ccefb4698613a7d3f3b57dd6f1f504c6a8bf6917ee8449"
+    },
+    "tools/assets/build.py": {
+      "bytes": 17711,
+      "sha256": "3eb0039ccbd34a3c3aec5e88aced09f34c8ac3677f9d777b97ece47daad9a53e"
+    },
+    "tools/assets/environment-kit.py": {
+      "bytes": 34141,
+      "sha256": "1fb49df90bba8637ec000f37464766c18bc22b969d7013776bd1c45ed3983f7c"
+    },
+    "tools/assets/heroes.py": {
+      "bytes": 69560,
+      "sha256": "d2593504f492fd69b42687b24c5bf85d41af18056e2d9385c7175cbf94e2c630"
+    }
+  },
+  "models": {
+    "tree": {
+      "glb": {
+        "bytes": 651080,
+        "sha256": "1587be859a79d45c3418fc442b9d0f47ded1d7b4efd8d1858c074139673f11b4"
+      },
+      "blend": {
+        "bytes": 430669,
+        "sha256": "1707626df2a5c36fab64eaaf026be4159295e5ada88a9474231e707a24af5647"
+      },
+      "accepted": {
+        "bytes": 651080,
+        "sha256": "1587be859a79d45c3418fc442b9d0f47ded1d7b4efd8d1858c074139673f11b4"
+      },
+      "byteExactAccepted": true
+    },
+    "roadside-oak": {
+      "glb": {
+        "bytes": 651132,
+        "sha256": "e34fd145e45d23567816a5d44dfa2bd8d02ae7af57b25080dcc8fb7ea511199a"
+      },
+      "blend": {
+        "bytes": 431030,
+        "sha256": "8125d8bfb1e070578fdc76ab60c48d23ea0b900a47e112851850a5ac0bcda048"
+      },
+      "accepted": {
+        "bytes": 651132,
+        "sha256": "e34fd145e45d23567816a5d44dfa2bd8d02ae7af57b25080dcc8fb7ea511199a"
+      },
+      "byteExactAccepted": true
+    },
+    "palm": {
+      "glb": {
+        "bytes": 881160,
+        "sha256": "83e001d52a835436bf62bc39c361e229b83dd025f1ba8aa8ef09a41d6461233d"
+      },
+      "blend": {
+        "bytes": 652973,
+        "sha256": "5533b4769540eaf6d3746752e5a2ef779d77c70463d19a2144f5b8f330e14f35"
+      },
+      "accepted": {
+        "bytes": 881160,
+        "sha256": "83e001d52a835436bf62bc39c361e229b83dd025f1ba8aa8ef09a41d6461233d"
+      },
+      "byteExactAccepted": true
+    },
+    "neighbor": {
+      "glb": {
+        "bytes": 6521848,
+        "sha256": "1cb95aa9ef86eb067d51e283eb03a11e9f85095aebe86a12fbfe097df5219d8f"
+      },
+      "blend": {
+        "bytes": 3524623,
+        "sha256": "e38f708552d2880592a29df50148c1cba20a2b18d4d3696eee07afc9234123d0"
+      },
+      "accepted": {
+        "bytes": 6521848,
+        "sha256": "14636d5162b64083d3daf70c52718799d940e435d6a59e803e78eeb023f16c71"
+      },
+      "byteExactAccepted": false,
+      "acceptedEquivalence": {
+        "jsonByteMeaningIdentical": true,
+        "vertexAttributesByteIdentical": true,
+        "skinAndAnimationStreamsByteIdentical": true,
+        "orientedTriangleSetsIdentical": true,
+        "difference": "Only cyclic ordering / ordering of existing triangle indices in rubber, lip, iris and hair. No changed vertex attributes or topology.",
+        "changedBinaryBytes": 9596
+      }
+    }
+  },
+  "provenanceAndGzipIdentityVerified": true,
+  "download": {
+    "modelAndTextureProbeEncodedAssetBytes": 44898003,
+    "budgetBytes": 48000000,
+    "exclusions": "raw tree.glb and roadside-oak.glb are decoded identities for served .glb.gz, neighborhood-atlas.png is unused legacy source. All seven WebP inputs, all 17 models and static PMREM probe included.",
+    "nativeResourceAudit": "Root-owned final check pending"
+  }
+}

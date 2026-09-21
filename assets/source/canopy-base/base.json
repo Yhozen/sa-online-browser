@@ -1,0 +1,137 @@
+{
+  "version": 1,
+  "purpose": "Immutable no-accessibility native and GLB base inputs. Runtime outputs are never authoring inputs. Replacing a base requires new explicit provenance and visual acceptance.",
+  "blenderVersion": "5.2.1",
+  "models": {
+    "tree": {
+      "blend": {
+        "path": "assets/source/canopy-base/tree.blend",
+        "bytes": 430669,
+        "sha256": "1707626df2a5c36fab64eaaf026be4159295e5ada88a9474231e707a24af5647"
+      },
+      "glb": {
+        "path": "assets/source/canopy-base/tree.glb",
+        "bytes": 651080,
+        "sha256": "1587be859a79d45c3418fc442b9d0f47ded1d7b4efd8d1858c074139673f11b4"
+      },
+      "originalBuild": {
+        "generatedAt": "2026-09-13T10:36:17.661Z",
+        "blender": {
+          "version": "5.2.1",
+          "buildHash": "9e2066aef7ef",
+          "distribution": "native-macos",
+          "platform": "darwin",
+          "architecture": "arm64",
+          "executableSha256": "ea651e507c6b197df0e234bfa04e5ed43e7f4d498267a7df93fcb38f21928a5c"
+        },
+        "recipes": {
+          "tools/build-assets.mjs": "06f52507fbabf20831ccefb4698613a7d3f3b57dd6f1f504c6a8bf6917ee8449",
+          "tools/assets/build.py": "3eb0039ccbd34a3c3aec5e88aced09f34c8ac3677f9d777b97ece47daad9a53e",
+          "tools/assets/environment-kit.py": "1fb49df90bba8637ec000f37464766c18bc22b969d7013776bd1c45ed3983f7c",
+          "tools/assets/heroes.py": "d2593504f492fd69b42687b24c5bf85d41af18056e2d9385c7175cbf94e2c630",
+          "tools/assets/garden-kit.py": "974d3add6e6f4ad5b9f52d681eeecb69dde28cb8b2a6d471365dcca4ddbf1c8e"
+        },
+        "glb": {
+          "bytes": 651080,
+          "sha256": "1587be859a79d45c3418fc442b9d0f47ded1d7b4efd8d1858c074139673f11b4"
+        },
+        "blend": {
+          "bytes": 430669,
+          "sha256": "1707626df2a5c36fab64eaaf026be4159295e5ada88a9474231e707a24af5647"
+        },
+        "gzip": {
+          "bytes": 382873,
+          "sha256": "0ce7b7bb8329eef22a8fc8cf1575421a9856682a92bda70382b72184addf1b2e"
+        }
+      }
+    },
+    "roadside-oak": {
+      "blend": {
+        "path": "assets/source/canopy-base/roadside-oak.blend",
+        "bytes": 408758,
+        "sha256": "d9ad319d747e3c859a33e6a2e60d7ab08969a7d09e8b7cc5de21baf7d17c6511"
+      },
+      "glb": {
+        "path": "assets/source/canopy-base/roadside-oak.glb",
+        "bytes": 651132,
+        "sha256": "c263048dc87e8f2580719d5631928255aa5768621bbe58b7a0f33541b31fd4d5"
+      },
+      "originalBuild": {
+        "generatedAt": "2026-09-13T10:36:17.661Z",
+        "blender": {
+          "version": "5.2.1",
+          "buildHash": "9e2066aef7ef",
+          "distribution": "native-macos",
+          "platform": "darwin",
+          "architecture": "arm64",
+          "executableSha256": "ea651e507c6b197df0e234bfa04e5ed43e7f4d498267a7df93fcb38f21928a5c"
+        },
+        "recipes": {
+          "tools/build-assets.mjs": "06f52507fbabf20831ccefb4698613a7d3f3b57dd6f1f504c6a8bf6917ee8449",
+          "tools/assets/build.py": "3eb0039ccbd34a3c3aec5e88aced09f34c8ac3677f9d777b97ece47daad9a53e",
+          "tools/assets/environment-kit.py": "1fb49df90bba8637ec000f37464766c18bc22b969d7013776bd1c45ed3983f7c",
+          "tools/assets/heroes.py": "d2593504f492fd69b42687b24c5bf85d41af18056e2d9385c7175cbf94e2c630",
+          "tools/assets/garden-kit.py": "974d3add6e6f4ad5b9f52d681eeecb69dde28cb8b2a6d471365dcca4ddbf1c8e"
+        },
+        "glb": {
+          "bytes": 651132,
+          "sha256": "e34fd145e45d23567816a5d44dfa2bd8d02ae7af57b25080dcc8fb7ea511199a"
+        },
+        "blend": {
+          "bytes": 431030,
+          "sha256": "8125d8bfb1e070578fdc76ab60c48d23ea0b900a47e112851850a5ac0bcda048"
+        },
+        "gzip": {
+          "bytes": 383478,
+          "sha256": "76591ea210f6d9ee37078f5515b1d5fea4536c45cb5c48a3baca5774809e2e85"
+        }
+      },
+      "derivation": {
+        "method": "Original native Blender5.2.1 low-wood taper at55%, smooth return below scaffold; native POSITION/NORMAL only transported to original packing. All crown/leaf/index/UV/color bytes retained.",
+        "parent": {
+          "blend": {
+            "path": "assets/source/canopy-base/parents/roadside-oak-before-trunk-taper.blend",
+            "bytes": 431030,
+            "sha256": "8125d8bfb1e070578fdc76ab60c48d23ea0b900a47e112851850a5ac0bcda048"
+          },
+          "glb": {
+            "path": "assets/source/canopy-base/parents/roadside-oak-before-trunk-taper.glb",
+            "bytes": 651132,
+            "sha256": "e34fd145e45d23567816a5d44dfa2bd8d02ae7af57b25080dcc8fb7ea511199a"
+          },
+          "record": {
+            "path": "assets/source/canopy-base/parents/roadside-oak-before-trunk-taper.json",
+            "bytes": 1676,
+            "sha256": "7e29b3dca296ac88cd116de3797afda11107546b9b6f28979ed0529afa41cc21"
+          }
+        },
+        "authorRecipe": {
+          "path": "assets/source/canopy-base/provenance/roadside-trunk-taper/author-taper.py",
+          "bytes": 7174,
+          "sha256": "a4f62583d3530447e8cbe4d7ae59d875a31cf8c298f19579ad863e833456b764"
+        },
+        "packingRecipe": {
+          "path": "assets/source/canopy-base/provenance/roadside-trunk-taper/packing-transport.mjs",
+          "bytes": 8224,
+          "sha256": "18f75be884221e4a155a7b15cbbfa3ebd8ed6e483b5b7a4c250eea5b05161623"
+        },
+        "nativeAuthoring": {
+          "path": "assets/source/canopy-base/provenance/roadside-trunk-taper/native-authoring.json",
+          "bytes": 4404,
+          "sha256": "9562128f867f3d10861ee24e91273b8a68534f02a7546b37da8b4c46d770ab49"
+        },
+        "rawNativeExport": {
+          "path": "assets/source/canopy-base/provenance/roadside-trunk-taper/raw-native-export.glb",
+          "bytes": 651132,
+          "sha256": "123fcabc8809524e4615d658e9c3fb83d71b23d9171d34a2b0fb8927efb10e47"
+        },
+        "verification": {
+          "path": "assets/source/canopy-base/provenance/roadside-trunk-taper/packing-verification.json",
+          "bytes": 1572,
+          "sha256": "e34736ee045ce51792f57a8b4a07ae1d8d0ad6f5b83dd2c4564a1f6a85b6d1aa"
+        },
+        "requiresFreshVisibilityBake": true
+      }
+    }
+  }
+}

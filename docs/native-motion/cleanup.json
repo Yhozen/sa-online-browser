@@ -1,0 +1,15 @@
+{
+  "checkedAt": "2026-09-13T05:58:36.516Z",
+  "ownedTargets": [
+    "3F77E15FD5E5C8794A8A7F7DE97B2648",
+    "107C6FD231CC5565CA3A3094D71D30CE"
+  ],
+  "remainingOwnedTargets": [],
+  "protectedTarget": "37D9DDC1B1728B3F58602FBC3B3FBD38",
+  "protectedPresent": true,
+  "health": {
+    "ok": true,
+    "sessions": 0,
+    "workers": 0
+  }
+}
