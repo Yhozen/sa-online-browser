@@ -6,7 +6,7 @@ import { installAtmosphere, updateSun } from "./lighting";
 import { createRenderer, applyQuality } from "./graphics";
 import yard from "../../../packages/shared/scenes/yard.json";
 import type { SceneManifest } from "../../../packages/shared/scene";
-import { loadAssets, assetStats, bakingReflections } from "./assets";
+import { loadAssets, assetStats, bakingReflections, startPaintTexture } from "./assets";
 import { gatewaySocketUrl, gatewayUrl } from "./gateway";
 import { warmupActors } from "./warmup";
 import { buildEnvironment } from "./environment";
@@ -20,6 +20,8 @@ import {
 import { CollisionIndex, findSafeExitPosition } from "./collision";
 import { FollowCamera } from "./camera";
 import { mountHUD, minimap } from "./hud";
+import { DrivingActivity } from "./challenge";
+import { createGameAudio } from "./audio";
 let arena = yard as unknown as SceneManifest,
   sceneReady = false;
 let collisionIndex = new CollisionIndex(arena.barriers);
@@ -33,6 +35,12 @@ mountHUD();
 const el = <T extends HTMLElement = HTMLElement>(id: string) =>
   document.getElementById(id) as T;
 const scene = new THREE.Scene();
+const gameAudio = createGameAudio();
+const activity = new DrivingActivity(scene, text => {
+  if (self.spawned) send({ type: "command", text });
+  if (text !== "/scores") renderer.domElement.focus();
+});
+activity.setCue(cue => gameAudio.cue(cue));
 scene.background = new THREE.Color("#283d46");
 scene.fog = new THREE.Fog("#283d46", 55, 135);
 THREE.Object3D.DEFAULT_UP.set(0, 0, 1);
@@ -210,6 +218,7 @@ function removeMesh(mesh: THREE.Group) {
   disposeActor(mesh); /* Geometry/materials belong to the shared asset cache. */
 }
 function clearWorld() {
+  activity.clear();
   for (const p of peers.values()) {
     removeMesh(p.mesh);
     p.label.remove();
@@ -269,6 +278,12 @@ function ensurePeer(id: number) {
   }
   return p;
 }
+function stopUnownedVehicle(id: number) {
+  if (self.spawned && self.mode === "driver" && self.vehicleId === id) return;
+  if ([...peers.values()].some(p => p.streamed && p.state.mode === "driver" && p.state.vehicleId === id)) return;
+  const vehicle = vehicles.get(id);
+  if (vehicle) vehicle.velocity = [0, 0, 0];
+}
 function handle(m: ServerMessage) {
   if (terminalReason !== null) return;
   if (typeof m.epoch === "number") {
@@ -290,6 +305,13 @@ function handle(m: ServerMessage) {
   }
   received[m.type] = (received[m.type] ?? 0) + 1;
   switch (m.type) {
+    case "challenge":
+    case "challengeScoresClear":
+    case "challengeScore":
+    case "raceCheckpoint":
+    case "raceCheckpointClear":
+      activity.accept(m as unknown as Record<string, unknown>);
+      break;
     case "init":
       self.id = m.playerId ?? null;
       removeMesh(selfMesh);
@@ -326,6 +348,7 @@ function handle(m: ServerMessage) {
         removeMesh(p.mesh);
         p.label.remove();
         peers.delete(p.id);
+        if (p.state.mode === "driver") stopUnownedVehicle(p.state.vehicleId);
       }
       names.delete(m.id!);
       break;
@@ -333,12 +356,14 @@ function handle(m: ServerMessage) {
     case "playerState":
       if (m.id !== undefined && m.id !== self.id && m.position) {
         const p = ensurePeer(m.id);
+        const previousVehicle = p.state.mode === "driver" ? p.state.vehicleId : 0;
         p.state = {
           ...p.state,
           ...m,
           position: [...m.position],
         } as PlayerState;
         p.streamed = true;
+        if (previousVehicle && (p.state.mode !== "driver" || p.state.vehicleId !== previousVehicle)) stopUnownedVehicle(previousVehicle);
         p.mesh.visible = true;
         if (p.mesh.position.lengthSq() === 0)
           p.mesh.position.set(...m.position);
@@ -427,14 +452,17 @@ function handle(m: ServerMessage) {
       break;
     case "seat": {
       simulationClock.reset(performance.now());
+      const previousVehicle = self.mode === "driver" ? self.vehicleId : 0;
       self.vehicleId = m.vehicleId ?? 0;
       self.seat = m.seat ?? 0;
       self.mode = self.seat === 0 ? "driver" : "passenger";
+      if (previousVehicle) stopUnownedVehicle(previousVehicle);
       speed = 0;
       const v = vehicles.get(self.vehicleId);
       if (v) {
         self.position = [...v.position];
         self.rotation = [...v.rotation];
+        self.velocity = [...v.velocity];
         heading = headingFromRotation(v.rotation);
       }
       keys.clear();
@@ -442,11 +470,13 @@ function handle(m: ServerMessage) {
     }
     case "exitVehicle": {
       simulationClock.reset(performance.now());
+      const previousVehicle = self.mode === "driver" ? self.vehicleId : 0;
       const v = vehicles.get(self.vehicleId);
       // Explicit server placements win; otherwise choose a nearby clear doorway.
       if (m.position) self.position = [...m.position];
       else if (v) self.position = freeExitPosition(v, self.seat);
       self.mode = "onFoot";
+      if (previousVehicle) stopUnownedVehicle(previousVehicle);
       self.vehicleId = 0;
       self.seat = 0;
       self.velocity = [0, 0, 0];
@@ -468,6 +498,7 @@ function handle(m: ServerMessage) {
 }
 el<HTMLFormElement>("join-form").addEventListener("submit", (event) => {
   event.preventDefault();
+  void gameAudio.unlock();
   if (!sceneReady) return;
   socket?.close();
   clearWorld();
@@ -525,27 +556,41 @@ el<HTMLFormElement>("chat-form").addEventListener("submit", (event) => {
     renderer.domElement.focus();
   }
 });
-function isTyping() {
-  return document.activeElement instanceof HTMLInputElement;
+el<HTMLInputElement>("audio-volume").value = String(gameAudio.preferences.volume * 100);
+el("audio-toggle").onclick = () => {
+  gameAudio.setMuted(!gameAudio.preferences.muted);
+  if (!gameAudio.preferences.muted) void gameAudio.unlock();
+};
+el<HTMLInputElement>("audio-volume").oninput = () => {
+  gameAudio.setVolume(Number(el<HTMLInputElement>("audio-volume").value) / 100);
+  void gameAudio.unlock();
+};
+el("audio-retry").onclick = () => { gameAudio.setMuted(false); void gameAudio.unlock(); };
+window.addEventListener("pagehide", event => { if (!event.persisted) { gameAudio.dispose(); activity.dispose(); } });
+function isUsingUI() {
+  return document.activeElement instanceof HTMLElement &&
+    !!document.activeElement.closest("input, textarea, select, button, a[href], summary, [contenteditable=true]");
 }
 window.addEventListener("keydown", (event) => {
   advanceSimulation(performance.now());
-  if (event.code === "Enter" && !isTyping() && self.spawned) {
+  if (event.code === "Enter" && !isUsingUI() && self.spawned) {
     event.preventDefault();
     keys.clear();
     el("chat-content").classList.remove("hidden");
+    el("chat-toggle").setAttribute("aria-expanded", "true");
     el<HTMLInputElement>("chat-input").focus();
     return;
   }
-  if (isTyping() || !self.spawned) return;
+  if (isUsingUI() || !self.spawned) return;
   if (
-    ["KeyW", "KeyA", "KeyS", "KeyD", "Space", "KeyE", "KeyG", "KeyF"].includes(
+    ["KeyW", "KeyA", "KeyS", "KeyD", "Space", "KeyE", "KeyG", "KeyF", "KeyR", "KeyH"].includes(
       event.code,
     )
   )
     event.preventDefault();
   keys.add(event.code);
   if (!event.repeat) {
+    if (event.code === "KeyR" && arena.challenge) send({ type: "command", text: "/race" });
     if (event.code === "KeyE") send({ type: "command", text: "/drive" });
     if (event.code === "KeyG") send({ type: "command", text: "/passenger" });
     if (event.code === "KeyF") send({ type: "command", text: "/exit" });
@@ -630,8 +675,9 @@ function step(dt: number) {
     if (self.position[2] === arena.groundZ + 1) jumpSpeed = 0;
   } else if (self.mode === "driver") {
     const throttle = Number(keys.has("KeyW")) - Number(keys.has("KeyS"));
-    speed += throttle * 10 * dt;
-    speed *= Math.exp(-(throttle ? 0.45 : 2.5) * dt);
+    const handbrake = keys.has("Space");
+    if (!handbrake) speed += throttle * 10 * dt;
+    speed *= Math.exp(-(handbrake ? 9 : throttle ? 0.45 : 2.5) * dt);
     speed = Math.max(-7, Math.min(19, speed));
     const steer = Number(keys.has("KeyA")) - Number(keys.has("KeyD"));
     heading +=
@@ -662,6 +708,7 @@ function step(dt: number) {
       ? ([...(vehicles.get(self.vehicleId)?.velocity ?? [0, 0, 0])] as Vec3)
       : (self.position.map((n, i) => (n - old[i]) / dt) as Vec3);
   self.keys =
+    (keys.has("KeyH") && self.mode === "driver" ? 2 : 0) |
     (keys.has("KeyW") ? 8 : 0) |
     (keys.has("KeyS") ? 32 : 0) |
     (keys.has("Space") ? 128 : 0);
@@ -683,7 +730,11 @@ const simulationClock = new SimulationClock(performance.now(), dt => {
   advanceCharacter(selfMesh, self, dt, arena.groundZ);
   for (const peer of peers.values())
     if (peer.streamed) advanceCharacter(peer.mesh, peer.state, dt, arena.groundZ);
-  for (const vehicle of vehicles.values()) animateCar(vehicle.mesh, vehicle.velocity, dt);
+  for (const vehicle of vehicles.values()) {
+    const driver = self.mode === "driver" && self.vehicleId === vehicle.id ? self :
+      [...peers.values()].find(peer => peer.state.mode === "driver" && peer.state.vehicleId === vehicle.id)?.state;
+    animateCar(vehicle.mesh, vehicle.velocity, dt, { rotation: vehicle.rotation, keys: driver?.keys ?? 0 });
+  }
 });
 function advanceSimulation(now: number) {
   if (!simulationClock.advance(now) &&
@@ -698,6 +749,30 @@ function simulateAndPublish(now: number) {
   if (self.spawned && now - lastSend >= (self.mode === "onFoot" ? onFootRate : inCarRate)) publishState(now);
 }
 setInterval(() => simulateAndPublish(performance.now()), 16);
+const audioDirection = new THREE.Vector3();
+setInterval(() => {
+  const now = performance.now();
+  activity.update(self, names, now);
+  const occupied = new Set([...peers.values()].filter(p => p.streamed && p.state.mode !== "onFoot").map(p => p.state.vehicleId));
+  if (self.spawned && self.mode !== "onFoot") occupied.add(self.vehicleId);
+  camera.getWorldDirection(audioDirection);
+  gameAudio.update({ connected: self.spawned, groundZ: arena.groundZ,
+    listener: { position: camera.position.toArray(), forward: audioDirection.toArray(), up: [0, 0, 1] },
+    self: { ...self, id: self.id ?? -1 },
+    peers: [...peers.values()].filter(p => p.streamed).map(p => ({ ...p.state, id: p.id })),
+    vehicles: [...vehicles.values()].map(v => ({ id: v.id, position: v.position, velocity: v.velocity, occupied: occupied.has(v.id) })),
+  }, now);
+  const audioStatus = gameAudio.status;
+  const audioButton = el<HTMLButtonElement>("audio-toggle");
+  audioButton.textContent = gameAudio.preferences.muted ? "Sound off" : "Sound on";
+  audioButton.setAttribute("aria-pressed", String(!gameAudio.preferences.muted));
+  const audioMessage = audioStatus.message ?? "Original neighborhood audio";
+  if (el("audio-status").textContent !== audioMessage) el("audio-status").textContent = audioMessage;
+  const nearCar = [...vehicles.values()].some(v => Math.hypot(v.position[0]-self.position[0],v.position[1]-self.position[1]) <= 12);
+  el("interaction-hint").textContent = !self.spawned ? "" : self.mode === "onFoot"
+    ? nearCar ? "E · Drive    G · Ride with a friend" : "Find the coupe on your radar · Enter to chat"
+    : self.mode === "passenger" ? "Riding along · F to exit" : "R · Time trial    H · Horn    F · Exit";
+}, 100);
 let previous = performance.now(), lastHud = 0;
 function frame(now: number) {
   requestAnimationFrame(frame);
@@ -825,7 +900,7 @@ function frame(now: number) {
         return row;
       }),
     );
-    minimap(arena, self, [...peers.values()], [...vehicles.values()]);
+    minimap(arena, self, [...peers.values()], [...vehicles.values()], activity.replica);
     lastHud = now;
   }
 }
@@ -840,7 +915,7 @@ function syncViewport() {
   renderer.setPixelRatio(dpr);
   renderer.setSize(width, height);
   antialias.resize();
-  minimap(arena, self, [...peers.values()], [...vehicles.values()]);
+  minimap(arena, self, [...peers.values()], [...vehicles.values()], activity.replica);
 }
 // A busy compositor can delay resize events while exposing the new CSS viewport.
 // The existing update timer also checks these cheap dimensions, keeping every
@@ -883,6 +958,7 @@ function snapshot() {
         },
       },
       presentation: {
+        vehicles: [...vehicles.values()].map(v => ({ id: v.id, ...v.mesh.userData.vehiclePresentation })),
         self: {
           visible: selfMesh.visible,
           animation: selfMesh.userData.animation,
@@ -896,6 +972,8 @@ function snapshot() {
         })),
       },
       status,
+      activity: { state: activity.replica.state, checkpoint: activity.replica.checkpoint, scores: activity.replica.scores },
+      audio: { ...gameAudio.status, preferences: gameAudio.preferences },
       epoch,
       controlRevision,
       self,
@@ -974,6 +1052,7 @@ async function initializeScene() {
       arena.id === "neighborhood",
     );
     buildEnvironment(scene, arena);
+    activity.configure(arena, startPaintTexture);
     el("loading").textContent = "Preparing neighborhood light and reflections…";
     await sun.environment(arena.id === "neighborhood" ? arena.vehicle.position : undefined);
     selfMesh = capsule(0);

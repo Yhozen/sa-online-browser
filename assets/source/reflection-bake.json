@@ -1,24 +1,24 @@
 {
   "version": 1,
-  "generatedAt": "2026-09-08T07:08:22.622Z",
+  "generatedAt": "2026-09-20T18:44:10.735Z",
   "format": "PMR1: uint32-le magic,width,height; RGBA16F PMREM atlas; gzip",
   "width": 1536,
   "height": 2048,
-  "compressedBytes": 10885842,
+  "compressedBytes": 10852682,
   "uncompressedBytes": 25165836,
-  "sha256": "58d8267844cd9ad3971e9678be5cd44799ab84ab0af11bc0878d0d5d3aa047b1",
-  "uncompressedSha256": "699cf02e3b214e4e9991b52769d4f6c249dae90502e99387ac9efba214197485",
+  "sha256": "47ee622eba8b1718d3179bf837998d457f5985715a19850b44d7fa6a04391740",
+  "uncompressedSha256": "2a1871042e72c0e007e404b907402cbcb01faf92c24a526746f45e90a29628a2",
   "browser": "147.0.7727.15",
   "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
   "scene": {
     "id": "neighborhood",
-    "revision": "77746494c168f09f"
+    "revision": "809e5e6ee7a59aea"
   },
   "sources": {
-    "apps/browser/src/lighting.ts": "ef572ae9c541bf21b113ae777bd28fa33bd1dfacd0d8b4df6f55f629e7fb0ff1",
-    "apps/browser/src/environment.ts": "39e39f95717469ef8ccd52856c7c09d5180421fd4dc6a5529c90a2346172c856",
-    "apps/browser/src/assets.ts": "80900514260d504f66716480195459f070d0e52bd14566f42809c1eea35ae65e",
-    "apps/browser/src/main.ts": "b50824ff79428c1f915d0e7d6522edf2d9ba56745118be52abc0f16a5a355571",
+    "apps/browser/src/lighting.ts": "b655399ca6a62d66dd77b63ef224fccedfb443aa72b333b4c1701fe7f423e484",
+    "apps/browser/src/environment.ts": "04b44c49f88b3e0af68d02b8c9e8808777685f9f57a4f606ac7e0e522f3f4dc8",
+    "apps/browser/src/assets.ts": "83c458fde06503fdcc6ab58092ede7a5c935c92026bb1e3cd36fb05a28dc9da8",
+    "apps/browser/src/main.ts": "744e9e5ea29f6c3e06a7d326076251cfb3662e6eb01f234d2a71ab2f5097f479",
     "apps/browser/src/reflection-storage.ts": "8b7f07a99248d1885e509aa3e916b87982ad33019348ae87fd04e09635c13720",
     "apps/browser/src/warmup.ts": "183def3b17b329c0f6878a6efb81e231c5b2feb2a80c4070ae50c050eddb89ff",
     "apps/browser/src/foliage-mips.ts": "bf7fe1414777bf98dc331fcf323a747dd6a1d20e1df857cde5e5ad47a98cb15c",
@@ -26,11 +26,27 @@
     "apps/browser/src/horizon.ts": "a89de1ab6fd43bd7a43e06cfc95c10f43de872b5342629cf085869802f9ed481",
     "apps/browser/src/road-detail.ts": "c86c9dc38d2b45274475a9eb7509a27be259d72da48da9ded30157e3ff491592",
     "apps/browser/src/verges.ts": "fd047ac898359f13d59d53e70d3246ca3a092517dfe745bdb2f11dc06836f337",
-    "packages/shared/scenes/neighborhood.json": "cce8c3bfc9bb5c4ddc7a7b96a71f72e6349cab4c07fa85d87a324a003cd056c2",
+    "packages/shared/scenes/neighborhood.json": "a0f0d6a5cf6055fba04f9c62c81316dc65e8b8a48fd7a9eba53ba828aed9fce1",
     "tools/bake-reflections.mjs": "0a60f1f00ec13e520ecf7912f5961ee6f677f291d2ed4c032d251cfb82f87955",
     "package-lock.json": "b99e5c05368deae7d0cd82a86505d33671cc2275c0852eed3f08afbd0b07bd74"
   },
   "inputs": {
+    "activity-bench.glb": {
+      "bytes": 568616,
+      "sha256": "13ab0e1de85ff84c35af25f3c8a0695c7733a2e8ddb550e4f4681ff3daef775b"
+    },
+    "activity-board.glb": {
+      "bytes": 789776,
+      "sha256": "3ffda81d365929f534e9f3ce9899fcae14d49745783cf86bec4b2bf7f1d68802"
+    },
+    "activity-planter.glb": {
+      "bytes": 606140,
+      "sha256": "080214bad529c1f1fa20ca956f68f03484f981c77a2ed7d1172b7682e69c6da0"
+    },
+    "activity-pylon.glb": {
+      "bytes": 508548,
+      "sha256": "2991005d7fd0a58e19ace1755cdbd16762bf7ecd5ce0b3a9950afd9655bebfe8"
+    },
     "arroyo-asphalt.png": {
       "bytes": 3594191,
       "sha256": "df6aa654341074cff7d9b324f115a00ab91a5eaa46afe4daaf723374ab87c87f"
@@ -46,6 +62,10 @@
     "arroyo-sky.png": {
       "bytes": 1281272,
       "sha256": "c045ac5131befcdb1e43fe6b2036ad0b487bfd0878453ca6ae1bc92c6d1cec9c"
+    },
+    "arroyo-start-paint.png": {
+      "bytes": 599455,
+      "sha256": "2294081c7ba5469b5ba19d263c4930152cb41603206b84ec333c54a5f55857a9"
     },
     "arroyo-surfaces.png": {
       "bytes": 3444449,

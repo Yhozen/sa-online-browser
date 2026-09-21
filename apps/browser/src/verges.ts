@@ -111,7 +111,7 @@ export function plantVerges(scene: THREE.Scene, manifest: SceneManifest, ground?
       const lx = (dx * c + dy * s) / (house.scale?.[0] || 1), ly = (-dx * s + dy * c) / (house.scale?.[1] || 1);
       // Authored meter-scale footprints: shell, covered porch, driveway and their access paths.
       return (Math.abs(lx) < 8.6 && Math.abs(ly) < 6.6) ||
-        (lx > -6.5 && lx < .5 && ly > -9.2 && ly < -5.5) ||
+        (lx > -6.7 && lx < .7 && ly > -9.2 && ly < -5.5) ||
         (lx > 3.5 && lx < 8.5 && ly > -21 && ly < -5.5) ||
         (lx > -4.7 && lx < -1.3 && ly > -21 && ly < -5.5);
     });

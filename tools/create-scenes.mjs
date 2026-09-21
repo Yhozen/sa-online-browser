@@ -155,7 +155,7 @@ for (const x of [22, 50])
 // A community meet-up beside the junction. Every solid prop has an envelope
 // in the same manifest used by browser collision and fixture course generation.
 for (const [id, asset, x, y, rotation, width, depth, height] of [
-  ["activity-board", "activity-board", 14, 22, 0, 2.8, .52, 2.64],
+  ["activity-board", "activity-board", 10.3, 21.2, 0, 2.8, .52, 2.64],
   ["activity-bench-a", "activity-bench", 18, 22, 0, 2.06, .80, .93],
   ["activity-planter-a", "activity-planter", 21, 22, 0, 1.42, 1.42, 1.58],
   ["activity-bench-b", "activity-bench", 21, 26, -Math.PI/2, .80, 2.06, .93],
@@ -165,11 +165,30 @@ for (const [id, asset, x, y, rotation, width, depth, height] of [
   barrier(id, x, y, width, depth, height);
 }
 // Pylons frame the course without narrowing the usable driving lane.
-for (const [i, point] of [[-6.9, 4], [6.9, 4], [30, 18.9], [64.9, -18],
+for (const [i, point] of [[-4.9, 4], [4.9, 4], [30, 18.9], [64.9, -18],
   [28, -54.9], [-6.9, -18]].entries()) {
   const id = `activity-pylon-${i}`;
   n.props.push({ id, asset: "activity-pylon", position: [...point, n.groundZ], rotation: i * .27 });
   barrier(id, point[0], point[1], .90, .90, 1.065);
+}
+// Original rosettes fill existing beds. Keep their complete leaf envelope clear
+// of roads, sidewalks, fences, entrances and the established walking test path.
+const gardenPoints = n.houses.flatMap(house => [[-8.3,-9.4],[1.7,-9.3],[-7.4,-13.6]].map(([u,v]) => [
+  house.position[0] + u*Math.cos(house.rotation) - v*Math.sin(house.rotation),
+  house.position[1] + u*Math.sin(house.rotation) + v*Math.cos(house.rotation),
+]));
+gardenPoints.push([-10.5,17],[-12.1,18.2],[-11.4,20]);
+for (const [i, [x,y]] of gardenPoints.entries()) {
+  if (n.barriers.some(b => Math.abs(x-b.position[0]) <= b.size[0]/2+.6 && Math.abs(y-b.position[1]) <= b.size[1]/2+.6)) continue;
+  if (n.culdesac && Math.hypot(x-n.culdesac.center[0],y-n.culdesac.center[1]) < n.culdesac.radius+3.1) continue;
+  if (n.roads.some(road => road.points.slice(1).some((end,j) => {
+    const begin=road.points[j], margin=road.width/2+3.1;
+    return x>=Math.min(begin[0],end[0])-margin && x<=Math.max(begin[0],end[0])+margin &&
+      y>=Math.min(begin[1],end[1])-margin && y<=Math.max(begin[1],end[1])+margin;
+  }))) continue;
+  const id=`activity-yucca-${i}`;
+  n.props.push({id,asset:"activity-yucca",position:[x,y,n.groundZ],rotation:i*2.39996});
+  barrier(id,x,y,.98,.98,.67);
 }
 for (const scene of [yard, n])
   writeFileSync(

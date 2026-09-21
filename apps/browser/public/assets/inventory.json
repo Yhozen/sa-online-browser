@@ -3,11 +3,11 @@
   "files": {
     "activity-bench.glb": {
       "bytes": 568616,
-      "sha256": "99e703e531d62a174112bd7ab04f3b02842fb2b73435175bdaeaef052d72cf87"
+      "sha256": "13ab0e1de85ff84c35af25f3c8a0695c7733a2e8ddb550e4f4681ff3daef775b"
     },
     "activity-board.glb": {
-      "bytes": 594652,
-      "sha256": "7cba8596be1cc44eb6af1265403878d9a626772df1a294e5d454d5715791c7a7"
+      "bytes": 789776,
+      "sha256": "3ffda81d365929f534e9f3ce9899fcae14d49745783cf86bec4b2bf7f1d68802"
     },
     "activity-planter.glb": {
       "bytes": 606140,
@@ -16,6 +16,10 @@
     "activity-pylon.glb": {
       "bytes": 508548,
       "sha256": "2991005d7fd0a58e19ace1755cdbd16762bf7ecd5ce0b3a9950afd9655bebfe8"
+    },
+    "activity-yucca.glb": {
+      "bytes": 524796,
+      "sha256": "23742dd473bbce0923fdd910b22622884b4608603ce74976d7a75b18ec625776"
     },
     "arroyo-asphalt.png": {
       "bytes": 3594191,
@@ -30,12 +34,16 @@
       "sha256": "603140ee50b79a8da0f06034276e3b9eddc3dd8c560d679e37ddc682d7be3073"
     },
     "arroyo-reflections.pmrem.gz": {
-      "bytes": 10885842,
-      "sha256": "58d8267844cd9ad3971e9678be5cd44799ab84ab0af11bc0878d0d5d3aa047b1"
+      "bytes": 10852682,
+      "sha256": "47ee622eba8b1718d3179bf837998d457f5985715a19850b44d7fa6a04391740"
     },
     "arroyo-sky.png": {
       "bytes": 1281272,
       "sha256": "c045ac5131befcdb1e43fe6b2036ad0b487bfd0878453ca6ae1bc92c6d1cec9c"
+    },
+    "arroyo-start-paint.png": {
+      "bytes": 599455,
+      "sha256": "2294081c7ba5469b5ba19d263c4930152cb41603206b84ec333c54a5f55857a9"
     },
     "arroyo-surfaces.png": {
       "bytes": 3444449,

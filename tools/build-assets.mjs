@@ -50,7 +50,7 @@ copyFileSync(
   "apps/browser/public/assets/neighborhood-atlas.png",
 );
 
-for (const name of ["surfaces", "details", "foliage", "sky", "asphalt"])
+for (const name of ["surfaces", "details", "foliage", "sky", "asphalt", "start-paint"])
   copyFileSync(`assets/textures/arroyo-${name}.png`, `apps/browser/public/assets/arroyo-${name}.png`);
 run(process.execPath, ["tools/asset-inventory.mjs"]);
 

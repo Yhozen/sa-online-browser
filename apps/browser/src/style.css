@@ -80,3 +80,60 @@ kbd {font:700 9px Arial,sans-serif;padding:2px 3px;background:#111b2388;border:1
 .graphics-error pre {white-space:pre-wrap;overflow-wrap:anywhere}
 @media(max-width:800px) {.top {left:20px;right:18px}.left {left:20px;top:135px;width:280px}.brand .title {font-size:44px}.connection {max-width:230px}.chat {left:18px;top:20px;width:40vw}.map-wrap {left:20px;bottom:50px;width:140px;height:140px}.corner {right:20px}.corner #disconnect {right:18px;top:86px}.controls {flex-wrap:wrap;gap:6px}.bottom {left:18px;right:18px}.arena-name {font-size:34px}}
 @media(max-height:650px) {.left {top:105px}.join {padding:15px 20px}.join h1 {font-size:30px;margin:12px 0}.join label {margin-top:12px}.muted {margin:8px 0}.map-wrap {width:136px;height:136px}.chat-log {height:65px}}
+
+/* Server-scored activity: a compact instrument, leaving the road and car visible. */
+.activity {position:fixed;right:32px;top:112px;width:276px;color:#f6f0db;background:linear-gradient(105deg,#0c171eef,#142127db);border-left:3px solid #c7b777;box-shadow:0 8px 28px #0003;text-shadow:0 1px 2px #0007}
+.activity-heading {display:flex;align-items:center;gap:10px;width:100%;border:0;background:transparent;color:inherit;text-align:left;padding:14px 15px;cursor:pointer}
+.activity-heading small {display:block;font-size:8px;letter-spacing:1.7px;color:#c7b777;margin-bottom:5px}
+.activity-heading b {display:block;font:italic 25px/1 Georgia,serif;font-weight:bold;letter-spacing:-.5px}
+.activity-emblem {font-size:29px;color:#dfd7ae;line-height:1}
+.activity-collapse {margin-left:auto;color:#c8c9b9;font-size:19px;font-weight:normal}
+#activity-content {padding:0 16px 15px}
+.activity-readout {display:flex;align-items:baseline;justify-content:space-between;margin:4px 0 10px}
+.activity-readout strong {font-size:28px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.6px}
+.activity-readout span {font-size:8px;letter-spacing:1px;color:#c9cbbf}
+.activity-progress-track {height:3px;background:#ffffff18;margin-bottom:11px}
+.activity-progress-track i {height:100%;display:block;background:#acd9a1;transition:width .18s ease}
+#activity-status {font-size:11px;line-height:1.5;margin:0 0 7px;min-height:32px}
+.activity-crew {font-size:10px;line-height:1.5;color:#b6c1b8;margin:0 0 13px;overflow-wrap:anywhere}
+.activity-actions {display:flex;gap:7px}
+.activity-actions button {color:#e9e4d0;background:#25362f;border:1px solid #71816b77;font-size:10px;padding:9px 8px;line-height:1.2}
+.activity-actions button:first-child {flex:1;color:#1a241f;background:#c8bd8e;border-color:#c8bd8e;font-weight:bold}
+.activity-actions button:disabled {cursor:default;background:#ffffff0c;color:#b0b4a6;border-color:#ffffff1c;opacity:.7}
+.activity-actions button:hover:not(:disabled) {filter:brightness(1.15)}
+.activity[data-phase="countdown"] .activity-readout strong {color:#eed186}
+.activity[data-phase="running"],.activity[data-phase="finished"] {border-color:#a3d59a}
+.activity[data-phase="finished"] .activity-readout strong {color:#b9e3a3}
+.activity[data-phase="cancelled"] {border-color:#d3937c}
+.activity-record-title {font-size:8px;letter-spacing:1.8px;color:#cbbb89;border-top:1px solid #ffffff1a;padding-top:14px;margin-top:14px}
+#race-scores-list {list-style-position:inside;padding:0;margin:10px 0;font-size:10px;color:#d6dbca}
+#race-scores-list li {display:flex;justify-content:space-between;gap:12px;margin:9px 0;line-height:1.4}
+#race-scores-list li span {overflow-wrap:anywhere}
+#race-scores-list li strong {white-space:nowrap;color:#f2e6b9;font-variant-numeric:tabular-nums}
+.activity-record-note {font-size:9px;color:#9cae9f;margin:0}
+.interaction-hint {position:fixed;left:50%;bottom:56px;transform:translateX(-50%);font-size:12px;color:#fff6dc;text-shadow:1px 2px 3px #000,0 0 7px #000;background:linear-gradient(90deg,transparent,#10201f94,transparent);padding:8px 35px;white-space:nowrap;pointer-events:none}
+body:not(.playing) .interaction-hint {display:none}
+.help-panel {position:fixed;right:32px;top:105px;z-index:5;width:310px;padding:20px;background:#101c24f5;border:1px solid #d4c99c55;box-shadow:0 10px 35px #0006}
+.help-panel h2 {font:italic 24px Georgia,serif;margin:0 0 20px;color:#f7ebc7}
+.help-panel p {font-size:11px;line-height:1.7;color:#c6d1c5}
+.help-panel b {color:#f1e0b4}
+.help-panel label {display:block;font-size:10px;margin-top:18px;color:#e5d8b1}
+.help-panel input[type="range"] {padding:10px 0;box-shadow:none;border:0;accent-color:#cbb983;background:transparent}
+.help-panel #audio-status {font-size:10px;color:#aabaac;min-height:1.5em}
+.connection #audio-toggle {min-width:55px}
+@media(max-width:1000px) {.activity {right:18px;width:246px;top:117px}.activity-heading b {font-size:22px}.activity-readout strong {font-size:25px}.help-panel {right:18px;top:117px}.interaction-hint {bottom:54px;font-size:10px;padding:7px 14px}.activity-heading {padding:12px 13px}#activity-content {padding:0 13px 13px}}
+@media(max-height:650px) {.activity {top:110px;width:242px}.activity-heading {padding:10px 12px}.activity-heading b {font-size:21px}#activity-content {padding:0 12px 12px}.activity-readout strong {font-size:24px}#activity-status {min-height:0}.activity-crew {margin-bottom:8px}.activity-readout {margin-top:0}.interaction-hint {bottom:48px}.help-panel {top:95px;padding:15px}.help-panel h2 {margin-bottom:12px}.help-panel p {margin:5px 0}}
+/* Keep the gathering area visible below the compact activity instrument. */
+.connection {max-width:510px}
+.activity {width:266px}
+.activity-heading {padding:10px 13px}
+.activity-heading small {font-size:7px;margin-bottom:4px}
+.activity-heading b {font-size:23px}
+#activity-content {padding:0 13px 11px}
+.activity-readout {margin:0 0 7px}
+.activity-readout strong {font-size:27px}
+.activity-progress-track {margin-bottom:8px}
+#activity-status {font-size:10px;min-height:26px;margin-bottom:7px}
+.activity-crew {display:none}
+.activity-actions button {padding:7px 8px}
+@media(max-width:1000px) {.connection {max-width:420px}.activity {width:242px}}

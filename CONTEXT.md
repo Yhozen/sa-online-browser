@@ -28,7 +28,7 @@ A replacement browser client that joins an existing multiplayer server through a
 
 ## Neighborhood presentation
 
-- **Scene manifest:** shared static placements, collision, spawns, resets, vehicle and minimap geometry; selected by POC_SCENE.
+- **Scene manifest:** shared static placements, collision, spawns, resets, vehicle, minimap geometry and optional activity course; selected by POC_SCENE.
 - **Scene revision:** content identity advertised by the gateway and echoed on join, preventing clients playing different geometry together.
 - **Asset kit:** original reusable Blender exports and their editable source scripts; independent of protocol entities.
 - **Seat anchor:** visual local transform for a replicated driver/passenger, not a seat reservation or networking message.
@@ -42,7 +42,7 @@ A replacement browser client that joins an existing multiplayer server through a
 - **Dream-loop target:** generated reference made from an actual gameplay composition; never evidence that the renderer achieved it.
 - **Native FXAA:** edge antialiasing after rendering at viewport × native DPR; no reduced-resolution scene buffer or upscaling.
 - **Baked vertex occlusion:** original Blender geometry is ray-tested to store local shelter shading in GLB vertex colors; preserved by both graphics presets.
-- **Cloud FPS diagnostic:** the historical 4 FPS target is reported, while fidelity and native resolution remain mandatory. Hardware GPU performance needs separate measurement.
+- **Cloud FPS diagnostic:** software-renderer timing used to explain cloud verification. FPS optimization is out of scope for the activity milestone; the user reports 120 FPS on their hardware. Native resolution and fidelity remain mandatory.
 
 - **Reflection bake:** a static, prefiltered HDR texture captured from original scene geometry with no player session; cached as bounded lossless RGBA16F PMR1 data. It is lighting input, not networking evidence.
 - **Canopy normal:** an authored outward shading direction shared across neighboring leaf cards; it changes light response without changing geometry or alpha coverage.
@@ -52,3 +52,15 @@ A replacement browser client that joins an existing multiplayer server through a
 
 - **Native viewport synchronization:** the drawing buffer and post-processing targets track CSS viewport dimensions multiplied by device pixel ratio, checked by the ordinary update timer as well as resize events. A delayed software-renderer resize is a readiness issue; it is not an adaptive resolution policy.
 - **Planting clearance:** triangle-level checks keep nonblocking low grass/soil decoration away from fixture barriers, roads, sidewalks and house-access strips; decorative detail does not change shared collision or playable geography.
+
+## Driving activity and feedback
+
+- **Arroyo Loop:** the neighborhood's server-scored nine-checkpoint time trial, with a stationary countdown and an optional passenger.
+- **Run generation:** the Pawn fixture's identity for one activity attempt. It separates rematches; it does not replace a browser session epoch.
+- **Activity replica:** browser presentation of received server notices and race-checkpoint RPCs. Timer interpolation is display-only and cannot award progress or a finish.
+- **Race checkpoint:** a position, next position, radius and type supplied through ordinary SA-MP race-checkpoint RPCs. The server owns checkpoint order; a browser marker is navigation feedback.
+- **Crew result:** one server-timed finish attributed to its driver and optional passenger. Browser movement remains trusted input; scoring authority is not an anti-cheat guarantee.
+- **Session record:** one of the five fastest completed runs retained by the current fixture process. Restarting the game server clears these records.
+- **Original sound kit:** reproducible project-authored PCM assets with an integrity-checked inventory, independent of GTA audio.
+- **Audio scene:** bounded sound voices derived from local and received gameplay state, with gesture unlock, spatial peer placement and session cleanup. It has no gameplay authority.
+- **Vehicle presentation:** wheel and lamp animation derived from observed motion and controls, preserving shared physics, vehicle placement and seat anchors.

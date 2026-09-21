@@ -271,9 +271,10 @@ async function phase(page, value, generation) {
   }).toBe(true);
   return (await snap(page)).activity.state;
 }
-async function startRace(driver, passenger) {
+async function startRace(driver, passenger, keyboard = false) {
   const generation = (await snap(driver)).activity.state.generation + 1;
-  await driver.getByTestId("race-start").click();
+  if (keyboard) await key(driver, "r");
+  else await driver.getByTestId("race-start").click();
   await phase(driver, "countdown", generation);
   await phase(passenger, "countdown", generation);
   await phase(driver, "running", generation);
@@ -306,6 +307,17 @@ test("activity: two server-scored laps, crew swap, false starts, corrections and
     const ids = [(await snap(a.page)).self.id, (await snap(b.page)).self.id];
     expect(new Set(ids).size).toBe(2);
     expect(observations.filter(event => event.event === "connect").every(event => event.npc === 0)).toBe(true);
+    // UI activation must keep Enter/Space, instead of leaking into chat/jump.
+    const initialZ = (await snap(a.page)).self.position[2];
+    await a.page.locator("#race-scores").focus(); await a.page.keyboard.press("Enter");
+    await expect(a.page.locator("#race-scores")).toHaveAttribute("aria-expanded", "true");
+    await a.page.keyboard.press("Space");
+    await expect(a.page.locator("#race-scores")).toHaveAttribute("aria-expanded", "false");
+    await a.page.locator("#audio-toggle").focus(); await a.page.keyboard.press("Enter");
+    await expect.poll(async () => (await snap(a.page)).audio.preferences.muted).toBe(true);
+    await a.page.keyboard.press("Space");
+    await expect.poll(async () => (await snap(a.page)).audio.preferences.muted).toBe(false);
+    expect((await snap(a.page)).self.position[2]).toBe(initialZ);
     await seats(a.page, b.page);
     // Driver key bit 2 arrives through UDP and produces a normal peer key state.
     await focus(a.page);
@@ -330,7 +342,7 @@ test("activity: two server-scored laps, crew swap, false starts, corrections and
     await key(b.page, "f"); await mode(b.page, "onFoot");
     await reset(a.page);
     await seats(b.page, a.page);
-    const second = await startRace(b.page, a.page);
+    const second = await startRace(b.page, a.page, true);
     const secondRoute = await driveLoop(b.page, a.page, second);
     results.push({ ...(await confirmFinish(b.page, a.page, second)), route: secondRoute });
     await b.page.screenshot({ path: `${dir}/swapped-crew-finish.png` });
@@ -346,10 +358,25 @@ test("activity: two server-scored laps, crew swap, false starts, corrections and
     await expect(a.page.getByTestId("race-status")).toContainText("before the green light");
     await reset(a.page); await seats(a.page, b.page);
     const exiting = await startRace(a.page, b.page);
+    await move(a.page, "s", 900);
+    expect((await snap(a.page)).presentation.vehicles[0].reversing).toBeGreaterThan(.5);
     await key(a.page, "f"); await mode(a.page, "onFoot");
     expect((await phase(a.page, "cancelled", exiting)).reason).toBe("driver_exit");
     await phase(b.page, "cancelled", exiting);
+    for (const page of [a.page, b.page]) {
+      await expect.poll(async () => Math.hypot(...(await snap(page)).vehicles[0].velocity)).toBe(0);
+      await expect.poll(async () => (await snap(page)).presentation.vehicles[0].reversing).toBeLessThan(.01);
+      await expect.poll(async () => Math.abs((await snap(page)).presentation.vehicles[0].signedSpeed)).toBeLessThan(.01);
+    }
     expect(observations.some(event => event.event === "challengeFinished" && event.generation === exiting)).toBe(false);
+    // A solo driver's direct G transition has no exitVehicle RPC in between.
+    await reset(a.page); await key(a.page, "e"); await mode(a.page, "driver");
+    await move(a.page, "s", 900);
+    await key(a.page, "g"); await mode(a.page, "passenger");
+    for (const page of [a.page, b.page]) {
+      await expect.poll(async () => Math.hypot(...(await snap(page)).vehicles[0].velocity)).toBe(0);
+      await expect.poll(async () => Math.abs((await snap(page)).presentation.vehicles[0].signedSpeed)).toBeLessThan(.01);
+    }
     await reset(a.page); await seats(a.page, b.page);
     const resetting = await startRace(a.page, b.page);
     await reset(b.page);
@@ -377,7 +404,7 @@ test("activity: two server-scored laps, crew swap, false starts, corrections and
     await a.page.locator("#quality").selectOption("standard");
     await a.page.screenshot({ path: `${dir}/standard-activity-plaza.png` });
     const graphics = (await snap(a.page)).graphics;
-    writeFileSync(`${dir}/results.json`, JSON.stringify({ results, graphics, tests: ["two normal players", "server-routed horn press/release", "passenger input cannot move car", "two complete ordered laps", "equal server/driver/passenger elapsed result", "driver/passenger role swap", "stationary countdown", "false start rejection", "driver exit cancellation", "server reset and .5-unit agreement", "disconnect clears stale activity", "fresh join receives server scores"], errors }, null, 2));
+    writeFileSync(`${dir}/results.json`, JSON.stringify({ results, graphics, tests: ["two normal players", "keyboard activation of records and audio controls", "server-routed horn press/release", "passenger input cannot move car", "two complete ordered laps", "equal server/driver/passenger elapsed result", "driver/passenger role swap", "keyboard race shortcut", "stationary countdown", "false start rejection", "moving driver exit cancellation and parked vehicle feedback", "server reset and .5-unit agreement", "disconnect clears stale activity", "fresh join receives server scores"], errors }, null, 2));
     expect(errors).toEqual([]);
   } finally {
     await a.close(); await b.close();

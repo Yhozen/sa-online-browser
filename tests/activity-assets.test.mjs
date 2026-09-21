@@ -10,6 +10,7 @@ const assets = [
   ["activity-pylon", [.66, .66, 1.065]],
   ["activity-bench", [2.06, .755647, .924275]],
   ["activity-planter", [1.381354, 1.344052, 1.575012]],
+  ["activity-yucca", [.876769, .903443, .649674]],
 ];
 
 async function load(name) {
@@ -92,6 +93,39 @@ test("activity planter is hollow concrete with recessed soil and solid succulent
   const rim = new THREE.Raycaster(new THREE.Vector3(.615, 0, 2), new THREE.Vector3(0, 0, -1)).intersectObjects(concrete);
   assert.ok(center.length && center[0].point.z < .17, "planter center must expose the hollow, not a concrete lid");
   assert.ok(rim.length && rim[0].point.z > .66, "raised rounded rim must surround the opening");
+});
+
+test("field yucca keeps its solid-leaf silhouette in a small shared-material export", async () => {
+  const bytes = readFileSync(new URL("../apps/browser/public/assets/activity-yucca.glb", import.meta.url));
+  assert.ok(bytes.byteLength < 600_000, "field plant must remain below its standalone download budget");
+  const scene = await load("activity-yucca");
+  let triangles = 0;
+  const materials = new Set();
+  scene.traverse((mesh) => {
+    if (!(mesh instanceof THREE.Mesh)) return;
+    triangles += (mesh.geometry.index?.count ?? mesh.geometry.getAttribute("position").count) / 3;
+    const positions = mesh.geometry.getAttribute("position");
+    for (let i = 0; i < positions.count; i++) {
+      const point = new THREE.Vector3().fromBufferAttribute(positions, i).applyMatrix4(mesh.matrixWorld);
+      assert.ok(Math.hypot(point.x, point.y) < .49, "arbitrary planted rotation must remain within the full-envelope collider");
+    }
+    const list = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
+    for (const material of list) {
+      materials.add(material.name);
+      assert.equal(material.transparent, false, "solid rosette should not depend on transparency sorting");
+      assert.equal(material.map, null, "field plant should reuse existing material definitions without an additional texture");
+    }
+  });
+  assert.ok(triangles >= 7_000 && triangles < 10_000, `expected detailed solid leaves below the asset budget, got ${triangles}`);
+  assert.deepEqual([...materials].sort(), ["activity-agave", "activity-agave-edge", "wood"]);
+  // Separate upper green blades and low woody litter/crown prevent an exported
+  // stump alone, empty alpha card or accidentally missing heart from passing.
+  const green = [];
+  scene.traverse((mesh) => {
+    if (mesh instanceof THREE.Mesh && mesh.material.name === "activity-agave") green.push(mesh);
+  });
+  const heart = new THREE.Raycaster(new THREE.Vector3(.09, 0, .8), new THREE.Vector3(0, 0, -1)).intersectObjects(green);
+  assert.ok(heart.length && heart[0].point.z > .30, "upright center leaves must form a real rosette heart");
 });
 
 test("club sign bakes original readable lettering into one UV-mapped enamel face", async () => {

@@ -46,8 +46,8 @@ function visit(suite) {
   for (const child of suite.suites || []) visit(child);
 }
 for (const suite of results.suites) visit(suite);
-if (cases.length !== 15 || cases.some((x) => x.status !== "expected"))
-  throw new Error("All yard, graphics and neighborhood scenarios must pass.");
+if (cases.length !== 16 || cases.some((x) => x.status !== "expected"))
+  throw new Error("All yard, graphics, neighborhood and activity scenarios must pass.");
 const active = new Map(),
   cycles = [];
 for (const event of observations) {
@@ -106,8 +106,15 @@ if (
   neighborhoodErrors.length
 )
   throw Error("Neighborhood acceptance evidence incomplete");
+const activity = JSON.parse(readFileSync("artifacts/activity/results.json"));
+const activityAgreements = JSON.parse(readFileSync("artifacts/activity/agreements.json"));
+const activityErrors = JSON.parse(readFileSync("artifacts/activity/errors.json"));
+if (activity.results.length !== 2 || activityErrors.length || !activityAgreements.length ||
+    activity.results.some(run => run.state.phase !== "finished" || run.state.elapsedMs !== run.observation.elapsedMs || run.checkpoints.length !== run.state.checkpointCount))
+  throw Error("Two server-scored activity laps and independent observations are required");
 const sourceFiles = [
   "apps/browser/src/main.ts",
+  "tests/activity-browser.test.mjs",
   "apps/browser/src/bootstrap.ts",
   "apps/browser/src/graphics.ts",
   "services/gateway/server.mjs",
@@ -161,6 +168,15 @@ const sourceFiles = [
   "packages/shared/scenes/yard.json",
   "apps/browser/src/style.css",
   "package.json",
+  "apps/browser/src/challenge.ts", "apps/browser/src/challenge-state.ts",
+  "apps/browser/src/audio.ts", "apps/browser/src/vehicle-presentation.ts",
+  "apps/browser/public/audio/inventory.json",
+  "packages/shared/protocol.ts", "packages/shared/scene.ts",
+  "tests/browser/activity.spec.mjs", "tests/challenge-state.test.mjs",
+  "tests/audio.test.mjs", "tests/audio-browser.test.mjs",
+  "tests/vehicle-presentation.test.mjs", "tests/activity-assets.test.mjs",
+  "tools/assets/activity-kit.py", "tools/build-audio.mjs", "tools/audio/synthesize.mjs",
+  "native/challenge-integration.py", "tools/verify.mjs",
 ];
 const hash = (file) =>
   createHash("sha256").update(readFileSync(file)).digest("hex");
@@ -207,6 +223,17 @@ const summary = {
       ),
     },
     errors: neighborhoodErrors,
+  },
+  activity: {
+    tests: activity.tests,
+    runs: activity.results.map(run => ({ generation: run.generation, driverId: run.state.driverId,
+      passengerId: run.state.passengerId, elapsedMs: run.state.elapsedMs,
+      checkpoints: run.checkpoints.length, serverObservation: run.observation })),
+    graphics: activity.graphics,
+    positionChecks: { count: activityAgreements.length,
+      maxServerDistance: Math.max(...activityAgreements.map(check => check.serverDistance)),
+      maxPeerDistance: Math.max(...activityAgreements.map(check => check.peerDistance)) },
+    errors: activityErrors,
   },
   demoSupervisor: { termination: supervisor, keyboardInterrupt: interrupt },
   positionChecks: {

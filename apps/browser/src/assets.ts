@@ -8,6 +8,7 @@ import { surfaceTexture } from "./surface-textures";
 import { decodeReflection } from "./reflection-storage";
 export let environmentTexture: THREE.Texture | undefined;
 export let reflectionTexture: THREE.Texture | undefined;
+export let startPaintTexture: THREE.Texture | undefined;
 export const bakingReflections = new URLSearchParams(location.search).get("bake-reflections") === "1";
 const models = new Map<string, GLTF>();
 export const surfaceMaterials = new Map<string, THREE.MeshStandardMaterial>();
@@ -31,6 +32,7 @@ const names = [
   "activity-pylon",
   "activity-bench",
   "activity-planter",
+  "activity-yucca",
 ];
 export async function loadAssets(
   progress: (text: string) => void,
@@ -61,6 +63,7 @@ export async function loadAssets(
   }
 
   const canonical = new Map<string, THREE.Material>();
+  const embeddedTextures = new Set<THREE.Texture>();
   // Sequential loading keeps peak decode memory predictable and provides useful progress.
   for (const name of names) {
     progress(`Loading ${name} · ${count + 1}/${names.length + 1}`);
@@ -80,6 +83,13 @@ export async function loadAssets(
         o.castShadow = true;
         o.receiveShadow = true;
         const list = Array.isArray(o.material) ? o.material : [o.material];
+        for (const material of list) for (const value of Object.values(material)) {
+          if (!(value instanceof THREE.Texture) || embeddedTextures.has(value)) continue;
+          embeddedTextures.add(value);
+          const image = value.image as { width?: number; height?: number } | undefined;
+          if (image?.width && image.height)
+            assetStats.textureBytes += image.width * image.height * 4 * (value.generateMipmaps ? 4 / 3 : 1);
+        }
         o.material = list.map((m) => {
           if (m.name.startsWith("foliage") || m.name.startsWith("palm-frond")) m.side = THREE.DoubleSide;
           if (m.name === "ivory" && m instanceof THREE.MeshStandardMaterial) m.color.set(0xe3dfcf);
@@ -91,8 +101,8 @@ export async function loadAssets(
               const physical = new THREE.MeshPhysicalMaterial();
               THREE.MeshStandardMaterial.prototype.copy.call(physical, m);
               physical.defines = { STANDARD: "", PHYSICAL: "" };
-              physical.clearcoat = 1; physical.clearcoatRoughness = .12; physical.envMapIntensity = 1.3;
-              physical.metalness = .45; physical.roughness = .22; physical.color.set(0x233d50);
+              physical.clearcoat = 1; physical.clearcoatRoughness = .045; physical.envMapIntensity = 1.3;
+              physical.metalness = .45; physical.roughness = .22; physical.color.set(0x294e64);
               canonical.set(m.name, physical); m.dispose();
             } else canonical.set(m.name, m);
           }
@@ -155,17 +165,24 @@ export async function loadAssets(
     }
     bitmap.close();
   }
-  // The original 12m road study is displayed over 9.6m to bring aggregate and
-  // fissures toward street scale while retaining its connected repair structure.
+  // Map the original study over 6m so aggregate and cracks read at street scale.
   const asphaltInput = await textureInput("arroyo-asphalt.png");
   const asphaltMaps = surfaceTexture(asphaltInput, -1, 1254);
-  for (const texture of Object.values(asphaltMaps)) texture.repeat.setScalar(1 / 2.4);
+  for (const texture of Object.values(asphaltMaps)) texture.repeat.setScalar(1 / 1.5);
   surfaceMaterials.set("asphalt", new THREE.MeshStandardMaterial({
     name:"asphalt", ...asphaltMaps, color:0xb1b1aa, roughness:.88,
     normalScale:new THREE.Vector2(.4, .4),
   }));
   assetStats.textureBytes += 1254 * 1254 * 4 * 4 / 3 * 3;
   asphaltInput.close();
+  const startPaint = await textureInput("arroyo-start-paint.png");
+  startPaintTexture = new THREE.Texture(startPaint);
+  startPaintTexture.colorSpace = THREE.SRGBColorSpace;
+  // The accepted input has transparent padding; sample only the authored two-row stripe.
+  startPaintTexture.offset.set(8 / 1752, (897 - 536) / 897);
+  startPaintTexture.repeat.set(1732 / 1752, 183 / 897);
+  startPaintTexture.anisotropy = 8; startPaintTexture.needsUpdate = true;
+  assetStats.textureBytes += startPaint.width * startPaint.height * 4 * 4 / 3;
   const leaves = await textureInput("arroyo-foliage.png");
   const leafCanvas = document.createElement("canvas");
   leafCanvas.width = leaves.width; leafCanvas.height = leaves.height;
@@ -211,7 +228,7 @@ export async function loadAssets(
       material.customProgramCacheKey = () => `arroyo-thin-leaf-diffuse-v3-${name.startsWith("foliage") ? "canopy" : "palm"}`;
       material.needsUpdate = true;
     }
-    if (name === "glass") { material.envMapIntensity = 1.4; material.roughness = .24; if(material instanceof THREE.MeshPhysicalMaterial)material.specularIntensity=.12; }
+    if (name === "glass") { material.envMapIntensity = 1.0; material.roughness = .10; if(material instanceof THREE.MeshPhysicalMaterial)material.specularIntensity=.24; }
   }
   const sky = await textureInput("arroyo-sky.png");
   environmentTexture = new THREE.Texture(sky);
@@ -257,7 +274,9 @@ export function bindAssetEnvironment(texture: THREE.Texture, localProbe?: THREE.
       const local = localProbe && ["paint", "glass"].includes(material.name);
       material.envMap = local ? localProbe : texture;
       material.envMapRotation.x = local ? 0 : Math.PI / 2;
-      material.envMapIntensity = leaf ? 1.55 : material.name === "denim" ? .8 : .85;
+      // Preserve the coat's authored reflection strength. A generic .85 override
+      // previously flattened it after the physical paint material was configured.
+      material.envMapIntensity = leaf ? 1.55 : material.name === "paint" ? 1.3 : material.name === "glass" ? 1.0 : .8;
       if (leaf) material.emissiveIntensity = .085;
       material.needsUpdate = true;
     }

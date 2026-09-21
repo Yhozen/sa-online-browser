@@ -1108,8 +1108,8 @@
     {
       "id": "activity-board",
       "position": [
-        14,
-        22,
+        10.3,
+        21.2,
         10.32
       ],
       "size": [
@@ -1173,7 +1173,7 @@
     {
       "id": "activity-pylon-0",
       "position": [
-        -6.9,
+        -4.9,
         4,
         9.5325
       ],
@@ -1186,7 +1186,7 @@
     {
       "id": "activity-pylon-1",
       "position": [
-        6.9,
+        4.9,
         4,
         9.5325
       ],
@@ -1246,6 +1246,331 @@
         0.9,
         0.9,
         1.065
+      ]
+    },
+    {
+      "id": "activity-yucca-0",
+      "position": [
+        -17.6,
+        -54.3,
+        9.335
+      ],
+      "size": [
+        0.98,
+        0.98,
+        0.67
+      ]
+    },
+    {
+      "id": "activity-yucca-1",
+      "position": [
+        -17.7,
+        -44.3,
+        9.335
+      ],
+      "size": [
+        0.98,
+        0.98,
+        0.67
+      ]
+    },
+    {
+      "id": "activity-yucca-2",
+      "position": [
+        -13.4,
+        -53.4,
+        9.335
+      ],
+      "size": [
+        0.98,
+        0.98,
+        0.67
+      ]
+    },
+    {
+      "id": "activity-yucca-3",
+      "position": [
+        -17.6,
+        -26.3,
+        9.335
+      ],
+      "size": [
+        0.98,
+        0.98,
+        0.67
+      ]
+    },
+    {
+      "id": "activity-yucca-4",
+      "position": [
+        -17.7,
+        -16.3,
+        9.335
+      ],
+      "size": [
+        0.98,
+        0.98,
+        0.67
+      ]
+    },
+    {
+      "id": "activity-yucca-5",
+      "position": [
+        -13.4,
+        -25.4,
+        9.335
+      ],
+      "size": [
+        0.98,
+        0.98,
+        0.67
+      ]
+    },
+    {
+      "id": "activity-yucca-6",
+      "position": [
+        -17.6,
+        2.699999999999999,
+        9.335
+      ],
+      "size": [
+        0.98,
+        0.98,
+        0.67
+      ]
+    },
+    {
+      "id": "activity-yucca-7",
+      "position": [
+        -17.7,
+        12.7,
+        9.335
+      ],
+      "size": [
+        0.98,
+        0.98,
+        0.67
+      ]
+    },
+    {
+      "id": "activity-yucca-8",
+      "position": [
+        -13.4,
+        3.5999999999999988,
+        9.335
+      ],
+      "size": [
+        0.98,
+        0.98,
+        0.67
+      ]
+    },
+    {
+      "id": "activity-yucca-12",
+      "position": [
+        -8.3,
+        61.6,
+        9.335
+      ],
+      "size": [
+        0.98,
+        0.98,
+        0.67
+      ]
+    },
+    {
+      "id": "activity-yucca-13",
+      "position": [
+        1.7,
+        61.7,
+        9.335
+      ],
+      "size": [
+        0.98,
+        0.98,
+        0.67
+      ]
+    },
+    {
+      "id": "activity-yucca-15",
+      "position": [
+        19.6,
+        51.3,
+        9.335
+      ],
+      "size": [
+        0.98,
+        0.98,
+        0.67
+      ]
+    },
+    {
+      "id": "activity-yucca-18",
+      "position": [
+        67.6,
+        20.3,
+        9.335
+      ],
+      "size": [
+        0.98,
+        0.98,
+        0.67
+      ]
+    },
+    {
+      "id": "activity-yucca-19",
+      "position": [
+        67.7,
+        10.3,
+        9.335
+      ],
+      "size": [
+        0.98,
+        0.98,
+        0.67
+      ]
+    },
+    {
+      "id": "activity-yucca-21",
+      "position": [
+        67.6,
+        -13.7,
+        9.335
+      ],
+      "size": [
+        0.98,
+        0.98,
+        0.67
+      ]
+    },
+    {
+      "id": "activity-yucca-22",
+      "position": [
+        67.7,
+        -23.7,
+        9.335
+      ],
+      "size": [
+        0.98,
+        0.98,
+        0.67
+      ]
+    },
+    {
+      "id": "activity-yucca-24",
+      "position": [
+        19.7,
+        -28.4,
+        9.335
+      ],
+      "size": [
+        0.98,
+        0.98,
+        0.67
+      ]
+    },
+    {
+      "id": "activity-yucca-25",
+      "position": [
+        29.7,
+        -28.3,
+        9.335
+      ],
+      "size": [
+        0.98,
+        0.98,
+        0.67
+      ]
+    },
+    {
+      "id": "activity-yucca-26",
+      "position": [
+        20.6,
+        -32.6,
+        9.335
+      ],
+      "size": [
+        0.98,
+        0.98,
+        0.67
+      ]
+    },
+    {
+      "id": "activity-yucca-27",
+      "position": [
+        37.3,
+        -62.6,
+        9.335
+      ],
+      "size": [
+        0.98,
+        0.98,
+        0.67
+      ]
+    },
+    {
+      "id": "activity-yucca-28",
+      "position": [
+        27.3,
+        -62.7,
+        9.335
+      ],
+      "size": [
+        0.98,
+        0.98,
+        0.67
+      ]
+    },
+    {
+      "id": "activity-yucca-29",
+      "position": [
+        36.4,
+        -58.4,
+        9.335
+      ],
+      "size": [
+        0.98,
+        0.98,
+        0.67
+      ]
+    },
+    {
+      "id": "activity-yucca-30",
+      "position": [
+        -10.5,
+        17,
+        9.335
+      ],
+      "size": [
+        0.98,
+        0.98,
+        0.67
+      ]
+    },
+    {
+      "id": "activity-yucca-31",
+      "position": [
+        -12.1,
+        18.2,
+        9.335
+      ],
+      "size": [
+        0.98,
+        0.98,
+        0.67
+      ]
+    },
+    {
+      "id": "activity-yucca-32",
+      "position": [
+        -11.4,
+        20,
+        9.335
+      ],
+      "size": [
+        0.98,
+        0.98,
+        0.67
       ]
     }
   ],
@@ -2456,8 +2781,8 @@
       "id": "activity-board",
       "asset": "activity-board",
       "position": [
-        14,
-        22,
+        10.3,
+        21.2,
         9
       ],
       "rotation": 0
@@ -2506,7 +2831,7 @@
       "id": "activity-pylon-0",
       "asset": "activity-pylon",
       "position": [
-        -6.9,
+        -4.9,
         4,
         9
       ],
@@ -2516,7 +2841,7 @@
       "id": "activity-pylon-1",
       "asset": "activity-pylon",
       "position": [
-        6.9,
+        4.9,
         4,
         9
       ],
@@ -2561,6 +2886,256 @@
         9
       ],
       "rotation": 1.35
+    },
+    {
+      "id": "activity-yucca-0",
+      "asset": "activity-yucca",
+      "position": [
+        -17.6,
+        -54.3,
+        9
+      ],
+      "rotation": 0
+    },
+    {
+      "id": "activity-yucca-1",
+      "asset": "activity-yucca",
+      "position": [
+        -17.7,
+        -44.3,
+        9
+      ],
+      "rotation": 2.39996
+    },
+    {
+      "id": "activity-yucca-2",
+      "asset": "activity-yucca",
+      "position": [
+        -13.4,
+        -53.4,
+        9
+      ],
+      "rotation": 4.79992
+    },
+    {
+      "id": "activity-yucca-3",
+      "asset": "activity-yucca",
+      "position": [
+        -17.6,
+        -26.3,
+        9
+      ],
+      "rotation": 7.19988
+    },
+    {
+      "id": "activity-yucca-4",
+      "asset": "activity-yucca",
+      "position": [
+        -17.7,
+        -16.3,
+        9
+      ],
+      "rotation": 9.59984
+    },
+    {
+      "id": "activity-yucca-5",
+      "asset": "activity-yucca",
+      "position": [
+        -13.4,
+        -25.4,
+        9
+      ],
+      "rotation": 11.9998
+    },
+    {
+      "id": "activity-yucca-6",
+      "asset": "activity-yucca",
+      "position": [
+        -17.6,
+        2.699999999999999,
+        9
+      ],
+      "rotation": 14.39976
+    },
+    {
+      "id": "activity-yucca-7",
+      "asset": "activity-yucca",
+      "position": [
+        -17.7,
+        12.7,
+        9
+      ],
+      "rotation": 16.79972
+    },
+    {
+      "id": "activity-yucca-8",
+      "asset": "activity-yucca",
+      "position": [
+        -13.4,
+        3.5999999999999988,
+        9
+      ],
+      "rotation": 19.19968
+    },
+    {
+      "id": "activity-yucca-12",
+      "asset": "activity-yucca",
+      "position": [
+        -8.3,
+        61.6,
+        9
+      ],
+      "rotation": 28.79952
+    },
+    {
+      "id": "activity-yucca-13",
+      "asset": "activity-yucca",
+      "position": [
+        1.7,
+        61.7,
+        9
+      ],
+      "rotation": 31.19948
+    },
+    {
+      "id": "activity-yucca-15",
+      "asset": "activity-yucca",
+      "position": [
+        19.6,
+        51.3,
+        9
+      ],
+      "rotation": 35.9994
+    },
+    {
+      "id": "activity-yucca-18",
+      "asset": "activity-yucca",
+      "position": [
+        67.6,
+        20.3,
+        9
+      ],
+      "rotation": 43.19928
+    },
+    {
+      "id": "activity-yucca-19",
+      "asset": "activity-yucca",
+      "position": [
+        67.7,
+        10.3,
+        9
+      ],
+      "rotation": 45.59924
+    },
+    {
+      "id": "activity-yucca-21",
+      "asset": "activity-yucca",
+      "position": [
+        67.6,
+        -13.7,
+        9
+      ],
+      "rotation": 50.39916
+    },
+    {
+      "id": "activity-yucca-22",
+      "asset": "activity-yucca",
+      "position": [
+        67.7,
+        -23.7,
+        9
+      ],
+      "rotation": 52.79912
+    },
+    {
+      "id": "activity-yucca-24",
+      "asset": "activity-yucca",
+      "position": [
+        19.7,
+        -28.4,
+        9
+      ],
+      "rotation": 57.59904
+    },
+    {
+      "id": "activity-yucca-25",
+      "asset": "activity-yucca",
+      "position": [
+        29.7,
+        -28.3,
+        9
+      ],
+      "rotation": 59.999
+    },
+    {
+      "id": "activity-yucca-26",
+      "asset": "activity-yucca",
+      "position": [
+        20.6,
+        -32.6,
+        9
+      ],
+      "rotation": 62.39896
+    },
+    {
+      "id": "activity-yucca-27",
+      "asset": "activity-yucca",
+      "position": [
+        37.3,
+        -62.6,
+        9
+      ],
+      "rotation": 64.79892000000001
+    },
+    {
+      "id": "activity-yucca-28",
+      "asset": "activity-yucca",
+      "position": [
+        27.3,
+        -62.7,
+        9
+      ],
+      "rotation": 67.19888
+    },
+    {
+      "id": "activity-yucca-29",
+      "asset": "activity-yucca",
+      "position": [
+        36.4,
+        -58.4,
+        9
+      ],
+      "rotation": 69.59884
+    },
+    {
+      "id": "activity-yucca-30",
+      "asset": "activity-yucca",
+      "position": [
+        -10.5,
+        17,
+        9
+      ],
+      "rotation": 71.9988
+    },
+    {
+      "id": "activity-yucca-31",
+      "asset": "activity-yucca",
+      "position": [
+        -12.1,
+        18.2,
+        9
+      ],
+      "rotation": 74.39876000000001
+    },
+    {
+      "id": "activity-yucca-32",
+      "asset": "activity-yucca",
+      "position": [
+        -11.4,
+        20,
+        9
+      ],
+      "rotation": 76.79872
     }
   ],
   "roads": [

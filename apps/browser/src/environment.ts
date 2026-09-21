@@ -71,7 +71,7 @@ export function buildEnvironment(scene: THREE.Scene, manifest: SceneManifest) {
         box([x, y, z + 0.03], [0.13, 2.5, 0.015], mat("white", 0xe6e4c9));
   } else {
     scene.background = new THREE.Color(0x9ec9da);
-    scene.fog = new THREE.Fog(0xb8c6c6, 130, 780);
+    scene.fog = new THREE.Fog(0xb6c9d6, 130, 780);
     surface(0, 0, 600, 600, z - 0.03, mat("grass", 0xaaa478));
     const asphalt = mat("asphalt", 0x505450),
       concrete = mat("concrete", 0xb0ada1),
@@ -184,6 +184,7 @@ export function buildEnvironment(scene: THREE.Scene, manifest: SceneManifest) {
     if (manifest.challenge) {
       // A flush paved gathering spot; the manifest's props own all solid collision.
       surface(19, 23.85, 10, 6.3, z + .02, concrete);
+      surface(11.45, 22.35, 5.1, 3.3, z + .02, concrete);
       for (const x of [16.5, 19, 21.5])
         box([x, 23.85, z + .028], [.018, 6.3, .005], joint);
       for (const y of [22.8, 24.9])

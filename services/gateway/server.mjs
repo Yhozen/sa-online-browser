@@ -11,7 +11,7 @@ import { WebSocketServer, WebSocket } from 'ws';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const DIST = path.join(ROOT, 'apps/browser/dist');
 const LOG = path.join(ROOT, '.runtime/logs/gateway.jsonl');
-const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png', '.glb': 'model/gltf-binary', '.webp': 'image/webp' };
+const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png', '.glb': 'model/gltf-binary', '.webp': 'image/webp', '.wav': 'audio/wav' };
 export function validateMessage(m) {
   if (!m || typeof m !== 'object' || Array.isArray(m)) return false;
   if (m.type === 'join') return (m.version === undefined || m.version === 1) && typeof m.name === 'string' && /^[A-Za-z0-9_]{3,20}$/.test(m.name);

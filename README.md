@@ -1,6 +1,6 @@
 # SA Online Browser
 
-A cloud-local browser multiplayer prototype: two players walk, chat, and drive an original sports coupe around Arroyo, a San Andreas-inspired neighborhood through the SA-MP 0.3.7 protocol and an unchanged **open.mp v1.5.8.3079** server.
+A browser multiplayer prototype: walk, chat, share an original sports coupe and race the Arroyo Loop with a friend. Arroyo is an original San Andreas-inspired neighborhood connected through the SA-MP 0.3.7 protocol to an unchanged **open.mp v1.5.8.3079** server.
 
 The browser renders and simulates locally. A Node WebSocket gateway starts one native C++ protocol worker per browser. All peer gameplay travels through the real upstream UDP server; the gateway does not broadcast gameplay between browsers.
 
@@ -101,11 +101,22 @@ After an abrupt worker crash, the server can retain the nickname until its conne
 | --- | --- |
 | W/A/S/D | Camera-relative walking; accelerate, brake and steer while driving |
 | Right mouse drag / wheel | Orbit camera / zoom |
-| Space | Jump on foot |
+| Space | Jump on foot / handbrake while driving |
 | Enter | Chat |
 | E / G | Request driver / passenger seat near the car |
 | F | Exit the car |
+| R / `/race` | Start the Arroyo Loop from the checkered line |
+| H | Horn while driving; other players hear it through replicated vehicle state |
+| `/cancel` / `/scores` | End your crew's attempt / show session records |
 | `/reset` / `/teleport` | Reset the fixture / teleport yourself |
+
+### Play the Arroyo Loop
+
+Join with distinct nicknames. Press **E** near the coupe to drive; your friend can press **G** to ride. At the checkered start, press **R** and hold still through the three-second countdown. Follow the green checkpoint and radar route through all nine gates. The server confirms the finish time and keeps the five fastest runs for that server session. Swap seats and rematch, or keep exploring together.
+
+Moving before GO cancels the attempt. Leaving/changing seats, a crew disconnect, reset or the three-minute limit also cancels it. Results survive browser rejoining but clear when the server restarts. This is a cooperative prototype with browser-simulated movement, not an anti-cheat system.
+
+**Sound** toggles the original spatial audio; **Help** opens volume and controls. Sound starts after a join/unmute gesture. Engines, tires, footsteps, doors, horn and activity cues follow local or server-relayed state. Preferences survive reloading, and hidden/disconnected sessions stop their audio. Steering, wheel rotation, reverse lamps and brake lamps follow the car's movement and inputs.
 
 The setup command installs build/Xvfb dependencies, verifies pinned downloads, compiles the fixture and native worker, installs Chromium, and builds the browser. It keeps Debian i386 libraries and QEMU isolated under `.runtime`; host system libraries are untouched. See [runtime instructions](test-server/README.md) and [native protocol details](native/README.md).
 
@@ -117,9 +128,9 @@ Stop `dev:poc` first so ports 3000 and 7777 are available, then run:
 npm run verify:poc
 ```
 
-The suite runs type checks, gateway and native tests, then two independent headed Chromium sessions under Xvfb. Allow approximately thirty minutes: the retained yard and new neighborhood each run a ten-minute active multiplayer soak, with additional loop, lifecycle and graphics tests. It checks server observations and decoded browser snapshots as well as rendering. `POC_HEADLESS=1 npm run verify:poc` selects headless Chromium.
+The suite runs type checks, gateway, asset, audio and native tests, then independent headed Chromium sessions under Xvfb. Allow approximately fifty minutes: the retained yard and neighborhood each run a ten-minute active multiplayer soak, with additional activity, loop, lifecycle and graphics tests. It checks server observations and decoded browser snapshots as well as rendering. `POC_HEADLESS=1 npm run verify:poc` selects headless Chromium. `npm run verify:activity` runs the focused two-crew challenge test, and `npm run test:audio` also checks real browser PCM output and audio lifecycle.
 
-Screenshots, videos, traces, JSON results, and server observations are written to ignored `artifacts/verification/`. Gateway worker transitions are in `.runtime/logs/gateway.jsonl`. Reproduce these artifacts when moving to a fresh workspace; large recordings are not committed.
+Screenshots, videos, traces, JSON results, and server observations are written to ignored `artifacts/verification/`, `artifacts/neighborhood/` and `artifacts/activity/`. Gateway worker transitions are in `.runtime/logs/gateway.jsonl`. Reproduce these artifacts when moving to a fresh workspace; large recordings are not committed.
 
 For the actual cloud desktop, start `dev:poc` with no other players, then run `npm run verify:desktop`. It opens two Google Chrome windows on display `:1` (or `$DISPLAY`), checks walking/chat/driving and occupants through UI input, audits texture allocations, and saves screenshots, traces and server observations to `artifacts/desktop/`. This is separate from the Xvfb performance test. Close extra software-rendered game windows before performance verification.
 
@@ -129,6 +140,7 @@ This demonstrates a narrow browser/open.mp protocol subset with an original neig
 
 - [Accepted PoC specification](docs/poc-plan.md) and [scope decision](docs/decisions/0002-placeholder-poc.md)
 - [Current status and continuation](docs/status.md)
+- [Playable activity and asset plan](docs/working-game-plan.md), [current results](docs/working-game-results.md), [original audio kit](docs/audio-assets.md) and [vehicle feedback](docs/vehicle-feedback.md)
 - [Domain glossary](CONTEXT.md)
 - [Protocol selection](docs/decisions/0001-protocol-and-scope.md), [long-horizon architecture](docs/architecture.md), and [roadmap](docs/roadmap.md)
 - Research: [SA-MP/open.mp](docs/research/sa-mp.md), [MTA](docs/research/mta.md), [browser feasibility](docs/research/browser-runtime.md)
@@ -143,10 +155,11 @@ Original PoC code is **GPL-3.0-or-later**. Preserve [third-party licenses and no
 
 ```sh
 npm run build:assets                 # pinned Blender 4.5.13 exports + static reflection bake
+npm run build:audio                  # regenerate the original deterministic WAV kit
 node tools/create-scenes.mjs          # regenerate the committed layout manifests
 npm run build:browser
 ```
 
-Normal `setup:poc` consumes committed GLBs and image inputs; it does not install Blender or call an image service. Edit `tools/assets/build.py`, `environment-kit.py`, and `heroes.py` to regenerate the kit, or inspect the editable `assets/source/*.blend` files. The scripts are authoritative; rebuilding replaces those .blend exports. The reflection bake uses installed pinned Chromium without player connections, saves a lossless RGBA16F atlas and provenance under `assets/source/reflection-bake.json`, and refreshes the asset inventory and browser build. Geometry is modeled in meters, Z-up and +Y forward, normalized once after glTF loading. Texture inputs, prompts, licenses and source pins are in [asset provenance](assets/PROVENANCE.md). The imagegen authoring skill is included under `.agents/skills/imagegen` with its own license.
+Normal `setup:poc` consumes committed GLBs, textures and WAVs; it does not install Blender or call an image service. Edit `tools/assets/build.py`, `environment-kit.py`, `heroes.py` and `activity-kit.py` to regenerate the kit, or inspect the editable `assets/source/*.blend` files. The scripts are authoritative; rebuilding replaces those .blend exports. The activity board retains its editable original glyphs, SVG and texture source. The reflection bake uses installed pinned Chromium without player connections, saves a lossless RGBA16F atlas and provenance under `assets/source/reflection-bake.json`, and refreshes the asset inventory and browser build. Geometry is modeled in meters, Z-up and +Y forward, normalized once after glTF loading. Texture inputs, prompts, licenses and source pins are in [asset provenance](assets/PROVENANCE.md) and [activity asset provenance](assets/activity-PROVENANCE.md). The imagegen authoring skill is included under `.agents/skills/imagegen` with its own license.
 
-The [accepted plan](docs/neighborhood-plan.md) defines the current scope. Next: a shared checkpoint driving challenge, then private remote invitations and latency testing, then an original GTA/SA-MP interoperability slice. Arroyo's custom map does not establish native GTA world compatibility.
+The [neighborhood plan](docs/neighborhood-plan.md) and [activity plan](docs/working-game-plan.md) define the current scope. Next: private remote invitations and latency testing, more cooperative activities and vehicle variety, then an original GTA/SA-MP interoperability slice. Arroyo's custom map does not establish native GTA world compatibility. Traffic, pedestrians, interiors and combat remain later milestones.

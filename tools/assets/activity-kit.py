@@ -403,6 +403,81 @@ def build_activity_kit():
             angle=i*math.tau/8
             tube("Dry old agave tip",[(math.cos(angle)*.12,math.sin(angle)*.12,.63),(math.cos(angle)*.40,math.sin(angle)*.40,.68),(math.cos(angle)*.52,math.sin(angle)*.52,.62)],.008,wood,5)
 
+    def yucca():
+        """A field-grown rosette: varied arched blades, folded hearts and litter.
+
+        Leaf silhouettes and thickness are real geometry, so low and standard
+        presets agree without alpha cards or a new image dependency. Appending
+        this builder preserves the older assets' per-index deterministic seeds.
+        """
+        start()
+        cylinder("Fibrous low root crown",(0,0,0),(0,0,.060),.051,wood,.032,12)
+        # Four growth rings balance sagging old leaves and a tight upright heart.
+        rings=[(10,.43,.255,.040,.87),(9,.36,.435,.039,.66),
+               (8,.22,.585,.030,.47),(6,.084,.615,.018,.47)]
+        for layer,(count,reach,height,width,arch) in enumerate(rings):
+            for index in range(count):
+                angle=index*math.tau/count+layer*2.3999632297+rng.uniform(-.09,.09)
+                radius=reach*rng.uniform(.90,1.06)
+                rise=height*rng.uniform(.91,1.035)
+                breadth=width*rng.uniform(.86,1.14)
+                sweep=rng.uniform(-.13,.13)
+                twist=rng.uniform(-.26,.26)
+                vertices,faces=[],[]
+                rows=14
+                for row in range(rows):
+                    t=row/(rows-1)
+                    heading=angle+sweep*math.sin(t*math.pi*.85)
+                    radial=.018+radius*t**1.20
+                    z=.040+rise*math.sin(t*math.pi*arch)
+                    # Older outer blades naturally arch and twist; the fresh
+                    # heart is compact, upright and pointed rather than fanned flat.
+                    center=Vector((math.cos(heading)*radial,math.sin(heading)*radial,z))
+                    side=Vector((-math.sin(heading),math.cos(heading),twist*math.sin(t*math.pi))).normalized()
+                    half_width=breadth*(.17+.83*math.sin(math.pi*t)**.63)*(1-.32*t)
+                    if row==rows-1:half_width=.00035
+                    ridge=.009*math.sin(t*math.pi)*(1-layer*.10)
+                    for offset in [-1,-.88,0,.88,1]:
+                        lift=ridge*(1-abs(offset))
+                        vertices.append(center+side*offset*half_width+Vector((0,0,lift)))
+                for row in range(rows-1):
+                    for column in range(4):
+                        a=row*5+column
+                        faces.append((a,a+1,a+6,a+5))
+                leaf=mesh(f"Living yucca blade ring {layer+1} — {index+1:02d}",vertices,faces,agave,True)
+                leaf.data.materials.append(agave_edge)
+                for face in leaf.data.polygons:
+                    # Narrow waxy margins, with a dry terminal spine. Color is
+                    # restrained; broad central faces retain the muted sage body.
+                    if face.index%4 in [0,3] or (layer<2 and index%3!=0 and face.index>=48):face.material_index=1
+                mod=leaf.modifiers.new("Solid waxy leaf thickness","SOLIDIFY")
+                mod.thickness=.0018
+                bpy.context.view_layer.objects.active=leaf
+                bpy.ops.object.modifier_apply(modifier=mod.name)
+        # Papery, bent basal leaves sit close to the earth, not on a circular
+        # soil disc. Their tapered silhouettes break the planted-object seam.
+        for index in range(9):
+            angle=index*2.3999632297+rng.uniform(-.12,.12)
+            reach=rng.uniform(.19,.34)
+            verts=[]
+            for row in range(7):
+                t=row/6
+                heading=angle+.17*math.sin(t*math.pi)
+                radial=.035+reach*t
+                center=Vector((math.cos(heading)*radial,math.sin(heading)*radial,
+                               .013+.048*(1-t)+.024*math.sin(t*math.tau)))
+                side=Vector((-math.sin(heading),math.cos(heading),0))
+                width=.013*(1-t)+.0004
+                verts.extend([center-side*width,center+Vector((0,0,.0025)),center+side*width])
+            faces=[]
+            for row in range(6):
+                for column in range(2):
+                    a=row*3+column;faces.append((a,a+1,a+4,a+3))
+            leaf=mesh("Curled dry basal leaf",verts,faces,wood,True)
+            mod=leaf.modifiers.new("Dry leaf thickness","SOLIDIFY");mod.thickness=.0008
+            bpy.context.view_layer.objects.active=leaf
+            bpy.ops.object.modifier_apply(modifier=mod.name)
+
     def bake_sign_face():
         """Rasterize our own editable glyph polygons onto one enamel surface.
 
@@ -593,7 +668,7 @@ def build_activity_kit():
         bpy.ops.render.render(write_still=True)
 
     report=[]
-    for index,(name,builder) in enumerate([("activity-board",board),("activity-pylon",pylon),("activity-bench",bench),("activity-planter",planter)]):
+    for index,(name,builder) in enumerate([("activity-board",board),("activity-pylon",pylon),("activity-bench",bench),("activity-planter",planter),("activity-yucca",yucca)]):
         if only and name != only:continue
         rng.seed(9020+index*1337)
         builder()

@@ -5,8 +5,8 @@ import { encodeReflection } from "./reflection-storage";
 
 /** One sun, physical sky reflections, and a stable shadow volume around the player. */
 export function installAtmosphere(scene: THREE.Scene, renderer: THREE.WebGLRenderer) {
-  const ambient = new THREE.HemisphereLight(0xc6ddef, 0x80725e, .8);
-  const sun = new THREE.DirectionalLight(0xffdfb0, 3.6);
+  const ambient = new THREE.HemisphereLight(0xc6ddef, 0x80725e, .68);
+  const sun = new THREE.DirectionalLight(0xffdbad, 4.4);
   sun.castShadow = true;
   sun.shadow.mapSize.set(4096, 4096);
   Object.assign(sun.shadow.camera, { left: -128, right: 128, top: 128, bottom: -128, near: 1, far: 320 });
@@ -29,7 +29,7 @@ export function installAtmosphere(scene: THREE.Scene, renderer: THREE.WebGLRende
       scene.environment = target.texture;
       scene.environmentIntensity = 0.4;
       scene.background = environmentTexture;
-      scene.backgroundIntensity = 0.85;
+      scene.backgroundIntensity = 1.0;
       scene.backgroundRotation.x = Math.PI / 2;
       scene.environmentRotation.x = Math.PI / 2;
       bindAssetEnvironment(target.texture);

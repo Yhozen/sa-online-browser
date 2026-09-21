@@ -1,15 +1,20 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+import type { ChallengeReplica } from "./challenge-state";
 import type { SceneManifest } from "../../../packages/shared/scene";
 export function mountHUD() {
   document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
 <div id="viewport" class="viewport" data-testid="viewport"></div><div class="vignette"></div>
-<header class="top"><div class="brand"><div><div class="title">Arroyo</div><p class="eyebrow">San Andreas · Multiplayer</p></div></div><div id="connection" class="connection"><span class="dot"></span><span data-testid="status" id="status">Not connected</span><button id="debug-toggle" title="Protocol diagnostics">≡</button><select id="quality" aria-label="Graphics quality"><option value="low">Low</option><option value="standard">Standard</option></select></div></header>
-<aside class="left"><section class="panel join" id="join-panel"><div class="kicker">WELCOME TO THE NEIGHBORHOOD</div><h1>Your block.<br>Your people.</h1><p class="muted">Afternoon sun. An open road.<br>Join your friends in Arroyo.</p><form id="join-form"><label for="nickname">YOUR NAME</label><input id="nickname" data-testid="nickname" minlength="3" maxlength="20" pattern="[A-Za-z0-9_]+" value="BrowserPlayer" autocomplete="off" required/><button class="primary" data-testid="join" id="join" disabled>Join neighborhood ↗</button></form><p id="loading" role="status">Preparing the scene…</p><button id="retry-assets" class="secondary hidden">Retry loading</button></section>
+<header class="top"><div class="brand"><div><div class="title">Arroyo</div><p class="eyebrow">San Andreas · Multiplayer</p></div></div><div id="connection" class="connection"><span class="dot"></span><span data-testid="status" id="status">Not connected</span><button id="audio-toggle" aria-label="Toggle game sound" aria-pressed="true">Sound on</button><button id="help-toggle" aria-label="Controls and sound settings" aria-expanded="false">Help</button><button id="debug-toggle" title="Protocol diagnostics">≡</button><select id="quality" aria-label="Graphics quality"><option value="low">Low</option><option value="standard">Standard</option></select></div></header>
+<aside class="left"><section class="panel join" id="join-panel"><div class="kicker">WELCOME TO THE NEIGHBORHOOD</div><h1>Your block.<br>Your people.</h1><p class="muted">Meet your crew. Take the wheel.<br>Set a time around your block.</p><form id="join-form"><label for="nickname">YOUR NAME</label><input id="nickname" data-testid="nickname" minlength="3" maxlength="20" pattern="[A-Za-z0-9_]+" value="BrowserPlayer" autocomplete="off" required/><button class="primary" data-testid="join" id="join" disabled>Join neighborhood ↗</button></form><p id="loading" role="status">Preparing the scene…</p><button id="retry-assets" class="secondary hidden">Retry loading</button></section>
 <section class="panel info" id="diagnostics"><div class="kicker">Session diagnostics</div><div class="row"><span>Player</span><strong id="self-name">—</strong></div><div class="row"><span>Server ID</span><strong id="server-id" data-testid="server-id">—</strong></div><div class="row"><span>Mode</span><strong id="mode" data-testid="mode">Exploring soon</strong></div><div class="row"><span>Nearby</span><strong id="player-count">0</strong></div><div id="roster"></div></section></aside>
 <div class="corner"><div class="arena-name">Arroyo</div><div class="arena-detail">A PLACE TO MEET</div><div class="speed"><span id="speed">00</span><small>KM/H</small></div><button class="secondary hidden" data-testid="disconnect" id="disconnect">Leave session</button></div>
 <div class="map-wrap"><b class="map-north" aria-label="North">N</b><canvas id="minimap" width="210" height="210" aria-label="Neighborhood minimap"></canvas><div class="map-caption"><span>ARROYO AVE</span></div></div>
-<section class="chat panel"><div class="chat-head"><button id="chat-toggle" aria-expanded="true">Neighborhood chat</button><span class="tag">ENTER ↵</span></div><div id="chat-content"><div data-testid="chat-log" id="chat-log" class="chat-log" role="log" aria-live="polite"></div><form id="chat-form"><input id="chat-input" data-testid="chat-input" placeholder="Say hello · /reset to start over" maxlength="128" autocomplete="off" disabled/><button type="submit" aria-label="Send chat">↗</button></form></div></section>
-<aside class="bottom"><div class="controls"><span><kbd>W A S D</kbd> move</span><span><kbd>E / G</kbd> drive / ride</span><span><kbd>F</kbd> exit</span><span><kbd>SPACE</kbd> jump</span><span>Right drag · orbit &nbsp; Scroll · zoom</span></div></aside><div id="toast" class="toast hidden" role="alert"></div><div class="footer-label">BROWSER → NATIVE GATEWAY → OPEN.MP</div>`;
+<section class="chat panel"><div class="chat-head"><button id="chat-toggle" aria-expanded="true">Neighborhood chat</button><span class="tag">ENTER ↵</span></div><div id="chat-content"><div data-testid="chat-log" id="chat-log" class="chat-log" role="log" aria-live="polite"></div><form id="chat-form"><input id="chat-input" data-testid="chat-input" placeholder="Say hello · /race · /reset" maxlength="128" autocomplete="off" disabled/><button type="submit" aria-label="Send chat">↗</button></form></div></section>
+<aside class="bottom"><div class="controls"><span><kbd>W A S D</kbd> move</span><span><kbd>E / G</kbd> drive / ride</span><span><kbd>F</kbd> exit</span><span><kbd>SPACE</kbd> jump / brake</span><span>Right drag · orbit &nbsp; Scroll · zoom</span></div></aside><div id="interaction-hint" class="interaction-hint" aria-live="off"></div><section id="help-panel" class="help-panel hidden" aria-label="Controls and sound settings"><h2>Make yourself at home</h2><p><b>W A S D</b> Move / drive &nbsp; <b>Space</b> Jump / handbrake</p><p><b>E</b> Drive &nbsp; <b>G</b> Ride &nbsp; <b>F</b> Exit</p><p><b>R</b> Start time trial &nbsp; <b>H</b> Horn</p><p>Right drag to orbit · Scroll to zoom</p><p><b>Enter</b> Chat · <b>/reset</b> Reset car and crew</p><label for="audio-volume">Sound volume</label><input id="audio-volume" aria-label="Sound volume" type="range" min="0" max="100" step="5"/><p id="audio-status" role="status"></p><button id="audio-retry" class="secondary">Enable / retry sound</button></section><div id="toast" class="toast hidden" role="alert"></div><div class="footer-label">BROWSER → NATIVE GATEWAY → OPEN.MP</div>`;
+  document.getElementById("help-toggle")!.onclick = () => {
+    const hidden = document.getElementById("help-panel")!.classList.toggle("hidden");
+    document.getElementById("help-toggle")!.setAttribute("aria-expanded", String(!hidden));
+  };
   document.getElementById("debug-toggle")!.onclick = () =>
     document.body.classList.toggle("debug");
   document.getElementById("chat-toggle")!.onclick = () => {
@@ -26,6 +31,7 @@ export function minimap(
   self: { position: number[]; heading: number; spawned: boolean },
   peers: { state: { position: number[] }; streamed: boolean }[],
   vehicles: { position: number[] }[],
+  activity?: ChallengeReplica,
 ) {
   const canvas = document.getElementById("minimap") as HTMLCanvasElement,
     c = canvas.getContext("2d")!;
@@ -68,6 +74,20 @@ export function minimap(
       b.size[0] * s,
       b.size[1] * s,
     );
+  }
+  if (manifest.challenge) {
+    c.strokeStyle = "#d7c383"; c.lineWidth = 1.4; c.setLineDash([3, 3]); c.beginPath();
+    [manifest.challenge.start, ...manifest.challenge.checkpoints].forEach((point, i) => {
+      const [x,y] = p(point); if (i) c.lineTo(x,y); else c.moveTo(x,y);
+    }); c.stroke(); c.setLineDash([]);
+    const [x,y] = p(manifest.challenge.start);
+    c.fillStyle = "#fbf4d8"; c.fillRect(x-3,y-3,6,6);
+    c.fillStyle = "#292d2a"; c.fillRect(x-3,y-3,3,3); c.fillRect(x,y,3,3);
+    if (activity?.checkpoint && activity.state?.phase === "running") {
+      const [cx,cy] = p(activity.checkpoint.position);
+      c.strokeStyle = "#8cf7a8"; c.lineWidth = 2; c.beginPath(); c.arc(cx,cy,6,0,Math.PI*2); c.stroke();
+      c.fillStyle = "#8cf7a8"; c.beginPath(); c.arc(cx,cy,2.5,0,Math.PI*2); c.fill();
+    }
   }
   function dot(v: number[], color: string, r: number) {
     const [x, y] = p(v);
