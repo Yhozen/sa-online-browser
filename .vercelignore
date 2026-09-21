@@ -11,8 +11,10 @@ native
 test-server
 tests
 docs
-# Exclude only root art sources; keep apps/browser/public/assets for Vite.
-/assets/
+# Keep the imported terrain data and apps/browser/public/assets for Vite.
+# Exclude editable art sources without excluding their parent directory.
+/assets/*
+!/assets/horizon-relief.json
 artifacts
 test-results
 playwright-report

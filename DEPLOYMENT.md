@@ -98,7 +98,9 @@ mount.
 `vercel.json` already pins the build: no framework detection, `npm ci`,
 `npm run build:browser`, and `apps/browser/dist` as the output directory.
 `.vercelignore` keeps the protocol worker, the fixture, the tests and the
-editable art sources out of the upload.
+editable art sources out of the upload. It retains `assets/horizon-relief.json`,
+which the browser imports at build time, and all `apps/browser/public/assets`.
+The Docker build context retains the same runtime terrain input.
 
 Set the gateway origin as a **build-time** environment variable, then deploy:
 
